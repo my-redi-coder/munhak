@@ -74,8 +74,13 @@ Char.prototype.setBack=function(name,num){
   if(this.backMat.map)this.backMat.map.dispose();this.backMat.map=backTex(this.uk,name,num);this.backMat.needsUpdate=true;
   if(this.jMat.map)this.jMat.map.dispose();this.jMat.map=jerseyTex(this.uk,name,num);this.jMat.needsUpdate=true;
 };
+/* 폰 불빛: 손에 드는 작은 빛 (act 'light', 8회말 여난부두) */
+var GLOWTEX=null;
+function glowTex(){if(!GLOWTEX)GLOWTEX=canvasTex(64,64,function(x){var g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.18,'rgba(255,246,220,.9)');g.addColorStop(.45,'rgba(255,226,160,.28)');g.addColorStop(1,'rgba(255,220,150,0)');x.fillStyle=g;x.fillRect(0,0,64,64)});return GLOWTEX}
 Char.prototype.setAct=function(a){
   var prev=this.act;this.act=a;
+  if(a==='light'&&!this.glow){this.glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),color:0xfff0c8,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));this.glow.scale.set(.95,.95,1);this.glow.position.set(0,-.5,0);this.armA.add(this.glow)}
+  if(this.glow)this.glow.visible=a==='light';
   var wave=a==='wave';
   if((prev==='wave')!==wave){this.torsoMat.color.setHex(wave?TEE:UNI[this.uk].hex);var ag=armGeo(wave?'tee':this.uk);this.armAm.geometry=ag;this.armBm.geometry=ag;this.back.visible=!wave;this.jersey.visible=wave}
 };
@@ -94,6 +99,9 @@ Char.prototype.update=function(dt,beat){
     else{var cl=Math.max(0,Math.sin(TAU*f));P.aX=P.bX=-1.35;P.aZ=.3-.24*cl;P.bZ=-P.aZ}
   }else if(this.act==='angry'){
     P.y=Math.abs(Math.sin(t*11))*.15;P.lA=P.lB=0;var sh=Math.sin(t*34)*.2;P.aX=-1.8+sh;P.bX=-1.8-sh;P.aZ=.42;P.bZ=-.42;P.tilt=Math.sin(t*21)*.05;P.head=Math.sin(t*17)*.09;face='angry';k=22;
+  }else if(this.act==='light'){
+    /* 불빛 든 손을 머리 위로, 다 같이 같은 박자로 좌우 (YEONAN.SWAY초에 한 번) */
+    var sw=Math.sin(TAU*(T/YEONAN.SWAY)+this.beatOff*3);P.lA=P.lB=0;P.aZ=2.55+sw*.4;P.aX=-.12;P.bZ=-.22;P.bX=-.1;P.tilt=sw*.09;P.head=sw*.05;face='happy';k=9;
   }else if(this.act==='wave'){
     P.lA=P.lB=0;var w=Math.sin(t*5.5);P.aZ=2.88+w*.12;P.bZ=-2.88+w*.12;P.tilt=w*.05;P.y=Math.abs(w)*.03;P.jz=w*.2;face='happy';
     if(this.player){var pa=this.jGeo.attributes.position,a=pa.array;for(var i=0;i<pa.count;i++){var x=a[i*3],y=a[i*3+1];a[i*3+2]=Math.sin(x*7+t*9)*.035*(.4+Math.abs(x))+Math.sin(y*6+t*7)*.02}pa.needsUpdate=true}

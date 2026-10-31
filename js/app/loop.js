@@ -2,7 +2,7 @@
 var T=0,last=performance.now(),crowdTick=0,excite=0;
 function frame(now){
   requestAnimationFrame(frame);
-  var dt=Math.min(.05,(now-last)/1000);last=now;if(document.hidden)return;T+=dt;
+  var dt=Math.min(.05,(now-last)/1000);last=now;if(document.hidden||MG.on)return;T+=dt;
   var beat=beatPos(T);
   if(player){updatePlayer(dt);player.update(dt,beat)}
   if(phase==='game'){updateNPCs(dt,beat);if(leader){var want=(player.act==='cheer'||npcs.some(function(n){return n.act==='cheer'}))?'cheer':(Math.sin(T*.25)>.4?'cheer':null);if(leader.act!==want)leader.setAct(want);leader.update(dt,beat)}}

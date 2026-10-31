@@ -2,6 +2,7 @@
    이벤트 때 빅보드 화면(BB.scr)을 잠깐 바꿔 끼워요. 매 프레임 캔버스에 다시 그려요.
    bbShow('wave')    : 큰 파도가 밀려와 부서지는 영상 (뒤로 수평선의 배)
    bbShow('homerun') : 파란 바탕에 흰 글씨 HOME RUN
+   bbShow('yeonan')  : 파도 영상을 되풀이하며 아래에 '여난부두' 글씨 (8회말 응원)
    bbShowOff()       : 원래 화면(bbScreenTex)으로 돌아가요. */
 var BBS={kind:null,t:0,W:1024,H:Math.round(1024*BB.H/BB.W),spray:[]};
 BBS.cv=document.createElement('canvas');BBS.cv.width=BBS.W;BBS.cv.height=BBS.H;BBS.x=BBS.cv.getContext('2d');
@@ -9,7 +10,7 @@ BBS.tex=new THREE.CanvasTexture(BBS.cv);BBS.tex.anisotropy=maxAniso;
 function bbShow(kind){BBS.kind=kind;BBS.t=0;BBS.spray=[];BB.scr.material.map=BBS.tex;BB.scr.material.needsUpdate=true;bbDraw()}
 function bbShowOff(){BBS.kind=null;BB.scr.material.map=bbScreenTex;BB.scr.material.needsUpdate=true}
 function bbShowTick(dt){if(!BBS.kind)return;BBS.t+=dt;bbDraw()}
-function bbDraw(){(BBS.kind==='wave'?bbWave:BBS.kind==='kkk'?bbKKK:bbHomerun)(BBS.x,BBS.W,BBS.H,BBS.t);BBS.tex.needsUpdate=true}
+function bbDraw(){(BBS.kind==='wave'?bbWave:BBS.kind==='kkk'?bbKKK:BBS.kind==='yeonan'?bbYeonan:bbHomerun)(BBS.x,BBS.W,BBS.H,BBS.t);BBS.tex.needsUpdate=true}
 
 /* 파도: 0~1.2초 너울 → 1.2~2.9초 큰 파도가 솟아 말려 들어옴 → 2.9초 부서지며 물보라 */
 function bbWave(x,w,h,t){
@@ -70,4 +71,15 @@ function bbKKK(x,w,h,t){
     x.lineWidth=6;x.strokeStyle=on?'#ffffff':'rgba(255,255,255,.18)';x.fillStyle=on?'#ffffff':'rgba(255,255,255,0)';
     var s=just?1.35-.35*(t/.5):1;x.save();x.translate(cx,h/2+6);x.scale(s,s);x.strokeText('K',0,0);x.fillText('K',0,0);x.restore();
   }
+}
+
+/* 8회말 여난부두: 파도 영상(bbWave)을 YW초마다 처음부터 되풀이 + 가운데 아래 '여난부두' */
+var YW=4.6;
+function bbYeonan(x,w,h,t){
+  var c=Math.floor(t/YW);if(c!==BBS.cyc){BBS.cyc=c;BBS.spray=[]}
+  bbWave(x,w,h,t-c*YW);
+  var g=x.createLinearGradient(0,h*.55,0,h);g.addColorStop(0,'rgba(8,24,60,0)');g.addColorStop(1,'rgba(8,24,60,.55)');x.fillStyle=g;x.fillRect(0,h*.55,w,h*.45);
+  x.save();x.textAlign='center';x.textBaseline='middle';var F='"Gowun Dodum","Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  x.font='700 '+Math.round(h*.3)+'px '+F;var s=1+Math.sin(t*1.9)*.02;x.translate(w/2,h*.74);x.scale(s,s);
+  x.lineJoin='round';x.lineWidth=h*.035;x.strokeStyle='rgba(6,26,70,.85)';x.strokeText('여난부두',0,0);x.fillStyle='#ffffff';x.fillText('여난부두',0,0);x.restore();
 }

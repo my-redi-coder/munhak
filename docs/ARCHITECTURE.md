@@ -11,10 +11,10 @@
 | `index.html` | 화면 뼈대 + 불러올 파일 목록(아래 순서대로 `<script>`) |
 | `styles/` | 모양(css) |
 | `js/` | 야구장 본체 (아래 레이어 표) |
-| `events/` | 이벤트 장면 하나 = 파일 하나 (`homer.js` 최정 홈런, `kkk.js` KKK) + 이벤트 배경음 mp3 |
-| `minigames/` | 미니게임 자리 (아직 없음, README 참고) |
+| `events/` | 이벤트 장면 하나 = 파일 하나 (`homer.js` 최정 홈런, `kkk.js` KKK, `yeonan.js` 8회말 여난부두) + 이벤트 배경음 mp3 + 여난부두 가사 json |
+| `minigames/` | 불펜장(미니게임): 독립 페이지들 + 공용 `shared/` (아래 '불펜장') |
 | `songs/` | 직접 만든 응원가 mp3 + 목록 `songs.js` |
-| `docs/` | 기획·구조·진행·모듈 지도 |
+| `docs/` | 기획·구조·진행·모듈 지도, 직접 올리는 파일 안내(`USER-FILES.md`) |
 | `tools/modmap.py` | `docs/MODULES.md`(파일마다 내놓는 이름) 다시 만들기 |
 
 ## 레이어 (아래가 바탕, 위로 갈수록 바탕을 사용)
@@ -22,7 +22,7 @@
 | 레이어    | 폴더           | 하는 일                                                                                                                                                                                                                                                       |
 |-----------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 앱        | `js/app/`      | 매 프레임 루프(`loop.js`), 시작 순서(`boot.js`)                                                                                                                                                                                                               |
-| 화면(UI)  | `js/ui/`       | 알림·말풍선·이름표(`feedback.js`), 입장 준비(`setup.js`), 시트·설정(`sheets.js`), 공격·수비 전환 버튼(`fieldmode.js`), 이벤트 목록 시트 + 이벤트 배경음 고르기(`event-sheet.js`)                                                                              |
+| 화면(UI)  | `js/ui/`       | 알림·말풍선·이름표(`feedback.js`), 입장 준비(`setup.js`), 시트·설정(`sheets.js`), 공격·수비 전환 버튼(`fieldmode.js`), 이벤트 목록 시트 + 이벤트 배경음 고르기(`event-sheet.js`), 불펜장 창(`bullpen.js`)                                                                              |
 | 게임 규칙 | `js/game/`     | 상태(`state.js`), 입장·구역 이동(`flow.js`), 행동(`actions.js`), 주변 으쓱이(`npc.js`), 입력(`input.js`), 카메라(`camera.js`), 걷기(`movement.js`), 그라운드 선수 배치·투구 흐름(`fieldplay.js`), 이벤트 진행 틀(`events.js`), 경기장 구경하기(`sightsee.js`), 이벤트 장면은 `events/` 폴더 |
 | 소리      | `js/audio/`    | 함성·비트·효과음·내 음원 (`audio.js`), 이벤트 효과음 딱·뱃고동·파도·잠깐 낮추기 (`eventsfx.js`), 이벤트 배경음 내 파일 보관·재생 (`evbgm.js`), 응원가 랜덤 재생 (`songs.js`, 곡 목록은 `songs/songs.js`)                                                                                                                 |
 | 캐릭터    | `js/entities/` | 으쓱이 모델, 표정, 등판, 동작 (`character.js`), 그라운드 선수 모델·등판·자세 (`player.js`)                                                                                                                                                                    |
@@ -30,7 +30,7 @@
 | 엔진      | `js/engine/`   | 렌더러, 씬, 조명, 도형 합치기 도우미 (`renderer.js`)                                                                                                                                                                                                          |
 | 바탕      | `js/core/`     | 공용 도우미(`util.js`), 데이터·문구·설정값(`config.js`)                                                                                                                                                                                                       |
 
-스타일은 `styles/`: `tokens.css`(색·글꼴 토큰, 다크 모드) → `boot.css` → `setup.css` → `hud.css` → `sheets.css` → `event.css`(이벤트 시트·장면 중 화면). 화면 뼈대(마크업)는 `index.html`.
+스타일은 `styles/`: `tokens.css`(색·글꼴 토큰, 다크 모드) → `boot.css` → `setup.css` → `hud.css` → `sheets.css` → `event.css`(이벤트 시트·장면 중 화면·여난부두 가사) → `bullpen.css`(불펜장 창). 화면 뼈대(마크업)는 `index.html`.
 
 ## 규칙
 
@@ -56,6 +56,23 @@
 - 공용 도우미: `evBoardCam()` 빅보드 꽉 차게, `evCaption(글자,대상,높이,ms)` 3D 위치 위 자막. 숨길 이벤트는 `EVENTS`에 `hidden:true`.
 - `index.html`에 `<script src="events/<이름>.js">`를 `events/homer.js` 다음 줄에 추가.
 
-## 미니게임 만드는 법 (계획)
+## 불펜장 (미니게임)
 
-- 혼자 도는 페이지 `minigames/<이름>.html`. 야구장 위에 창(iframe)으로 띄우고 닫으면 내 자리로 돌아와요. 야구장 코드와 엮이지 않아요.
+- 야구장 위쪽 **불펜장** 버튼 → `js/ui/bullpen.js`가 `minigames/bullpen.html`을 화면 가득 창(iframe)으로 띄워요. 창이 열린 동안 야구장 그리기와 소리는 쉬어요(`MG.on`). 미니게임의 '야구장' 버튼이 `postMessage({munhak:'bullpen-close'})`로 닫아요.
+- 미니게임 페이지는 야구장 코드와 엮이지 않아요. 각자 `minigames/shared/`만 써요.
+
+| 파일 | 하는 일 |
+|---|---|
+| `minigames/bullpen.html` + `bullpen/` | 불펜장 첫 화면: 일러스트(`bullpen-bg.svg`), 게임 목록 `GAMES`(마운드 위 / 등판 대기 중), 내 라커 바로가기 |
+| `minigames/locker.html` + `locker/` | 내 라커: 라커 두 칸(카드 앨범 / 공박스 준비 중), `#cards`면 카드 앨범 |
+| `minigames/number-match.html` + `number-match/` | 등번호 매치 게임, 결과 시트, 덱 완성 엔딩. 주소에 `?dev`면 확인용 버튼 |
+| `minigames/shared/mg.css` | 공용 색·글꼴(야구장 토큰과 같음), 위쪽 막대, 버튼, 알림 |
+| `minigames/shared/store.js` | `LOCKER`: 수집품 보관(이 기기 localStorage `munhak-locker-v1`), `mgToast`, `mgExit` |
+| `minigames/shared/roster.js` | 선수 명단 `ROSTER`(등번호·이름·등급), 동명이인 `SAME_NAME` |
+| `minigames/shared/card.js` + `card.css` | 선수 카드 앞·뒷면, 앨범 칸 |
+
+### 새 미니게임 더하는 법
+
+1. `minigames/<이름>.html` + `minigames/<이름>/` 폴더(js·css). `shared/` 파일들을 불러와요.
+2. `minigames/bullpen/bullpen.js`의 `GAMES`에 한 줄. 만드는 중엔 `ready:false`(등판 대기 중), 열 때 `ready:true`.
+3. 모으는 게 있으면 `shared/store.js`의 `LOCKER`에 칸을 더하고, `locker.html`에 라커 칸을 열어요.

@@ -1,0 +1,29 @@
+/* 선수 카드 모양 (shared/card.js) */
+.pc-back{position:absolute;inset:0;border-radius:10px;background:#c8102e;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);overflow:hidden}
+.pc-back svg{width:100%;height:100%;display:block}
+.pc-front{height:100%;border-radius:10px;padding:3px;background:#c8102e}
+.pc-front.t-star{background:linear-gradient(135deg,var(--silver1),var(--silver2) 40%,#fff 55%,var(--silver2) 80%)}
+.pc-front.t-legend{background:linear-gradient(135deg,var(--gold1),var(--gold2) 35%,#fff4c2 52%,var(--gold2) 75%,#8c6418)}
+.pc-face{position:relative;height:100%;border-radius:7px;background:#fbfaf5;color:#2f3329;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;container-type:inline-size;overflow:hidden}
+.t-legend .pc-face{background:linear-gradient(180deg,#fffdf3,#f6edcf)}
+.pc-face .num{font-family:var(--num);color:#c8102e;font-size:46cqw;line-height:1}
+.pc-face .num.n3{font-size:34cqw}
+.t-legend .pc-face .num{color:#8c6418}
+.pc-face .nm{font-family:var(--num);font-size:23cqw;line-height:1.1;padding:0 4px;word-break:keep-all}
+.pc-face .nm.long{font-size:18cqw}
+.pc-face .pos{font-size:11cqw;color:#80846f;margin-top:4px}
+.pc-face .tag{position:absolute;top:5%;right:8%;font-size:13cqw;line-height:1}
+.t-star .pc-face .tag{color:#c8102e}
+.t-legend .pc-face .tag{color:#b8862b}
+.pc-face .under{position:absolute;bottom:7%;left:20%;right:20%;height:2px;background:#c8102e;opacity:.55}
+.t-legend .pc-face::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);background-size:250% 100%;animation:pcShine 2.6s ease-in-out infinite;pointer-events:none}
+@keyframes pcShine{0%{background-position:130% 0}60%,100%{background-position:-60% 0}}
+.pc-mini{aspect-ratio:3/4;border-radius:8px}
+.pc-mini .pc-front{border-radius:8px}
+.pc-mini .pc-face{border-radius:6px;gap:2px}
+.pc-mini .num{font-size:40cqw}
+.pc-mini .num.n3{font-size:30cqw}
+.pc-mini .mn{font-size:15cqw;word-break:keep-all;line-height:1.15;padding:0 3px}
+.pc-mini.locked{background:var(--glass-strong);border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;color:var(--faint);font-family:var(--num);font-size:1.3rem}
+.pc-mini.isnew{box-shadow:0 0 0 2px var(--grass)}
+@media (prefers-reduced-motion:reduce){.t-legend .pc-face::after{animation:none}}

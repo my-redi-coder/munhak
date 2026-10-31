@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>내 라커 — 불펜장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/mg.css">
+<link rel="stylesheet" href="shared/card.css">
+<link rel="stylesheet" href="locker/locker.css">
+</head>
+<body>
+<header class="mgbar">
+  <button class="cap" id="back" aria-label="뒤로"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <h1 id="title">내 라커</h1>
+  <span class="cap ghost" aria-hidden="true"></span>
+</header>
+<main class="wrap">
+  <section id="home">
+    <div class="lockers">
+      <a class="door" href="#cards"><span class="plate">카드 앨범<small id="cardsMeta"></small></span></a>
+      <div class="door locked" aria-disabled="true"><span class="badge">준비 중</span><span class="plate">공박스<small>홈런볼 모으기</small></span></div>
+    </div>
+    <p class="lockers-note">불펜장 게임에서 모은 것들이 여기 쌓여요.</p>
+  </section>
+  <section id="cards" hidden>
+    <div class="progress">
+      <div class="r"><span class="big" id="albumCount"></span><span id="albumPct"></span></div>
+      <div class="bar"><i id="albumBar"></i></div>
+      <p class="done-note" id="doneNote" hidden>🏆 덱 완성! 랜더스 선수 전부를 모았어요</p>
+    </div>
+    <h2 class="sec">레전드와 프랜차이즈 스타</h2>
+    <div class="album" id="albumSpecial"></div>
+    <h2 class="sec">선수단</h2>
+    <div class="album" id="albumAll"></div>
+    <a class="primary" href="number-match.html" style="margin-top:20px">등번호 매치 하러 가기</a>
+  </section>
+</main>
+<script src="shared/store.js"></script>
+<script src="shared/roster.js"></script>
+<script src="shared/card.js"></script>
+<script src="locker/locker.js"></script>
+</body>
+</html>

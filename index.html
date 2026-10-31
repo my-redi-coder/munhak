@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="styles/hud.css">
 <link rel="stylesheet" href="styles/sheets.css">
 <link rel="stylesheet" href="styles/event.css">
+<link rel="stylesheet" href="styles/bullpen.css">
 </head>
 <body>
 <canvas id="c" tabindex="0" aria-label="1루 관중석 3D 화면"></canvas>
@@ -72,7 +73,8 @@
         <button id="bPhoto" aria-label="직관 사진"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>
       </div>
       <div class="row2"><button class="pill" id="bLook" aria-label="경기장 구경하기"><svg class="i" viewBox="0 0 24 24"><circle cx="7" cy="15" r="3.5"/><circle cx="17" cy="15" r="3.5"/><path d="M10.5 15h3M4.5 12.5L7 6h3l.8 6.5M19.5 12.5L17 6h-3l-.8 6.5"/></svg>구경</button>
-      <button class="pill" id="bEvent"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="2"/></svg>이벤트</button></div>
+      <button class="pill" id="bEvent"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="2"/></svg>이벤트</button>
+      <button class="pill" id="bBullpen" aria-haspopup="dialog"><svg class="i" viewBox="0 0 24 24"><path d="M4 18c3-1.6 5-1.6 8 0s5 1.6 8 0"/><ellipse cx="12" cy="14" rx="7" ry="2.2"/><path d="M10.6 12h2.8"/><circle cx="12" cy="6.5" r="2.6"/></svg>불펜장</button></div>
       <div class="cap seg" role="group" aria-label="그라운드 공격·수비"><button id="bAtk" aria-pressed="false">공격</button><button id="bDef" aria-pressed="false">수비</button></div>
     </div>
   </div>
@@ -129,6 +131,10 @@
   </div>
 </div>
 
+<section id="bullpen" hidden role="dialog" aria-modal="true" aria-label="불펜장">
+  <iframe id="bullpenFrame" title="불펜장" src="about:blank"></iframe>
+</section>
+
 <section id="bye" hidden>
   <svg class="i" viewBox="0 0 24 24" style="width:30px;height:30px;color:#b0533f;stroke-width:1.1"><circle cx="12" cy="12" r="9"/><path d="M7.6 4.3c1.9 2.3 1.9 13.1 0 15.4M16.4 4.3c-1.9 2.3-1.9 13.1 0 15.4"/></svg>
   <h2>재밌게 놀다 가셨나요</h2>
@@ -169,9 +175,11 @@
 <script src="js/game/events.js"></script>
 <script src="events/homer.js"></script>
 <script src="events/kkk.js"></script>
+<script src="events/yeonan.js"></script>
 <script src="js/ui/fieldmode.js"></script>
 <script src="js/ui/event-sheet.js"></script>
 <script src="js/ui/food.js"></script>
+<script src="js/ui/bullpen.js"></script>
 <script src="js/game/input.js"></script>
 <script src="js/game/camera.js"></script>
 <script src="js/game/sightsee.js"></script>

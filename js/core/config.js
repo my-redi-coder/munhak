@@ -44,15 +44,21 @@ var FIELD_MODE={attack:{label:'우리 공격',toast:'우리 팀 공격이에요.
 var EVENTS=[
   {id:'homer',label:'최정 홈런',tag:'14번',desc:'최정이 그린존으로 큼지막하게 넘겨요',ready:true},
   {id:'kkk',label:'KKK',tag:'29번',desc:'김광현이 삼진 세 개를 잡고 만세',ready:true},
+  {id:'yeonan',label:'8회말 여난부두 응원',tag:'떼창',desc:'불빛 속에 하나 되는 으쓱이들',ready:true},
   {id:'bench',label:'벤치클리어링',tag:'',desc:'양 팀 더그아웃이 우르르 나와요',ready:false,hidden:true},
   {id:'hog',label:'꽃돼지 안타',tag:'92번',desc:'데굴데굴 굴러서 1루까지',ready:false,hidden:true}
 ];
 /* 이벤트 배경음: 직접 찍은 육성응원 (events/ 폴더) */
-var EV_BGM={homer:'events/homer-bgm.mp3'};
+var EV_BGM={homer:'events/homer-bgm.mp3',yeonan:'events/yeonan.mp3'};
+/* 8회말 여난부두: 음원(EV_BGM.yeonan)·가사(lyrics)는 사용자가 events/ 폴더에 직접 올려요. 둘 다 없어도 장면은 돌아가요.
+   SWAY: 불빛을 왼쪽→오른쪽→왼쪽 한 번 흔드는 데 걸리는 초 / NO_SONG: 음원이 없을 때 장면 길이(초) */
+var YEONAN={lyrics:'events/yeonan-lyrics.json',SWAY:3.2,NO_SONG:48};
 var EV_TEXT={
   kkk:{start:'29번 김광현이 마운드에 올라요',k:'삼진',back:'KKK! 주변 으쓱이들이 일어나 환호해요',watch:'KKK 보는 중'},
+  yeonan:{start:'8회말, 구장 조명이 꺼져요',on:'하나둘 폰 불빛이 켜져요',mute:'소리를 켜면 떼창이 들려요',back:'여난부두 떼창 끝! 다시 불이 켜져요',watch:'여난부두 응원 중'},
   homer:{start:'14번 최정이 타석에 들어서요',hit:'딱! 크다아아',land:'그린존으로 넘어갔어요!',back:'최정 홈런! 주변 으쓱이들이 일어나 환호해요',watch:'최정 홈런 보는 중'}
 };
 LINES.kkk=['김광현!! 김광현!!','KKK!!!','삼진이다!!','에이스!!','광현아 사랑해!!'];
+LINES.yeonan=['여난부두~!!','최고다 랜더스!!','소름 돋았어','이 맛에 야구 보지'];
 LINES.homer=['최정!! 최정!!','넘어갔다!!','홈런이다!!','소년장사!!','역시 최정!!'];
 
