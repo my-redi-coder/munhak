@@ -115,6 +115,7 @@ EV_SCENES.yeonan={
     var v=new THREE.Vector3();function bc(k){blockCenter(ZB[k],v);return [v.x,v.y,v.z]}
     var th=ZB.ussk.cfg.theta;YN.V={ussk:bc('ussk'),inf:bc('infield'),out:bc('outfield'),fw:[-Math.sin(th),0,-Math.cos(th)]};
     YN.st={song:false,songOk:false,end:null,on:false,shout:0};YN.dur=YEONAN.NO_SONG;
+    YN.primed=evBgmPrime('yeonan');/* 버튼 누른 직후에 미리 재생(소리 0) → 노래 시작 때 막히지 않게 */
     bbShow('yeonan');ynCam(0,0);ynLyricEl();
     toast(EV_TEXT.yeonan.start,2400);crowdSwell(.5);EV.excite=.1;
   },
@@ -122,9 +123,11 @@ EV_SCENES.yeonan={
     var st=YN.st;
     /* 암전 → (끝날 때) 다시 밝게 */
     var n=st.end==null?clamp(t/YN.DARK,0,1):1-clamp((t-st.end)/YN.OUT,0,1);ynNight(n*n*(3-2*n));
-    if(!st.on&&t>YN.DARK){st.on=true;ynPeopleOn();toast(EV_TEXT.yeonan.on,2400);crowdSwell(.9,5)}
+    if(!st.on&&t>YN.DARK){st.on=true;ynPeopleOn();toast(EV_TEXT.yeonan.on,2400);crowdSwell(.7)}
     /* 노래 시작 */
-    if(!st.song&&t>=YN.SONG_AT){st.song=true;st.t0=t;st.songOk=evBgmPlay('yeonan');if(!st.songOk&&!AU.on)toast(EV_TEXT.yeonan.mute,2800);EV.excite=.25}
+    if(!st.song&&t>=YN.SONG_AT){st.song=true;st.t0=t;st.songOk=YN.primed?evBgmGo():evBgmPlay('yeonan');if(!st.songOk&&!AU.on)toast(EV_TEXT.yeonan.mute,2800);
+      if(st.songOk)crowdSwell(.2);/* 떼창이 또렷하게: 노래 동안 평소 함성을 낮춰요(끝날 때 크게 터짐) */
+      EV.excite=.25}
     /* 노래 시계: 음원이 돌면 음원 시간, 아니면 장면 시간 */
     var el=EVB.el,st_=0;
     if(st.song){
@@ -147,7 +150,7 @@ EV_SCENES.yeonan={
   },
   stop:function(){
     ynNight(0);if(YN.pts&&YN.pts.parent)scene.remove(YN.pts);
-    if(YN.el)YN.el.classList.remove('on');evBgmStop(.8);ynPeopleOff();
+    if(YN.el)YN.el.classList.remove('on');evBgmStop(.8);ynPeopleOff();if(!YN.st||YN.st.end==null)crowdSwell(.5);YN.primed=false;
     if(BBS.kind)bbShowOff();BBS.cyc=null;
   }
 };
