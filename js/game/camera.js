@@ -4,15 +4,16 @@ function camTarget(out){player.root.getWorldPosition(out);out.y+=player.mode==='
 function camDesired(out,look){
   if(phase==='setup2'){out.copy(overview.pos);look.copy(overview.look);return}
   if(EV.cam&&phase==='game'){out.copy(EV.cam.pos);look.copy(EV.cam.look);return}
+  if(SS.on&&phase==='game'){ssCam(out,look);return}
   camTarget(look);var cp=Math.cos(cam.pitch);
   out.set(look.x+Math.sin(cam.yaw)*cp*cam.dist,look.y+Math.sin(cam.pitch)*cam.dist,look.z+Math.cos(cam.yaw)*cp*cam.dist);
-  if(phase==='game'&&curBlock){var lp=curBlock.g.worldToLocal(out.clone());if(lp.z>-1.9&&Math.abs(lp.x)<curBlock.W/2+.5){var gh=curBlock.groundH(clamp(lp.z,-1,99))+1.0;if(lp.y<gh){out.y+=gh-lp.y}}}
+  if(phase==='game'&&curBlock){var lp=curBlock.g.worldToLocal(out.clone());if(lp.z>-1.9&&lp.x>curBlock.xMin-.9&&lp.x<curBlock.xMax+.9){var gh=curBlock.groundH(clamp(lp.z,-1,99))+1.0;if(lp.y<gh){out.y+=gh-lp.y}}}
 }
 function snapCam(){camDesired(cam.cur,cam.look);camera.position.copy(cam.cur);camera.lookAt(cam.look)}
 var _dp=new THREE.Vector3(),_dl=new THREE.Vector3();
 function updateCam(dt){
   if(phase==='setup1'&&cam.auto)cam.yaw+=dt*.32*(reduceMotion?.3:1);
-  camDesired(_dp,_dl);var k=phase==='setup2'?2.2:EV.cam&&phase==='game'?EV.cam.k:9;
+  camDesired(_dp,_dl);var k=phase==='setup2'?2.2:EV.cam&&phase==='game'?EV.cam.k:SS.on?7:9;
   cam.cur.x=damp(cam.cur.x,_dp.x,k,dt);cam.cur.y=damp(cam.cur.y,_dp.y,k,dt);cam.cur.z=damp(cam.cur.z,_dp.z,k,dt);
   cam.look.x=damp(cam.look.x,_dl.x,k,dt);cam.look.y=damp(cam.look.y,_dl.y,k,dt);cam.look.z=damp(cam.look.z,_dl.z,k,dt);
   camera.position.copy(cam.cur);camera.lookAt(cam.look);

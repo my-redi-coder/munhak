@@ -1,18 +1,18 @@
 /* ================= input ================= */
 var ray=new THREE.Raycaster(),ndc=new THREE.Vector2(),ptrs=new Map(),drag=null,pinch=null;
-canvas.addEventListener('pointerdown',function(e){canvas.focus({preventScroll:true});ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:performance.now()});canvas.setPointerCapture(e.pointerId);if(ptrs.size===2){var a=Array.from(ptrs.values());pinch={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),dist:cam.dist};drag=null}else drag={moved:false};cam.auto=phase==='setup1'?0:cam.auto});
+canvas.addEventListener('pointerdown',function(e){canvas.focus({preventScroll:true});ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,t:performance.now()});canvas.setPointerCapture(e.pointerId);if(ptrs.size===2){var a=Array.from(ptrs.values());pinch={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),dist:cam.dist,sd:SS.dist};drag=null}else drag={moved:false};cam.auto=phase==='setup1'?0:cam.auto});
 canvas.addEventListener('pointermove',function(e){var p=ptrs.get(e.pointerId);if(!p)return;var dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;
-  if(pinch&&ptrs.size===2){var a=Array.from(ptrs.values()),d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);cam.dist=clamp(pinch.dist*pinch.d/Math.max(20,d),2.2,11);return}
-  if(drag){if(Math.hypot(e.clientX-p.sx,e.clientY-p.sy)>7)drag.moved=true;if(drag.moved&&(phase==='game'||phase==='setup1')){cam.yaw-=dx*.0065;cam.pitch=clamp(cam.pitch+dy*.0045,phase==='setup1'?-.1:.04,1.15)}}});
+  if(pinch&&ptrs.size===2){var a=Array.from(ptrs.values()),d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(SS.on){SS.dist=clamp(pinch.sd*pinch.d/Math.max(20,d),SS.MIN,SS.MAX);return}cam.dist=clamp(pinch.dist*pinch.d/Math.max(20,d),2.2,11);return}
+  if(drag){if(Math.hypot(e.clientX-p.sx,e.clientY-p.sy)>7)drag.moved=true;if(drag.moved&&SS.on){ssDrag(dx,dy);return}if(drag.moved&&(phase==='game'||phase==='setup1')){cam.yaw-=dx*.0065;cam.pitch=clamp(cam.pitch+dy*.0045,phase==='setup1'?-.1:.04,1.15)}}});
 function endPtr(e){var p=ptrs.get(e.pointerId);if(!p)return;ptrs.delete(e.pointerId);
   if(drag&&!drag.moved&&!pinch&&performance.now()-p.t<600)onTap(e.clientX,e.clientY);
   if(ptrs.size<2)pinch=null;if(ptrs.size===0){drag=null;if(phase==='setup1')cam.auto=1}}
 canvas.addEventListener('pointerup',endPtr);canvas.addEventListener('pointercancel',function(e){ptrs.delete(e.pointerId);drag=null;pinch=null});
-canvas.addEventListener('wheel',function(e){e.preventDefault();cam.dist=clamp(cam.dist*(1+Math.sign(e.deltaY)*.08),2.2,11)},{passive:false});
+canvas.addEventListener('wheel',function(e){e.preventDefault();if(SS.on){SS.dist=clamp(SS.dist*(1+Math.sign(e.deltaY)*.08),SS.MIN,SS.MAX);return}cam.dist=clamp(cam.dist*(1+Math.sign(e.deltaY)*.08),2.2,11)},{passive:false});
 
 var tapMark=new THREE.Mesh(new THREE.RingGeometry(.22,.3,24),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0,depthWrite:false}));tapMark.rotation.x=-Math.PI/2;scene.add(tapMark);var tapT=0;
 function onTap(cx,cy){
-  if(phase!=='game'||EV.on)return;
+  if(phase!=='game'||EV.on||SS.on)return;
   ndc.set(cx/innerWidth*2-1,-(cy/innerHeight)*2+1);ray.setFromCamera(ndc,camera);
   var objs=[];npcs.forEach(function(n){objs.push.apply(objs,n.meshes)});objs.push.apply(objs,player.meshes);
   if(leader)objs.push.apply(objs,leader.meshes);FP.list.forEach(function(p){objs.push.apply(objs,p.meshes)});
@@ -26,7 +26,7 @@ function onTap(cx,cy){
     if(PL.seat===s&&player.mode==='sit')return;
     goToSeat(s);return;
   }
-  if(o===curBlock.terrace){var lp=curBlock.g.worldToLocal(h.point.clone());walkTo(curBlock.clampX(lp.x),curBlock.clampZ(lp.z),null,'걷는 중');showTap(h.point);return}
+  if(o===curBlock.terrace||curBlock.links.indexOf(o.userData.block)>=0){var lp=curBlock.g.worldToLocal(h.point.clone());walkTo(curBlock.clampX(lp.x),curBlock.clampZ(lp.z),null,'걷는 중');showTap(h.point);return}
   if(o.userData.block){toast('다른 구역은 위쪽 구역 버튼으로 옮겨요',2200);return}
   toast('가까운 관중석 바닥을 눌러주세요',2000);
 }

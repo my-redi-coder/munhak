@@ -4,7 +4,7 @@ var ACT_BTN={cheer:'응원하기',angry:'화내기',wave:'유니폼 흔들기'};
 var lineT=0;
 function setActButtons(){document.querySelectorAll('.act').forEach(function(b){var a=b.dataset.act;if(a==='food')return;var on=player.act===a;b.setAttribute('aria-pressed',on);b.querySelector('span').textContent=on?'멈추기':ACT_BTN[a]})}
 function startAct(a){
-  if(EV.on)return;
+  if(EV.on||SS.on)return;
   if(player.act===a){stopAct();return}
   PL.target=null;PL.onArrive=null;
   if(player.mode==='sit'&&PL.seat){PL.returnSeat=PL.seat;standAtSeat(player,PL.seat,curBlock)}
@@ -30,5 +30,5 @@ $('bExit').onclick=leaveGame;
 $('bSound').onclick=function(){setSound(!AU.on);toast(AU.on?'소리를 켰어요':'소리를 껐어요',1600);if(AU.on&&player.act==='cheer')beatStart()};
 $('bZone').onclick=function(){buildZoneList($('zoneList2'),true);openModal('mZone')};
 $('bSet').onclick=function(){openModal('mSet')};
-$('statusStop').onclick=function(){if(EV.on){skipEvent();return}PL.target=null;PL.onArrive=null;if(player.mode==='walk')player.mode='stand';setStatus(null)};
+$('statusStop').onclick=function(){if(EV.on){skipEvent();return}if(SS.on){ssStop();return}PL.target=null;PL.onArrive=null;if(player.mode==='walk')player.mode='stand';setStatus(null)};
 function setStatus(t){if(!t){$('status').hidden=true;return}$('statusTx').textContent=t;$('status').hidden=false}

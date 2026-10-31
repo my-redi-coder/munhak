@@ -37,7 +37,7 @@ EV_SCENES.homer={
     HR.b.root.position.set(-.95,0,0);HR.b.root.rotation.y=Math.PI/2;
     HR.st={hit:false,land:false,board:0,leg:0,ph:0,dist:0,home:false,toss:false,sw:false};
     HR.tbuf=[];HR.ball.visible=false;HR.trail.visible=false;
-    var por=camera.aspect<1;evCam(por?[-6,2.1,3.6]:[-6.4,2.2,1.9],por?[-1.3,1.5,-2.2]:[.8,1.5,-7],6,true);
+    var por=camera.aspect<1;evCam(por?[-3.2,2.5,7.6]:[-6.4,2.2,1.9],por?[-.3,1.4,-6]:[.8,1.5,-7],6,true);
     toast(EV_TEXT.homer.start,2600);HR.bgm=evBgmPlay('homer');HR.cv=HR.bgm?.55:1;crowdSwell(.75*HR.cv);
   },
   tick:function(t,dt){

@@ -6,7 +6,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
 | `js/core/config.js` | 54 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, ME, myName, TEAMS, HOME_SIDE, PLAYER_SCALE, POS … |
-| `songs/songs.js` | 6 | SONGS |
+| `songs/songs.js` | 10 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 11 | cloudTex, clouds |
 | `js/world/field.js` | 35 | FN, fx, fz, FK, fenceR, fieldTex, field, outer |
@@ -14,7 +14,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/landmarks.js` | 10 |  |
 | `js/world/bigboard.js` | 87 | BB, bbEq, bbScreenTex, bbPanelTex, boardTick |
 | `js/world/bbshow.js` | 59 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun |
-| `js/world/stands.js` | 78 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
+| `js/world/stands.js` | 90 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
 | `js/world/greenzone.js` | 59 | GZ, gzY, gzP |
 | `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
 | `js/world/bbq.js` | 64 | BBQ, bbqSmoke, bbqTick |
@@ -39,7 +39,8 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/event-sheet.js` | 19 | buildEventList, syncEvBgmUI |
 | `js/ui/food.js` | 172 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
 | `js/game/input.js` | 53 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
-| `js/game/camera.js` | 31 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
+| `js/game/camera.js` | 32 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
+| `js/game/sightsee.js` | 17 | SS, ssStart, ssStop, ssCam, ssDrag |
 | `js/game/movement.js` | 21 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
 | `js/app/loop.js` | 18 | T, frame |

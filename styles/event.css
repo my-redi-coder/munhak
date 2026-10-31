@@ -59,3 +59,6 @@ body.ev #labels{opacity:0}
 #food .fd-opt:disabled{opacity:.5}
 #food .fd-opt .ic{width:34px;height:34px;flex:none}
 @media (prefers-reduced-motion:reduce){#food *{animation:none!important;transition:none!important}}
+
+/* 세로 화면: 위아래 검은 띠를 얇게 */
+@media (orientation:portrait){#letterbox i{height:4vh}body.ev #toast{top:calc(4vh + 12px)}}
