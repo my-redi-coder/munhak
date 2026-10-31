@@ -2,7 +2,8 @@
    모두 효과음 채널(AU.sfx)로 나가요. 소리가 꺼져 있으면 조용히 넘어가요.
    evSound('crack') 방망이에 맞는 '딱'
    evSound('horn')  배 뱃고동 '뿌우우우' (낮은 소리 두 겹 + 항구 메아리)
-   evSound('surf')  파도가 밀려와 부서지는 소리 */
+   evSound('surf')  파도가 밀려와 부서지는 소리
+   evClapBuild(초) / evClapStop()  2스트라이크 때 빨라지는 관중 박수 */
 var HORN_VOL=1.4;  // 뱃고동 크기 (예전 0.34)
 /* 잠깐 낮추기: 관중 함성과 이벤트 배경음을 sec초 동안 줄였다가 되돌려요 */
 function evDuck(sec){if(!AU.ctx)return;var t=AU.ctx.currentTime,g=AU.crowdG.gain;g.cancelScheduledValues(t);g.setTargetAtTime(.18,t,.12);g.setTargetAtTime(.9,t+sec,.6);if(typeof evBgmDuck==='function')evBgmDuck(sec)}
@@ -41,3 +42,10 @@ function evSound(kind){
     s.connect(f);f.connect(sg);sg.connect(AU.sfx);s.start(t);s.stop(t+4.5);
   }
 }
+/* 2스트라이크 박수: dur초 동안 관중 박수가 점점 빨라지고 커져요(관중 함성 채널). evClapStop()으로 바로 끊어요 */
+var EVCLAP={g:null};
+function evClapBuild(dur){
+  if(!evReady())return;evClapStop();var c=AU.ctx,t0=c.currentTime+.05,g=EVCLAP.g=c.createGain();g.gain.value=1;g.connect(AU.amb);
+  for(var t=0;t<dur;){var u=t/dur,v=.18+.32*u;for(var j=0;j<6;j++)noiseHit(t0+t+Math.random()*.035,.08,'bandpass',rnd(1200,2200),.9,v*rnd(.6,1),g);t+=.5-.36*u}
+}
+function evClapStop(){if(!EVCLAP.g||!AU.ctx)return;var g=EVCLAP.g;EVCLAP.g=null;g.gain.setTargetAtTime(0,AU.ctx.currentTime,.04);setTimeout(function(){try{g.disconnect()}catch(e){}},700)}

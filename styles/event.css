@@ -77,3 +77,18 @@ body.ev #labels{opacity:0}
 .ylyric .nxt{margin-top:6px;font-size:clamp(14px,3.6vw,18px);color:rgba(255,255,255,.7);text-shadow:0 1px 6px rgba(0,0,0,.6)}
 @media (orientation:portrait){.ylyric{bottom:calc(4vh + 22px)}}
 @media (prefers-reduced-motion:reduce){.ylyric{transition:none}}
+/* 볼카운트 불 (js/ui/count.js) — 왼쪽 위, B 초록 / S 노랑 / O 빨강 */
+.evcount{position:fixed;left:calc(env(safe-area-inset-left,0px) + 12px);top:calc(9vh + 58px);z-index:6;pointer-events:none;display:flex;flex-direction:column;gap:5px;padding:8px 11px 8px 9px;border-radius:12px;background:rgba(16,21,31,.78);box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;transform:translateY(-6px);transition:opacity .3s,transform .3s}
+.evcount.on{opacity:1;transform:none}
+.evcount .r{display:flex;align-items:center;gap:6px;height:14px}
+.evcount b{width:14px;font:900 13px/1 "Arial Black","Helvetica Neue",Arial,sans-serif;color:rgba(255,255,255,.88)}
+.evcount i{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.14);transition:background .15s,box-shadow .15s}
+.evcount .b i.lit{background:#2fd36b;box-shadow:0 0 8px #2fd36b}
+.evcount .s i.lit{background:#ffd23a;box-shadow:0 0 8px #ffd23a}
+.evcount .o i.lit{background:#ff3b3b;box-shadow:0 0 9px #ff3b3b}
+.evcount i.pop{animation:ecPop .35s ease-out}
+@keyframes ecPop{0%{transform:scale(.4)}60%{transform:scale(1.35)}100%{transform:scale(1)}}
+.evcount .o.full i{animation:ecFlash .5s steps(2) 6}
+@keyframes ecFlash{50%{background:#ffe0e0;box-shadow:0 0 16px #ff3b3b}}
+@media (orientation:portrait){.evcount{top:calc(4vh + 56px)}}
+@media (prefers-reduced-motion:reduce){.evcount,.evcount i{transition:none;animation:none!important}}

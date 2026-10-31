@@ -14,16 +14,18 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/landmarks.js` | 10 |  |
 | `js/world/bigboard.js` | 87 | BB, bbEq, bbScreenTex, bbPanelTex, boardTick |
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
+| `js/world/kboard.js` | 19 | KB, kbTex, kbAdd, kbTick, kbClear |
 | `js/world/stands.js` | 90 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
 | `js/world/greenzone.js` | 59 | GZ, gzY, gzP |
 | `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
 | `js/world/bbq.js` | 64 | BBQ, bbqSmoke, bbqTick |
 | `js/world/crowd.js` | 40 | _m, crowd, crowdSet, crowdFlush |
 | `js/entities/character.js` | 116 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, KFONT, drawBack, backTex, jerseyTex, jerseyShared, Char … |
-| `js/entities/player.js` | 69 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |
+| `js/entities/player.js` | 71 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |
+| `js/entities/bpface.js` | 60 | BPF, bpfXY, BPF_INK, bpfTex, bpfMat |
 | `js/audio/audio.js` | 68 | AU, BPM, MEL, MELMAP, ROOTS, hz, auEnsure, applyVol, setSound, crowdSwell, noiseHit, drum, clap, hat … |
 | `js/audio/songs.js` | 15 | SONG, songPick, songStart, songStop, songPlaying, songBeat |
-| `js/audio/eventsfx.js` | 43 | HORN_VOL, evDuck, evReady, evSound |
+| `js/audio/eventsfx.js` | 51 | HORN_VOL, evDuck, evReady, evSound, EVCLAP, evClapBuild, evClapStop |
 | `js/audio/evbgm.js` | 17 | EVB, evBgmPlay, evBgmStop, evBgmDuck |
 | `js/game/state.js` | 32 | player, cam, PL, makePlayer, placeForSetup, clearNPCs, spawnNPCs, sitChar, standAtSeat, makeLeader |
 | `js/ui/feedback.js` | 38 | toastT, toast, labels, addLabel, _p, updateLabels, clearLabels, drawSoundIcon, COUNTS, fmt, totalCount |
@@ -34,8 +36,9 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/game/npc.js` | 35 | npcReact, NPC_MSG, npcStart, npcStop, updateNPCs, _np |
 | `js/game/fieldplay.js` | 75 | FP, PITCH, faceTo, fpAdd, setFieldMode, fpByRole, fpKeys, fpPose, POSE, PITCHKEYS, SWINGKEYS, fieldTick |
 | `js/game/events.js` | 54 | EV, EV_SCENES, evCam, startEvent, evTick, evRelease, evFinish, skipEvent, evCrowdCheer, evCrowdShout, evCrowdCalm, evBoardCam, EVCAP, evCaption … |
+| `js/ui/count.js` | 20 | EVCOUNT, evCountEl, evCount, evCountOff, evCount0 |
 | `events/homer.js` | 119 | HR, hrRunPose, hrBallAt, hrTurn, hrBoardCam, hrFielders, hrPreField, hrLooseBat, hrLooseTick, hrRun, hrHighFive, hrOnDeck |
-| `events/kkk.js` | 82 | KK, kkMirror, kkWalk, kkTurn, kkEase, kkLerp |
+| `events/kkk.js` | 107 | KK, kkMirror, kkWalk, kkTurn, kkEase, kkLerp, kkFaceCam, kkBanzaiCam |
 | `events/yeonan.js` | 153 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, ynLyricEl, ynLyric, ynShot, ynCam |
 | `js/ui/fieldmode.js` | 9 | syncFieldBtns, pickFieldMode |
 | `js/ui/event-sheet.js` | 13 | buildEventList |

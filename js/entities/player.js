@@ -14,10 +14,12 @@ function bpGeo(tk){
     {g:Cyl(.06,.07,.14,10),c:SKIN,p:[0,.66,0]},{g:Cyl(.13,.215,.06,18,false),c:t.body,p:[0,.59,0],s:[BP.TW,1,BP.TD]}]);
   g.upper=mergeParts([{g:Cyl(.078,.072,.24,10),c:t.body,p:[0,-.11,0]},{g:Cyl(.075,.075,.025,10),c:t.trim,p:[0,-.225,0]}]);
   g.fore=mergeParts([{g:Cyl(.056,.05,.25,10),c:SKIN,p:[0,-.125,0]},{g:new THREE.SphereGeometry(.058,10,8),c:SKIN,p:[0,-.27,0]}]);
-  g.head=mergeParts([{g:new THREE.SphereGeometry(.17,20,14),c:SKIN},{g:new THREE.SphereGeometry(.018,6,5),c:0x2b2320,p:[.06,.0,.158]},{g:new THREE.SphereGeometry(.018,6,5),c:0x2b2320,p:[-.06,0,.158]},
+  g.head=mergeParts([{g:new THREE.SphereGeometry(.17,20,14),c:SKIN},
     {g:new THREE.SphereGeometry(.05,8,6),c:SKIN,p:[.168,0,0],s:[.5,1,.8]},{g:new THREE.SphereGeometry(.05,8,6),c:SKIN,p:[-.168,0,0],s:[.5,1,.8]}]);
+  /* 눈 점은 따로: 표정 그림(entities/bpface.js)을 덮을 때 숨겨요 */
+  g.eyes=mergeParts([{g:new THREE.SphereGeometry(.018,6,5),c:0x2b2320,p:[.06,0,.158]},{g:new THREE.SphereGeometry(.018,6,5),c:0x2b2320,p:[-.06,0,.158]}]);
   g.cap=mergeParts([{g:new THREE.SphereGeometry(.18,18,10,0,TAU,0,Math.PI*.5),c:t.cap,p:[0,.03,0]},{g:Cyl(.13,.13,.018,16,false,-Math.PI/2,Math.PI),c:t.cap,p:[0,.035,.13],s:[1,1,1.05]},{g:new THREE.SphereGeometry(.022,6,4),c:t.cap,p:[0,.21,0]}]);
-  g.helmet=mergeParts([{g:new THREE.SphereGeometry(.195,18,12,0,TAU,0,Math.PI*.58),c:t.helmet,p:[0,.02,0]},{g:Cyl(.14,.14,.02,16,false,-Math.PI/2,Math.PI),c:t.helmet,p:[0,.02,.15]},{g:Cyl(.08,.08,.06,12),c:t.helmet,p:[-.17,-.04,0],r:[0,0,Math.PI/2]}]);
+  g.helmet=mergeParts([{g:new THREE.SphereGeometry(.195,18,12,0,TAU,0,Math.PI*.5),c:t.helmet,p:[0,.02,0]},{g:Cyl(.14,.14,.02,16,false,-Math.PI/2,Math.PI),c:t.helmet,p:[0,.02,.15]},{g:Cyl(.08,.08,.06,12),c:t.helmet,p:[-.17,-.04,0],r:[0,0,Math.PI/2]}]);
   g.mask=mergeParts([{g:new THREE.SphereGeometry(.19,16,10,0,TAU,0,Math.PI*.55),c:BP.gear,p:[0,.02,0]},{g:Box(.26,.24,.05),c:0x1a1d24,p:[0,-.03,.17]}]);
   g.chest=mergeParts([{g:Box(.42,.48,.08),c:BP.gear,p:[0,.3,.17]}]);
   g.shinGuard=mergeParts([{g:Box(.15,.34,.07),c:BP.gear,p:[0,-.2,.08]}]);
@@ -47,7 +49,7 @@ function Ballplayer(o){
   this.arm=[1,-1].map(function(s){var up=grp(tor,s*.27,.5,0);add(up,G.upper);var fo=grp(up,0,-.24,0);add(fo,G.fore);return {up:up,fo:fo}});
   var gear=o.role==='C'?G.mitt:G.glove;
   if(o.gear!=='none'&&o.gear!=='bat')add(this.arm[0].fo,gear,MVC,[0,0,0]);
-  this.head=this.headG=grp(tor,0,.86,0);add(this.head,G.head);
+  this.head=this.headG=grp(tor,0,.86,0);add(this.head,G.head);this.eyes=add(this.head,G.eyes);
   add(this.head,o.role==='C'?G.mask:o.gear==='bat'?G.helmet:G.cap);
   if(o.gear==='bat'){this.bat=grp(tor,-.08,.42,.2);add(this.bat,G.bat)}
   this.shadow=new THREE.Mesh(GEO.shadow,shadowMat);this.shadow.position.y=.02;this.shadow.scale.setScalar(1.1);root.add(this.shadow);
