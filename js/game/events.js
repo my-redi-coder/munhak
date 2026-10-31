@@ -1,3 +1,4 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 이벤트 진행 틀 =================
    장면은 EV_SCENES[id] = {start(), tick(t,dt) → 다 끝나면 true, stop()} 로 등록해요.
    startEvent(id) → 화면을 이벤트 모드로(아래 바 숨김, '건너뛰기'), 매 프레임 evTick(dt)이 장면을 돌려요.
@@ -38,17 +39,22 @@ function skipEvent(){evRelease();evFinish()}
 function evCrowdCheer(share){
   npcs.forEach(function(n){if(!n.follow&&Math.random()<share){n.follow=true;n.evFollow=true;n.joinAt=rnd(.1,1.6);n.want='cheer'}});
 }
+function evShuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+/* 환호하는 으쓱이 count명이 서로 다른 멘트를 하나씩 (사람도 멘트도 겹치지 않게) */
 function evCrowdShout(lines,count){
-  var c=npcs.filter(function(n){return n.act==='cheer'||n.evFollow});
-  for(var i=0;i<Math.min(count,c.length);i++)(function(n,d){setTimeout(function(){if(phase==='game')addLabel(n,pick(lines),'line',2400)},d)})(c[Math.floor(Math.random()*c.length)],400+i*700);
+  var c=evShuffle(npcs.filter(function(n){return n.act==='cheer'||n.evFollow})),L=evShuffle(lines),m=Math.min(count,c.length,L.length);
+  for(var i=0;i<m;i++)(function(n,line,d){setTimeout(function(){if(phase==='game')addLabel(n,line,'line',2400)},d)})(c[i],L[i],400+i*650);
 }
 function evCrowdCalm(){npcs.forEach(function(n){if(n.evFollow){n.evFollow=false;n.follow=false;n.ai=rnd(2,8)}})}
 /* 빅보드가 화면에 꽉 차게 (세로 화면이면 더 뒤로, 홈 위까지만) */
 function evBoardCam(){var tn=Math.tan(camera.fov*Math.PI/360),d=Math.max(46,BB.W*.5/(tn*camera.aspect)+4,BB.H*.9/tn);d=Math.min(d,-BB.Z-2);evCam([0,BB.CY+2,BB.Z+d],[0,BB.CY,BB.Z],8,true)}
-/* 화면 자막: 3D 위치 위에 잠깐 뜨는 글자 (중계 자막 흉내). evCaption(글자, 대상 Object3D, 위 높이, ms) */
+/* 화면 자막: 3D 위치 위에 잠깐 뜨는 빨간 배지 (중계 자막 흉내). evCaption(글자, 대상 Object3D, 위 높이, ms, 아이콘)
+   아이콘 {k:true} 앞에 동그란 K, {k:true,rev:true} 뒤집힌 K(루킹 삼진) */
 var EVCAP={el:null,obj:null,dy:0,until:0};
-function evCaption(text,obj,dy,ms){if(!EVCAP.el){EVCAP.el=document.createElement('div');EVCAP.el.className='evcap';document.body.appendChild(EVCAP.el)}
-  EVCAP.el.textContent=text;EVCAP.obj=obj.root||obj;EVCAP.dy=dy||2.6;EVCAP.until=EV.t+(ms||1400)/1000;EVCAP.el.classList.add('on')}
+function evCaption(text,obj,dy,ms,ic){if(!EVCAP.el){EVCAP.el=document.createElement('div');EVCAP.el.className='evcap';document.body.appendChild(EVCAP.el)}
+  var bd=document.createElement('span');bd.className='bd';
+  if(ic&&ic.k){var i=document.createElement('i');i.textContent='K';if(ic.rev)i.className='rev';bd.appendChild(i)}
+  var tx=document.createElement('span');tx.textContent=text;bd.appendChild(tx);EVCAP.el.replaceChildren(bd);EVCAP.obj=obj.root||obj;EVCAP.dy=dy||2.6;EVCAP.until=EV.t+(ms||1400)/1000;EVCAP.el.classList.add('on')}
 var _cv=new THREE.Vector3();
 function evCaptionTick(){if(!EVCAP.el||!EVCAP.obj)return;if(EV.t>EVCAP.until||!EV.run){EVCAP.el.classList.remove('on');EVCAP.obj=null;return}
   EVCAP.obj.getWorldPosition(_cv);_cv.y+=EVCAP.dy;_cv.project(camera);EVCAP.el.style.visibility=_cv.z>1?'hidden':'';EVCAP.el.style.transform='translate('+((_cv.x*.5+.5)*innerWidth)+'px,'+((-_cv.y*.5+.5)*innerHeight)+'px) translate(-50%,-100%)'}

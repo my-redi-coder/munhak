@@ -1,6 +1,7 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 그라운드 선수 표정 (이벤트에서 가까이 비출 때) =================
    평소 선수 얼굴은 눈 점만 있어요. p.setFace(종류)로 앞얼굴에 표정 그림을 덮고, p.clearFace()로 되돌려요.
-   종류: 'sulk-pimple' 시무룩 + 여드름 / 'sulk-brow' 시무룩 + 짙은 눈썹 / 'joy' 눈웃음 + 활짝 벌린 입
+   종류: 'sulk-freckle' 시무룩 + 주근깨 / 'sulk-brow' 시무룩 + 짙은 눈썹 / 'joy' 눈웃음 + 활짝 벌린 입
    그림 판은 머리 앞쪽 조각(좌우 PH, 위아래 TH0부터 TH 라디안)에 감겨요. 모자·헬멧 챙(높이 .02~.03) 아래만 보여요. */
 var BPF={R:.1715,PH:2.0,TH0:.72,TH:2.0,W:256,mats:{}};
 BPF.H=Math.round(BPF.W*BPF.TH/BPF.PH);
@@ -43,12 +44,12 @@ function bpfTex(kind){return canvasTex(BPF.W,BPF.H,function(x,w,h){
   /* 입: 작은 ∩ + 아랫입술 */
   var m=bpfXY(0,-.105);x.lineWidth=4.5;x.beginPath();x.moveTo(m[0]-15,m[1]+5);x.quadraticCurveTo(m[0],m[1]-8,m[0]+15,m[1]+5);x.stroke();
   x.strokeStyle='rgba(180,90,90,.55)';x.lineWidth=3;x.beginPath();x.moveTo(m[0]-7,m[1]+9);x.quadraticCurveTo(m[0],m[1]+12,m[0]+7,m[1]+9);x.stroke();
-  if(kind==='sulk-pimple'){
-    /* 여드름: 볼·코 옆·턱에 붉은 점 */
-    [[-.62,-.06,6],[-.5,-.1,4.5],[-.7,-.02,4],[.56,-.07,5.5],[.66,-.11,4],[.16,-.06,3.5],[-.1,-.135,4.5],[.48,-.03,3.5]].forEach(function(d){
-      var p=bpfXY(d[0],d[1]);x.fillStyle='rgba(225,80,80,.55)';x.beginPath();x.arc(p[0],p[1],d[2]+2.5,0,TAU);x.fill();
-      x.fillStyle='#d9454b';x.beginPath();x.arc(p[0],p[1],d[2],0,TAU);x.fill();
-      x.fillStyle='rgba(255,236,220,.85)';x.beginPath();x.arc(p[0]-d[2]*.3,p[1]-d[2]*.35,d[2]*.35,0,TAU);x.fill()});
+  if(kind==='sulk-freckle'){
+    /* 주근깨: 코 위와 양 볼에 연한 갈색 작은 점 (자리는 매번 같게) */
+    var sd=7;function r(){sd=(sd*9301+49297)%233280;return sd/233280}
+    x.fillStyle='rgba(176,112,72,.55)';
+    for(var k=0;k<20;k++){var side=k%2?1:-1,ax=side*(.18+r()*.42),y=-.045-r()*.05,p=bpfXY(ax,y);x.beginPath();x.arc(p[0],p[1],1.6+r()*1.4,0,TAU);x.fill()}
+    for(k=0;k<4;k++){var p2=bpfXY((r()-.5)*.2,-.05-r()*.02);x.beginPath();x.arc(p2[0],p2[1],1.5+r(),0,TAU);x.fill()}
   }
 })}
 function bpfMat(kind){return BPF.mats[kind]||(BPF.mats[kind]=new THREE.MeshLambertMaterial({map:bpfTex(kind)}))}

@@ -1,15 +1,16 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 이벤트: KKK (김광현) =================
    우리 수비로 바꾸고 투수 등판을 '김광현 29'로, 왼손 투구(글러브는 오른손)로 바꿔요.
    타석마다: 왼쪽 위 카운트 S 노랑 1 → 2(박수 빨라지고 함성 커짐) → 결정구 → 삼진 자막·O 빨강 +1·K보드 카드
    1) 오프닝: 그라운드 높이 낮은 카메라, 다리 들기 → 투구 따라 흐르기 → 첫 타자 루킹 삼진 '팡!'
-      → 시무룩한 1번 타자 얼굴(여드름) → 걸어 나오는 투수 둘레를 돌아 앞모습
+      → 시무룩한 1번 타자 얼굴(주근깨) → 걸어 나오는 투수 둘레를 돌아 앞모습
    2) 중계 구도(투수 등 뒤 높이): 두 번째 타자 루킹 삼진 → 시무룩한 2번 타자 얼굴(짙은 눈썹)
    3) 같은 구도: 세 번째 타자 헛스윙 삼진 (얼굴 컷 없이 바로 만세)
    4) 등 뒤 낮은 곳에서 X자 만세 전신 (천천히 조금 다가가기)  5) 눈웃음 얼굴 클로즈업  6) 전광판 K K K  7) 내 자리
    시간표(초): 타석 시작 AB, 공 도착 A, 타자 얼굴 컷 F[시작,끝], 투수 걷기 W, 만세 UP, 얼굴 FACE, 전광판 BOARD, 내 자리 BACK, 끝 END
    카운트: 타석 시작 뒤 S1·S2초에 노랑 불 */
 var KK={AB:[0,9.2,14.3],A:[2.6,11.8,16.9],F:[[3.6,5.2],[12.7,14.3]],W:5.2,CUT2:9.2,CUT3:14.3,UP:17.5,FACE:20.95,BOARD:22.55,BACK:25.75,END:29.05,
-  S1:.35,S2:1.0,BATTER_FACE:['sulk-pimple','sulk-brow',null],v1:new THREE.Vector3(),v2:new THREE.Vector3()};
+  S1:.35,S2:1.0,BATTER_FACE:['sulk-freckle','sulk-brow',null],v1:new THREE.Vector3(),v2:new THREE.Vector3()};
 /* 왼손잡이: 오른손 투구 키를 좌우로 뒤집어요 */
 function kkMirror(P){var Q={},k;for(k in P)Q[k]=P[k];
   Q.thA=P.thB;Q.thB=P.thA;Q.knA=P.knB;Q.knB=P.knA;Q.spA=-P.spB;Q.spB=-P.spA;
@@ -80,7 +81,7 @@ EV_SCENES.kkk={
       else Q=fpPose(st.up?POSE.stand:pt>PITCH.kick&&pt<PITCH.arrive+.8?POSE.ready:POSE.relax);
       q.apply(Q,8,dt)});
     /* '팡!' 삼진: 자막(루킹/헛스윙), 카운트 S 꺼지고 O +1, K보드 카드(루킹은 뒤집힌 K) */
-    if(st.k===n&&t>=A){st.k++;evClapStop();evSound('pop');BBS.n=st.k;BBS.t=0;evCaption(EV_TEXT.kkk.k[n],b.root,2.9,n===2?550:950);
+    if(st.k===n&&t>=A){st.k++;evClapStop();evSound('pop');BBS.n=st.k;BBS.t=0;evCaption(EV_TEXT.kkk.k[n],b.root,2.9,n===2?550:950,{k:true,rev:n<2});
       evCount(0,0,n+1);kbAdd(n<2);
       crowdSwell([.85,1.1,1.7][n],[5,6,8][n]);EV.excite=[.4,.6,1][n];if(n===2){evCrowdCheer(.7)}}
     /* 타자 얼굴 컷 (1·2번째 삼진 뒤) */
@@ -100,7 +101,7 @@ EV_SCENES.kkk={
     /* 눈웃음 + 활짝 벌린 입 클로즈업 */
     if(!st.face&&t>=KK.FACE){st.face=true;evCam([.18,2.66,KK.home.z+1.25],[0,2.6,KK.home.z],8,true)}
     if(!st.board&&t>=KK.BOARD){st.board=true;BBS.n=3;BBS.t=0;evBoardCam()}
-    if(!st.back&&t>=KK.BACK){st.back=true;evCountOff();evRelease(EV_TEXT.kkk.back);setTimeout(function(){evCrowdShout(LINES.kkk,3)},700)}
+    if(!st.back&&t>=KK.BACK){st.back=true;evCountOff();evRelease(EV_TEXT.kkk.back);setTimeout(function(){evCrowdShout(LINES.kkk,EV_SHOUT_N)},700)}
     return t>=KK.END;
   },
   stop:function(){FP.ball.visible=false;evClapStop();evCountOff();kbClear();if(BBS.kind)bbShowOff();EV.field=false;setFieldMode(KK.prevMode||'defense');syncFieldBtns()}

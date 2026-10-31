@@ -1,3 +1,4 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 이벤트: 최정 홈런 =================
    우리 공격으로 바꾸고 타자 등판을 '최정 14'로 켜요. 방망이를 높이 세운 자세 → 다리 들고 → 딱!
    공은 3루 쪽 외야 너머 그린존으로. 빅보드는 파도 영상 + 뱃고동 → 파란 바탕 HOME RUN.
@@ -71,7 +72,7 @@ EV_SCENES.homer={
     if(st.board===0&&t>=HR.BOARD){st.board=1;HR.ball.visible=false;bbShow('wave');hrBoardCam();setTimeout(function(){if(EV.run===EV_SCENES.homer)evSound('horn')},250);setTimeout(function(){if(EV.run===EV_SCENES.homer)evSound('surf')},800)}
     if(st.board===1&&t>=HR.HRT){st.board=2;bbShow('homerun');crowdSwell(1.8*HR.cv,8);EV.excite=1}
     if(st.board===2&&t>=HR.WIDE){st.board=3;evCam(camera.aspect<1?[16,26,34]:[34,24,30],camera.aspect<1?[2,9,-60]:[-6,7,-48],6,true)}
-    if(st.board===3&&t>=HR.BACK){st.board=4;evRelease(EV_TEXT.homer.back);setTimeout(function(){evCrowdShout(LINES.homer,3)},700)}
+    if(st.board===3&&t>=HR.BACK){st.board=4;evRelease(EV_TEXT.homer.back);setTimeout(function(){evCrowdShout(LINES.homer,EV_SHOUT_N)},700)}
     /* 주루 */
     if(cs>=HR.RUN&&!st.home)hrRun(dt);
     if(st.home)hrHighFive(t,dt);
