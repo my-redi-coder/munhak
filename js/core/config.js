@@ -49,7 +49,7 @@ var EVENTS=[
   {id:'hog',label:'꽃돼지 안타',tag:'92번',desc:'데굴데굴 굴러서 1루까지',ready:false,hidden:true}
 ];
 /* 이벤트 배경음: 직접 찍은 육성응원 (events/ 폴더) */
-var EV_BGM={homer:'events/homer-bgm.mp3',yeonan:'events/yeonan.mp3'};
+var EV_BGM={homer:'events/homer-bgm.mp3',yeonan:'songs/song2.mp3'};
 /* 8회말 여난부두: 음원(EV_BGM.yeonan)·가사(lyrics)는 사용자가 events/ 폴더에 직접 올려요. 둘 다 없어도 장면은 돌아가요.
    SWAY: 불빛을 왼쪽→오른쪽→왼쪽 한 번 흔드는 데 걸리는 초 / NO_SONG: 음원이 없을 때 장면 길이(초) */
 var YEONAN={lyrics:'events/yeonan-lyrics.json',SWAY:3.2,NO_SONG:48};
