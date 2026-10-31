@@ -21,7 +21,7 @@ function startEvent(id){
   fadeTo('',function(){sc.start();EV.ready=true});
 }
 function evTick(dt){
-  if(!EV.run||!EV.ready)return;EV.t+=dt;
+  evCaptionTick();if(!EV.run||!EV.ready)return;EV.t+=dt;
   if(EV.run.tick(EV.t,dt))evFinish();
 }
 function evRelease(msg){
@@ -43,3 +43,12 @@ function evCrowdShout(lines,count){
   for(var i=0;i<Math.min(count,c.length);i++)(function(n,d){setTimeout(function(){if(phase==='game')addLabel(n,pick(lines),'line',2400)},d)})(c[Math.floor(Math.random()*c.length)],400+i*700);
 }
 function evCrowdCalm(){npcs.forEach(function(n){if(n.evFollow){n.evFollow=false;n.follow=false;n.ai=rnd(2,8)}})}
+/* 빅보드가 화면에 꽉 차게 (세로 화면이면 더 뒤로, 홈 위까지만) */
+function evBoardCam(){var tn=Math.tan(camera.fov*Math.PI/360),d=Math.max(46,BB.W*.5/(tn*camera.aspect)+4,BB.H*.9/tn);d=Math.min(d,-BB.Z-2);evCam([0,BB.CY+2,BB.Z+d],[0,BB.CY,BB.Z],8,true)}
+/* 화면 자막: 3D 위치 위에 잠깐 뜨는 글자 (중계 자막 흉내). evCaption(글자, 대상 Object3D, 위 높이, ms) */
+var EVCAP={el:null,obj:null,dy:0,until:0};
+function evCaption(text,obj,dy,ms){if(!EVCAP.el){EVCAP.el=document.createElement('div');EVCAP.el.className='evcap';document.body.appendChild(EVCAP.el)}
+  EVCAP.el.textContent=text;EVCAP.obj=obj.root||obj;EVCAP.dy=dy||2.6;EVCAP.until=EV.t+(ms||1400)/1000;EVCAP.el.classList.add('on')}
+var _cv=new THREE.Vector3();
+function evCaptionTick(){if(!EVCAP.el||!EVCAP.obj)return;if(EV.t>EVCAP.until||!EV.run){EVCAP.el.classList.remove('on');EVCAP.obj=null;return}
+  EVCAP.obj.getWorldPosition(_cv);_cv.y+=EVCAP.dy;_cv.project(camera);EVCAP.el.style.visibility=_cv.z>1?'hidden':'';EVCAP.el.style.transform='translate('+((_cv.x*.5+.5)*innerWidth)+'px,'+((-_cv.y*.5+.5)*innerHeight)+'px) translate(-50%,-100%)'}

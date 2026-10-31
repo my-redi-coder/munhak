@@ -9,7 +9,12 @@ function evDuck(sec){if(!AU.ctx)return;var t=AU.ctx.currentTime,g=AU.crowdG.gain
 function evReady(){return AU.ctx&&AU.on&&AU.ctx.state==='running'}
 function evSound(kind){
   if(!evReady())return;var c=AU.ctx,t=c.currentTime;
-  if(kind==='crack'){
+  if(kind==='pop'){
+    /* 미트에 꽂히는 '팡!': 짧고 단단한 가죽 소리 + 낮은 울림 */
+    noiseHit(t,.05,'bandpass',1400,1.1,1.1,AU.sfx);noiseHit(t,.12,'lowpass',420,.8,.7,AU.sfx);
+    var po=c.createOscillator(),pg=c.createGain();po.type='sine';po.frequency.setValueAtTime(190,t);po.frequency.exponentialRampToValueAtTime(70,t+.12);
+    pg.gain.setValueAtTime(.6,t);pg.gain.exponentialRampToValueAtTime(.001,t+.16);po.connect(pg);pg.connect(AU.sfx);po.start(t);po.stop(t+.18);
+  }else if(kind==='crack'){
     noiseHit(t,.06,'highpass',2200,.8,.9,AU.sfx);noiseHit(t,.18,'bandpass',900,1.4,.5,AU.sfx);
     var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(1900,t);o.frequency.exponentialRampToValueAtTime(700,t+.08);
     g.gain.setValueAtTime(.35,t);g.gain.exponentialRampToValueAtTime(.001,t+.12);o.connect(g);g.connect(AU.sfx);o.start(t);o.stop(t+.14);

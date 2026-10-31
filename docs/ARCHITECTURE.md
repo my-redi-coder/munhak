@@ -11,7 +11,7 @@
 | `index.html` | 화면 뼈대 + 불러올 파일 목록(아래 순서대로 `<script>`) |
 | `styles/` | 모양(css) |
 | `js/` | 야구장 본체 (아래 레이어 표) |
-| `events/` | 이벤트 장면 하나 = 파일 하나 (`homer.js` = 최정 홈런) |
+| `events/` | 이벤트 장면 하나 = 파일 하나 (`homer.js` 최정 홈런, `kkk.js` KKK) + 이벤트 배경음 mp3 |
 | `minigames/` | 미니게임 자리 (아직 없음, README 참고) |
 | `songs/` | 직접 만든 응원가 mp3 + 목록 `songs.js` |
 | `docs/` | 기획·구조·진행·모듈 지도 |
@@ -52,7 +52,8 @@
 - 장면 하나 = `events/<이름>.js` 하나. `EV_SCENES['<id>']={start(),tick(t,dt)→끝나면 true,stop()}`로 등록.
 - 공통 틀은 `js/game/events.js`: `startEvent`, `evCam(위치,보는곳,부드러움,컷)`, `evRelease(문구)`, `EV.field`(선수 직접 조종), 관중 반응 `evCrowdCheer/Shout`.
 - 목록·문구는 `config.js`의 `EVENTS`, `EV_TEXT`. 열 때 `ready:true`.
-- 빅보드 화면 연출은 `js/world/bbshow.js`, 효과음은 `js/audio/eventsfx.js`, 배경음은 `js/audio/evbgm.js`.
+- 빅보드 화면 연출은 `js/world/bbshow.js`, 효과음은 `js/audio/eventsfx.js`, 배경음은 `js/audio/evbgm.js`(파일은 `events/`, 목록은 `config.js`의 `EV_BGM`).
+- 공용 도우미: `evBoardCam()` 빅보드 꽉 차게, `evCaption(글자,대상,높이,ms)` 3D 위치 위 자막. 숨길 이벤트는 `EVENTS`에 `hidden:true`.
 - `index.html`에 `<script src="events/<이름>.js">`를 `events/homer.js` 다음 줄에 추가.
 
 ## 미니게임 만드는 법 (계획)

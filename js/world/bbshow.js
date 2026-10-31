@@ -9,7 +9,7 @@ BBS.tex=new THREE.CanvasTexture(BBS.cv);BBS.tex.anisotropy=maxAniso;
 function bbShow(kind){BBS.kind=kind;BBS.t=0;BBS.spray=[];BB.scr.material.map=BBS.tex;BB.scr.material.needsUpdate=true;bbDraw()}
 function bbShowOff(){BBS.kind=null;BB.scr.material.map=bbScreenTex;BB.scr.material.needsUpdate=true}
 function bbShowTick(dt){if(!BBS.kind)return;BBS.t+=dt;bbDraw()}
-function bbDraw(){(BBS.kind==='wave'?bbWave:bbHomerun)(BBS.x,BBS.W,BBS.H,BBS.t);BBS.tex.needsUpdate=true}
+function bbDraw(){(BBS.kind==='wave'?bbWave:BBS.kind==='kkk'?bbKKK:bbHomerun)(BBS.x,BBS.W,BBS.H,BBS.t);BBS.tex.needsUpdate=true}
 
 /* 파도: 0~1.2초 너울 → 1.2~2.9초 큰 파도가 솟아 말려 들어옴 → 2.9초 부서지며 물보라 */
 function bbWave(x,w,h,t){
@@ -56,4 +56,18 @@ function bbHomerun(x,w,h,t){
   x.lineWidth=14;x.strokeStyle='rgba(6,30,80,.45)';x.strokeText('HOME RUN',6,8);x.fillStyle='#ffffff';x.fillText('HOME RUN',0,0);x.restore();
   if(t<.25){x.fillStyle='rgba(255,255,255,'+(1-t/.25)+')';x.fillRect(0,0,w,h)}
   for(i=0;i<10;i++){var a=t*2+i*.7,px=(i*97+t*40)%w,py=h*.15+((i*53)%60)/60*h*.7,sz=4+3*Math.sin(a*3);x.fillStyle='rgba(255,255,255,'+(.5+.5*Math.sin(a*4))+')';x.fillRect(px-sz,py-1,sz*2,2);x.fillRect(px-1,py-sz,2,sz*2)}
+}
+
+/* KKK: 어두운 바탕에 K 세 칸. BBS.n개까지 켜지고, 마지막엔 K가 차례로 번쩍여요 */
+function bbKKK(x,w,h,t){
+  x.fillStyle='#10151f';x.fillRect(0,0,w,h);
+  x.save();x.globalAlpha=.08;x.fillStyle='#ffffff';for(var i=0;i<w;i+=16)x.fillRect(i,0,1,h);x.restore();
+  var n=BBS.n||0,HF='"Arial Black","Helvetica Neue",Arial,sans-serif',sw=w/3;
+  x.textAlign='center';x.textBaseline='middle';x.font='900 '+Math.round(h*.78)+'px '+HF;
+  for(i=0;i<3;i++){
+    var cx=sw*i+sw/2,on=i<n,fl=n>=3?Math.max(0,Math.sin(t*6-i*1.1)):0,just=on&&i===n-1&&t<.5;
+    if(on){x.fillStyle='rgba(200,16,46,'+(.35+.4*fl)+')';x.fillRect(sw*i+10,10,sw-20,h-20)}
+    x.lineWidth=6;x.strokeStyle=on?'#ffffff':'rgba(255,255,255,.18)';x.fillStyle=on?'#ffffff':'rgba(255,255,255,0)';
+    var s=just?1.35-.35*(t/.5):1;x.save();x.translate(cx,h/2+6);x.scale(s,s);x.strokeText('K',0,0);x.fillText('K',0,0);x.restore();
+  }
 }

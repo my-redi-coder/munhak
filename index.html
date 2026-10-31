@@ -118,24 +118,6 @@
     <div class="slider"><label for="vAmb">관중 함성</label><input id="vAmb" type="range" min="0" max="100"><output id="oAmb"></output></div>
     <div class="slider"><label for="vBeat">응원 비트</label><input id="vBeat" type="range" min="0" max="100"><output id="oBeat"></output></div>
     <div class="slider"><label for="vSfx">효과음</label><input id="vSfx" type="range" min="0" max="100"><output id="oSfx"></output></div>
-    <h4>내 응원가</h4>
-    <p class="help">응원하기 소리를 이 화면에서만 내 음원 파일로 바꿔요. 고르지 않으면 직접 만든 응원가가 랜덤으로, 없으면 기본 비트가 나와요. 파일은 저장되지 않아요.</p>
-    <div class="filerow">
-      <span class="fn" id="fileName">지금은 기본 비트예요.</span>
-      <button class="ghost" id="pickFile">음원 파일 고르기</button>
-      <button class="ghost" id="clearFile" hidden>기본 비트로 돌아가기</button>
-      <input type="file" id="fileIn" accept="audio/*" hidden>
-    </div>
-    <h4>이벤트 배경음</h4>
-    <p class="help">최정 홈런 장면에서 틀 파일을 골라요. 음원이나 mp4 영상 모두 돼요. 이 기기 브라우저에만 보관돼서, 공유한 사람에겐 들리지 않아요.</p>
-    <div class="filerow">
-      <span class="fn" id="evBgmName">지금은 배경음이 없어요.</span>
-      <button class="ghost" id="evBgmPick">파일 고르기</button>
-      <button class="ghost" id="evBgmClear" hidden>지우기</button>
-      <input type="file" id="evBgmIn" accept="audio/*,video/mp4,.mp4,.m4a" hidden>
-    </div>
-    <h4>조작 방법</h4>
-    <p class="help" id="howto">바닥을 누르면 걷고, 의자를 누르면 가서 앉아요. 화면을 끌어 둘러보고, 두 손가락으로 확대·축소해요. 다른 으쓱이를 누르면 이름이 잠깐 보여요.</p>
   </div>
 </div>
 
@@ -186,6 +168,7 @@
 <script src="js/game/fieldplay.js"></script>
 <script src="js/game/events.js"></script>
 <script src="events/homer.js"></script>
+<script src="events/kkk.js"></script>
 <script src="js/ui/fieldmode.js"></script>
 <script src="js/ui/event-sheet.js"></script>
 <script src="js/ui/food.js"></script>
