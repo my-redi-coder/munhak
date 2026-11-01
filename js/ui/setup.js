@@ -1,21 +1,19 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= setup UI ================= */
 function buildSwatches(){
   var box=$('swatches');box.innerHTML='';
   UKEYS.forEach(function(k){var b=document.createElement('button');b.className='sw';b.setAttribute('role','radio');b.setAttribute('aria-checked',k===ME.uni);b.innerHTML='<i style="background:'+UNI[k].css+'"></i>'+UNI[k].label;
     b.onclick=function(){ME.uni=k;player.setUniform(k);buildSwatches();sfx('tap')};box.appendChild(b)});
 }
-function buildZoneList(el,inGame){
+/* 입장 준비 2단계의 구역 고르기. (게임 안에서 옮기는 건 '내 위치' 메뉴, ui/places.js) */
+function buildZoneList(el){
   el.innerHTML='';
   ZKEYS.forEach(function(k){
-    var b=document.createElement('button');b.className='zone'+(inGame?' zrow':'');b.setAttribute('role','radio');
-    var on=inGame?(curBlock&&curBlock.key===k):ME.zone===k;b.setAttribute('aria-checked',on);
+    var b=document.createElement('button');b.className='zone';b.setAttribute('role','radio');
+    var on=ME.zone===k;b.setAttribute('aria-checked',on);
     var t=document.createElement('div');t.innerHTML='<b></b><span></span>';t.querySelector('b').textContent=ZONES[k].label;t.querySelector('span').textContent=ZONES[k].desc;b.appendChild(t);
-    if(inGame){var c=document.createElement('span');c.className='cnt'+(on?' here':'');c.textContent=on?'지금 여기':'관중 '+fmt(COUNTS[k])+'명';b.appendChild(c)}
-    else{var rd=document.createElement('span');rd.className='rd';b.appendChild(rd)}
-    b.onclick=function(){
-      if(inGame){closeModal('mZone');if(curBlock.key!==k)goZone(k,true)}
-      else{ME.zone=k;buildZoneList(el,false);focusZone(k)}
-    };
+    var rd=document.createElement('span');rd.className='rd';b.appendChild(rd);
+    b.onclick=function(){ME.zone=k;buildZoneList(el);focusZone(k)};
     el.appendChild(b);
   });
 }

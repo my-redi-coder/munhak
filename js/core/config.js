@@ -39,7 +39,7 @@ var POS={                  // [x,z], 홈 (0,0), 중견수 쪽이 -z
   LF:{label:'좌익수',at:[-47,-66]},CF:{label:'중견수',at:[0,-84]},RF:{label:'우익수',at:[47,-66]}
 };
 var DEF_KEYS=['P','C','1B','2B','SS','3B','LF','CF','RF'];
-var FIELD_MODE={attack:{label:'우리 공격',toast:'우리 팀 공격이에요. 타석에 우리 선수가 섰어요'},defense:{label:'우리 수비',toast:'우리 팀 수비예요. 그라운드에 우리 선수들이 나갔어요'}};
+var FIELD_MODE={attack:{label:'우리 공격',short:'공격',toast:'우리 팀 공격이에요. 타석에 우리 선수가 섰어요'},defense:{label:'우리 수비',short:'수비',toast:'우리 팀 수비예요. 그라운드에 우리 선수들이 나갔어요'}};
 
 /* 이벤트 (나에게만 보이는 장면) — 목록·문구 */
 var EVENTS=[
@@ -73,10 +73,20 @@ var EV_SHOUT_N=5;
 /* ================= 포토존 (플레이어존·홈런기념판) =================
    '내 위치' 시트의 '둘러보기'에서 들어가요. 문구·숫자는 여기서 고쳐요. */
 var PZ_CFG={
-  pz:{label:'플레이어존',desc:'3번 게이트 포토존, 내 사진 넣고 찍기',title:'PLAYER OF THE MONTH',line:'다음 시즌의 주인공은?',lineMax:22},
+  pz:{label:'플레이어존',desc:'3번 게이트 포토존, 내 사진 넣고 찍기',indoor:true,title:'PLAYER OF THE MONTH',line:'다음 시즌의 주인공은?',lineMax:22},
   hr:{label:'홈런기념판',desc:'외야 잔디벽, 최정 홈런 숫자판',base:538,max:999,miles:[1,100,200,300,400,500],name:'CHOIJEONG',sub:'LEGENDARY',foot:'HOMERUNS',rec:'KBO HOME RUN RECORD'},
   poses:[['pzUp','하나!'],['pzV','브이'],['pzShow','소개'],['pzBanzai','만세']],
   hint:'드래그로 좌우를 보고, 으쓱이는 끌어서 옮겨요',
   full:'999호! 마일스톤 판이 꽉 찼어요',
   newMile:function(m){return m+'호 마일스톤이 새로 붙었어요!'}
 };
+
+/* ================= 경기 상황 · 내 위치 (묶음 A, 2026-11-01) ================= */
+/* 낮·밤 경기: 위쪽 상황 칩 → '경기 상황' 시트(ui/fieldmode.js), 바뀌는 모습은 world/daynight.js */
+var DAY_TIME={
+  day:{short:'낮',btn:'낮 경기',toast:'낮 경기예요. 봄 햇살이 가득해요'},
+  night:{short:'밤',btn:'밤 경기',toast:'밤 경기예요. 조명탑이 환하게 켜졌어요'}
+};
+/* '내 위치' 펼침 메뉴의 둘러보기 순서(ui/places.js). 포토존 이름은 PZ_CFG에서, 나머지는 TOUR_CFG에서 */
+var TOURS=['hr','pz','look','wall'];
+var TOUR_CFG={look:{label:'경기장 구경'},wall:{label:'담벼락'}};

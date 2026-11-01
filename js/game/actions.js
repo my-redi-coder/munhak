@@ -29,7 +29,6 @@ document.querySelectorAll('.act').forEach(function(b){b.onclick=function(){auEns
 $('bPhoto').onclick=function(){auEnsure();if(phase==='game')takePhoto('jikgwan')};
 $('bExit').onclick=leaveGame;
 $('bSound').onclick=function(){setSound(!AU.on);toast(AU.on?'소리를 켰어요':'소리를 껐어요',1600);if(AU.on&&player.act==='cheer')beatStart()};
-$('bZone').onclick=function(){buildZoneList($('zoneList2'),true);openModal('mZone')};
 $('bSet').onclick=function(){openModal('mSet')};
 $('statusStop').onclick=function(){if(EV.on){skipEvent();return}if(SS.on){ssStop();return}PL.target=null;PL.onArrive=null;if(player.mode==='walk')player.mode='stand';setStatus(null)};
 function setStatus(t){if(!t){$('status').hidden=true;return}$('statusTx').textContent=t;$('status').hidden=false}

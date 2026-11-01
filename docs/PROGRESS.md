@@ -159,3 +159,15 @@
 - 맨 위에 따로 생긴 문서 4개(ARCHITECTURE·DECISIONS·MODULES·PROGRESS)는 `docs/`와 합침(포토존 내용 + 홈런볼 내용 둘 다 살림), `MODULES.md`는 `tools/modmap.py`로 다시 만듦
 - 불펜장 위쪽 오른쪽 라커 버튼: 아이콘만 → 아이콘 + '나의 라커룸' 글자 (`minigames/bullpen.html`)
 - 확인: index.html·미니게임 페이지가 부르는 파일 경로 전부 존재, JS 전체 문법 검사 통과. 화면 확인은 폰에서
+
+## 묶음 A: 메뉴 개편 + 담벼락 + 낮·밤 경기 — 완료 (2026-11-01, `munhak_2026-11-01_A-hud-wall-daynight`)
+
+- 위쪽 버튼: '구경' 버튼과 공격|수비 캡슐 삭제. 오른쪽 아래 줄은 이벤트·불펜장, 그 아래 상황 칩(빨간 점 + '수비 · 낮'). 칩 → '경기 상황' 시트(`#mMatch`)에서 공수·낮밤 (`js/ui/fieldmode.js`, 이벤트가 부르는 옛 이름 `syncFieldBtns`는 칩 글자 맞추기로 남김)
+- 내 위치: 시트(`#mZone`) → 버튼 아래 펼침 메뉴(`#placeMenu`, 새 파일 `js/ui/places.js`). 관중석 4곳 / 둘러보기 4곳(홈런기념판·플레이어존·경기장 구경·담벼락). 구역별 관중 수 뺌. 화살표·Esc 지원. 입장 준비의 구역 고르기(`setup.js`)는 그대로, 게임 안 목록 코드만 정리
+- 담벼락: 새 파일 `js/ui/wall.js`, `styles/wall.css`, 글은 `index.html`의 `#wall`. 프로토타입 글·낙서·형광펜·벽 그림 그대로, '돌아가기'·Esc, 하단 버튼 없음. 열린 동안 3D 쉼(`loop.js`의 `WALL.on`), 손글씨 글꼴은 처음 들어갈 때만
+- 낮·밤 경기: 새 파일 `js/world/daynight.js`(`DN_LOOK`에 밤 색·빛 값). 하늘 밤 + 별, 안개·구름 어둡게, 조명탑 6개 머리판 빛 + 번지는 빛, 구장은 밝게. 1.5초 동안 서서히, 저장(`dayTime`). `sky.js`가 `skyU`를, `landmarks.js`가 `TOWERS`·`towerRY`를 내놓게 고침
+- 여난부두(`events/yeonan.js`): 시작할 때마다 지금 모습을 기억 → 끝나면 그 모습으로(밤 경기면 켜진 밤). 암전 동안 조명탑 불 끄고 별 띄움(`dnEventDark`)
+- 플레이어존은 `PZ_CFG.pz.indoor`라 밤에도 낮 조명(`photozone.js`의 `dnOverride`)
+- 손댄 파일 맨 위 출처 주석 확인
+- 확인: JS 전체 문법 검사 통과, index.html이 부르는 파일 경로 전부 존재. 화면은 폰에서 확인 필요(특히 밤 조명 밝기·조명탑 불빛 방향, 펼침 메뉴 위치, 담벼락 글꼴)
+

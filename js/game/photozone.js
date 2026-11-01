@@ -24,6 +24,7 @@ function pzStart(k){
   var S=PZ_SETS[k];
   fadeTo(PZ_CFG[k].label+'으로 가는 중',function(){
     if(!S.g){S.build();scene.add(S.g)}
+    if(PZ_CFG[k].indoor)dnOverride(0);/* 실내 포토존은 밤 경기여도 낮 조명 그대로 (world/daynight.js) */
     PZ.on=true;PZ.key=k;PZ.set=S;S.g.visible=true;PZ.pan=0;PZ.zoom=1;PZ.hidden=false;PZ.grab=false;
     PZ.ch=new Char({name:myName(),uni:ME.uni,backName:ME.backName,backNum:ME.backNum});
     S.g.add(PZ.ch.root);PZ.ch.root.position.set(S.startX,0,S.standZ);PZ.ch.root.rotation.y=0;PZ.ch.mode='stand';
@@ -37,6 +38,7 @@ function pzStop(){
   if(!PZ.on)return;
   fadeTo('',function(){
     PZ.on=false;PZ.set.g.visible=false;if(PZ.ch){PZ.ch.dispose();PZ.ch=null}
+    if(DN.force!=null)dnOverride(null);
     document.body.classList.remove('pz');pzUIClose();snapCam();
   });
 }

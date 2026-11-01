@@ -1,3 +1,4 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= game flow ================= */
 function fadeTo(msg,fn){var f=$('fade');$('fadeMsg').textContent=msg||'';f.classList.add('on');setTimeout(function(){fn();setTimeout(function(){f.classList.remove('on')},120)},reduceMotion?60:380)}
 function enterGame(){
@@ -38,6 +39,6 @@ $('again').onclick=function(){
 function startSetup(){
   phase='setup1';$('setup').hidden=false;$('step1').hidden=false;$('step2').hidden=true;
   $('meName').textContent=myName();$('inName').value=ME.backName;$('inNum').value=ME.backNum;
-  buildSwatches();buildZoneList($('zoneList'),false);placeForSetup();
+  buildSwatches();buildZoneList($('zoneList'));placeForSetup();
   cam.yaw=player.root.rotation.y+.5;cam.dist=3.9;cam.pitch=.12;cam.auto=1;snapCam();
 }

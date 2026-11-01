@@ -1,5 +1,7 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 이벤트: 8회말 여난부두 응원 =================
    구장 조명이 꺼지고, 관중석에 폰 불빛이 하나둘 켜져 다 같이 좌우로 흔들며 떼창해요.
+   낮 경기·밤 경기 어느 쪽에서 시작해도 불이 꺼졌다가, 끝나면 시작했던 모습으로 돌아와요(2026-11-01).
    음원 EV_BGM.yeonan, 가사 YEONAN.lyrics (core/config.js) — 둘 다 사용자가 events/ 폴더에 직접 올려요.
    가사 파일은 가사 싱크 도구에서 만든 {lines:[{t,e,text}]}. 없으면 가사 없이, 음원이 없으면 YEONAN.NO_SONG초 동안 돌아요.
    흐름: 암전(0~DARK) → 불빛 번짐 → 노래(SONG_AT부터) 동안 카메라가 구장 곳곳을 비춤 → 마지막은 내 자리 → 불 켜지며 끝
@@ -17,20 +19,24 @@ function ynLoadLyrics(){
   }).catch(function(){console.info('여난부두 가사 파일이 없어요: '+YEONAN.lyrics)});
 }
 
-/* ---- 밤으로: 조명·하늘·안개·구름을 n(0 낮 ~ 1 밤)만큼 ---- */
+/* ---- 밤으로: 조명·하늘·안개·구름을 n(0 지금 모습 ~ 1 불 꺼진 밤)만큼 ----
+   시작할 때마다 지금 모습(낮 경기든 밤 경기든, world/daynight.js)을 기억해 두고, 끝나면 그대로 돌아가요.
+   조명탑 불빛·별은 dnEventDark(n)가 맡아요. */
 function ynNightSetup(){
   if(YN.lit)return;var L=YN.lit=[];
   scene.children.forEach(function(o){if(o.isLight)L.push([o,o.intensity]);if(o.material&&o.material.uniforms&&o.material.uniforms.top)YN.sky=o.material.uniforms});
   YN.skyDay=['top','mid','bot'].map(function(k){return YN.sky?YN.sky[k].value.clone():null});
   YN.skyNight=[new THREE.Color(0x070d22),new THREE.Color(0x101a38),new THREE.Color(0x1d2546)];
   YN.fogDay=scene.fog.color.clone();YN.fogNight=new THREE.Color(0x0d1428);
+  YN.cloudOp=clouds.map(function(c){return c.material.opacity});
 }
 function ynNight(n){
   ynNightSetup();YN.n=n;
   YN.lit.forEach(function(l){l[0].intensity=l[1]*(1-.8*n)});
   if(YN.sky)['top','mid','bot'].forEach(function(k,i){YN.sky[k].value.copy(YN.skyDay[i]).lerp(YN.skyNight[i],n)});
   scene.fog.color.copy(YN.fogDay).lerp(YN.fogNight,n);
-  clouds.forEach(function(c){c.material.opacity=.9*(1-.85*n)});
+  clouds.forEach(function(c,i){c.material.opacity=YN.cloudOp[i]*(1-.85*n)});
+  dnEventDark(n);
 }
 
 /* ---- 관중석 불빛: 관중 무리 + 장식 관중석 자리마다 하나 (Points 한 덩어리) ---- */
@@ -109,6 +115,7 @@ function ynCam(lt,frac){
 
 EV_SCENES.yeonan={
   start:function(){
+    YN.lit=null;/* 지금 모습(낮·밤 경기)을 새로 기억 */
     ynLoadLyrics();ynBuildLights();
     var P=YN.P;for(var i=0;i<P.N;i++)P.on[i]=YN.DARK+rnd(0,6.5)*Math.pow(Math.random(),.6);
     scene.add(YN.pts);ynLights(0,0);

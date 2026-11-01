@@ -1,17 +1,8 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
 /* ================= 포토존 화면 버튼 =================
-   '내 위치' 시트의 둘러보기 목록(#tourList), 포토존 화면(#pz): 돌아가기, 세트별 도구, 포즈, 비키기, 찍기.
+   포토존 화면(#pz): 돌아가기, 세트별 도구, 포즈, 비키기, 찍기. (들어가는 목록은 '내 위치' 메뉴, ui/places.js)
    플레이어존 도구: 사진 넣기(이 기기에 줄여서 저장) / 문구(#mPzLine) / 기본으로
    홈런기념판 도구: ▼ 숫자 ▲(길게 누르면 빨라짐) / 538로 */
-(function tourList(){
-  var el=$('tourList');
-  ['hr','pz'].forEach(function(k){
-    var b=document.createElement('button');b.className='zone zrow';
-    var t=document.createElement('div');t.innerHTML='<b></b><span></span>';t.querySelector('b').textContent=PZ_CFG[k].label;t.querySelector('span').textContent=PZ_CFG[k].desc;b.appendChild(t);
-    var c=document.createElement('span');c.className='cnt';c.textContent='포토존';b.appendChild(c);
-    b.onclick=function(){closeModal('mZone');auEnsure();sfx('tap');pzStart(k)};el.appendChild(b);
-  });
-})();
 
 function pzBtn(label,fn,cls){var b=document.createElement('button');b.className='pill'+(cls?' '+cls:'');b.textContent=label;if(fn)b.onclick=fn;return b}
 function pzUIOpen(k){

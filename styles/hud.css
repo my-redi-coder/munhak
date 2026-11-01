@@ -1,3 +1,4 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* hud */
 #hud{position:fixed;inset:0;z-index:10;pointer-events:none}
 #hud>*{pointer-events:auto}
@@ -6,7 +7,7 @@
 .cap{display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow)}
 .cap button,.cap .stat{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:40px;height:40px;padding:0 8px;white-space:nowrap;border-radius:999px;font-size:13px}
 .cap .stat{color:var(--muted);padding:0 8px 0 10px}
-.left{display:flex;gap:8px}
+.left{display:flex;gap:8px;position:relative}
 .right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
 .pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13px}
 #toast{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 120px);transform:translate(-50%,-6px);max-width:calc(100% - 40px);padding:9px 16px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13px;line-height:1.4;text-align:center;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -30,9 +31,16 @@
 .bub::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:#fff;transform:translateX(-50%) rotate(45deg);border-right:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06)}
 .bub.angry{background:#fff1f1;color:#a3132b}
 .bub.angry::after{background:#fff1f1}
-/* 공격·수비 전환 */
-.seg button{min-width:52px;padding:0 12px;transition:background .2s,color .2s}
-.seg button[aria-pressed="true"]{background:var(--red);color:var(--red-ink)}
+/* 경기 상황 칩 (묶음 A): 누르면 '경기 상황' 시트 */
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex:none}
+/* 내 위치 펼침 메뉴 (묶음 A): 버튼 바로 아래 */
+.pmenu{position:absolute;top:calc(100% + 8px);left:0;width:224px;max-height:calc(100vh - 140px);overflow:auto;padding:6px;border-radius:18px;background:var(--glass-strong);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:var(--shadow);transform-origin:top left;animation:pmenu .16s ease-out}
+@keyframes pmenu{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.pmenu h4{margin:10px 12px 4px;font-size:12px;font-weight:400;color:var(--muted)}
+.pmenu hr{border:0;border-top:1px solid var(--line);margin:6px 8px}
+.pitem{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 12px;border-radius:12px;font-size:15px;text-align:left}
+.pitem:hover{background:var(--line)}
+.pitem[aria-current="true"]{background:rgba(200,16,46,.1);color:var(--red)}
 
 /* 좁은 폰 화면(세로): 위쪽 버튼을 줄여 한 줄에 들어가게, 안내 문구는 오른쪽 버튼들 아래로 */
 .row2{display:flex;gap:8px}
@@ -44,7 +52,6 @@
   .cap .stat svg{display:none}
   #zoneName{display:inline-block;max-width:5.2em;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
   .pill{height:36px;padding:0 11px;font-size:12px;gap:4px}
-  .seg button{min-width:44px;padding:0 9px}
   #toast{top:calc(env(safe-area-inset-top,0px) + 150px);max-width:calc(100% - 24px)}
 }
 /* 경기장 구경하기 중(body.ss): 위·아래 버튼 숨기고 '돌아가기'만 */
@@ -52,3 +59,4 @@ body.ss #hud .top,body.ss #hud .bar{opacity:0}
 body.ss #hud .top>*{pointer-events:none}
 body.ss #hud .bar{display:none}
 body.ss #labels{opacity:0}
+@media (prefers-reduced-motion:reduce){.pmenu{animation:none}}

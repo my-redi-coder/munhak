@@ -44,7 +44,7 @@ function goToSeat(s){
 addEventListener('keydown',function(e){
   if(e.target&&e.target.tagName==='INPUT')return;
   if(foodOpen()){if(e.key==='Escape')foodEsc();return}
-  if(e.key==='Escape'){['mZone','mSet'].forEach(function(id){if(!$(id).hidden)closeModal(id)});return}
+  if(e.key==='Escape'){['mSet','mMatch'].forEach(function(id){if(!$(id).hidden)closeModal(id)});return}
   if(phase!=='game')return;
   var k=e.key.toLowerCase();
   if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].indexOf(k)>=0){PL.keys[k]=true;e.preventDefault()}
