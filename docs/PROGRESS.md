@@ -2,6 +2,16 @@
 
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
+## 작은 패치 G: 티켓팅 War 직관전승 · 연석으로 다시 예매 · 1석 확률 — 완료 (2026-11-01, `munhak_2026-11-01_G-ticket-perfect`)
+
+- 좌석 수 확률: 1석 20% · 2석 45% · 4석 35%(`minigames/ticketing/perfect.js`의 `ZS.odds`, 전엔 1/3씩)
+- 직관전승 = 한 구단 티켓을 전부 모았고 몇 석이든 전부 연석(`shared/ticket.js`의 `tkTeamPerfect`, 따로 저장하지 않고 티켓에서 계산)
+- 발권 순간(`zsCelebrate`): 그 구단의 마지막 조각이 채워질 때 티켓 위 금박 스티커(`tkSeal`) → 금색 'OO전 직관전승!' + 손글씨 '한국시리즈도 걱정없는 금손! 이제 가을야구만 가면 돼…' + 종이가루
+- 티켓북(`locker.js`의 `#tkHead`): 직관전승 구단 탭은 금색(글자·숫자 그대로), 그 구단 쪽 위에 금박 스티커 띠. 따로 앉은 티켓이 있는 구단은 '연석으로 다시 예매' 띠
+- 연석으로 다시 예매: `ticketing.html?rebook=구단` → 그 구단 따로 앉은 티켓 중 하나를 같은 석 수로. 연석이면 티켓 교체, 또 따로면 원래 티켓 그대로(`zsRebookMiss`). 야푸먹기 티켓북에서 누르면 불펜장 창으로(`munhak:tkb-rebook:구단`)
+- 확인용(`ticketing.html?dev`): '직관전승 장면 해보기'(KIA전 마지막 한 경기를 1석으로, 기록이 바뀜)
+- 확인: 문법 검사 + 직관전승·다시 예매 흐름이 오류 없이 도는지
+
 ## 묶음 F: 티켓북 바로가기 · 퍼펙트 판 · 금 글러브 도전 · 글꼴 · 뒤돌기 포즈 — 완료 (2026-11-01, `munhak_2026-11-01_F-ticketbook-perfect`)
 
 1. 포토존 포즈 **뒤돌기**(`config.js`의 `PZ_CFG.poses`, `js/game/photozone.js`의 `PZ_POSE.pzBack`): 몸을 완전히 돌려(`pzTick`에서 want=π) 세트를 올려다봄. 고개 위아래는 새 값 `P.hx`(`js/entities/character.js`, `headG.rotation.x`)

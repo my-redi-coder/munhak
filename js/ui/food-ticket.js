@@ -17,7 +17,9 @@ function ticketBuild(){
   window.addEventListener('message',function(e){if(e.origin!==location.origin)return;
     if(e.data==='munhak:tkb-close')ticketClose();
     /* 티켓북 맨 아래 '티켓팅 하러 가기' → 야푸먹기를 닫고 불펜장 창에 티켓팅 War */
-    else if(e.data==='munhak:tkb-ticketing'){ticketClose();closeFood();openBullpen('minigames/ticketing.html')}});
+    else if(e.data==='munhak:tkb-ticketing'){ticketClose();closeFood();openBullpen('minigames/ticketing.html')}
+    /* 티켓북 구단 쪽 '연석으로 다시 예매' → 그 구단으로 티켓팅 War */
+    else if(typeof e.data==='string'&&e.data.indexOf('munhak:tkb-rebook:')===0){var t=e.data.slice(18);ticketClose();closeFood();openBullpen('minigames/ticketing.html?rebook='+encodeURIComponent(t))}});
 }
 function ticketOpen(){
   if(TKB.on)return;ticketBuild();TKB.on=true;

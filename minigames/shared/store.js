@@ -31,6 +31,7 @@ var LOCKER=(function(){
     addTicket:function(i,o){d.tickets[i]=o;save()},
     ticketCount:function(){return Object.keys(d.tickets).length},
     resetTickets:function(){d.tickets={};save()},
+    removeTicket:function(i){delete d.tickets[i];save()},
     addPerfect:function(){d.perfect=(d.perfect||0)+1;save();return d.perfect},
     perfectCount:function(){return d.perfect||0}
   };

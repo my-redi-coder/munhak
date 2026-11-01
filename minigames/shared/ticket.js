@@ -1,7 +1,9 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= 승리 티켓 그리기 (티켓팅 War · 내 라커 티켓북 공용) =================
    tkHTML(i) 티켓 한 장 전체 / tkStack(i) 매수만큼 겹친 티켓 / tkMini(i,k,n,tog) 주머니에 꽂힌 위쪽 절반 / tkBookHTML(team,newI) 티켓북 한 쪽
-   모은 티켓 정보는 LOCKER.ticket(i) = {n 매수, tog 같이 앉음, seat 자리, blk 구역}. 모양은 shared/ticket.css */
+   모은 티켓 정보는 LOCKER.ticket(i) = {n 매수, tog 같이 앉음, seat 자리, blk 구역}. 모양은 shared/ticket.css
+   (2026-11-01) 직관전승 = 한 구단 티켓을 전부 모았고 몇 석이든 전부 연석(tkTeamPerfect). 따로 저장하지 않고 티켓에서 바로 계산해요.
+     금색 탭(tkTeamTabs의 class zs), 금박 스티커 tkSeal(team), 구단 위 띠 tkPerfHead(team) / 따로 앉은 티켓 다시 예매 띠 tkRebookHead(team) */
 var TK_WD='일월화수목금토';
 function tkDate(g){return new Date(2026,+g.d.slice(0,2)-1,+g.d.slice(2))}
 function tkDay(g){return TK_WD[tkDate(g).getDay()]}
@@ -35,5 +37,28 @@ function tkBookHTML(team,newI){
 }
 function tkTeamTabs(cur){
   return TK_TEAMS.map(function(t){var all=0,got=0;TICKETS.forEach(function(g,i){if(g.opp===t){all++;if(LOCKER.ticket(i))got++}});
-    return '<button data-t="'+tkEsc(t)+'" aria-pressed="'+(t===cur)+'">'+tkEsc(t)+'<small>'+got+'/'+all+'</small></button>'}).join('');
+    return '<button data-t="'+tkEsc(t)+'"'+(tkTeamPerfect(t)?' class="zs"':'')+' aria-pressed="'+(t===cur)+'">'+tkEsc(t)+'<small>'+got+'/'+all+'</small></button>'}).join('');
 }
+
+/* ---------- 직관전승 · 연석으로 다시 예매 (2026-11-01) ---------- */
+function tkTeamIds(t){var a=[];TICKETS.forEach(function(g,i){if(g.opp===t)a.push(i)});return a}
+function tkTeamPerfect(t){return tkTeamIds(t).every(function(i){var o=LOCKER.ticket(i);return !!o&&(o.tog||o.n===1)})}
+function tkTeamSplit(t){return tkTeamIds(t).filter(function(i){var o=LOCKER.ticket(i);return !!o&&!o.tog&&o.n>1})}
+var TK_SEAL_N=0;
+/* 밝은 금박 스티커: 톱니 테두리 + 흰 빛줄기 + 빨간 '직관전승' */
+function tkSeal(team){var id='tks'+(++TK_SEAL_N),d='',n=24,k,a,r;
+  for(k=0;k<n*2;k++){a=Math.PI*k/n;r=k%2?44:48.5;d+=(k?'L':'M')+(50+r*Math.cos(a)).toFixed(1)+' '+(50+r*Math.sin(a)).toFixed(1)}
+  return '<svg class="gseal" viewBox="0 0 100 100" aria-hidden="true"><defs>'
+   +'<linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6C4"/><stop offset=".35" stop-color="#FFD54A"/><stop offset=".7" stop-color="#F6B92B"/><stop offset="1" stop-color="#FFE68A"/></linearGradient>'
+   +'<linearGradient id="'+id+'s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+   +'<clipPath id="'+id+'c"><circle cx="50" cy="50" r="41"/></clipPath></defs>'
+   +'<path d="'+d+'Z" fill="#F2B12A" stroke="#E09A1A" stroke-width=".8"/><circle cx="50" cy="50" r="41" fill="url(#'+id+')"/>'
+   +'<g clip-path="url(#'+id+'c)"><rect x="8" y="-10" width="18" height="120" fill="url(#'+id+'s)" transform="rotate(30 50 50)"/></g>'
+   +'<circle cx="50" cy="50" r="36" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.2" opacity=".9"/>'
+   +'<text x="50" y="36" text-anchor="middle" font-family="Gowun Dodum,sans-serif" font-size="10.5" fill="#B5121B">'+tkEsc(team)+'전</text>'
+   +'<text x="50" y="59" text-anchor="middle" font-family="Black Han Sans,sans-serif" font-size="20" fill="#C8102E" stroke="#fff" stroke-width="2.4" paint-order="stroke">직관전승</text>'
+   +'<text x="50" y="73" text-anchor="middle" font-family="Gowun Dodum,sans-serif" font-size="8.5" fill="#B5121B">전부 연석</text></svg>';
+}
+function tkPerfHead(team){return '<div class="zs-head"><div class="gs">'+tkSeal(team)+'</div><div><b>'+tkEsc(team)+'전 직관전승</b><span>'+tkTeamIds(team).length+'경기 전부 연석으로 모았어요</span></div></div>'}
+function tkRebookHead(team){var n=tkTeamSplit(team).length;if(!n)return '';
+  return '<div class="rb-head"><div><b>따로 앉은 티켓 '+n+'장</b><span>다 연석으로 바꾸면 직관전승에 한 걸음 더!</span></div><button class="rebook" data-rb="'+tkEsc(team)+'">연석으로 다시 예매</button></div>'}

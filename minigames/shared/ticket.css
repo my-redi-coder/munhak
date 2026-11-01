@@ -62,3 +62,19 @@
 .tkmodal .yt svg{width:18px;height:18px}
 .tkmodal .cl{background:var(--card);color:var(--ink);border:1px solid var(--line)}
 @media (prefers-reduced-motion:reduce){.pocket.new .pk-stack,.tkmodal .sheet{animation:none}}
+
+/* (2026-11-01) 직관전승: 금색 탭(글자는 그대로) · 금박 스티커 · 구단 위 금색 띠 / 연석으로 다시 예매 띠 */
+.tktabs button.zs{background:linear-gradient(135deg,#FFF6C4,#FFD54A 55%,#F6B92B);color:#5a3a00;border-color:#F2B12A}
+.tktabs button.zs small{color:#8a5a00}
+.tktabs button.zs[aria-pressed="true"]{color:#5a3a00;box-shadow:inset 0 0 0 2px var(--red)}
+.tktabs button.zs[aria-pressed="true"] small{color:#8a5a00}
+.gseal{display:block;width:100%;height:100%}
+.zs-head{display:flex;align-items:center;gap:10px;margin:2px 4px 12px;padding:8px 12px 8px 8px;border-radius:12px;background:linear-gradient(135deg,#FFF6C4,#FFE27A);border:1px solid #F2B12A}
+.zs-head .gs{width:46px;height:46px;flex:none}
+.zs-head b{display:block;font-family:var(--num);font-weight:400;font-size:18px;line-height:1.1;color:#5a3a00}
+.zs-head span{font-size:12.5px;color:#8a6a1a}
+.rb-head{display:flex;align-items:center;gap:10px;margin:2px 4px 12px;padding:10px 10px 10px 14px;border-radius:12px;background:var(--card);border:1px dashed rgba(200,16,46,.45)}
+.rb-head>div{flex:1;min-width:0}
+.rb-head b{display:block;font-size:14px;color:var(--ink)}
+.rb-head span{font-size:12px;color:var(--muted);word-break:keep-all}
+.rb-head .rebook{flex:none;height:40px;padding:0 14px;border-radius:999px;background:var(--red);color:#fff;font-size:13.5px;border:0;cursor:pointer;white-space:nowrap}

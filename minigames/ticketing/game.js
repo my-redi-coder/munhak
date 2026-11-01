@@ -2,7 +2,8 @@
 /* ================= 티켓팅 War (묶음 B, 2026-11-01) =================
    한 판: 예매 오픈(경기·목표) → 대기열 → 좌석도(빈자리 찾기) → 결제 → 발권 → 티켓북(locker.html#tickets).
    - 경기: 아직 없는 2026 승리 경기(shared/tickets.js) 중 랜덤 → 티켓북이 얼룩덜룩 채워져요
-   - 목표: 혼자 직관(1) · 친구랑(2) · 가족 표(4) 랜덤
+   - 목표: 혼자 직관(1) · 친구랑(2) · 가족 표(4) 랜덤 (2026-11-01부터 1석 20% · 2석 45% · 4석 35%, ticketing/perfect.js의 ZS.odds)
+   - (2026-11-01) 직관전승 연출 · 연석으로 다시 예매(?rebook=구단)는 ticketing/perfect.js
    - 같이 앉기: 1자리 / 나란히 2자리 / 한 줄 4자리·앞뒤 2+2  →  '완벽 예매!'
    - 따로라도: 1+1, 떨어진 2+2, 1+3  →  '따로라도 성공!' + 사용자 멘트.  1+1+1+1·2+1+1은 안 돼요
    - 난이도: 빈자리가 떠 있는 시간 LIFE(초)에 0.6~1.6배 랜덤, 주말은 0.8배·제한 시간 20초(평일 23초), 원정은 빈자리가 더 드물게 */
@@ -33,10 +34,13 @@ function snd(k){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)()
 var R=null;
 function stopRound(){if(!R)return;cancelAnimationFrame(R.raf);R.phase='done'}
 function newRound(retry){
-  stopRound();var left=TICKETS.map(function(_,i){return i}).filter(function(i){return !LOCKER.ticket(i)});
-  if(!left.length){renderAllDone();return}
-  var gi=retry&&R?R.gi:pick(left),goal=retry&&R?R.goal:pick([1,2,4]);
-  R={gi:gi,goal:goal,phase:'open'};renderOpen();window.scrollTo(0,0);
+  stopRound();var gi=null,goal=null,rebook=false;
+  if(retry&&R){gi=R.gi;goal=R.goal;rebook=!!R.rebook}
+  else{var rb=zsRebookPick();if(rb){gi=rb.gi;goal=rb.goal;rebook=true}}
+  if(gi==null){var left=TICKETS.map(function(_,i){return i}).filter(function(i){return !LOCKER.ticket(i)});
+    if(!left.length){renderAllDone();return}
+    gi=pick(left);goal=zsGoal()}
+  R={gi:gi,goal:goal,rebook:rebook,phase:'open'};renderOpen();if(rebook)zsChip();window.scrollTo(0,0);
 }
 function renderAllDone(){$('stage').innerHTML='<div class="tw-card result"><p class="kick">티켓팅 War</p><h2>티켓북 완성!</h2><p class="sub">2026 시즌 승리 '+TICKETS.length+'경기 티켓을 다 모았어요</p><div class="btns"><a class="primary" href="locker.html#tickets">티켓북 보기</a></div></div>'}
 function goalIcon(n){var r='<span>'+(n===1?'<i></i>':'<i></i><i></i>')+'</span>';return '<div class="ic" aria-hidden="true">'+r+(n===4?r:'')+'</div>'}
@@ -120,14 +124,18 @@ function judge(now){var ru=runs(R.mine),L=ru.map(function(x){return x.cs.length}
   $('payBtn').onclick=paid;$('payBtn').focus();
 }
 function paid(){if(R.phase!=='pay')return;cancelAnimationFrame(R.raf);R.phase='done';
-  LOCKER.addTicket(R.gi,{n:R.goal,tog:R.tog,seat:R.seatStr,blk:R.blk});syncN();renderPrint()}
+  if(R.rebook&&!R.tog){zsRebookMiss();return}/* 다시 예매인데 또 따로: 원래 티켓 그대로 */
+  var team=TICKETS[R.gi].opp,was=tkTeamPerfect(team);
+  LOCKER.addTicket(R.gi,{n:R.goal,tog:R.tog,seat:R.seatStr,blk:R.blk});syncN();
+  R.zs=!was&&tkTeamPerfect(team);renderPrint();if(R.zs)zsCelebrate()}
 function fail(t,s){cancelAnimationFrame(R.raf);R.phase='done';snd('bad');var g=TICKETS[R.gi];
   $('stage').innerHTML='<div class="tw-card result"><p class="kick">'+tkMD(g)+' '+tkEsc(g.opp)+'전</p><h2>'+t+'</h2><p class="sub">'+s+'</p><div class="btns"><button class="primary" id="again">같은 경기 다시 도전</button><button class="secondary" id="other">다른 경기 예매하기</button></div></div>';
   $('again').onclick=function(){newRound(true)};$('other').onclick=function(){newRound()};
 }
 function renderPrint(){var i=R.gi;snd('print');
   var line=R.tog?(R.goal===1?'혼자여도 직관은 직관!':R.goal===2?'나란히 앉아요':'온 가족이 같이 앉아요'):pick(SPLIT);
-  $('stage').innerHTML='<div class="tw-card result"><p class="kick">발권 완료</p><h2>'+(R.tog?'완벽 예매!':'따로라도 성공!')+'</h2><p class="line">'+tkEsc(line)+'</p>'
+  if(R.rebook)line='따로 앉았던 티켓을 연석으로 바꿨어요';
+  $('stage').innerHTML='<div class="tw-card result"><p class="kick">발권 완료</p><h2>'+(R.rebook?'연석으로 바꿨어요!':R.tog?'완벽 예매!':'따로라도 성공!')+'</h2><p class="line">'+tkEsc(line)+'</p>'
    +'<div class="printer"><div class="slot"></div><div class="paper"><div class="tkwrap">'+tkStack(i)+'</div></div></div>'
    +'<div class="btns"><button class="primary" id="tuck">티켓북에 꽂기</button><button class="secondary" id="more">한 판 더</button></div></div>';
   $('tuck').onclick=function(){try{sessionStorage.setItem('tw-new',String(i))}catch(e){}location.href='locker.html#tickets'};
@@ -138,6 +146,10 @@ function renderPrint(){var i=R.gi;snd('print');
 $('back').onclick=function(){location.href='bullpen.html'};
 if(/[?&]dev\b/.test(location.search)){$('dev').hidden=false;
   $('devFill').onclick=function(){TICKETS.forEach(function(g,i){if(!LOCKER.ticket(i)){var n=pick([1,2,4]);LOCKER.addTicket(i,{n:n,tog:n===1||Math.random()<.6,seat:'C열 4'+(n>1?'·5':'')+'번',blk:g.home?'1루 내야 5구역':'3루 원정석 2구역'})}});syncN();mgToast('티켓을 다 채웠어요')};
+  /* 직관전승 장면: KIA전 마지막 한 경기만 남기고 연석으로 채운 뒤 그 경기를 1석으로 (기록이 바뀌어요) */
+  $('devZs').onclick=function(){var ids=tkTeamIds('KIA'),last=ids[ids.length-1];
+    ids.forEach(function(i){if(i!==last)LOCKER.addTicket(i,{n:2,tog:true,seat:'C열 4·5번',blk:'1루 내야 5구역'})});LOCKER.removeTicket(last);syncN();
+    stopRound();R={gi:last,goal:1,rebook:false,phase:'open'};renderOpen();mgToast('KIA전 마지막 경기예요. 한 자리만 잡으면 직관전승!')};
   $('devClear').onclick=function(){LOCKER.resetTickets();syncN();newRound();mgToast('티켓을 다 비웠어요')};
 }
 syncN();newRound();

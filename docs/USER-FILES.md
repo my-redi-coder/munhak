@@ -39,3 +39,9 @@
 - 손글씨·제목 글꼴 파일이 저장소 안에 있어요(구글 글꼴 서버를 안 써서, 누구 폰에서든 똑같이 보여요). 직접 올릴 건 없어요.
 - 파일: `GowunDodum-Regular.woff2` `BlackHanSans-Regular.woff2` `NanumPenScript-Regular.woff2` `NanumBrushScript-Regular.woff2` `Gaegu-Regular.woff2` `Gaegu-Bold.woff2` + `fonts.css` + `LICENSE.md`
 - 자주 쓰는 한글 2,350자와 사이트 글자만 들어 있어서, 아주 드문 글자는 기본 글꼴로 보일 수 있어요.
+
+## 응원가 가사 (`lyrics/`, 2026-11-01)
+
+- 가사 싱크 도구에서 곡을 고르고 줄마다 찍은 뒤 내보내기 내용을 `lyrics/song5.json`처럼 곡 번호 이름으로 저장해요(여난부두는 `events/yeonan-lyrics.json` 그대로).
+- 깃허브 웹: **Add file → Create new file**에서 이름 칸에 `lyrics/song5.json`이라고 치면 폴더가 같이 생겨요 → 내용 붙여넣기 → **Commit changes**.
+- 띠 전광판이 이 파일들을 읽게 하는 건 다음 작업이에요(지금은 올려만 두면 돼요).

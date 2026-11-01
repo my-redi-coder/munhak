@@ -54,7 +54,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/food.js` | 177 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
 | `js/ui/food-note.js` | 59 | NOTE, NOTE_PAGES, NOTE_DOODLE, NOTE_STAMP, noteSvg, noteFonts, noteLine, noteBuild, notePaint, noteGo, noteFocus, noteOpen, noteClose, noteBind |
 | `js/ui/food-phone.js` | 127 | PHONE_CFG, PHONE, PH_DAYS, PH_ICON, phWall, phoneSvg, phDday, phBuild, phTime, phChime, phoneOpen, phoneClose, phoneBind |
-| `js/ui/food-ticket.js` | 44 | TKB, TKB_SRC, ticketBuild, ticketOpen, ticketClose, ticketGlint, ticketBind |
+| `js/ui/food-ticket.js` | 46 | TKB, TKB_SRC, ticketBuild, ticketOpen, ticketClose, ticketGlint, ticketBind |
 | `js/ui/bullpen.js` | 22 | MG, openBullpen, closeBullpen |
 | `js/game/input.js` | 55 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
 | `js/game/camera.js` | 34 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |

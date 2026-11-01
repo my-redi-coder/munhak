@@ -76,8 +76,12 @@ function lkTickets(){
   $('tkEmpty').hidden=LOCKER.ticketCount()>0;
   $('tkTabs').innerHTML=tkTeamTabs(tkTeam);
   var cur=$('tkTabs').querySelector('[aria-pressed="true"]');if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:'nearest',inline:'center'});
+  $('tkHead').innerHTML=tkTeamPerfect(tkTeam)?tkPerfHead(tkTeam):tkRebookHead(tkTeam);/* (2026-11-01) 직관전승 띠 / 연석으로 다시 예매 */
   $('tkGrid').innerHTML=tkBookHTML(tkTeam,newI);
 }
+/* 연석으로 다시 예매: 그 구단의 따로 앉은 티켓 하나를 같은 석 수로 티켓팅 War에서 다시 */
+$('tkHead').addEventListener('click',function(e){var b=e.target.closest('[data-rb]');if(!b)return;var t=b.dataset.rb;
+  if(LK_EMBED){try{parent.postMessage('munhak:tkb-rebook:'+t,location.origin)}catch(er){}}else location.href='ticketing.html?rebook='+encodeURIComponent(t)});
 $('tkTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;tkTeam=b.dataset.t;lkTickets()});
 $('tkGrid').addEventListener('click',function(e){var b=e.target.closest('.pocket.has');if(!b)return;
   var i=+b.dataset.i,o=LOCKER.ticket(i);$('tkBox').innerHTML=tkStack(i);

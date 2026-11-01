@@ -134,3 +134,8 @@
 - **불펜장 창에 바로 열기**: `openBullpen(url)` — url을 주면 그 미니게임 페이지로.
 - **홈런볼 퍼펙트·도전**: `minigames/homerun/perfect.js`(game.js 다음에 불러옴). game.js는 `pfPool()` `pfMoment()` `pfResult()` `pfReset()`만 부름. 금 글러브 아이콘은 `minigames/shared/glove.js`(결과·공박스 공용).
 - **저장 칸**: `minigames/shared/store.js`의 `munhak-locker-v1`은 이름·모양을 바꾸지 않기. 새 항목은 기본값을 넣어 더하기(이번 `perfect`처럼).
+
+## 티켓팅 War 직관전승 (2026-11-01)
+
+- 계산·그림은 `minigames/shared/ticket.js`(`tkTeamPerfect` `tkTeamSplit` `tkSeal` `tkPerfHead` `tkRebookHead`, 티켓팅·티켓북 공용), 연출·다시 예매·확률은 `minigames/ticketing/perfect.js`(game.js 앞에 불러옴).
+- 저장 칸은 그대로(티켓 기록만 보고 계산). 확인용으로 `LOCKER.removeTicket(i)`만 더함.
