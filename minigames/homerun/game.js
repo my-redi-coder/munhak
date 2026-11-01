@@ -4,7 +4,8 @@
    공이 떨어지는 순간(±0.2초) 누르면 나이스 캐치. 놓친 공은 판 끝에 한 번 더, 또 놓치면 다음 판 맨 앞으로.
    난이도는 시즌 따라: 봄(1~48번째 공) → 여름(~96) → 가을. 최정 공 20개는 늘 1.4초.
    잡은 공은 내 라커 공박스(LOCKER.addBall)로. 주소 끝 #replay-ground / #replay-allstar 면 그 장면만 다시 보기.
-   주소에 ?dev 가 있으면 확인용 버튼이 보여요. */
+   주소에 ?dev 가 있으면 확인용 버튼이 보여요.
+   (2026-11-01) 퍼펙트 판(전부 나이스 캐치)·금 글러브 도전(시즌 다 모은 뒤 랜덤 12개)은 homerun/perfect.js */
 var $=function(id){return document.getElementById(id)};
 var cv=$('hrCanvas'),ctx=cv.getContext('2d');
 var CW=0,CH=0,DPR=1;
@@ -25,7 +26,7 @@ var STAGE=[
   {name:'가을',dur:1.6,spread:1,wind:.18,gap:.75,b2b:.35}
 ];
 var CHOI_DUR=1.4;
-var G={as:null,asShown:false,gr:null,state:'idle',queue:[],pos:0,missed:[],retry:false,caught:0,nice:0,plan:0,ball:null,gx:.5,lastTap:-9,raf:0,last:0,wait:0,next:null,lastDate:'',replayBack:false};
+var G={challenge:false,gold:false,need:0,miss:0,perfect:false,as:null,asShown:false,gr:null,state:'idle',queue:[],pos:0,missed:[],retry:false,caught:0,nice:0,plan:0,ball:null,gx:.5,lastTap:-9,raf:0,last:0,wait:0,next:null,lastDate:'',replayBack:false};
 
 function stageOf(idx){return idx<48?0:idx<96?1:2}
 function nextQueue(){var q=[];for(var i=0;i<HR.length&&q.length<12;i++)if(!LOCKER.hasBall(i))q.push(i);return q}
@@ -33,10 +34,12 @@ function nextQueue(){var q=[];for(var i=0;i<HR.length&&q.length<12;i++)if(!LOCKE
 /* 시작 화면 */
 function showGate(){
   var q=nextQueue(),n=LOCKER.ballCount();G.state='idle';
+  $('hrGateBox').hidden=!!q.length;
   if(!q.length){
+    var pc=LOCKER.perfectCount();
     $('gateTitle').textContent='시즌 끝!';
-    $('gateText').innerHTML='2026 시즌 홈런 '+HR_TOTAL+'개를 다 모았어요.<br>공박스에서 하나씩 꺼내 보세요.';
-    $('hrStart').textContent='공박스 보기';$('hrStart').dataset.go='box';
+    $('gateText').innerHTML='2026 시즌 홈런 '+HR_TOTAL+'개를 다 모았어요.<br>랜덤 공 '+PF.size+'개를 전부 나이스 캐치하면 금 글러브!'+(pc?'<br>지금까지 금 글러브 '+pc+'개':'');
+    $('hrStart').textContent='금 글러브 도전';$('hrStart').dataset.go='gg';
   }else{
     $('gateTitle').textContent=STAGE[stageOf(q[0])].name+' · '+(Math.floor(n/12)+1)+'판';
     $('gateText').innerHTML=hrDay(HR[q[0]].date)+'부터 공 '+q.length+'개가 날아와요.<br>시즌 '+n+'/'+HR_TOTAL;
@@ -51,17 +54,20 @@ function setStrip(h){
   $('hrDate').textContent=hrDay(h.date);$('hrOpp').textContent='vs '+h.opp;
   var c=$('hrChip');c.hidden=false;c.textContent=h.home?'문학':'원정';c.className='chip'+(h.home?' home':'');
 }
-function setCount(){$('hrCnt').textContent=G.retry?'다시 '+(G.pos+1)+' / '+G.queue.length:Math.min(G.pos+1,G.queue.length)+' / '+G.queue.length}
+function setCount(){if(G.challenge){$('hrCnt').textContent='도전 '+Math.min(G.pos+1,G.queue.length)+' / '+G.queue.length;return}$('hrCnt').textContent=G.retry?'다시 '+(G.pos+1)+' / '+G.queue.length:Math.min(G.pos+1,G.queue.length)+' / '+G.queue.length}
 function flipStrip(d,o){$('hrDate').textContent=d;$('hrOpp').textContent=o;$('hrChip').hidden=true;var w=$('hrWhen');w.classList.remove('flip');void w.offsetWidth;w.classList.add('flip');G.lastDate=''}
 
-$('hrStart').onclick=function(){if($('hrStart').dataset.go==='box'){location.href='locker.html#balls';return}startRound()};
-function startRound(){
-  G.queue=nextQueue();G.asShown=false;G.as=null;G.pos=0;G.missed=[];G.retry=false;G.caught=0;G.nice=0;G.plan=G.queue.length;G.lastDate='';
+$('hrStart').onclick=function(){startRound($('hrStart').dataset.go==='gg')};
+function startRound(challenge){
+  pfReset();G.challenge=!!challenge;
+  G.queue=G.challenge?pfPool():nextQueue();
+  G.need=G.queue.filter(function(i){return !HR[i].ground}).length;/* 퍼펙트에 필요한 나이스 캐치 수 */
+  G.asShown=G.challenge;/* 도전에선 올스타 장면 없이 */G.as=null;G.pos=0;G.missed=[];G.retry=false;G.caught=0;G.nice=0;G.plan=G.queue.length;G.lastDate='';
   $('hrGate').hidden=true;G.state='play';launchNext(.6);loop();
 }
 function launchNext(delay){
   if(G.pos>=G.queue.length){
-    if(!G.retry&&G.missed.length){G.retry=true;G.queue=G.missed;G.missed=[];G.pos=0;flashMsg('놓친 공이 다시 날아와요',1400);delay=1.6}
+    if(!G.retry&&G.missed.length&&!G.challenge){G.retry=true;G.queue=G.missed;G.missed=[];G.pos=0;flashMsg('놓친 공이 다시 날아와요',1400);delay=1.6}
     else return endRound();
   }
   var h=HR[G.queue[G.pos]];
@@ -115,28 +121,33 @@ function update(dt,now){
   }
 }
 function collect(h,nice,ground){
-  LOCKER.addBall(h.i);G.caught++;if(nice){G.nice++;LOCKER.addNice()}
+  if(!G.challenge)LOCKER.addBall(h.i);G.caught++;if(nice){G.nice++;if(!G.challenge)LOCKER.addNice()}
+  var perf=nice&&!G.miss&&G.nice===G.need;/* 이 공으로 퍼펙트 완성 */
   var say=ground?'그라운드 홈런! '+cardEsc(h.name)+'<small>공은 담장을 안 넘었지만 홈까지 달렸어요</small>'
     :'팡! '+cardEsc(h.name)+'<small>No.'+h.no+' · 시즌 '+h.nth+'호'+(h.title?' · '+cardEsc(h.title):'')+'</small>';
-  $('hrPop').innerHTML=ballHTML(h,false)+'<div class="say">'+say+'</div>'+(nice?'<span class="nice">나이스 캐치!</span>':'');
+  $('hrPop').innerHTML=ballHTML(h,false)+'<div class="say">'+say+'</div>'+(nice?'<span class="nice'+(perf?' gold':'')+'">나이스 캐치!</span>':'');
   $('hrPop').classList.add('show');G.ball=null;
   var b2b=isBackToBack(h),st=STAGE[stageOf(h.i)];
-  setTimeout(function(){$('hrPop').classList.remove('show')},ground?1700:1200);
+  if(perf){G.perfect=true;pfMoment()}
+  setTimeout(function(){$('hrPop').classList.remove('show')},ground?1700:perf?1900:1200);
   G.pos++;launchNext((ground?1.9:1.35)+(b2b?st.b2b:st.gap)-.6);
 }
-function miss(h){G.missed.push(h.i);flashMsg('앞줄 관중이 잡아갔어요',1000);G.pos++;launchNext(1.3)}
+function miss(h){G.miss++;if(!G.challenge)G.missed.push(h.i);flashMsg('앞줄 관중이 잡아갔어요',1000);G.pos++;launchNext(1.3)}
 /* 같은 경기·같은 이닝에 이어지는 공이면 간격을 줄여요 */
 function isBackToBack(h){var nx=HR[G.queue[G.pos+1]];return !!nx&&nx.date===h.date&&nx.inn===h.inn&&nx.home===h.home}
 function flashMsg(t,ms){var m=$('hrMsg');m.textContent=t;m.classList.add('show');clearTimeout(flashMsg.k);flashMsg.k=setTimeout(function(){m.classList.remove('show')},ms)}
 function endRound(){
   G.state='idle';G.ball=null;G.next=null;
   var lost=G.missed.length;
-  $('hrrTitle').textContent=G.caught===G.plan?'한 개도 안 놓쳤어요':'이번 판 끝';
-  $('hrrMsg').textContent=lost?'못 잡은 공 '+lost+'개는 다음 판 맨 앞에서 다시 날아와요.':'잡은 공은 공박스에 순서대로 들어갔어요.';
+  $('hrrTitle').textContent=G.challenge?'도전 끝':G.caught===G.plan?'한 개도 안 놓쳤어요':'이번 판 끝';
+  $('hrrMsg').textContent=G.challenge?(G.perfect?'금 글러브는 공박스에 쌓여요.':'금 글러브는 '+G.need+'개 전부 나이스 캐치일 때만! 한 판 더 해볼까요?')
+    :lost?'못 잡은 공 '+lost+'개는 다음 판 맨 앞에서 다시 날아와요.':'잡은 공은 공박스에 순서대로 들어갔어요.';
+  $('hrrNext').textContent=G.challenge?'한 판 더':'다음 판';
+  pfResult(G.perfect,G.perfect?LOCKER.addPerfect():0);
   $('hrrCaught').textContent=G.caught+'/'+G.plan;$('hrrNice').textContent=G.nice;$('hrrSeason').textContent=LOCKER.ballCount()+'/'+HR_TOTAL;
   $('hrResult').classList.add('show');showGate();$('hrrNext').focus();
 }
-$('hrrNext').onclick=function(){$('hrResult').classList.remove('show');if(nextQueue().length)startRound()};
+$('hrrNext').onclick=function(){$('hrResult').classList.remove('show');if(G.challenge)startRound(true);else if(nextQueue().length)startRound()};
 
 /* 다시 보기: 그라운드 홈런 · 올스타 브레이크 (공은 새로 들어오지 않아요) */
 function startReplay(kind){
@@ -177,6 +188,12 @@ if(/[?&]dev\b/.test(location.search)){
   $('dBreak').onclick=function(){var l=[];for(var i=0;i<HR_BREAK_IDX;i++)l.push(i);LOCKER.setBalls(l);showGate();mgToast('올스타 브레이크 바로 앞까지 채웠어요')};
   $('dAS').onclick=function(){startReplay('allstar')};
   $('dGround').onclick=function(){startReplay('ground')};
+  $('dAll').onclick=function(){LOCKER.setBalls(HR.map(function(h){return h.i}));showGate();mgToast('143개를 다 채웠어요. 금 글러브 도전이 열려요')};
+  /* 퍼펙트 장면: 기록은 안 남기고 연출만 */
+  $('dPerfect').onclick=function(){if(G.state==='play'){mgToast('판이 끝난 뒤에 볼 수 있어요');return}G.need=PF.size;pfMoment();
+    setTimeout(function(){$('hrrTitle').textContent='';$('hrrMsg').textContent='확인용 장면이라 기록은 남지 않아요.';
+      $('hrrCaught').textContent=PF.size+'/'+PF.size;$('hrrNice').textContent=PF.size;$('hrrSeason').textContent=LOCKER.ballCount()+'/'+HR_TOTAL;
+      pfResult(true,LOCKER.perfectCount());$('hrResult').classList.add('show');G.gold=false},2400)};
   $('dReset').onclick=function(){LOCKER.resetBalls();G.state='idle';showGate();mgToast('공박스를 비웠어요')};
 }
 

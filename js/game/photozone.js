@@ -13,11 +13,14 @@ var _pzP=new THREE.Plane(new THREE.Vector3(0,0,1),0),_pzV=new THREE.Vector3();
    (2026-11-01) 포즈 3개(소개·만세·브이), 포즈마다 표정이 달라요
    - 소개 'normal': 동그란 눈 + 작은 미소, 눈도 깜빡여요(차분하게 안내)
    - 만세 'joy'   : 눈웃음 + 활짝 벌린 입 + 빨간 볼(제일 신남, KKK 김광현 얼굴을 으쓱이 얼굴로 옮김)
-   - 브이 'happy' : ^ ^ 눈 + 웃는 입 */
+   - 브이 'happy' : ^ ^ 눈 + 웃는 입
+   (2026-11-01) 4번째 포즈 '뒤돌기': 완전히 등을 돌려 세트(홈런기념판·플레이어존 패널)를 올려다봐요. 사진엔 등번호·이름이 보여요.
+     몸 돌리기는 아래 pzTick(want=π), 고개 들기는 P.hx(entities/character.js) */
 var PZ_POSE={
   pzShow:function(P,t){var s=Math.sin(t*2.4)*.05,d=PZ.dir||1;P.aX=-1.15+s;P.bX=-1.15-s;P.aZ=d>0?.8:-.3;P.bZ=d>0?.3:-.8;P.tilt=-d*.04;P.head=-d*.08;return 'normal'},
   pzBanzai:function(P,t){var s=Math.sin(t*3);P.aZ=2.75+s*.06;P.bZ=-2.75-s*.06;P.y=Math.abs(s)*.03;return 'joy'},
-  pzV:function(P,t){var s=Math.sin(t*2.2);P.aZ=2.15;P.aX=-.95;P.bZ=-.18;P.tilt=.07+s*.01;P.head=-.1;return 'happy'}
+  pzV:function(P,t){var s=Math.sin(t*2.2);P.aZ=2.15;P.aX=-.95;P.bZ=-.18;P.tilt=.07+s*.01;P.head=-.1;return 'happy'},
+  pzBack:function(P,t){var s=Math.sin(t*1.3);P.aZ=.2;P.bZ=-.2;P.aX=P.bX=.06;P.hx=-.42+s*.03;P.head=s*.04;P.y=Math.sin(t*2)*.006;return 'happy'}
 };
 
 function pzStart(k){
@@ -85,6 +88,7 @@ function pzTick(dt,beat){
   var S=PZ.set,c=PZ.ch.root;
   /* '소개' 포즈면 가리킬 곳 쪽으로 몸을 살짝 틀어요 */
   var want=0;if(PZ.pose==='pzShow'){var dx=S.pointX()-c.position.x;PZ.dir=dx>=0?1:-1;want=PZ.dir*.38}
+  else if(PZ.pose==='pzBack')want=Math.PI;/* 뒤돌기: 세트 쪽을 봐요 */
   c.rotation.y=damp(c.rotation.y,want,8,dt);
   PZ.ch.update(dt,beat);
   if(S.tick)S.tick(dt);

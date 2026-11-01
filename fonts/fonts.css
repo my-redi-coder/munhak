@@ -1,0 +1,11 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* ================= 글꼴 (2026-11-01) =================
+   구글 글꼴 서버 대신 이 저장소에서 바로 받아요. 광고 차단·회사 와이파이 등으로 구글이 막혀도 손글씨가 보여요.
+   사이트에 쓰이는 글자 위주로 줄인 파일이라 가벼워요. 글꼴은 그 글꼴을 쓰는 글자가 화면에 나올 때만 내려받아요.
+   라이선스: fonts/LICENSE.md (모두 OFL) */
+@font-face{font-family:'Gowun Dodum';font-style:normal;font-weight:400;font-display:swap;src:url('GowunDodum-Regular.woff2') format('woff2')}
+@font-face{font-family:'Black Han Sans';font-style:normal;font-weight:400;font-display:swap;src:url('BlackHanSans-Regular.woff2') format('woff2')}
+@font-face{font-family:'Nanum Pen Script';font-style:normal;font-weight:400;font-display:swap;src:url('NanumPenScript-Regular.woff2') format('woff2')}
+@font-face{font-family:'Nanum Brush Script';font-style:normal;font-weight:400;font-display:swap;src:url('NanumBrushScript-Regular.woff2') format('woff2')}
+@font-face{font-family:'Gaegu';font-style:normal;font-weight:400;font-display:swap;src:url('Gaegu-Regular.woff2') format('woff2')}
+@font-face{font-family:'Gaegu';font-style:normal;font-weight:700;font-display:swap;src:url('Gaegu-Bold.woff2') format('woff2')}

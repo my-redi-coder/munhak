@@ -74,7 +74,7 @@ function Char(o){
   this.jMat=new THREE.MeshLambertMaterial({transparent:true,alphaTest:.3,side:THREE.FrontSide});
   var j1=new THREE.Mesh(this.jGeo,this.jMat),j2=new THREE.Mesh(this.jGeo,this.jMat);j2.rotation.y=Math.PI;this.jersey.add(j1);this.jersey.add(j2);
   if(o.shadow!==false){this.shadow=new THREE.Mesh(GEO.shadow,shadowMat);this.shadow.position.y=.02;root.add(this.shadow)}
-  this.cur={aZ:.12,aX:0,bZ:-.12,bX:0,lA:0,lB:0,y:0,tilt:0,head:0,jz:0};
+  this.cur={aZ:.12,aX:0,bZ:-.12,bX:0,lA:0,lB:0,y:0,tilt:0,head:0,jz:0,hx:0};/* hx: 고개 위아래(+ 숙임, - 들기) */
   this.mode='stand';this.act=null;this.t=Math.random()*10;this.blinkT=rnd(2,5);this.beatOff=Math.random()<.5?0:(Math.random()<.5?.08:-.08);
   this.setBack(o.backName||'',o.backNum==null?'':o.backNum);
 }
@@ -96,7 +96,7 @@ Char.prototype.setAct=function(a){
 };
 Char.prototype.setFace=function(k){if(this.faceKind!==k){this.faceKind=k;this.face.material=FACE[k]}};
 Char.prototype.update=function(dt,beat){
-  this.t+=dt;var t=this.t,P={aZ:.12,aX:0,bZ:-.12,bX:0,lA:0,lB:0,y:0,tilt:0,head:0,jz:0},face='normal',k=14;
+  this.t+=dt;var t=this.t,P={aZ:.12,aX:0,bZ:-.12,bX:0,lA:0,lB:0,y:0,tilt:0,head:0,jz:0,hx:0},face='normal',k=14;
   if(this.mode==='walk'){var s=Math.sin(t*11);P.lA=s*.7;P.lB=-s*.7;P.aX=-s*.55;P.bX=s*.55;P.y=Math.abs(Math.cos(t*11))*.04}
   else if(this.mode==='sit'){P.lA=P.lB=-1.45;P.aX=P.bX=-.4;P.aZ=.16;P.bZ=-.16;P.y=Math.sin(t*1.6)*.006}
   else P.y=Math.sin(t*2)*.008;
@@ -121,6 +121,6 @@ Char.prototype.update=function(dt,beat){
   var c=this.cur;for(var key in P)c[key]=damp(c[key],P[key],k,dt);
   this.armA.rotation.set(c.aX,0,c.aZ);this.armB.rotation.set(c.bX,0,c.bZ);
   this.legA.rotation.x=c.lA;this.legB.rotation.x=c.lB;
-  this.body.position.y=c.y;this.body.rotation.z=c.tilt;this.headG.rotation.z=c.head;this.jersey.rotation.z=c.jz;
+  this.body.position.y=c.y;this.body.rotation.z=c.tilt;this.headG.rotation.z=c.head;this.headG.rotation.x=c.hx;this.jersey.rotation.z=c.jz;
 };
 Char.prototype.dispose=function(){if(this.root.parent)this.root.parent.remove(this.root);if(this.backMat.map)this.backMat.map.dispose();if(this.jMat.map)this.jMat.map.dispose();this.torsoMat.dispose();this.backMat.dispose();this.jMat.dispose();if(this.player)this.jGeo.dispose()};

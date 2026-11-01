@@ -6,9 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>홈런볼 모으기 — 불펜장</title>
 <!-- SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="stylesheet" href="shared/mg.css">
 <link rel="stylesheet" href="shared/ball.css">
 <link rel="stylesheet" href="homerun/homerun.css">
@@ -26,12 +24,15 @@
   </div>
   <div class="field">
     <canvas id="hrCanvas" tabindex="0" aria-label="외야 관중석. 글러브를 좌우로 움직여 공을 잡아요"></canvas>
+    <canvas id="hrConfetti" aria-hidden="true"></canvas>
+    <div class="perf-banner" id="hrPerfect" aria-live="polite"></div>
     <div class="pop" id="hrPop"></div>
     <div class="msg" id="hrMsg"></div>
     <div class="gate" id="hrGate">
       <h3 id="gateTitle"></h3>
       <p id="gateText"></p>
       <button class="primary" id="hrStart">시작</button>
+      <a class="gate-box" id="hrGateBox" href="locker.html#balls" hidden>공박스 보기</a>
     </div>
   </div>
   <p class="howto">글러브를 좌우로 끌어 공 그림자 위에 두면 잡혀요. 공이 떨어지는 순간 화면을 누르면 나이스 캐치!</p>
@@ -43,6 +44,8 @@
       <button class="secondary" id="dBreak">올스타 직전까지 채우기</button>
       <button class="secondary" id="dAS">올스타 장면 바로 보기</button>
       <button class="secondary" id="dGround">그라운드 홈런 바로 보기</button>
+      <button class="secondary" id="dAll">143개 다 채우기(금 글러브 도전)</button>
+      <button class="secondary" id="dPerfect">퍼펙트 장면 보기</button>
       <button class="secondary" id="dReset">공박스 비우기</button>
     </div>
   </section>
@@ -50,8 +53,11 @@
 
 <div class="overlay" id="hrResult" role="dialog" aria-modal="true" aria-labelledby="hrrTitle">
   <div class="sheet">
+    <div class="perf-stamp" id="pfStamp" aria-hidden="true"><b>PERFECT</b><small>ALL NICE CATCH</small></div>
     <h3 id="hrrTitle"></h3>
+    <p class="perf-line" id="pfLine" hidden></p>
     <p id="hrrMsg"></p>
+    <div class="perf-glove" id="pfGlove" hidden></div>
     <div class="result"><div>잡은 공<b id="hrrCaught"></b></div><div>나이스 캐치<b id="hrrNice"></b></div><div>시즌<b id="hrrSeason"></b></div></div>
     <div class="row"><a class="secondary" href="locker.html#balls">공박스 보기</a><button class="primary" id="hrrNext">다음 판</button></div>
   </div>
@@ -65,6 +71,8 @@
 <script src="shared/ball.js"></script>
 <script src="homerun/scene.js"></script>
 <script src="homerun/cutscene.js"></script>
+<script src="shared/glove.js"></script>
 <script src="homerun/game.js"></script>
+<script src="homerun/perfect.js"></script>
 </body>
 </html>

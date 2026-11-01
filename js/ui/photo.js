@@ -16,14 +16,13 @@ var POLA={side:.075,top:.075,bot:.29,pad:.09,
   font:'"Nanum Pen Script", "Gaegu", cursive',capSize:.085,dateSize:.058};
 function photoStamp(){var d=new Date(),p=function(n){return ('0'+n).slice(-2)};return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds())}
 function photoDate(){var d=new Date(),p=function(n){return ('0'+n).slice(-2)};return d.getFullYear()+'. '+p(d.getMonth()+1)+'. '+p(d.getDate())}
-/* 손글씨 글꼴은 포토존에 처음 들어갈 때 불러요(ui/photozone-ui.js가 부름) */
+/* 손글씨 글꼴은 포토존에 처음 들어갈 때 미리 받아둬요(ui/photozone-ui.js가 부름). 글꼴 파일은 fonts/ (2026-11-01부터 구글 대신 저장소) */
 function photoFonts(){
   if(PHOTO.font)return PHOTO.font;
-  var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap';document.head.appendChild(l);
   PHOTO.font=new Promise(function(ok){
     if(!document.fonts||!document.fonts.load)return ok();
     var tm=setTimeout(ok,2500);/* 늦으면 기본 글꼴로 */
-    l.onload=function(){document.fonts.load('60px "Nanum Pen Script"').then(function(){clearTimeout(tm);ok()},ok)};l.onerror=ok;
+    document.fonts.load('60px "Nanum Pen Script"','문학에서 봄을 기다리며 2026').then(function(){clearTimeout(tm);ok()},ok);
   });
   return PHOTO.font;
 }

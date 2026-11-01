@@ -2,6 +2,7 @@
 /* ================= 야푸먹기 =================
    (묶음 B) 테이블 위 수첩 이스터에그는 js/ui/food-note.js
    (B3) 테이블 위 핸드폰 잠금화면(개막 D-day·SSG 인스타·쓱튜브 알림)은 js/ui/food-phone.js
+   (2026-11-01) 테이블 위 입장권을 누르면 티켓북이 그 자리에서 펼쳐져요 → js/ui/food-ticket.js
    내 자리 앞 테이블. 배경은 지금 3D 장면을 흐리게 보여주고, 관중 소리는 조금 낮춰 계속 들려요.
    주문 → 상에 차림(같은 음식은 한 접시) → 눌러서 한 입씩(새우4·물회5·홈런볼6) → 빈 그릇은 비닐봉투로.
    기록은 이번 방문 안에서만, 음식별 그릇 수. 맥주는 5번 홀짝 → '한 잔 더'(기록 없음). 짝짝이는 소리. */
@@ -90,8 +91,8 @@ function fdTable(){
   /* 핸드폰 → js/ui/food-phone.js (잠금화면) */
   +phoneSvg(hm)
   +'<g id="fdBag">'+fdBagSvg()+'</g>'
-  /* 입장권 */
-  +'<g transform="translate(150 354) rotate(-6)"><rect x="-50" y="-27" width="100" height="54" rx="3" fill="#fffaf0" stroke="#e0d6c0"/><rect x="-50" y="-27" width="100" height="10" fill="#c8102e"/><text x="-44" y="-19.5" font-size="6.5" fill="#fff">문학 · 1루 입장권</text><text x="-44" y="-3" font-size="10" fill="#3a3a30">'+z+'</text><text x="-44" y="9" font-size="7" fill="#3a3a30">'+FOOD.seat[0]+'열 '+FOOD.seat[1]+'번</text><text x="-44" y="20" font-size="5.5" fill="#8a8670">봄날 경기</text><path d="M26-17V27" stroke="#cfc4aa" stroke-dasharray="2 2"/><g stroke="#3a3a30" stroke-width=".9"><path d="M32-12V20M35-12V20M37-12V20M41-12V20M44-12V20"/></g></g>'
+  /* 입장권 → 누르면 티켓북 (js/ui/food-ticket.js) */
+  +'<g id="fdTicket" class="fd-tap" role="button" tabindex="0" aria-label="입장권, 티켓북 펼치기" transform="translate(150 354) rotate(-6)"><rect x="-50" y="-27" width="100" height="54" rx="3" fill="#fffaf0" stroke="#e0d6c0"/><rect x="-50" y="-27" width="100" height="10" fill="#c8102e"/><text x="-44" y="-19.5" font-size="6.5" fill="#fff">문학 · 1루 입장권</text><text x="-44" y="-3" font-size="10" fill="#3a3a30">'+z+'</text><text x="-44" y="9" font-size="7" fill="#3a3a30">'+FOOD.seat[0]+'열 '+FOOD.seat[1]+'번</text><text x="-44" y="20" font-size="5.5" fill="#8a8670">봄날 경기</text><path d="M26-17V27" stroke="#cfc4aa" stroke-dasharray="2 2"/><g stroke="#3a3a30" stroke-width=".9"><path d="M32-12V20M35-12V20M37-12V20M41-12V20M44-12V20"/></g></g>'
   /* 물티슈·휴지 */
   +'<g transform="translate(234 356)"><rect x="-24" y="-18" width="48" height="34" rx="7" fill="#f7f9fb" stroke="#d7dde3"/><rect x="-24" y="-6" width="48" height="10" fill="#6aa6d6"/><text y="1.5" font-size="6.5" fill="#fff" text-anchor="middle">물티슈</text></g><g transform="translate(262 322)"><circle r="9" fill="#fff" stroke="#e2e2e2"/><path d="M-5-2q3 3 6-1t4 3M-3 4q3-2 6 1" stroke="#e2e2e2" fill="none"/></g>'
   /* 짝짝이 */
@@ -160,7 +161,7 @@ function openFood(){
   if(phase!=='game'||FOOD.open)return;if(EV.on){toast('이벤트가 끝나면 먹을 수 있어요');return}
   auEnsure();FOOD.open=true;var t=$('fdTbl');t.innerHTML=fdTable();
   FD_KEYS.forEach(function(k){if(FOOD.on[k]!=null)fdAddDish(k,false)});
-  fdBind($('fdBeer'),fdSip);fdBind($('fdClap'),fdClap);noteBind();phoneBind();fdBeerLabel();
+  fdBind($('fdBeer'),fdSip);fdBind($('fdClap'),fdClap);noteBind();phoneBind();ticketBind();fdBeerLabel();
   var z=ZONES[curBlock&&ZONES[curBlock.key]?curBlock.key:ME.zone].label;$('fdWhere').textContent=z+' · 내 자리';
   $('fdSheet').hidden=true;$('food').hidden=false;fdUI();
   if(AU.ctx){var tt=AU.ctx.currentTime;AU.amb.gain.setTargetAtTime(AU.vol.amb/100*.7,tt,.3);AU.beat.gain.setTargetAtTime(AU.vol.beat/100*.7,tt,.3)}
@@ -168,9 +169,9 @@ function openFood(){
   $('fdOrder').focus();
 }
 function closeFood(){
-  if(!FOOD.open)return;noteClose();phoneClose();FOOD.open=false;$('food').hidden=true;clearInterval(FOOD.swT);clearTimeout(FOOD.hintT);applyVol();
+  if(!FOOD.open)return;noteClose();phoneClose();ticketClose();FOOD.open=false;$('food').hidden=true;clearInterval(FOOD.swT);clearTimeout(FOOD.hintT);applyVol();
   var b=document.querySelector('.act[data-act="food"]');if(b)b.focus();
 }
-function foodEsc(){if(PHONE.on)phoneClose();else if(NOTE.on)noteClose();else if(!$('fdSheet').hidden)fdSheet(false);else closeFood()}
+function foodEsc(){if(TKB.on)ticketClose();else if(PHONE.on)phoneClose();else if(NOTE.on)noteClose();else if(!$('fdSheet').hidden)fdSheet(false);else closeFood()}
 $('fdClose').onclick=closeFood;$('fdOrder').onclick=function(){fdSheet(true)};$('fdSheetX').onclick=function(){fdSheet(false)};$('fdGo').onclick=fdOrder;
 var _fdEnter=enterGame;enterGame=function(){foodReset();closeFood();return _fdEnter.apply(this,arguments)};

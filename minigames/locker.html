@@ -6,9 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>내 라커 — 불펜장</title>
 <!-- SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="stylesheet" href="shared/mg.css">
 <link rel="stylesheet" href="shared/card.css">
 <link rel="stylesheet" href="shared/ball.css">
@@ -51,7 +49,7 @@
   </section>
 
   <section id="balls" hidden>
-    <h2 class="sec">기념구 진열장</h2>
+    <div class="secrow"><h2 class="sec">기념구 진열장</h2><span class="gbadge" id="gBadge" hidden></span></div>
     <div class="showcase" id="showcase"></div>
     <div class="months" id="months" role="group" aria-label="달 고르기"></div>
     <div class="shelf" id="shelf"></div>
@@ -65,11 +63,12 @@
   <section id="tickets" hidden>
     <div class="tkbook">
       <div class="tkprog"><b id="tkCount"></b><span>2026 시즌 승리 경기</span></div>
+      <p class="tkempty" id="tkEmpty" hidden>티켓팅 War로 이긴 경기 티켓을 모아보세요</p>
       <div class="tktabs" id="tkTabs" role="group" aria-label="상대 구단 고르기"></div>
       <div class="tkgrid" id="tkGrid"></div>
     </div>
     <p class="tip" style="text-align:center">티켓을 누르면 꺼내서 볼 수 있어요.</p>
-    <a class="primary" href="ticketing.html" style="margin-top:16px">티켓팅 하러 가기</a>
+    <a class="primary" id="tkGo" href="ticketing.html" style="margin-top:16px">티켓팅 하러 가기</a>
   </section>
 </main>
 <div class="tkmodal" id="tkModal" hidden role="dialog" aria-modal="true" aria-label="티켓 꺼내 보기">
@@ -90,6 +89,7 @@
 <script src="shared/card.js"></script>
 <script src="shared/homeruns.js"></script>
 <script src="shared/ball.js"></script>
+<script src="shared/glove.js"></script>
 <script src="shared/tickets.js"></script>
 <script src="shared/ticket.js"></script>
 <script src="locker/locker.js"></script>

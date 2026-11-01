@@ -2,6 +2,20 @@
 
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
+## 묶음 F: 티켓북 바로가기 · 퍼펙트 판 · 금 글러브 도전 · 글꼴 · 뒤돌기 포즈 — 완료 (2026-11-01, `munhak_2026-11-01_F-ticketbook-perfect`)
+
+1. 포토존 포즈 **뒤돌기**(`config.js`의 `PZ_CFG.poses`, `js/game/photozone.js`의 `PZ_POSE.pzBack`): 몸을 완전히 돌려(`pzTick`에서 want=π) 세트를 올려다봄. 고개 위아래는 새 값 `P.hx`(`js/entities/character.js`, `headG.rotation.x`)
+2. 야푸먹기 테이블 위 **입장권 → 티켓북**(`js/ui/food-ticket.js`, `styles/food-ticket.css`): `minigames/locker.html?embed=1#tickets`를 아래에서 올라오는 창(iframe)으로. 닫기: 티켓북 '뒤로'·바깥·Esc(postMessage `munhak:tkb-close`). 맨 아래 '티켓팅 하러 가기'는 야푸먹기를 닫고 불펜장 창에 티켓팅 War(`openBullpen(url)`, `munhak:tkb-ticketing`)
+   - 티켓이 없으면 티켓북 위에 안내 문구(`#tkEmpty`, 라커의 티켓북에서도 똑같이)
+3. 입장권 귀퉁이 **✦ 반짝 두 번**: 사이트를 연 뒤 테이블이 처음 보일 때 한 번만(`TKB.glinted`, 새로고침하면 다시)
+4. 스페인어 수첩: **어디를 눌러도 다음 장**, 3장 다음은 1장(`js/ui/food-note.js`의 `noteGo`)
+5. **글꼴을 저장소에**(`fonts/`): 고운돋움·검은고딕·나눔펜(한글 2,350자+사이트 글자), 나눔붓·개구(담벼락 글자만), woff2 6개 약 1.3MB, `fonts/fonts.css` + `fonts/LICENSE.md`(OFL). 모든 html의 구글 글꼴 링크를 바꾸고, `photo.js`·`wall.js`·`food-note.js`의 구글 글꼴 불러오기 삭제
+6. 홈런볼 **퍼펙트 판**(`minigames/homerun/perfect.js`): 놓친 공 없이 전부 나이스 캐치(그라운드 홈런은 빼고 셈, `G.need`·`G.miss`) → 하늘에 'N개 전부 나이스 캐치!' + 종이가루 + 금 글러브(✦) + 금색 나이스 캐치 딱지 / 결과에 PERFECT 도장 + '짐승도 울고 갈 수비…!' + 금 글러브 줄. 기록 `LOCKER.addPerfect()`(`perfect` 항목 새로, 기존 기록 그대로) → 공박스 '기념구 진열장' 옆 금 글러브 배지(`shared/glove.js`)
+7. 기념구 **〈언제나 처음은 소중하다〉**(`shared/ball.js`의 `BALL_MOTTO`): 크게 볼 때 아래 실밥 밑에 검정 작은 손글씨, 실밥 곡선을 따라 휨
+8. **금 글러브 도전**: 143개를 다 모은 뒤 시작 화면 버튼. 랜덤 12개(그라운드 홈런 빼고), 올스타 장면·놓친 공 다시 오기 없음, 공박스·나이스 캐치 누적은 그대로, 퍼펙트만 쌓임. 결과 버튼 '한 판 더'
+- 확인용(`homerun.html?dev`): '143개 다 채우기(금 글러브 도전)', '퍼펙트 장면 보기'(기록 안 남김)
+- 확인: JS 문법 검사 + 홈런볼·라커 페이지 오류 없이 열리는지만. 폰에서 볼 것: 뒤돌기 고개 방향, 티켓북 창 높이·닫기, 반짝 위치, 수첩 넘기기, 다른 폰에서 손글씨, 퍼펙트 연출, 공 아래 문구 위치
+
 ## 작은 패치 E: 포토존 폴라로이드 + 플레이어존 무대 꾸미기 — 완료 (2026-11-01, `munhak_2026-11-01_E-polaroid-stage`)
 
 - 폴라로이드 촬영 틀: `index.html`의 `#pzFrame`이 정사각형 → 폴라로이드 종이(`.pz-paper`) + 사진 칸(`#pzWin`) + 미리보기 문구·날짜 + 마스킹테이프. 아래 흰 여백이 화면의 바닥을 가림. 모양은 `styles/photozone.css`, 비율은 `js/ui/photo.js`의 `POLA`와 같게(사진 칸 1 기준 옆·위 .075, 아래 .29)

@@ -51,18 +51,19 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `events/yeonan.js` | 163 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, ynLyricEl, ynLyric, ynShot, ynCam |
 | `js/ui/fieldmode.js` | 28 | matchSync, syncFieldBtns, pickFieldMode, pickDayTime |
 | `js/ui/event-sheet.js` | 13 | buildEventList |
-| `js/ui/food.js` | 176 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
-| `js/ui/food-note.js` | 58 | NOTE, NOTE_PAGES, NOTE_DOODLE, NOTE_STAMP, noteSvg, noteFonts, noteLine, noteBuild, notePaint, noteGo, noteFocus, noteOpen, noteClose, noteBind |
+| `js/ui/food.js` | 177 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
+| `js/ui/food-note.js` | 59 | NOTE, NOTE_PAGES, NOTE_DOODLE, NOTE_STAMP, noteSvg, noteFonts, noteLine, noteBuild, notePaint, noteGo, noteFocus, noteOpen, noteClose, noteBind |
 | `js/ui/food-phone.js` | 127 | PHONE_CFG, PHONE, PH_DAYS, PH_ICON, phWall, phoneSvg, phDday, phBuild, phTime, phChime, phoneOpen, phoneClose, phoneBind |
-| `js/ui/bullpen.js` | 21 | MG, openBullpen, closeBullpen |
+| `js/ui/food-ticket.js` | 44 | TKB, TKB_SRC, ticketBuild, ticketOpen, ticketClose, ticketGlint, ticketBind |
+| `js/ui/bullpen.js` | 22 | MG, openBullpen, closeBullpen |
 | `js/game/input.js` | 55 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
 | `js/game/camera.js` | 34 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
 | `js/game/sightsee.js` | 18 | SS, ssStart, ssStop, ssCam, ssDrag |
-| `js/game/photozone.js` | 91 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, PZ_WIN, pzWinMeasure, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab … |
-| `js/ui/photo.js` | 126 | PHOTO, POLA, photoStamp, photoDate, photoFonts, photoWin, polaPetal, polaTape, polaCompose, polaFlat, polaRender, takePhoto, polaCapDone |
+| `js/game/photozone.js` | 95 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, PZ_WIN, pzWinMeasure, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab … |
+| `js/ui/photo.js` | 125 | PHOTO, POLA, photoStamp, photoDate, photoFonts, photoWin, polaPetal, polaTape, polaCompose, polaFlat, polaRender, takePhoto, polaCapDone |
 | `js/ui/photozone-ui.js` | 61 | pzBtn, pzUIOpen, pzUIClose, pzUISync, pzHold |
 | `js/ui/places.js` | 53 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
-| `js/ui/wall.js` | 58 | WALL, wallFonts, wallArt, wallOpen, wallClose |
+| `js/ui/wall.js` | 54 | WALL, wallFonts, wallArt, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
 | `js/app/loop.js` | 20 | T, frame |

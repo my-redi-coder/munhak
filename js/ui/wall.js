@@ -8,12 +8,8 @@
    - 손글씨 글꼴(나눔붓·나눔펜·개구)은 담벼락에 처음 들어갈 때만 불러요(첫 로딩 가볍게).
    - 담벼락이 화면을 다 덮는 동안 야구장 그리기는 쉬어요(app/loop.js의 WALL.on). 스타일은 styles/wall.css */
 var WALL={on:false,fonts:false,art:false};
-function wallFonts(){
-  if(WALL.fonts)return;WALL.fonts=true;
-  var l=document.createElement('link');l.rel='stylesheet';
-  l.href='https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=Gaegu:wght@400;700&display=swap';
-  document.head.appendChild(l);
-}
+/* 글꼴은 fonts/fonts.css에 있고, 담벼락 글자가 화면에 나올 때 저절로 내려받아요(2026-11-01부터 구글 대신 저장소) */
+function wallFonts(){WALL.fonts=true}
 function wallArt(){
   if(WALL.art)return;WALL.art=true;
   $('wallArt').innerHTML='<svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" role="img" aria-label="야구장 담벼락">'

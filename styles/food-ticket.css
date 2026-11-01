@@ -1,0 +1,14 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* 야푸먹기: 테이블 위 입장권 → 티켓북 (js/ui/food-ticket.js) */
+.tkb-ov{position:absolute;inset:0;z-index:6;background:rgba(30,34,26,.5);display:flex;align-items:flex-end;justify-content:center;
+  padding-top:calc(env(safe-area-inset-top,0px) + 28px);opacity:0;pointer-events:none;transition:opacity .22s}
+.tkb-ov.on{opacity:1;pointer-events:auto}
+.tkb-sheet{width:100%;max-width:520px;height:100%;border-radius:20px 20px 0 0;overflow:hidden;background:var(--paper,#f1efe5);
+  box-shadow:0 -10px 30px rgba(20,24,16,.3);transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.9,.3,1)}
+.tkb-ov.on .tkb-sheet{transform:none}
+.tkb-sheet iframe{display:block;width:100%;height:100%;border:0;background:transparent}
+/* 입장권 귀퉁이 ✦ 반짝 (두 번) */
+.fd-glint{transform-box:fill-box;transform-origin:center;opacity:0;animation:fdGlint .9s ease-in-out 2;pointer-events:none;filter:drop-shadow(0 0 2px rgba(255,236,170,.9))}
+@keyframes fdGlint{0%{opacity:0;transform:translate(47px,-24px) scale(.2) rotate(0)}45%{opacity:1;transform:translate(47px,-24px) scale(1) rotate(25deg)}100%{opacity:0;transform:translate(47px,-24px) scale(.2) rotate(50deg)}}
+@media (prefers-reduced-motion:reduce){.tkb-ov,.tkb-sheet{transition:none}.fd-glint{animation:fdGlintCalm 1.8s ease-in-out 1}
+  @keyframes fdGlintCalm{0%,100%{opacity:0;transform:translate(47px,-24px)}50%{opacity:.9;transform:translate(47px,-24px)}}}

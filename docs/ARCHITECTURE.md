@@ -126,3 +126,11 @@
 - **응원단상** `js/game/mascots.js`: `makeMascots()`(boot.js, `makeLeader()` 다음)가 `stageG`에 세움. `mascotTick(dt,beat)`(loop.js, 매 프레임 — 입장 준비 화면에서도 유니폼은 따라감): `ME.uni` 비교 → `setUniform`, `leader.act==='cheer'`면 율동, `player.act==='cheer'`이고 이벤트 중이 아니면 `MASC.next` 타이머로 랜덤 포즈. 누르기는 `input.js`가 `mascotMeshes()`를 맞힘 대상에 넣고 `userData.mascot`이면 `mascotTap` + 이름표.
 - 배리 몸통은 정면 윤곽(`barryCrownShape`)을 가운데에서 사방으로 부풀린 면(`barryCrownGeo`), 얼굴 부품은 `barryFront(x,y)`로 휜 앞면에 붙여요. 재질은 빛을 덜 타게(일부 자체 발광) 해서 야구장 빛에 하얗게 날아가지 않게.
 
+
+## 묶음 F: 티켓북 바로가기 · 퍼펙트 판 · 글꼴 (2026-11-01)
+
+- **글꼴**: `fonts/fonts.css`(@font-face 6개) → 각 html `<head>`에서 한 줄(`fonts/fonts.css`, 미니게임은 `../fonts/fonts.css`). 구글 글꼴 서버는 안 씀. 새 글자가 필요하면 원본 글꼴을 다시 줄여야 해요(Claude에게 부탁).
+- **야푸먹기 → 티켓북**: `js/ui/food-ticket.js`가 라커 페이지를 `?embed=1`로 iframe에 띄움. 라커 쪽(`minigames/locker/locker.js`의 `LK_EMBED`)은 '뒤로'·Esc를 `parent.postMessage('munhak:tkb-close')`로, '티켓팅 하러 가기'를 `'munhak:tkb-ticketing'`으로 바꿔 보냄. 같은 사이트(origin)에서 온 메시지만 받음.
+- **불펜장 창에 바로 열기**: `openBullpen(url)` — url을 주면 그 미니게임 페이지로.
+- **홈런볼 퍼펙트·도전**: `minigames/homerun/perfect.js`(game.js 다음에 불러옴). game.js는 `pfPool()` `pfMoment()` `pfResult()` `pfReset()`만 부름. 금 글러브 아이콘은 `minigames/shared/glove.js`(결과·공박스 공용).
+- **저장 칸**: `minigames/shared/store.js`의 `munhak-locker-v1`은 이름·모양을 바꾸지 않기. 새 항목은 기본값을 넣어 더하기(이번 `perfect`처럼).

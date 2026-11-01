@@ -33,3 +33,9 @@
 
 - 새 곡은 다음 번호(12번~)로. 128kbps mp3로 바꿔 올리고, `songs.js`에 한 줄(제목·파일·빠르기·첫 박 시간). 이 표에도 한 줄.
 - 빠르기가 빨라 율동이 정신없으면 그 곡만 bpm을 절반으로 적으면 돼요.
+
+## 글꼴 (`fonts/`, 2026-11-01)
+
+- 손글씨·제목 글꼴 파일이 저장소 안에 있어요(구글 글꼴 서버를 안 써서, 누구 폰에서든 똑같이 보여요). 직접 올릴 건 없어요.
+- 파일: `GowunDodum-Regular.woff2` `BlackHanSans-Regular.woff2` `NanumPenScript-Regular.woff2` `NanumBrushScript-Regular.woff2` `Gaegu-Regular.woff2` `Gaegu-Bold.woff2` + `fonts.css` + `LICENSE.md`
+- 자주 쓰는 한글 2,350자와 사이트 글자만 들어 있어서, 아주 드문 글자는 기본 글꼴로 보일 수 있어요.

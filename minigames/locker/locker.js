@@ -5,10 +5,17 @@
    공박스: 위 기념구 진열장(날짜만, 눌러야 어떤 공인지) → 달 고르기 → 선반(한 줄 5개, 시즌 순서).
      기념구는 선반 제자리에 ★ 표시만 남아요. 공을 누르면 손글씨 기념구가 크게.
      그라운드 홈런·올스타 브레이크를 게임에서 한 번 본 사람에게만 '다시 보기' 버튼.
+     (2026-11-01) 퍼펙트 판을 한 번이라도 하면 '기념구 진열장' 옆에 금 글러브 배지(퍼펙트 n회). 공을 크게 보면 아래 실밥 밑에 〈언제나 처음은 소중하다〉(shared/ball.js)
    (묶음 B) 라커는 두 칸씩 두 줄: 카드 앨범 · 공박스 / 티켓북(#tickets) · 빈 라커(안 열리고 철컹 소리만).
-   티켓북: 상대 구단별 탭(많이 이긴 순), 주머니에 반쯤 꽂힌 티켓, 누르면 꺼내 보기 + 하이라이트. 그리기는 shared/ticket.js */
+   티켓북: 상대 구단별 탭(많이 이긴 순), 주머니에 반쯤 꽂힌 티켓, 누르면 꺼내 보기 + 하이라이트. 그리기는 shared/ticket.js
+   (2026-11-01) 티켓이 하나도 없으면 안내 문구(#tkEmpty).
+   (2026-11-01) ?embed 로 열리면 야구장 야푸먹기 테이블 위에 띄운 티켓북(js/ui/food-ticket.js): 뒤로·Esc는 창 닫기, '티켓팅 하러 가기'는 야구장의 불펜장 창으로 티켓팅 War를 열어요 */
 var $=function(id){return document.getElementById(id)};
 var curMonth='open';
+var LK_EMBED=/[?&]embed=1/.test(location.search);
+function lkCloseEmbed(){try{parent.postMessage('munhak:tkb-close',location.origin)}catch(e){}}
+if(LK_EMBED){document.documentElement.classList.add('embed');$('back').setAttribute('aria-label','티켓북 닫기');
+  $('tkGo').onclick=function(e){e.preventDefault();try{parent.postMessage('munhak:tkb-ticketing',location.origin)}catch(er){}}}
 function lkRender(){
   var n=LOCKER.cardCount(),T=ROSTER.length,view=location.hash==='#cards'?'cards':location.hash==='#balls'?'balls':location.hash==='#tickets'?'tickets':'home';
   var cvw=$('cardView');if(cvw)cvw.classList.remove('show');$('ballView').classList.remove('show');
@@ -47,6 +54,8 @@ function lkBalls(){
   }).join('');
   var sp=HR_SPECIALS.filter(function(h){return LOCKER.hasBall(h.i)}).length;
   $('seasonLine').textContent='시즌 '+LOCKER.ballCount()+' / '+HR_TOTAL+' · 진열장 '+sp+' / '+HR_SPECIALS.length;
+  var pc=LOCKER.perfectCount(),gb=$('gBadge');gb.hidden=!pc;/* (2026-11-01) 홈런볼 퍼펙트 판 = 금 글러브 */
+  if(pc){gb.innerHTML=gloveSVG()+'퍼펙트 <b>'+pc+'</b>회';gb.setAttribute('aria-label','금 글러브 '+pc+'개, 퍼펙트 판 '+pc+'회')}
   $('replayGround').hidden=!LOCKER.seen('ground');$('replayAS').hidden=!LOCKER.seen('allstar');
   $('replays').hidden=!(LOCKER.seen('ground')||LOCKER.seen('allstar'));
 }
@@ -64,6 +73,7 @@ function lkTickets(){
   var newI=null;try{var v=sessionStorage.getItem('tw-new');if(v!=null){newI=+v;sessionStorage.removeItem('tw-new');tkTeam=TICKETS[newI].opp}}catch(e){}
   if(!tkTeam)tkTeam=TK_TEAMS[0];
   $('tkCount').textContent=LOCKER.ticketCount()+' / '+TICKETS.length;
+  $('tkEmpty').hidden=LOCKER.ticketCount()>0;
   $('tkTabs').innerHTML=tkTeamTabs(tkTeam);
   var cur=$('tkTabs').querySelector('[aria-pressed="true"]');if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:'nearest',inline:'center'});
   $('tkGrid').innerHTML=tkBookHTML(tkTeam,newI);
@@ -75,7 +85,7 @@ $('tkGrid').addEventListener('click',function(e){var b=e.target.closest('.pocket
   $('tkYt').href='https://www.youtube.com/watch?v='+encodeURIComponent(TICKETS[i].v);$('tkModal').hidden=false;$('tkClose').focus()});
 function tkClose(){$('tkModal').hidden=true}
 $('tkClose').onclick=tkClose;$('tkModal').addEventListener('click',function(e){if(e.target.id==='tkModal')tkClose()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('tkModal').hidden)tkClose()});
+document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;if(!$('tkModal').hidden)tkClose();else if(LK_EMBED)lkCloseEmbed()});
 /* 빈 라커: 안 열리고 철컹 */
 var lkAC=null;
 function lkClank(){try{lkAC=lkAC||new(window.AudioContext||window.webkitAudioContext)();if(lkAC.state==='suspended')lkAC.resume();
@@ -86,7 +96,7 @@ function lkClank(){try{lkAC=lkAC||new(window.AudioContext||window.webkitAudioCon
   var s=c.createBufferSource(),f=c.createBiquadFilter(),g2=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=3000;g2.gain.value=.6;s.connect(f);f.connect(g2);g2.connect(out);s.start(t);
 }catch(e){}}
 $('emptyDoor').onclick=function(){var d=$('emptyDoor');lkClank();d.classList.remove('rattle');void d.offsetWidth;d.classList.add('rattle')};
-$('back').onclick=function(){if(location.hash==='#cards'||location.hash==='#balls'||location.hash==='#tickets')location.hash='';else location.href='bullpen.html'};
+$('back').onclick=function(){if(LK_EMBED){lkCloseEmbed();return}if(location.hash==='#cards'||location.hash==='#balls'||location.hash==='#tickets')location.hash='';else location.href='bullpen.html'};
 window.addEventListener('hashchange',lkRender);
 window.addEventListener('pageshow',lkRender);
 lkRender();

@@ -3,7 +3,8 @@
    테이블 위 남색 수첩(귀퉁이 33)을 누르면 위로 넘기는 메모장이 펼쳐져요. 안내 문구는 일부러 없음.
    1장 <암기장> + 수염 난 투수 ♥ SSG 낙서 / 2장 체크된 두 문장 + COMPLETE 도장(Oct 16, 2026 · max 2 years) / 3장 빈 체크박스 세 문장.
    한글 뜻은 보여주지 않아요. 글을 고칠 땐 NOTE_PAGES만. 모양은 styles/food-note.css
-   (B2) 넘기기는 오른쪽 아래 말린 귀퉁이를 눌러서만. 마지막 장은 귀퉁이가 펴져 있고 누르면 덮여요. 뒤로 가기 없음. 열 때는 늘 1장부터(넘기는 동작 없이)
+   (2026-11-01) 수첩 어디를 눌러도 다음 장. 마지막 3장에서 누르면 다시 1장으로(닫기는 × 또는 바깥). 말린 귀퉁이는 넘길 수 있다는 표시로 남겨 둠.
+   열 때는 늘 1장부터(넘기는 동작 없이)
    food.js와 연결: fdTable()이 noteSvg()를 그리고, openFood가 noteBind(), closeFood·foodEsc가 noteClose()를 불러요. */
 var NOTE={on:false,page:0,built:false,fonts:false};
 var NOTE_PAGES=[
@@ -20,8 +21,8 @@ function noteSvg(){
    +'<path d="M7 0v6M15 0v6M23 0v6M31 0v6" stroke="#a9a9a3" stroke-width="1.6" fill="none"/><rect x="4" y="36" width="32" height="1.6" fill="#c8102e" opacity=".8"/>'
    +'<text x="30" y="50" text-anchor="middle" font-family="Nanum Pen Script, cursive" font-size="13" fill="#fff" transform="rotate(-8 30 46)">33</text></g>';
 }
-function noteFonts(){if(NOTE.fonts)return;NOTE.fonts=true;var l=document.createElement('link');l.rel='stylesheet';
-  l.href='https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap';document.head.appendChild(l)}
+/* 글꼴은 fonts/fonts.css (2026-11-01부터 구글 대신 저장소). 수첩이 열릴 때 저절로 내려받아요 */
+function noteFonts(){NOTE.fonts=true}
 function noteLine(t,checked){
   return '<div class="nt-ln"><svg class="nt-box" viewBox="0 0 28 28" aria-hidden="true"><path class="sq" d="M3 4.5L25 3.5L24.5 25L4 24.5Z"/>'
    +(checked?'<path class="ck" pathLength="1" d="M6 14L12 21L27 1"/>':'')+'</svg><div class="nt-tx"><p class="nt-say">'+t[0]+'</p><p class="nt-es" lang="es">'+t[1]+'</p></div></div>';
@@ -35,20 +36,20 @@ function noteBuild(){
     else inner='<div class="nt-in nt-list'+(P.lines.length>2?' nt-three':'')+'">'+P.lines.map(function(t){return noteLine(t,P.done)}).join('')+'</div>'+(P.done?NOTE_STAMP:'');
     var last=i===NOTE_PAGES.length-1;
     pages+='<section class="nt-page" data-p="'+i+'" aria-label="'+(i+1)+'장">'+inner+'<span class="nt-no">'+(i+1)+'</span>'
-      +'<button class="nt-corner'+(last?' flat':'')+'" aria-label="'+(last?'수첩 덮기':'다음 장 넘기기')+'"></button></section>';
+      +'<button class="nt-corner'+(last?' flat':'')+'" aria-label="'+(last?'첫 장으로':'다음 장 넘기기')+'"></button></section>';
   }
   o.innerHTML='<button class="nt-x" id="ntX" aria-label="수첩 닫기">×</button><div class="nt-book" id="ntBook"><div class="nt-back"></div><div class="nt-rings"><i></i><i></i><i></i><i></i><i></i><i></i></div>'+pages+'</div>'
    +'<div class="nt-dots" aria-hidden="true"><b></b><b></b><b></b></div>';
   $('food').appendChild(o);
   $('ntX').onclick=noteClose;
-  o.addEventListener('click',function(e){if(e.target===o)noteClose();var c=e.target.closest('.nt-corner');if(c)noteGo(1)});
+  o.addEventListener('click',function(e){if(e.target===o){noteClose();return}if(e.target.closest('.nt-book'))noteGo(1)});
 }
 function notePaint(){
   var ps=[].slice.call(document.querySelectorAll('#noteOv .nt-page')).sort(function(a,b){return a.dataset.p-b.dataset.p});
   ps.forEach(function(p,i){p.classList.toggle('gone',i<NOTE.page);p.setAttribute('aria-hidden',i!==NOTE.page);p.classList.toggle('now',i===NOTE.page&&NOTE.on)});
   [].forEach.call(document.querySelectorAll('#noteOv .nt-dots b'),function(d,i){d.classList.toggle('on',i===NOTE.page)});
 }
-function noteGo(d){var n=NOTE.page+d;if(n<0)return;if(n>=NOTE_PAGES.length){noteClose();return}NOTE.page=n;fdSnd('rustle');notePaint();noteFocus()}
+function noteGo(d){var n=NOTE.page+d;if(n<0)return;if(n>=NOTE_PAGES.length)n=0;NOTE.page=n;fdSnd('rustle');notePaint();noteFocus()}
 function noteFocus(){var p=document.querySelector('#noteOv .nt-page[data-p="'+NOTE.page+'"] .nt-corner');if(p)p.focus()}
 function noteOpen(){if(NOTE.on)return;noteFonts();noteBuild();var o=$('noteOv');
   /* 1장으로 되돌릴 때 넘어갔던 장이 다시 내려오는 동작이 보이지 않게 잠깐 움직임을 끔 */

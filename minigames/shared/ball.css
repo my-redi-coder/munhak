@@ -8,6 +8,7 @@
 .hball .l2{font-size:8.4cqw;transform:rotate(1deg)}
 .hball .l3{font-size:8cqw;transform:rotate(-1deg);word-break:keep-all}
 .hball .l4{font-size:6cqw;transform:rotate(.6deg);word-break:keep-all;padding:0 4%}
+.hball .motto text{font-family:"Nanum Pen Script",cursive;font-size:5.4px;fill:#1a1a1a;letter-spacing:.15px}/* 아래 실밥 밑 한 줄 (ball.js BALL_MOTTO) */
 .hball.sp .l1{color:#1a1a1a}.hball.sp .l2{color:#1f4fb5}.hball.sp .l3{color:#1e7a3c}.hball.sp .l4{color:#1a1a1a}
 /* 크게 보기 */
 .ballview{position:fixed;inset:0;z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;background:rgba(20,24,16,.72)}

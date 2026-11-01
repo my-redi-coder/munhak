@@ -56,3 +56,15 @@
 .door.rattle{animation:lkRattle .32s ease-in-out}
 @keyframes lkRattle{20%{transform:translateX(-3px) rotate(-.6deg)}45%{transform:translateX(3px) rotate(.5deg)}70%{transform:translateX(-2px)}}
 @media (prefers-reduced-motion:reduce){.door.rattle{animation:none}}
+
+/* (2026-11-01) 티켓이 없을 때 안내 */
+.tkempty{margin:0 4px 12px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:13.5px;text-align:center}
+/* (2026-11-01) 야구장 야푸먹기 테이블 위에 띄운 티켓북(?embed): 뒤로 버튼이 '닫기' 역할 */
+.embed .mgbar{top:0}
+.embed body::before{display:none}
+/* (2026-11-01) 공박스: 퍼펙트 판 금 글러브 배지 */
+.secrow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:22px 4px 10px}
+.secrow h2.sec{margin:0}
+.gbadge{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px 0 6px;border-radius:999px;background:linear-gradient(135deg,#fff4c2,#d9a83e);color:#4a3207;font-size:12.5px;box-shadow:0 2px 8px rgba(184,134,43,.35);white-space:nowrap}
+.gbadge .gglove{width:24px;height:24px;display:block}
+.gbadge b{font-family:var(--num);font-weight:400;font-size:15px}
