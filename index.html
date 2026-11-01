@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="styles/photozone.css">
 <link rel="stylesheet" href="styles/wall.css">
 <link rel="stylesheet" href="styles/food-note.css">
+<link rel="stylesheet" href="styles/food-phone.css">
 </head>
 <body>
 <canvas id="c" tabindex="0" aria-label="1루 관중석 3D 화면"></canvas>
@@ -73,7 +74,6 @@
     </div>
     <div class="right">
       <div class="cap">
-        <span class="stat" aria-label="1루 관중 수"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5a3 3 0 0 1 0 6M21 20c0-2.8-1.9-5.2-4.5-5.8"/></svg><span id="crowdN">0</span></span>
         <button id="bSound" aria-label="소리 끄기"><svg class="i" viewBox="0 0 24 24" id="sndIco"></svg></button>
         <button id="bSet" aria-label="설정" aria-haspopup="dialog"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button>
         <button id="bPhoto" aria-label="직관 사진"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>
@@ -154,7 +154,7 @@
   <div class="wall-scroll" id="wallScroll">
     <div class="wall-in">
       <div class="note">
-        <p class="loc plate"><b>문학야구장 외벽</b><span>담벼락 한 귀퉁이</span></p>
+        <p class="loc tag"><b>문학야구장 외벽</b><span>담벼락 한 귀퉁이</span></p>
         <p>안녕하세요, SSG 팬 <em class="me">레디코더</em>예요.</p>
         <p>26년 <em class="me">신입 야구팬</em>인 저에게 이번 겨울은 처음으로 맞이하는 야구 없는 계절이에요. 아쉬움을 달래기 위해 문학에 <span class="circ">봄<svg viewBox="0 0 60 40" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M47 8C35 1 13 3 6 14C1 25 14 36 32 35C50 34 59 24 54 14C51 7 40 4 27 6"/></svg></span>을 먼저 데려다 놨어요. 천천히 둘러보고, 응원도 크게 하고 가세요.</p>
         <p>처음으로 개발이란 걸 해보는 문과생이라, 여기저기 부족한 점이 많을 거예요. 넓은 야구팬의 아량으로 예쁘게 봐주세요.</p>
@@ -167,6 +167,9 @@
         <div class="big">김강민 고양이 닮음.</div>
         <div class="small">니 고양이 본적 없냐?</div>
       </div>
+    </div>
+    <!-- (B3) 벽 밑단 + 보도블록: 글 맨 끝에서 같이 스크롤돼요. 출처 글씨는 보도블록 위 -->
+    <div class="wall-ground">
       <div class="credit">
         <div class="src">참고한 곳: SSG 랜더스 공식 앱, 스탯티즈, KBO 기록실, 쓱튜브 영상</div>
         <div>© SSG 팬 레디코더 · CC BY-NC 4.0</div>
@@ -251,6 +254,7 @@
 <script src="js/ui/event-sheet.js"></script>
 <script src="js/ui/food.js"></script>
 <script src="js/ui/food-note.js"></script>
+<script src="js/ui/food-phone.js"></script>
 <script src="js/ui/bullpen.js"></script>
 <script src="js/game/input.js"></script>
 <script src="js/game/camera.js"></script>

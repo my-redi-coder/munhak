@@ -1,3 +1,4 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= UI helpers ================= */
 var toastT=null,lastAmbientToast=0,lastSysToast=0;
 function toast(msg,ms,ambient){
@@ -31,8 +32,5 @@ function drawSoundIcon(){
   $('bSound').setAttribute('aria-label',AU.on?'소리 끄기':'소리 켜기');
 }
 
-/* counts */
-var COUNTS={ussk:Math.floor(rnd(780,920)),infield:Math.floor(rnd(1100,1300)),outfield:Math.floor(rnd(1400,1650)),harulala:Math.floor(rnd(380,470))};
+/* (B3) 위쪽 관중 수 표시는 없앴어요 — 혼자 들어오는 곳이라 필요 없음 */
 function fmt(n){return n.toLocaleString('ko-KR')}
-function totalCount(){return COUNTS.ussk+COUNTS.infield+COUNTS.outfield+COUNTS.harulala}
-setInterval(function(){ZKEYS.forEach(function(k){COUNTS[k]=Math.max(100,COUNTS[k]+Math.floor(rnd(-4,6)))});$('crowdN').textContent=fmt(totalCount())},9000);

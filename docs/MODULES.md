@@ -32,7 +32,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/audio/eventsfx.js` | 51 | HORN_VOL, evDuck, evReady, evSound, EVCLAP, evClapBuild, evClapStop |
 | `js/audio/evbgm.js` | 29 | EVB, evBgmPlay, evBgmPrime, evBgmGo, evBgmStop, evBgmDuck |
 | `js/game/state.js` | 32 | player, cam, PL, makePlayer, placeForSetup, clearNPCs, spawnNPCs, sitChar, standAtSeat, makeLeader |
-| `js/ui/feedback.js` | 38 | toastT, toast, labels, addLabel, _p, updateLabels, clearLabels, drawSoundIcon, COUNTS, fmt, totalCount |
+| `js/ui/feedback.js` | 36 | toastT, toast, labels, addLabel, _p, updateLabels, clearLabels, drawSoundIcon, fmt |
 | `js/ui/setup.js` | 38 | buildSwatches, buildZoneList, syncBack, beaconTex, beacon, drawBeacon, overview, blockCenter, focusZone |
 | `js/game/flow.js` | 44 | fadeTo, enterGame, goZone, leaveGame, startSetup |
 | `js/game/actions.js` | 35 | ACT_LABEL, ACT_BTN, lineT, setActButtons, startAct, stopAct, setStatus |
@@ -47,8 +47,9 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `events/yeonan.js` | 163 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, ynLyricEl, ynLyric, ynShot, ynCam |
 | `js/ui/fieldmode.js` | 28 | matchSync, syncFieldBtns, pickFieldMode, pickDayTime |
 | `js/ui/event-sheet.js` | 13 | buildEventList |
-| `js/ui/food.js` | 175 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
+| `js/ui/food.js` | 176 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
 | `js/ui/food-note.js` | 58 | NOTE, NOTE_PAGES, NOTE_DOODLE, NOTE_STAMP, noteSvg, noteFonts, noteLine, noteBuild, notePaint, noteGo, noteFocus, noteOpen, noteClose, noteBind |
+| `js/ui/food-phone.js` | 127 | PHONE_CFG, PHONE, PH_DAYS, PH_ICON, phWall, phoneSvg, phDday, phBuild, phTime, phChime, phoneOpen, phoneClose, phoneBind |
 | `js/ui/bullpen.js` | 21 | MG, openBullpen, closeBullpen |
 | `js/game/input.js` | 54 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
 | `js/game/camera.js` | 34 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
@@ -57,7 +58,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/photo.js` | 22 | PHOTO, photoStamp, takePhoto |
 | `js/ui/photozone-ui.js` | 60 | pzBtn, pzUIOpen, pzUIClose, pzUISync, pzHold |
 | `js/ui/places.js` | 53 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
-| `js/ui/wall.js` | 59 | WALL, wallFonts, wallArt, wallOpen, wallClose |
+| `js/ui/wall.js` | 58 | WALL, wallFonts, wallArt, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
 | `js/app/loop.js` | 19 | T, frame |

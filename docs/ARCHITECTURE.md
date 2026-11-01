@@ -115,5 +115,6 @@
 ## 묶음 B: 스페인어 수첩 · 관중 멘트 · 티켓팅 War (2026-11-01)
 
 - **스페인어 수첩** `js/ui/food-note.js` + `styles/food-note.css`: 야푸먹기 테이블(`food.js`의 `fdTable`)이 `noteSvg()`로 수첩을 그리고, `openFood`가 `noteBind()`, `closeFood`·`foodEsc`가 `noteClose()`. 펼친 수첩은 `#food` 안에 처음 열 때 만들어요(`noteBuild`). 글은 `NOTE_PAGES`만 고치면 돼요. 손글씨 글꼴은 처음 열 때만 불러와요.
+- **핸드폰 잠금화면** `js/ui/food-phone.js` + `styles/food-phone.css`: `fdTable`이 `phoneSvg(hm)`로 작은 핸드폰을 그리고, `openFood`가 `phoneBind()`, `closeFood`·`foodEsc`가 `phoneClose()`. 펼친 잠금화면은 `#food` 안에 처음 열 때 만들어요(`phBuild`). 개막일·알림 글·링크는 `PHONE_CFG`만. 배경화면은 `phWall()` SVG.
 - **관중 멘트** `js/game/crowdtalk.js`: 멘트 목록은 `config.js`의 `TALK`(angry·good·calm × any·attack·defense)와 `LINES`(cheer 구호·wave). `talkPool`이 지금 공수(`FP.mode`)를 보고 섞어요. `crowdSay` 말풍선(3.5초 안에 같은 글자 안 겹침), `crowdWave` 화·응원 물결(근처 여러 명이 따라 하고 몇 초 뒤 멈춤 `waveFollow`, 물결끼리 `CROWD.GAP`초 쉼), `crowdCalm` 화 물결 뒤 달래기. `npc.js`가 행동 시작 때 부르고, 내가 화내면 `npcReact`가 근처 여러 명을 끌어들여요. 비율·확률은 `CROWD` 숫자만 바꾸면 돼요.
 - **티켓팅 War**: 위 불펜장 표 참고. 티켓 저장은 `LOCKER.addTicket(i,{n,tog,seat,blk})`. 발권 뒤 '티켓북에 꽂기'는 sessionStorage `tw-new`에 번호를 남기고 `locker.html#tickets`로 가요(방금 꽂은 티켓 강조).

@@ -16,14 +16,17 @@ body.wall #labels{opacity:0}
 .wall-in{max-width:440px;margin:0 auto}
 
 .note{font-family:var(--hand);color:#1b2126;transform:rotate(-.8deg)}
-/* 명패: 벽에 박힌 빨간 금속판(손글씨 메모와 달리 반듯하게). 두 줄 — 큰 줄 '문학야구장 외벽' / 작은 줄 '담벼락 한 귀퉁이' */
-.note .plate{display:flex;flex-direction:column;align-items:center;gap:3px;width:max-content;max-width:100%;margin:0 auto 22px;padding:10px 26px 11px;transform:rotate(.8deg);
-  font-family:"Gowun Dodum",sans-serif;color:#fff;background:linear-gradient(180deg,#d42a3c,#a50f22);border:2px solid #6e0a17;border-radius:6px;
-  box-shadow:inset 0 0 0 3px rgba(255,255,255,.22),inset 0 1px 0 4px rgba(255,255,255,.08),0 3px 0 #6e0a17,0 6px 12px rgba(40,10,15,.28);
-  background-image:radial-gradient(circle,#f3e6c4 0 2.2px,#7a5a2a 2.6px,transparent 3.2px),radial-gradient(circle,#f3e6c4 0 2.2px,#7a5a2a 2.6px,transparent 3.2px),radial-gradient(circle,#f3e6c4 0 2.2px,#7a5a2a 2.6px,transparent 3.2px),radial-gradient(circle,#f3e6c4 0 2.2px,#7a5a2a 2.6px,transparent 3.2px),linear-gradient(180deg,#d42a3c,#a50f22);
-  background-repeat:no-repeat;background-size:8px 8px,8px 8px,8px 8px,8px 8px,100% 100%;background-position:7px 7px,calc(100% - 7px) 7px,7px calc(100% - 7px),calc(100% - 7px) calc(100% - 7px),0 0}
-.note .plate b{font-size:18px;font-weight:700;letter-spacing:.14em;text-shadow:0 1px 0 rgba(80,0,10,.55)}
-.note .plate span{font-size:12.5px;letter-spacing:.3em;opacity:.92}
+/* (B3) 위치 글귀: 마스킹테이프로 비뚤게 붙인 크라프트지 종이 라벨(예전 빨간 금속 명패 대신). 두 줄 — 큰 줄 '문학야구장 외벽' / 작은 줄 '담벼락 한 귀퉁이' */
+.note .tag{position:relative;display:flex;flex-direction:column;align-items:center;width:max-content;max-width:100%;margin:6px auto 30px;padding:13px 28px 11px;transform:rotate(-1.7deg);
+  font-family:var(--hand);color:#4a3520;background:#d8c29b;
+  background-image:radial-gradient(ellipse at 20% 30%,rgba(255,250,235,.35),transparent 60%),radial-gradient(ellipse at 85% 80%,rgba(120,85,40,.12),transparent 55%);
+  box-shadow:0 1px 1.5px rgba(60,40,15,.22),0 4px 10px rgba(40,30,10,.12)}
+.note .tag::before,.note .tag::after{content:"";position:absolute;width:52px;height:19px;background:rgba(250,246,230,.68);box-shadow:0 0 1px rgba(80,70,50,.18);
+  clip-path:polygon(0 8%,6% 0,12% 10%,18% 2%,24% 9%,30% 0,36% 8%,42% 1%,48% 9%,54% 0,60% 8%,66% 2%,72% 10%,78% 0,84% 8%,90% 1%,96% 9%,100% 3%,100% 92%,94% 100%,88% 91%,82% 99%,76% 90%,70% 100%,64% 92%,58% 99%,52% 90%,46% 100%,40% 92%,34% 99%,28% 91%,22% 100%,16% 92%,10% 99%,4% 91%,0 98%)}
+.note .tag::before{top:-9px;left:-17px;transform:rotate(-28deg)}
+.note .tag::after{bottom:-8px;right:-17px;transform:rotate(-24deg)}
+.note .tag b{font-size:25px;font-weight:700;line-height:1.1;color:#4a3520}
+.note .tag span{font-size:17px;margin-top:2px}
 /* 강조: 자주색 글씨 / 손으로 그은 밑줄 / '봄' 핑크 펜 동그라미(들어올 때 슥 그려짐) */
 .note em.me{font-style:normal;font-weight:700;color:#9c1a6b}
 .note .ul{padding-bottom:3px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C40 3 80 6.5 120 4.2S180 3.5 198 5' fill='none' stroke='%231b2126' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") 0 100%/100% 7px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -43,6 +46,10 @@ body.wall #labels{opacity:0}
 .graffiti{margin:36px 4px 0 auto;width:max-content;max-width:100%;transform:rotate(-4deg);color:#1d2226}
 .graffiti .big{font-family:var(--brush);font-size:34px;line-height:1;letter-spacing:.06em;opacity:.92}
 .graffiti .small{font-family:var(--pen);font-size:20px;margin:6px 0 0 16px;color:#2b3036;opacity:.85;transform:rotate(1.5deg)}
-.credit{margin-top:44px;text-align:center;font-size:11.5px;line-height:1.7;color:#46525a}
-.credit .src{color:#2f3a41}
+.credit{text-align:center;font-size:11.5px;line-height:1.7;color:#2f3a41;max-width:440px;margin:0 auto}
+.credit .src{color:#253037}
+/* (B3) 벽 밑단 + 보도블록: 글 맨 끝에서 화면 양끝까지 꽉 차게(.wall-scroll 좌우 여백 8%를 넘어감), 같이 스크롤 */
+.wall-ground{margin:44px -9.524% calc(-28px - env(safe-area-inset-bottom,0px));padding:22px 8% calc(26px + env(safe-area-inset-bottom,0px));
+  border-top:22px solid #8a969d;box-shadow:inset 0 2px 0 #6f7a80;background:#9da5a8;
+  background-image:repeating-linear-gradient(90deg,transparent 0 63px,rgba(90,100,106,.28) 63px 65px),repeating-linear-gradient(180deg,transparent 0 30px,rgba(90,100,106,.22) 30px 32px)}
 @media (prefers-reduced-motion:reduce){.hl,.circ path{transition:none}}

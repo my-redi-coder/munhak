@@ -4,7 +4,7 @@ function fadeTo(msg,fn){var f=$('fade');$('fadeMsg').textContent=msg||'';f.class
 function enterGame(){
   fadeTo(ZONES[ME.zone].label+'으로 들어가는 중',function(){
     $('setup').hidden=true;$('hud').hidden=false;beacon.visible=false;camera.clearViewOffset();
-    $('crowdN').textContent=fmt(totalCount());drawSoundIcon();
+    drawSoundIcon();
     phase='game';goZone(ME.zone,false);
     if(AU.on){auEnsure();}
     setTimeout(function(){addLabel(player,myName(),'tag',3200)},450);
