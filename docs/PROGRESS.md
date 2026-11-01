@@ -2,6 +2,15 @@
 
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
+## 작은 패치 H: 띠 전광판 가사 · 평소 문구 — 완료 (2026-11-01, `munhak_2026-11-01_H-ribbon-lyrics`)
+
+- `js/world/ribbon.js` 새로: 응원하기로 응원가가 나오면 `lyrics/song번호.json`(2번 여난부두는 `events/yeonan-lyrics.json`)을 불러 지금 줄을 띠 전광판에. 가사가 나오는 동안 흐름 멈춤 + 칸마다 같은 줄, 줄이 바뀌면 0.35초 반짝, 쉬는 동안·끝나면 평소 문구로. 긴 줄은 30px→최소 17px로 줄여 한 칸에
+- 여난부두 이벤트: `events/yeonan.js`의 `ynLyric`이 `ribbonFeed(가사, 노래 시간)`으로 넘겨줌
+- 평소 문구(`js/world/props.js`의 `LED_MSGS`): '봄에 만나요' · 'V6를 향해' · '다음 시즌, 문학에서' ('1루 관중석'·'소리 질러!' 뺌). 그리기는 `ledDrawDefault()`
+- `app/loop.js`: 흐르기는 `ribbonTick(T)`가 맡음
+- `lyrics/song5.json`: '안되는 게 어딨어, (불! 꽃!) 다 이기면 되지! (투! 혼!)' 두 곳을 **시간 정확히 반으로** 나눠 두 줄로(54.33~56.08~57.83, 68.19~69.8~71.4)
+- 확인: 문법 검사만. 폰에서 응원하기 → 가사 파일 있는 곡(1·3·5·8·11번)과 여난부두 이벤트에서 볼 것
+
 ## 작은 패치 G: 티켓팅 War 직관전승 · 연석으로 다시 예매 · 1석 확률 — 완료 (2026-11-01, `munhak_2026-11-01_G-ticket-perfect`)
 
 - 좌석 수 확률: 1석 20% · 2석 45% · 4석 35%(`minigames/ticketing/perfect.js`의 `ZS.odds`, 전엔 1/3씩)

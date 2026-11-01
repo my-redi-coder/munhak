@@ -84,6 +84,7 @@ function ynLyricEl(){
   return YN.el;
 }
 function ynLyric(st){
+  if(YN.lyrics&&typeof ribbonFeed==='function')ribbonFeed(YN.lyrics,st);/* 띠 전광판에도 같은 가사 (world/ribbon.js) */
   var L=YN.lyrics,el=YN.el;if(!L||!L.length||!el)return;
   var ci=-1;for(var i=0;i<L.length;i++){var e=L[i].e!=null?L[i].e:(L[i+1]?L[i+1].t:L[i].t+4);if(st>=L[i].t&&st<e){ci=i;var p=(st-L[i].t)/Math.max(.3,e-L[i].t)}}
   var up=ci<0?L.filter(function(l){return l.t>st})[0]:null;

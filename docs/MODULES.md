@@ -10,7 +10,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |
 | `js/world/field.js` | 35 | FN, fx, fz, FK, fenceR, fieldTex, field, outer |
-| `js/world/props.js` | 35 | ledTex, ledMat |
+| `js/world/props.js` | 40 | LED_MSGS, ledDrawDefault, ledTex, ledMat |
 | `js/world/landmarks.js` | 19 | TOWERS, HILL_CLEAR, hillBlocked, towerRY |
 | `js/world/bigboard.js` | 87 | BB, bbEq, bbScreenTex, bbPanelTex, boardTick |
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
@@ -48,7 +48,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/count.js` | 20 | EVCOUNT, evCountEl, evCount, evCountOff, evCount0 |
 | `events/homer.js` | 120 | HR, hrRunPose, hrBallAt, hrTurn, hrBoardCam, hrFielders, hrPreField, hrLooseBat, hrLooseTick, hrRun, hrHighFive, hrOnDeck |
 | `events/kkk.js` | 108 | KK, kkMirror, kkWalk, kkTurn, kkEase, kkLerp, kkFaceCam, kkBanzaiCam |
-| `events/yeonan.js` | 163 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, ynLyricEl, ynLyric, ynShot, ynCam |
+| `events/yeonan.js` | 164 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, ynLyricEl, ynLyric, ynShot, ynCam |
 | `js/ui/fieldmode.js` | 28 | matchSync, syncFieldBtns, pickFieldMode, pickDayTime |
 | `js/ui/event-sheet.js` | 13 | buildEventList |
 | `js/ui/food.js` | 177 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
@@ -66,5 +66,6 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/wall.js` | 54 | WALL, wallFonts, wallArt, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
+| `js/world/ribbon.js` | 46 | RIB, ribLyricUrl, ribSongNo, ribLoad, ribLineAt, ribbonFeed, ribDraw, ribbonTick |
 | `js/app/loop.js` | 20 | T, frame |
 | `js/app/boot.js` | 8 | _ro |

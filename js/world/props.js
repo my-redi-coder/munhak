@@ -29,7 +29,12 @@
   scene.add(new THREE.Mesh(mergeParts(parts),MVC));
 })();
 
-/* LED ribbon */
-var ledTex=canvasTex(1024,64,function(x,w,h){x.fillStyle='#14211b';x.fillRect(0,0,w,h);x.font='30px "Gowun Dodum","Apple SD Gothic Neo",sans-serif';x.textBaseline='middle';var msgs=['봄에 만나요','1루 관중석','다음 시즌, 문학에서','소리 질러!'];var px=20;for(var i=0;i<8;i++){var m=msgs[i%msgs.length];x.fillStyle=i%2?'#f6e7b0':'#ff5a6e';x.fillText(m,px,h/2+2);px+=x.measureText(m).width+60}});
+/* 띠 전광판 (LED ribbon). 평소 문구는 LED_MSGS (2026-11-01: '1루 관중석'·'소리 질러!' 빼고 'V6를 향해')
+   응원가·여난부두 가사를 띄우는 건 js/world/ribbon.js */
+var LED_MSGS=['봄에 만나요','V6를 향해','다음 시즌, 문학에서'];
+function ledDrawDefault(){var c=ledTex.image,x=c.getContext('2d'),w=c.width,h=c.height;
+  x.fillStyle='#14211b';x.fillRect(0,0,w,h);x.font='30px "Gowun Dodum","Apple SD Gothic Neo",sans-serif';x.textBaseline='middle';x.textAlign='left';x.shadowBlur=0;
+  var px=20;for(var i=0;px<w;i++){var m=LED_MSGS[i%LED_MSGS.length];x.fillStyle=i%2?'#f6e7b0':'#ff5a6e';x.fillText(m,px,h/2+2);px+=x.measureText(m).width+60}}
+var ledTex=canvasTex(1024,64,function(){});ledDrawDefault();ledTex.needsUpdate=true;
 ledTex.wrapS=THREE.RepeatWrapping;
 var ledMat=new THREE.MeshBasicMaterial({map:ledTex,fog:false});
