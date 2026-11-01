@@ -1,8 +1,0 @@
-/* 불펜장 창 (js/ui/bullpen.js) — 미니게임 페이지를 화면 가득 */
-#bullpen{position:fixed;inset:0;z-index:60;background:var(--paper);animation:bpIn .25s ease}
-#bullpen iframe{display:block;width:100%;height:100%;border:0;background:var(--paper)}
-@keyframes bpIn{from{opacity:0}to{opacity:1}}
-@media (prefers-reduced-motion:reduce){#bullpen{animation:none}}
-body.mg #hud{visibility:hidden}
-/* 아주 좁은 폰: 구경·이벤트·불펜장 세 버튼이 화면 안에 들어오게 */
-@media (max-width:380px){#hud .row2 .pill{padding:0 9px}#hud .row2{gap:5px}}
