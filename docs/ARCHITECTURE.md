@@ -91,9 +91,9 @@
 - 들어가는 길: 위쪽 구역 버튼 → **내 위치** 펼침 메뉴 → '둘러보기'(`js/ui/places.js`). `pzStart('pz'|'hr')`, 나가기는 화면 왼쪽 위 '돌아가기'(`pzStop`).
 - 세트는 야구장 밖 떨어진 곳에 처음 갈 때 지어요(플레이어존 x=150, 홈런기념판 x=−150, z=380). 세트 약속은 `js/world/pz-kit.js` 맨 위 주석. 새 포토존은 `PZ_SETS.<이름>`에 세트를 등록하고 `config.js`의 `PZ_CFG`에 이름·설명, `TOURS`에 이름, `places.js`의 `TOUR_GO`·`PLACE_ICO`에 한 줄, `photozone-ui.js`의 도구에 한 줄. 실내 세트면 `PZ_CFG`에 `indoor:true`(밤 경기여도 낮 조명).
 - 사진용 으쓱이는 내 으쓱이(유니폼·등판)를 본떠 따로 세워요. 내 자리·행동은 그대로.
-- 카메라: 정면에서 좌우(`PZ.pan`)와 가까이/멀리(`PZ.zoom`, 가운데 정사각형 촬영 틀 `#pzFrame`에 꽉 맞는 거리의 배수 — `pzFitD`)만. 으쓱이를 누른 채 끌면 좌우로 옮겨요.
+- 카메라: 정면에서 좌우(`PZ.pan`)와 가까이/멀리(`PZ.zoom`, 폴라로이드 틀의 사진 칸 `#pzWin`에 꽉 맞는 거리의 배수 — `pzFitD`, 칸 크기·위치는 `PZ_WIN`)만. 으쓱이를 누른 채 끌면 좌우로 옮겨요.
 - 포즈는 `PZ_POSE`(game/photozone.js) 3개, 함수가 돌려주는 값이 표정: 소개 `normal` / 만세 `joy` / 브이 `happy`. 표정 그림은 `character.js`의 `faceTex`·`FACE`. `update`가 act 이름으로 찾아 써요.
-- 찍기는 `takePhoto(이름, {square:true})`(ui/photo.js): 포토존은 화면 가운데 정사각형만 잘라 1080×1080 jpg(`photoSquare`, 잠깐 해상도를 올려 그림), 위쪽 '직관 사진' 버튼(`game/actions.js`)은 `square` 없이 화면 그대로. 버튼은 안 찍힘 → 미리보기 시트에서 저장·공유.
+- 찍기는 `takePhoto(이름, {pola:true})`(ui/photo.js): 포토존은 폴라로이드 틀의 사진 칸(`#pzWin`)만 잘라 1080×1080(`photoWin`, 잠깐 해상도를 올려 그림) → `polaCompose`로 종이·문구·날짜·테이프를 붙여 jpg. 틀 비율은 `POLA`와 `styles/photozone.css`가 같아야 해요. 위쪽 '직관 사진' 버튼(`game/actions.js`)은 화면 그대로. 버튼은 안 찍힘 → 미리보기 시트에서 저장·공유(문구는 미리보기에서 눌러 그 사진만 고침).
 - 이 기기에 저장: 플레이어존 사진(`munhak:pzPhoto`, 긴 쪽 1400px jpg), 한 줄 문구(`pzLine`), 홈런 수(`pzHr`).
 
 ## 위쪽 버튼 · 내 위치 · 담벼락 (묶음 A, 2026-11-01)

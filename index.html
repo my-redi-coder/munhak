@@ -151,7 +151,8 @@
 </div>
 
 <section id="pz" hidden aria-label="포토존">
-  <div class="pz-frame" id="pzFrame" aria-hidden="true"></div><!-- 1:1 촬영 틀: 이 안쪽만 사진에 담겨요 (2026-11-01) -->
+  <!-- 폴라로이드 촬영 틀 (2026-11-01): 사진 칸(#pzWin) 안쪽만 사진에 담겨요. 아래 흰 여백이 바닥을 가려요. 비율은 ui/photo.js의 POLA와 같아요 -->
+  <div class="pz-frame" id="pzFrame" aria-hidden="true"><div class="pz-paper"><div class="pz-win" id="pzWin"></div><p class="pz-cap"><span id="pzCapPrev"></span><b id="pzDatePrev"></b></p></div><i class="pz-tape"></i></div>
   <div class="pz-top"><button class="pill" id="pzBack"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>돌아가기</button><span class="pill pz-title" id="pzTitle"></span></div>
   <div class="pz-bottom">
     <div class="pz-tools" id="pzTools"></div>
@@ -204,7 +205,8 @@
 <div class="modal" id="mPhoto" hidden role="dialog" aria-modal="true" aria-labelledby="mPhotoT">
   <div class="panel">
     <header><h3 id="mPhotoT">찰칵!</h3><button class="iconbtn" data-close aria-label="사진 닫기"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
-    <img class="photo-prev" id="photoImg" alt="방금 찍은 사진">
+    <div class="photo-stage" id="photoStage"><img class="photo-prev" id="photoImg" alt="방금 찍은 사진"><button class="pola-hit" id="polaCapHit" hidden aria-label="이 사진의 문구 고치기"></button><input class="pola-in" id="polaCapIn" hidden maxlength="15" autocomplete="off" aria-label="이 사진의 문구"></div>
+    <p class="help" id="polaHelp" hidden>아래 문구를 누르면 이 사진에만 바꿀 수 있어요.</p>
     <div class="photo-acts"><a class="primary" id="photoSave" href="#" download>저장</a><button class="ghost" id="photoShare" hidden>공유</button></div>
     <p class="help">저장이 안 되면 사진을 길게 눌러 저장해 주세요.</p>
   </div>

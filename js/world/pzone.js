@@ -3,7 +3,8 @@
    3번 게이트 실내 통로의 빨간 아치 패널. 패널 그림은 pzPanelDraw()가 그려요.
    - 사진이 없으면 기본 그림 '다음 시즌의 주인공'(봄 하늘, 꽃잎, 빛나는 야구공, 소품 액자)
    - 사진을 넣으면 위쪽 큰 칸을 사진으로 꽉 채워요
-   'PLAYER OF THE MONTH'는 고정, 아래 띠의 한 줄 문구만 바꿀 수 있어요(PZP.line). 사진·문구는 이 기기에 저장. */
+   'PLAYER OF THE MONTH'는 고정, 아래 띠의 한 줄 문구만 바꿀 수 있어요(PZP.line). 사진·문구는 이 기기에 저장.
+   (2026-11-01) 무대 꾸미기: 크림 타일 바닥, 기둥 사이 짙은 빨강 벽(아치 위 빈틈 메움), 사진 칸 금색 선, 아치 전구 테두리 — PZ_STAGE */
 var PZP={img:null,line:store.get('pzLine',null),tex:null,cv:null,W:5.6,Y0:.45,YS:3.75,YC:4.3};
 
 function pzPanelDraw(){
@@ -59,6 +60,48 @@ function pzSetPhoto(url){
 }
 function pzSetLine(t){PZP.line=t;store.set('pzLine',t);pzPanelDraw()}
 
+/* ===== (2026-11-01) 무대 꾸미기: 크림 타일 바닥 · 짙은 빨강 벽 · 금색 선 · 전구 테두리 =====
+   색·크기는 PZ_STAGE에서만 바꾸면 돼요 */
+var PZ_STAGE={w:11.5,gold:0xd9b45a,goldW:.06,bulbGap:.42,bulbR:.065,
+  tiles:['#f3ebdd','#f0e6d4','#f5eee2','#eee3cf'],grout:'#d6c8ae',wall:'#8a1022',wallLine:'#7a0d1d'};
+var PZB={on:[],t:0};
+/* 바닥 타일: 한 장 그림에 2×2칸, 반복해서 깔아요(한 칸 약 0.8m) */
+function pzTileTex(){
+  var t=canvasTex(256,256,function(x,w,h){
+    var n=2,c=w/n;x.fillStyle=PZ_STAGE.grout;x.fillRect(0,0,w,h);
+    for(var i=0;i<n;i++)for(var j=0;j<n;j++){
+      var l=i*c+2,tp=j*c+2,s=c-4,gr=x.createLinearGradient(l,tp,l+s,tp+s);
+      gr.addColorStop(0,PZ_STAGE.tiles[(i*2+j)%PZ_STAGE.tiles.length]);gr.addColorStop(1,'#e9ddc8');
+      x.fillStyle=gr;x.fillRect(l,tp,s,s);
+      for(var k=0;k<160;k++){x.fillStyle=pick(['#e2d4bb','#fbf6ec','#dccdb2']);x.globalAlpha=rnd(.15,.45);x.fillRect(l+rnd(0,s),tp+rnd(0,s),rnd(1,3),rnd(1,3))}
+      x.globalAlpha=.35;x.fillStyle='#fff';x.fillRect(l,tp,s,2);x.fillRect(l,tp,2,s);x.globalAlpha=1;
+    }
+  });
+  t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(34/1.6,30/1.6);return t;
+}
+/* 아치 앞 바닥에 번지는 따뜻한 빛 */
+function pzPoolTex(){return canvasTex(256,128,function(x,w,h){var g=x.createRadialGradient(w/2,0,0,w/2,0,w*.55);g.addColorStop(0,'rgba(255,214,140,.38)');g.addColorStop(1,'rgba(255,214,140,0)');x.fillStyle=g;x.fillRect(0,0,w,h)})}
+/* 무대 벽: 짙은 빨강 + 세로 결 */
+function pzBackdropTex(){return canvasTex(512,256,function(x,w,h){
+  var g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'#6f0c1a');g.addColorStop(.5,PZ_STAGE.wall);g.addColorStop(1,'#760d1c');x.fillStyle=g;x.fillRect(0,0,w,h);
+  x.strokeStyle=PZ_STAGE.wallLine;x.lineWidth=3;for(var i=16;i<w;i+=32){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke()}
+})}
+/* 전구: 아치 틀 가운데 줄을 따라 일정한 간격. 세 무리가 차례로 밝아지는 극장 간판 느낌 */
+function pzBulbs(g,w,y0,yS,yC){
+  var path=pzArch(new THREE.Path(),w,y0,yS,yC),n=Math.round(path.getLength()/PZ_STAGE.bulbGap),pts=path.getSpacedPoints(n);
+  var geo=new THREE.SphereGeometry(PZ_STAGE.bulbR,10,8),glow=canvasTex(64,64,function(x,w,h){var r=x.createRadialGradient(w/2,h/2,0,w/2,h/2,w/2);r.addColorStop(0,'rgba(255,236,170,.9)');r.addColorStop(.35,'rgba(255,214,120,.35)');r.addColorStop(1,'rgba(255,214,120,0)');x.fillStyle=r;x.fillRect(0,0,w,h)});
+  PZB.on=[0,1,2].map(function(){return{m:new THREE.MeshBasicMaterial({color:0xfff3c4}),s:new THREE.SpriteMaterial({map:glow,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending})}});
+  for(var i=0,k=0;i<pts.length-1;i++){var p=pts[i];if(p.y<y0+.12)continue;/* 아래 가로줄엔 안 달아요 */
+    var o=PZB.on[k++%3],b=new THREE.Mesh(geo,o.m),sp=new THREE.Sprite(o.s);
+    b.position.set(p.x,p.y,.1);g.add(b);sp.scale.set(.42,.42,1);sp.position.set(p.x,p.y,.12);g.add(sp)}
+  pzBulbTick(0);
+}
+function pzBulbTick(dt){
+  if(!PZB.on.length)return;PZB.t+=dt;
+  PZB.on.forEach(function(o,i){var v=reduceMotion?.9:.68+.32*Math.max(0,Math.sin(PZB.t*3.2-i*2.09));
+    o.m.color.setRGB(1,.86+.1*v,.55+.3*v);o.s.opacity=.25+.6*v});
+}
+
 PZ_SETS.pz={
   O:new THREE.Vector3(150,0,380),g:null,T:new THREE.Vector3(0,0,0),W:6.4,H:4.9,camY:1.45,lookY:2.15,
   standZ:1.45,standX:[-3.6,3.6],startX:1.7,panMin:-3,panMax:3,zoomMax:function(){return 1.5},pose:'pzV',
@@ -66,7 +109,9 @@ PZ_SETS.pz={
   build:function(){
     var g=this.g=new THREE.Group();g.position.copy(this.O);g.visible=false;var P=PZP;
     /* 통로: 바닥·벽·천장 (실내라서 그림으로 명암) */
-    var fl=new THREE.Mesh(new THREE.PlaneGeometry(34,30),pzTexMat(pzNoiseTex(256,256,'#4a4b4e',{n:900,c:['#3e3f42','#58595c','#2f3033'],s:[1,3,1,3]},[.3,.7],[10,9])));fl.rotation.x=-Math.PI/2;fl.position.set(0,0,12);g.add(fl);
+    /* (2026-11-01) 바닥: 어두운 아스팔트 → 밝은 크림 타일 + 아치 앞 따뜻한 불빛 웅덩이 */
+    var fl=new THREE.Mesh(new THREE.PlaneGeometry(34,30),pzTexMat(pzTileTex()));fl.rotation.x=-Math.PI/2;fl.position.set(0,0,12);g.add(fl);
+    var pool=new THREE.Mesh(new THREE.PlaneGeometry(10,5),new THREE.MeshBasicMaterial({map:pzPoolTex(),transparent:true,depthWrite:false}));pool.rotation.x=-Math.PI/2;pool.position.set(0,.01,1.6);g.add(pool);
     var wallT=canvasTex(512,256,function(x,w,h){var gr=x.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#c9c7c2');gr.addColorStop(1,'#a9a7a2');x.fillStyle=gr;x.fillRect(0,0,w,h);x.strokeStyle='rgba(0,0,0,.08)';x.lineWidth=2;for(var i=0;i<w;i+=128){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke()}});wallT.wrapS=THREE.RepeatWrapping;wallT.repeat.set(5,1);
     var back=new THREE.Mesh(new THREE.PlaneGeometry(34,5.2),pzTexMat(wallT));back.position.set(0,2.6,-.5);g.add(back);
     [-1,1].forEach(function(s){var sw=new THREE.Mesh(new THREE.PlaneGeometry(30,5.2),pzMat(0xb3b1ac));sw.rotation.y=-s*Math.PI/2;sw.position.set(s*17,2.6,12);g.add(sw);
@@ -82,11 +127,20 @@ PZ_SETS.pz={
     P.cv=document.createElement('canvas');P.cv.width=1536;P.cv.height=Math.round(1536*(P.YC-P.Y0)/P.W);
     P.tex=new THREE.CanvasTexture(P.cv);P.tex.anisotropy=maxAniso;
     var panel=new THREE.Mesh(pzFlat(pzArch(new THREE.Shape(),P.W,P.Y0,P.YS,P.YC)),pzTexMat(P.tex));panel.position.z=-.2;g.add(panel);
-    /* 위쪽 빨간 띠(천장까지 이어진 부분) */
-    var top=new THREE.Mesh(Box(P.W+3,.5,.4),pzMat(0xc8102e));top.position.set(0,P.YC+.6,-.25);g.add(top);
+    /* (2026-11-01) 위쪽 빈틈 메우기: 기둥 사이 벽 전체를 짙은 빨강 무대 벽으로, 위 띠는 기둥까지 + 아래 금색 선 */
+    var stageW=PZ_STAGE.w;
+    var backdrop=new THREE.Mesh(new THREE.PlaneGeometry(stageW,5.2),pzTexMat(pzBackdropTex()));backdrop.position.set(0,2.6,-.44);g.add(backdrop);
+    var top=new THREE.Mesh(Box(stageW,.5,.4),pzMat(0xc8102e));top.position.set(0,P.YC+.6,-.25);g.add(top);
+    var topGold=new THREE.Mesh(Box(stageW,.05,.42),pzMat(PZ_STAGE.gold));topGold.position.set(0,P.YC+.33,-.25);g.add(topGold);
+    /* 금색 선: 사진 칸 가장자리를 따라 얇게 */
+    var gt=PZ_STAGE.goldW,ring=pzArch(new THREE.Shape(),P.W,P.Y0,P.YS,P.YC);ring.holes.push(pzArch(new THREE.Path(),P.W-gt*2,P.Y0+gt,P.YS-gt,P.YC-gt));
+    var gold=new THREE.Mesh(new THREE.ShapeGeometry(ring,24),pzMat(PZ_STAGE.gold));gold.position.z=-.19;g.add(gold);
+    /* 전구 테두리: 아치 틀 가운데 줄을 따라 (깜빡임은 tick) */
+    pzBulbs(g,P.W+f,P.Y0-f*.3,P.YS+f/2,P.YC+f/2);
     pzPanelDraw();
     var saved=store.get('pzPhoto',null);if(saved)pzSetPhoto(saved);
     if(document.fonts&&document.fonts.load)document.fonts.load('40px "Gowun Dodum"').then(pzPanelDraw,function(){});
     return g;
-  }
+  },
+  tick:function(dt){pzBulbTick(dt)}
 };

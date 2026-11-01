@@ -4,9 +4,18 @@ body.pz #hud{display:none}
 body.pz #labels{opacity:0}
 #pz{position:fixed;inset:0;z-index:12;pointer-events:none}
 #pz>*{pointer-events:auto}
-/* 1:1 촬영 틀 (2026-11-01): 화면 가운데 정사각형, 바깥은 살짝 어둡게. 이 안쪽만 사진에 담겨요(ui/photo.js의 photoSquare) */
-#pz>.pz-frame{position:absolute;left:50%;top:50%;width:min(100vw,100vh);height:min(100vw,100vh);transform:translate(-50%,-50%);pointer-events:none;border:1.5px solid rgba(255,255,255,.7);box-shadow:0 0 0 200vmax rgba(10,14,20,.38)}
-@supports (height:100dvh){#pz>.pz-frame{width:min(100vw,100dvh);height:min(100vw,100dvh)}}
+/* 폴라로이드 촬영 틀 (2026-11-01): 사진 칸(.pz-win) 안쪽만 사진에 담겨요(ui/photo.js의 photoWin). 바깥은 살짝 어둡게.
+   비율은 ui/photo.js의 POLA와 같아야 해요 — 사진 칸 한 변 1 기준 옆·위 여백 .075, 아래 .29 → 종이 1.15 × 1.365
+   (칸 위치 %: 왼쪽 .075/1.15, 위 .075/1.365, 폭 1/1.15 · 글씨 크기 cqw = 종이 폭 기준) */
+#pz>.pz-frame{position:absolute;left:50%;top:50%;width:min(92vw,calc(86vh * 1.15 / 1.365));aspect-ratio:1.15/1.365;transform:translate(-50%,-50%);pointer-events:none}
+@supports (height:100dvh){#pz>.pz-frame{width:min(92vw,calc(86dvh * 1.15 / 1.365))}}
+.pz-paper{position:absolute;inset:0;overflow:hidden;container-type:inline-size;box-shadow:0 0 0 200vmax rgba(10,14,20,.38),0 10px 30px rgba(0,0,0,.25)}
+.pz-win{position:absolute;left:6.5217%;top:5.4945%;width:86.9565%;aspect-ratio:1;box-shadow:0 0 0 200vmax rgba(251,248,241,.95);outline:1px solid rgba(60,40,20,.14)}
+.pz-cap{position:absolute;left:0;right:0;top:80.22%;bottom:0;margin:0;font-family:"Nanum Pen Script","Gaegu",cursive;color:#2b3a5c;line-height:1}
+.pz-cap span{position:absolute;left:9.13%;top:35%;font-size:7.39cqw;transform:translateY(-50%) rotate(-1.4deg);transform-origin:left center;white-space:nowrap}
+.pz-cap b{position:absolute;right:8.26%;top:69.4%;font-weight:400;font-size:5.04cqw;color:#5b6680;transform:translateY(-50%);white-space:nowrap}
+.pz-tape{position:absolute;left:50%;top:0;width:29.57%;aspect-ratio:3.4;transform:translate(-50%,-50%) rotate(-4deg);background:repeating-linear-gradient(60deg,rgba(255,255,255,.22) 0 6%,transparent 6% 12%),rgba(246,186,203,.85);
+  clip-path:polygon(0 0,100% 0,97% 16%,100% 33%,97% 50%,100% 66%,97% 83%,100% 100%,0 100%,3% 83%,0 66%,3% 50%,0 33%,3% 16%)}
 #pz[hidden]{display:none}
 .pz-top{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px 0;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none}
 .pz-top>*{pointer-events:auto}
@@ -30,6 +39,15 @@ body.pz #labels{opacity:0}
 @keyframes flash{0%{opacity:.85}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){#flash.on{animation:none}}
 .photo-prev{width:100%;max-height:52vh;object-fit:contain;border-radius:14px;background:#000}
+/* 폴라로이드 미리보기 (2026-11-01): 배경 없이 살짝 기울이고 그림자. 문구를 누르면 그 자리에 입력칸 */
+.photo-stage{position:relative}
+.photo-stage.pola{width:fit-content;max-width:100%;margin:6px auto 4px;transform:rotate(-2deg)}
+.photo-stage.pola .photo-prev{display:block;width:auto;max-width:100%;height:auto;max-height:56vh;border-radius:0;background:none;filter:drop-shadow(0 8px 14px rgba(40,25,15,.22))}
+@media (prefers-reduced-motion:reduce){.photo-stage.pola{transform:none}}
+.pola-hit{position:absolute;border:0;padding:0;background:none;border-radius:8px;cursor:text}
+.pola-hit:focus-visible{outline:2px dashed var(--red);outline-offset:2px}
+.pola-in{position:absolute;box-sizing:border-box;padding:0 3%;border:1.5px dashed #9aa3b8;border-radius:8px;background:rgba(255,255,255,.9);font-family:"Nanum Pen Script","Gaegu",cursive;color:#2b3a5c;outline:none}
+.photo-stage [hidden]{display:none}
 .photo-acts{display:flex;gap:8px}
 .photo-acts>*{flex:1;text-decoration:none}
 .photo-acts .ghost{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:16px;border:1px solid var(--line);background:var(--glass);font-size:16px}

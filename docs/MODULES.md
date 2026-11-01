@@ -5,7 +5,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
-| `js/core/config.js` | 116 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, myName, TEAMS, HOME_SIDE, PLAYER_SCALE … |
+| `js/core/config.js` | 117 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, myName, TEAMS, HOME_SIDE, PLAYER_SCALE … |
 | `songs/songs.js` | 19 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |
@@ -20,7 +20,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
 | `js/world/bbq.js` | 64 | BBQ, bbqSmoke, bbqTick |
 | `js/world/pz-kit.js` | 39 | PZ_SETS, pzFlat, pzArch, pzStar, pzSpark, pzScribble, pzRound, pzCover, pzMat, pzTexMat, pzNoiseTex |
-| `js/world/pzone.js` | 92 | PZP, pzPanelDraw, pzDefaultArt, pzIcoGlove, pzIcoTicket, pzIcoBat, pzIcoCap, pzSetPhoto, pzSetLine |
+| `js/world/pzone.js` | 146 | PZP, pzPanelDraw, pzDefaultArt, pzIcoGlove, pzIcoTicket, pzIcoBat, pzIcoCap, pzSetPhoto, pzSetLine, PZ_STAGE, PZB, pzTileTex, pzPoolTex, pzBackdropTex … |
 | `js/world/hrboard.js` | 118 | HRB, HRB_TILE, hrDigitMat, HRB_SIDE, hrTile, hrSetTile, hrShield, hrMiles, hrBoard, hrShow, hrSetCount, hrTick |
 | `js/world/crowd.js` | 40 | _m, crowd, crowdSet, crowdFlush |
 | `js/world/daynight.js` | 108 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
@@ -58,9 +58,9 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/game/input.js` | 55 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
 | `js/game/camera.js` | 34 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
 | `js/game/sightsee.js` | 18 | SS, ssStart, ssStop, ssCam, ssDrag |
-| `js/game/photozone.js` | 86 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab, pzDrag, pzRelease … |
-| `js/ui/photo.js` | 33 | PHOTO, photoStamp, photoSquare, takePhoto |
-| `js/ui/photozone-ui.js` | 60 | pzBtn, pzUIOpen, pzUIClose, pzUISync, pzHold |
+| `js/game/photozone.js` | 91 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, PZ_WIN, pzWinMeasure, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab … |
+| `js/ui/photo.js` | 126 | PHOTO, POLA, photoStamp, photoDate, photoFonts, photoWin, polaPetal, polaTape, polaCompose, polaFlat, polaRender, takePhoto, polaCapDone |
+| `js/ui/photozone-ui.js` | 61 | pzBtn, pzUIOpen, pzUIClose, pzUISync, pzHold |
 | `js/ui/places.js` | 53 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
 | `js/ui/wall.js` | 58 | WALL, wallFonts, wallArt, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |

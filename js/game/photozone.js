@@ -5,7 +5,7 @@
    - 카메라: 정면에서 좌우로만(PZ.pan, 살짝 돌아가는 느낌), 두 손가락·휠로 가까이/멀리(PZ.zoom: 화면에 꽉 맞는 거리의 배수).
    - 으쓱이를 누른 채 끌면 세트 앞 줄(standZ)을 따라 좌우로 옮겨요. '비키기'로 잠깐 숨겨요.
    - 포즈는 PZ_POSE(아래). entities/character.js의 update가 act 이름으로 여기서 찾아 써요.
-   화면 버튼은 ui/photozone-ui.js, 찍기는 ui/photo.js(포토존은 가운데 정사각형만 잘라 1:1로 저장). */
+   화면 버튼은 ui/photozone-ui.js, 찍기는 ui/photo.js(포토존은 폴라로이드 틀의 사진 칸만 잘라 폴라로이드로 저장). */
 var PZ={on:false,key:null,set:null,ch:null,pan:0,zoom:1,pose:null,hidden:false,grab:false,gOff:0};
 var _pzP=new THREE.Plane(new THREE.Vector3(0,0,1),0),_pzV=new THREE.Vector3();
 
@@ -32,7 +32,7 @@ function pzStart(k){
     PZ.ch=new Char({name:myName(),uni:ME.uni,backName:ME.backName,backNum:ME.backNum});
     S.g.add(PZ.ch.root);PZ.ch.root.position.set(S.startX,0,S.standZ);PZ.ch.root.rotation.y=0;PZ.ch.mode='stand';
     pzPose(S.pose);
-    document.body.classList.add('pz');setStatus(null);pzUIOpen(k);
+    document.body.classList.add('pz');setStatus(null);pzUIOpen(k);pzWinMeasure();
     snapCam();if(S.onEnter)S.onEnter();
     setTimeout(function(){if(PZ.on)toast(PZ_CFG.hint,3200)},300);
   });
@@ -48,13 +48,18 @@ function pzStop(){
 function pzPose(k){PZ.pose=k;if(PZ.ch)PZ.ch.setAct(k);pzUISync()}
 function pzHide(on){PZ.hidden=on;if(PZ.ch)PZ.ch.root.visible=!on;pzUISync()}
 
-/* 카메라: 세트 폭·높이가 화면 가운데 정사각형 촬영 틀(#pzFrame, 1:1 사진)에 꽉 차는 거리 × zoom
-   틀 한 변 = 화면 짧은 쪽. 세로 화면이면 폭, 가로 화면이면 높이에 맞춰요 */
-function pzFitD(S){var t=Math.tan(camera.fov*Math.PI/360);return Math.max(S.W,S.H)/2/(t*Math.min(camera.aspect,1))}
+/* 카메라: 세트 폭·높이가 폴라로이드 사진 칸(#pzWin)에 꽉 차는 거리 × zoom (2026-11-01)
+   PZ_WIN.f = 사진 칸 한 변 ÷ 화면 짧은 쪽, PZ_WIN.dy = 사진 칸 가운데가 화면 가운데보다 위로 간 px.
+   사진 칸이 위로 올라간 만큼 카메라를 내려서 세트가 칸 가운데 오게 해요 */
+var PZ_WIN={f:1,dy:0};
+function pzWinMeasure(){var e=$('pzWin'),r=e&&e.getBoundingClientRect();if(!r||!r.width){PZ_WIN.f=1;PZ_WIN.dy=0;return}
+  PZ_WIN.f=r.width/Math.min(innerWidth,innerHeight);PZ_WIN.dy=innerHeight/2-(r.top+r.height/2)}
+addEventListener('resize',function(){if(PZ.on)pzWinMeasure()});
+function pzFitD(S){var t=Math.tan(camera.fov*Math.PI/360);return Math.max(S.W,S.H)/2/(t*Math.min(camera.aspect,1)*PZ_WIN.f)}
 function pzCam(out,look){
-  var S=PZ.set,O=S.O,d=pzFitD(S)*PZ.zoom;
-  look.set(O.x+S.T.x+PZ.pan,O.y+S.lookY-d*.045,O.z+S.T.z);
-  out.set(O.x+S.T.x+PZ.pan*.5,O.y+S.camY+d*.03,O.z+S.T.z+d);
+  var S=PZ.set,O=S.O,d=pzFitD(S)*PZ.zoom,sh=PZ_WIN.dy/(innerHeight/2)*d*Math.tan(camera.fov*Math.PI/360);
+  look.set(O.x+S.T.x+PZ.pan,O.y+S.lookY-d*.045-sh,O.z+S.T.z);
+  out.set(O.x+S.T.x+PZ.pan*.5,O.y+S.camY+d*.03-sh,O.z+S.T.z+d);
 }
 function pzZoomTo(z){if(PZ.on)PZ.zoom=clamp(z,.55,PZ.set.zoomMax())}
 
