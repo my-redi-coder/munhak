@@ -32,6 +32,7 @@ function crowdNear(x,z,except){
 }
 function crowdWave(act,src){
   if(act!=='angry'&&act!=='cheer')return 0;if(typeof EV!=='undefined'&&EV.on)return 0;
+  if(act==='angry'&&typeof evCalm==='function'&&evCalm())return 0;/* 이벤트 직후엔 화 물결 없음 */
   var T=performance.now()/1000;if(T-CROWD.last<CROWD.GAP)return 0;CROWD.last=T;
   var x=src.seat?src.seat.x:src.root.position.x,z=src.seat?src.seat.z:src.root.position.z;
   var R=CROWD.JOIN[act],want=Math.floor(rnd(R[0],R[1]+1)),list=crowdNear(x,z,src).slice(0,want+2),n=0;
@@ -40,7 +41,8 @@ function crowdWave(act,src){
   return n;
 }
 function crowdCalm(x,z){
-  if(typeof EV!=='undefined'&&EV.on)return;if(Math.random()>CROWD.CALM)return;
+  if(typeof EV!=='undefined'&&EV.on)return;if(typeof evCalm==='function'&&evCalm()&&player.act!=='angry')return;/* 화낸 사람이 없으면 달래지 않아요 */
+  if(Math.random()>CROWD.CALM)return;
   var c=npcs.filter(function(n){return n.act!=='angry'}).sort(function(a,b){return Math.hypot(a.seat.x-x,a.seat.z-z)-Math.hypot(b.seat.x-x,b.seat.z-z)})[0];
   if(c)addLabel(c,crowdPick(talkPool('calm')),'say',2400);
 }

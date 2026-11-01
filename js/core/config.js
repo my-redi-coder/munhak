@@ -63,12 +63,16 @@ var FIELD_MODE={attack:{label:'우리 공격',short:'공격',toast:'우리 팀 �
 
 /* 이벤트 (나에게만 보이는 장면) — 목록·문구 */
 var EVENTS=[
-  {id:'homer',label:'최정 홈런',tag:'14번',desc:'최정이 그린존으로 큼지막하게 넘겨요',ready:true},
+  {id:'homer',label:'최 정 홈 런',tag:'14번',desc:'최정이 그린존으로 큼지막하게 넘겨요',ready:true},
   {id:'kkk',label:'KKK',tag:'29번',desc:'김광현이 삼진 세 개를 잡고 만세',ready:true},
   {id:'yeonan',label:'8회말 여난부두 응원',tag:'떼창',desc:'불빛 속에 하나 되는 으쓱이들',ready:true},
   {id:'bench',label:'벤치클리어링',tag:'',desc:'양 팀 더그아웃이 우르르 나와요',ready:false,hidden:true},
   {id:'hog',label:'꽃돼지 안타',tag:'92번',desc:'데굴데굴 굴러서 1루까지',ready:false,hidden:true}
 ];
+/* 이벤트 중·직후 화내기 쉬기 (2026-11-01): 이벤트가 진행되는 동안 + 내 자리로 돌아온 뒤 이만큼(초)은 주변 으쓱이가 화내지 않아요.
+   이벤트마다 장면 길이가 달라서(최정 홈런 약 20초 + 뒷마무리 5초, KKK 약 26초 + 3초, 여난부두는 노래 길이) '내 자리로 돌아온 순간'부터 재요.
+   장면 뒷마무리(베이스 돌기 등)는 이 시간 안에 끝나요. 숫자만 고치면 돼요 */
+var EV_CALM={homer:30,kkk:30,yeonan:30};
 /* 이벤트 배경음: 직접 찍은 육성응원 (events/ 폴더) */
 var EV_BGM={homer:'events/homer-bgm.mp3',yeonan:'songs/song2.mp3'};
 /* 8회말 여난부두: 음원(EV_BGM.yeonan)·가사(lyrics)는 사용자가 events/ 폴더에 직접 올려요. 둘 다 없어도 장면은 돌아가요.
@@ -95,7 +99,7 @@ var EV_SHOUT_N=5;
 var PZ_CFG={
   pz:{label:'플레이어존',desc:'3번 게이트 포토존, 내 사진 넣고 찍기',indoor:true,title:'PLAYER OF THE MONTH',line:'다음 시즌의 주인공은?',lineMax:22},
   hr:{label:'홈런기념판',desc:'외야 잔디벽, 최정 홈런 숫자판',base:538,max:999,miles:[1,100,200,300,400,500],name:'CHOIJEONG',sub:'LEGENDARY',foot:'HOMERUNS',rec:'KBO HOME RUN RECORD'},
-  poses:[['pzUp','하나!'],['pzV','브이'],['pzShow','소개'],['pzBanzai','만세']],
+  poses:[['pzShow','소개'],['pzBanzai','만세'],['pzV','브이']],/* 포즈마다 표정이 달라요: 소개 = 기본 얼굴, 만세 = 활짝(joy), 브이 = 웃는 눈(happy) — game/photozone.js의 PZ_POSE */
   hint:'드래그로 좌우를 보고, 으쓱이는 끌어서 옮겨요',
   full:'999호! 마일스톤 판이 꽉 찼어요',
   newMile:function(m){return m+'호 마일스톤이 새로 붙었어요!'}

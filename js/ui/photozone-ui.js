@@ -45,7 +45,7 @@ function pzHold(b,dir){
 
 $('pzBack').onclick=function(){sfx('tap');pzStop()};
 $('pzHide').onclick=function(){sfx('tap');pzHide(!PZ.hidden)};
-$('pzShot').onclick=function(){takePhoto(PZ.key==='hr'?'homerun':'playerzone')};
+$('pzShot').onclick=function(){takePhoto(PZ.key==='hr'?'homerun':'playerzone',{square:true})};/* 1:1 (2026-11-01) */
 /* 사진 넣기: 긴 쪽 1400px로 줄여 jpg로 저장 */
 $('pzFile').onchange=function(){
   var f=this.files&&this.files[0];this.value='';if(!f)return;

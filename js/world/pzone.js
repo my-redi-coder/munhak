@@ -61,7 +61,7 @@ function pzSetLine(t){PZP.line=t;store.set('pzLine',t);pzPanelDraw()}
 
 PZ_SETS.pz={
   O:new THREE.Vector3(150,0,380),g:null,T:new THREE.Vector3(0,0,0),W:6.4,H:4.9,camY:1.45,lookY:2.15,
-  standZ:1.45,standX:[-3.6,3.6],startX:1.7,panMin:-3,panMax:3,zoomMax:function(){return 1.5},pose:'pzUp',
+  standZ:1.45,standX:[-3.6,3.6],startX:1.7,panMin:-3,panMax:3,zoomMax:function(){return 1.5},pose:'pzV',
   pointX:function(){return 0},
   build:function(){
     var g=this.g=new THREE.Group();g.position.copy(this.O);g.visible=false;var P=PZP;

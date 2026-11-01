@@ -54,6 +54,7 @@
 - 공통 틀은 `js/game/events.js`: `startEvent`, `evCam(위치,보는곳,부드러움,컷)`, `evRelease(문구)`, `EV.field`(선수 직접 조종), 관중 반응 `evCrowdCheer/Shout`.
 - 목록·문구는 `config.js`의 `EVENTS`, `EV_TEXT`. 열 때 `ready:true`.
 - 빅보드 화면 연출은 `js/world/bbshow.js`, 효과음은 `js/audio/eventsfx.js`, 배경음은 `js/audio/evbgm.js`(파일은 `events/`, 목록은 `config.js`의 `EV_BGM`).
+- 이벤트 중 + 내 자리로 돌아온 뒤 `EV_CALM[id]`초(config.js, 기본 30)는 `evCalm()`이 참 → 주변 으쓱이가 화내기를 고르지 않고(npc.js) 화 물결·달래기도 쉬어요(crowdtalk.js). 시작할 때 화내던 으쓱이는 `evCalmCrowd()`로 진정. 새 이벤트도 `EV_CALM`에 한 줄 추가.
 - 공용 도우미: `evBoardCam()` 빅보드 꽉 차게, `evCaption(글자,대상,높이,ms)` 3D 위치 위 자막, `evCount(b,s,o)`/`evCountOff()` 볼카운트 불, `evClapBuild(초)`/`evClapStop()` 빨라지는 박수, 선수 `setFace(종류)`/`clearFace()` 표정. 숨길 이벤트는 `EVENTS`에 `hidden:true`.
 - `index.html`에 `<script src="events/<이름>.js">`를 `events/homer.js` 다음 줄에 추가.
 
@@ -90,9 +91,9 @@
 - 들어가는 길: 위쪽 구역 버튼 → **내 위치** 펼침 메뉴 → '둘러보기'(`js/ui/places.js`). `pzStart('pz'|'hr')`, 나가기는 화면 왼쪽 위 '돌아가기'(`pzStop`).
 - 세트는 야구장 밖 떨어진 곳에 처음 갈 때 지어요(플레이어존 x=150, 홈런기념판 x=−150, z=380). 세트 약속은 `js/world/pz-kit.js` 맨 위 주석. 새 포토존은 `PZ_SETS.<이름>`에 세트를 등록하고 `config.js`의 `PZ_CFG`에 이름·설명, `TOURS`에 이름, `places.js`의 `TOUR_GO`·`PLACE_ICO`에 한 줄, `photozone-ui.js`의 도구에 한 줄. 실내 세트면 `PZ_CFG`에 `indoor:true`(밤 경기여도 낮 조명).
 - 사진용 으쓱이는 내 으쓱이(유니폼·등판)를 본떠 따로 세워요. 내 자리·행동은 그대로.
-- 카메라: 정면에서 좌우(`PZ.pan`)와 가까이/멀리(`PZ.zoom`, 화면에 꽉 맞는 거리의 배수)만. 으쓱이를 누른 채 끌면 좌우로 옮겨요.
-- 포즈는 `PZ_POSE`(game/photozone.js). `character.js`의 `update`가 act 이름으로 찾아 써요.
-- 찍기는 `takePhoto(이름)`(ui/photo.js): 3D 화면만 jpg로(버튼은 안 찍힘) → 미리보기 시트에서 저장·공유. 위쪽 '직관 사진' 버튼도 같은 함수를 써요(`game/actions.js`).
+- 카메라: 정면에서 좌우(`PZ.pan`)와 가까이/멀리(`PZ.zoom`, 가운데 정사각형 촬영 틀 `#pzFrame`에 꽉 맞는 거리의 배수 — `pzFitD`)만. 으쓱이를 누른 채 끌면 좌우로 옮겨요.
+- 포즈는 `PZ_POSE`(game/photozone.js) 3개, 함수가 돌려주는 값이 표정: 소개 `normal` / 만세 `joy` / 브이 `happy`. 표정 그림은 `character.js`의 `faceTex`·`FACE`. `update`가 act 이름으로 찾아 써요.
+- 찍기는 `takePhoto(이름, {square:true})`(ui/photo.js): 포토존은 화면 가운데 정사각형만 잘라 1080×1080 jpg(`photoSquare`, 잠깐 해상도를 올려 그림), 위쪽 '직관 사진' 버튼(`game/actions.js`)은 `square` 없이 화면 그대로. 버튼은 안 찍힘 → 미리보기 시트에서 저장·공유.
 - 이 기기에 저장: 플레이어존 사진(`munhak:pzPhoto`, 긴 쪽 1400px jpg), 한 줄 문구(`pzLine`), 홈런 수(`pzHr`).
 
 ## 위쪽 버튼 · 내 위치 · 담벼락 (묶음 A, 2026-11-01)

@@ -23,11 +23,20 @@ function faceTex(kind){
     x.strokeStyle='#2b2320';x.fillStyle='#2b2320';x.lineCap='round';x.lineWidth=5;
     if(kind==='happy'){[[96,54],[160,54]].forEach(function(p){x.beginPath();x.moveTo(p[0]-9,p[1]+4);x.lineTo(p[0],p[1]-5);x.lineTo(p[0]+9,p[1]+4);x.stroke()});x.beginPath();x.moveTo(114,82);x.quadraticCurveTo(128,104,142,82);x.closePath();x.fillStyle='#9b3a3a';x.fill()}
     else if(kind==='angry'){x.lineWidth=6;x.beginPath();x.moveTo(82,36);x.lineTo(106,46);x.moveTo(174,36);x.lineTo(150,46);x.stroke();[[96,58],[160,58]].forEach(function(p){x.beginPath();x.ellipse(p[0],p[1],6,7,0,0,TAU);x.fill()});x.lineWidth=5;x.beginPath();x.moveTo(114,96);x.quadraticCurveTo(128,84,142,96);x.stroke();x.strokeStyle='#e0263f';x.lineWidth=4;x.beginPath();x.moveTo(196,22);x.quadraticCurveTo(204,30,212,22);x.moveTo(196,40);x.quadraticCurveTo(204,32,212,40);x.moveTo(194,24);x.quadraticCurveTo(202,31,194,38);x.moveTo(214,24);x.quadraticCurveTo(206,31,214,38);x.stroke()}
+    else if(kind==='joy'){/* (2026-11-01) 만세 포즈: 볼 더 빨갛게 + 눈웃음 ∩ + 활짝 벌린 입(윗니·혀) */
+      x.fillStyle='rgba(255,105,120,.42)';[[66,80],[190,80]].forEach(function(p){x.beginPath();x.ellipse(p[0],p[1],18,11,0,0,TAU);x.fill()});
+      x.lineWidth=6;[96,160].forEach(function(cx){x.beginPath();x.arc(cx,62,10,Math.PI*1.08,Math.PI*1.92);x.stroke()});
+      var mx=128,my=78,mw=17,md=26;
+      x.beginPath();x.moveTo(mx-mw,my);x.lineTo(mx+mw,my);x.quadraticCurveTo(mx+mw,my+md,mx,my+md);x.quadraticCurveTo(mx-mw,my+md,mx-mw,my);x.closePath();
+      x.fillStyle='#7a1f2a';x.fill();x.save();x.clip();
+      x.fillStyle='#fff';x.fillRect(mx-mw,my,mw*2,5);
+      x.fillStyle='#f07a86';x.beginPath();x.ellipse(mx,my+md*.92,mw*.62,md*.36,0,0,TAU);x.fill();x.restore();
+      x.strokeStyle='#2b2320';x.lineWidth=3.5;x.stroke()}
     else if(kind==='blink'){x.lineWidth=5;[[96,56],[160,56]].forEach(function(p){x.beginPath();x.moveTo(p[0]-8,p[1]);x.lineTo(p[0]+8,p[1]);x.stroke()});x.lineWidth=4;x.beginPath();x.moveTo(118,86);x.quadraticCurveTo(128,94,138,86);x.stroke()}
     else{[[96,56],[160,56]].forEach(function(p){x.beginPath();x.ellipse(p[0],p[1],7,9.5,0,0,TAU);x.fill();x.fillStyle='#fff';x.beginPath();x.arc(p[0]+2.5,p[1]-3.5,2.4,0,TAU);x.fill();x.fillStyle='#2b2320'});x.lineWidth=4;x.beginPath();x.moveTo(118,86);x.quadraticCurveTo(128,94,138,86);x.stroke()}
   });
 }
-var FACE={};['normal','happy','angry','blink'].forEach(function(k){FACE[k]=new THREE.MeshLambertMaterial({map:faceTex(k),transparent:true,depthWrite:false})});
+var FACE={};['normal','happy','angry','blink','joy'].forEach(function(k){FACE[k]=new THREE.MeshLambertMaterial({map:faceTex(k),transparent:true,depthWrite:false})});
 
 var KFONT='"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif';
 function drawBack(x,w,h,u,name,num,ox,oy){

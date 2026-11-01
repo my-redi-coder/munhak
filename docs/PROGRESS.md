@@ -2,6 +2,16 @@
 
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
+## 작은 패치 D: 이벤트 직후 화내기 쉬기 + 이벤트 이름 + 포토존 1:1·포즈별 표정 — 완료 (2026-11-01, `munhak_2026-11-01_D-photo-event`)
+
+- 화내기 쉬기(`js/game/events.js`의 `evCalm`·`evCalmCrowd`, `EV.calmUntil`): 이벤트 중 + 내 자리로 돌아온 뒤 `EV_CALM[id]`초(`config.js`, 세 이벤트 모두 30). 장면 뒷마무리(최정 홈런 5.4초·KKK 3.3초)는 이 안에 끝남. 건너뛰기 해도 그때부터 30초
+  - `js/game/npc.js`: 혼자 행동 고를 때 화내기가 나오면 가만히(4~10초 뒤 다시 고름). `js/game/crowdtalk.js`: 화 물결 쉼, 달래기도 화낸 사람이 없으면 쉼(내가 화내는 중이면 그대로)
+  - 시작할 때 화내던 으쓱이·곧 따라 화낼 예정이던 으쓱이 진정
+- 이벤트 목록 이름 '최 정 홈 런'(`config.js`의 `EVENTS`)
+- 포토존 1:1: `index.html`에 촬영 틀 `#pzFrame`, `styles/photozone.css`(가운데 정사각형, 바깥 살짝 어둡게, 얇은 흰 테두리). `pzFitD`가 세트를 틀에 꽉 차게(가로 화면에서도 세트가 안 잘림). `js/ui/photo.js`의 `photoSquare()`: 잠깐 해상도를 올려 그린 뒤 가운데 정사각형만 잘라 1080×1080 jpg, `takePhoto(이름,{square:true})`. 직관 사진은 그대로
+- 포즈 3개(소개·만세·브이, `PZ_CFG.poses`), 표정: 소개 `normal` / 만세 새 표정 `joy`(`character.js`의 `faceTex`) / 브이 `happy`. 플레이어존 기본 포즈 브이(`js/world/pzone.js`)
+- 확인: JS 문법 검사만. 화면(촬영 틀 위치·어둡기, 저장된 사진 구도, 만세 표정, 이벤트 뒤 30초 조용한지)은 폰에서
+
 ## 작은 패치: 사이트 제목 + 링크 미리보기 카드 — 완료 (2026-11-01, 묶음 C와 합쳐 `munhak_2026-11-01_C-mascots-og`)
 
 - 다른 채팅에서 만든 것을 이 묶음에 합침(`index.html`의 머리 부분만 바뀜, 마스코트 스크립트 4줄과 안 겹침)

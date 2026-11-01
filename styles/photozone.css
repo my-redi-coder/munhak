@@ -4,6 +4,9 @@ body.pz #hud{display:none}
 body.pz #labels{opacity:0}
 #pz{position:fixed;inset:0;z-index:12;pointer-events:none}
 #pz>*{pointer-events:auto}
+/* 1:1 촬영 틀 (2026-11-01): 화면 가운데 정사각형, 바깥은 살짝 어둡게. 이 안쪽만 사진에 담겨요(ui/photo.js의 photoSquare) */
+#pz>.pz-frame{position:absolute;left:50%;top:50%;width:min(100vw,100vh);height:min(100vw,100vh);transform:translate(-50%,-50%);pointer-events:none;border:1.5px solid rgba(255,255,255,.7);box-shadow:0 0 0 200vmax rgba(10,14,20,.38)}
+@supports (height:100dvh){#pz>.pz-frame{width:min(100vw,100dvh);height:min(100vw,100dvh)}}
 #pz[hidden]{display:none}
 .pz-top{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px 0;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none}
 .pz-top>*{pointer-events:auto}

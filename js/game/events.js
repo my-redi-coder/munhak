@@ -6,7 +6,13 @@
    EV.cam   {pos,look,k}가 있으면 카메라가 내 자리 대신 여기를 봐요 (game/camera.js)
    EV.field true면 fieldTick이 쉬고 장면이 선수를 직접 움직여요 (game/fieldplay.js)
    EV.excite 관중 들썩임 0~1 (app/loop.js) */
-var EV={on:false,run:null,id:null,t:0,ready:false,cam:null,field:false,excite:0};
+var EV={on:false,run:null,id:null,t:0,ready:false,cam:null,field:false,excite:0,calmUntil:0};
+/* 화내기 쉬기 (2026-11-01): 이벤트 중 + 내 자리로 돌아온 뒤 EV_CALM[id]초 동안은 주변 으쓱이가 화내지 않아요 (game/npc.js·crowdtalk.js가 물어봐요) */
+function evCalm(){return EV.on||!!EV.run||performance.now()<EV.calmUntil}
+/* 이벤트가 시작될 때 화내던 으쓱이는 진정시키고, 곧 화낼 예정이던 으쓱이도 취소 */
+function evCalmCrowd(){npcs.forEach(function(n){
+  if(n.act==='angry'||(n.follow&&n.want==='angry')){n.follow=false;n.waveFollow=false;n.joinAt=0;if(n.act)npcStop(n);n.ai=rnd(4,10)}
+})}
 var EV_SCENES={};
 function evCam(p,l,k,cut){
   if(!EV.cam)EV.cam={pos:new THREE.Vector3(),look:new THREE.Vector3(),k:6};
@@ -16,7 +22,7 @@ function evCam(p,l,k,cut){
 function startEvent(id){
   var sc=EV_SCENES[id];if(!sc||phase!=='game'||EV.on)return;
   if(EV.run)evFinish();
-  auEnsure();stopAct(true);PL.target=null;PL.onArrive=null;if(player.mode==='walk')player.mode='stand';
+  auEnsure();stopAct(true);evCalmCrowd();PL.target=null;PL.onArrive=null;if(player.mode==='walk')player.mode='stand';
   EV.on=true;EV.run=sc;EV.id=id;EV.t=0;EV.ready=false;EV.excite=.15;
   document.body.classList.add('ev');setStatus(EV_TEXT[id].watch);$('statusStop').textContent='건너뛰기';
   fadeTo('',function(){sc.start();EV.ready=true});
@@ -26,7 +32,7 @@ function evTick(dt){
   if(EV.run.tick(EV.t,dt))evFinish();
 }
 function evRelease(msg){
-  if(!EV.on)return;EV.on=false;
+  if(!EV.on)return;EV.on=false;EV.calmUntil=performance.now()+((typeof EV_CALM!=='undefined'&&EV_CALM[EV.id])||30)*1000;
   document.body.classList.remove('ev');setStatus(null);$('statusStop').textContent='멈추기';
   fadeTo('',function(){EV.cam=null;snapCam();if(msg)setTimeout(function(){toast(msg,3200)},300)});
 }

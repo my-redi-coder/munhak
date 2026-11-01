@@ -5,7 +5,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
-| `js/core/config.js` | 112 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, myName, TEAMS, HOME_SIDE, PLAYER_SCALE … |
+| `js/core/config.js` | 116 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, myName, TEAMS, HOME_SIDE, PLAYER_SCALE … |
 | `songs/songs.js` | 19 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |
@@ -24,7 +24,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/hrboard.js` | 118 | HRB, HRB_TILE, hrDigitMat, HRB_SIDE, hrTile, hrSetTile, hrShield, hrMiles, hrBoard, hrShow, hrSetCount, hrTick |
 | `js/world/crowd.js` | 40 | _m, crowd, crowdSet, crowdFlush |
 | `js/world/daynight.js` | 108 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
-| `js/entities/character.js` | 117 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, KFONT, drawBack, backTex, jerseyTex, jerseyShared, Char … |
+| `js/entities/character.js` | 126 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, KFONT, drawBack, backTex, jerseyTex, jerseyShared, Char … |
 | `js/entities/player.js` | 71 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |
 | `js/entities/bpface.js` | 61 | BPF, bpfXY, BPF_INK, bpfTex, bpfMat |
 | `js/entities/mascot-kit.js` | 160 | MASCOT_UNI, mascotUni, MASCOT_FONT, MASCOT_REDUCED, MASCOT_SIG, mkLambert, mkShiny, mascotOnSphere, mascotOutline, mascotCapsule, mascotJerseyTex, mascotJersey, Mascot, mascotDamp … |
@@ -41,10 +41,10 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/game/flow.js` | 44 | fadeTo, enterGame, goZone, leaveGame, startSetup |
 | `js/game/actions.js` | 35 | ACT_LABEL, ACT_BTN, lineT, setActButtons, startAct, stopAct, setStatus |
 | `js/ui/sheets.js` | 7 | lastFocus, openModal, closeModal |
-| `js/game/crowdtalk.js` | 46 | CROWD, talkPool, actLine, crowdPick, crowdSay, crowdNear, crowdWave, crowdCalm |
-| `js/game/npc.js` | 41 | npcReact, NPC_MSG, npcStart, npcStop, updateNPCs, _np |
+| `js/game/crowdtalk.js` | 48 | CROWD, talkPool, actLine, crowdPick, crowdSay, crowdNear, crowdWave, crowdCalm |
+| `js/game/npc.js` | 46 | npcReact, NPC_MSG, npcStart, npcStop, updateNPCs, _np |
 | `js/game/fieldplay.js` | 75 | FP, PITCH, faceTo, fpAdd, setFieldMode, fpByRole, fpKeys, fpPose, POSE, PITCHKEYS, SWINGKEYS, fieldTick |
-| `js/game/events.js` | 60 | EV, EV_SCENES, evCam, startEvent, evTick, evRelease, evFinish, skipEvent, evCrowdCheer, evShuffle, evCrowdShout, evCrowdCalm, evBoardCam, EVCAP … |
+| `js/game/events.js` | 66 | EV, evCalm, evCalmCrowd, EV_SCENES, evCam, startEvent, evTick, evRelease, evFinish, skipEvent, evCrowdCheer, evShuffle, evCrowdShout, evCrowdCalm … |
 | `js/ui/count.js` | 20 | EVCOUNT, evCountEl, evCount, evCountOff, evCount0 |
 | `events/homer.js` | 120 | HR, hrRunPose, hrBallAt, hrTurn, hrBoardCam, hrFielders, hrPreField, hrLooseBat, hrLooseTick, hrRun, hrHighFive, hrOnDeck |
 | `events/kkk.js` | 108 | KK, kkMirror, kkWalk, kkTurn, kkEase, kkLerp, kkFaceCam, kkBanzaiCam |
@@ -58,8 +58,8 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/game/input.js` | 55 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
 | `js/game/camera.js` | 34 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
 | `js/game/sightsee.js` | 18 | SS, ssStart, ssStop, ssCam, ssDrag |
-| `js/game/photozone.js` | 82 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab, pzDrag, pzRelease … |
-| `js/ui/photo.js` | 22 | PHOTO, photoStamp, takePhoto |
+| `js/game/photozone.js` | 86 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab, pzDrag, pzRelease … |
+| `js/ui/photo.js` | 33 | PHOTO, photoStamp, photoSquare, takePhoto |
 | `js/ui/photozone-ui.js` | 60 | pzBtn, pzUIOpen, pzUIClose, pzUISync, pzHold |
 | `js/ui/places.js` | 53 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
 | `js/ui/wall.js` | 58 | WALL, wallFonts, wallArt, wallOpen, wallClose |

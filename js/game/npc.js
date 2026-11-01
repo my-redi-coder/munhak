@@ -1,6 +1,7 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= NPC behaviour =================
-   (묶음 B) 말풍선·물결은 game/crowdtalk.js. 행동 고르는 비율(응원2·화1·흔들기1)은 그대로 */
+   (묶음 B) 말풍선·물결은 game/crowdtalk.js. 행동 고르는 비율(응원2·화1·흔들기1)은 그대로
+   (2026-11-01) 이벤트 중·직후엔 화내기를 고르면 그냥 가만히 있어요(evCalm). 내가 직접 화내면 따라 화내는 건 그대로 */
 function npcReact(a){
   var near=npcs.slice().sort(function(x,y){return Math.abs(x.seat.x-player.root.position.x)+Math.abs(x.seat.z-player.root.position.z)-(Math.abs(y.seat.x-player.root.position.x)+Math.abs(y.seat.z-player.root.position.z))});
   if(a==='cheer'){
@@ -28,9 +29,13 @@ function updateNPCs(dt,beat){
       n.ai-=dt;
       if(n.ai<=0){
         if(n.act){npcStop(n);n.ai=rnd(8,22)}
-        else{var a=pick(['cheer','cheer','angry','wave']);npcStart(n,a);n.ai=rnd(3,6);
-          if(Math.random()<.55)toast(n.name+NPC_MSG[a],2400,true);
-          crowdSay(n,a);crowdWave(a,n);
+        else{var a=pick(['cheer','cheer','angry','wave']);
+          /* 이벤트 중·직후(game/events.js의 evCalm)엔 화 대신 가만히 앉아 있어요 */
+          if(a==='angry'&&typeof evCalm==='function'&&evCalm()){n.ai=rnd(4,10)}
+          else{npcStart(n,a);n.ai=rnd(3,6);
+            if(Math.random()<.55)toast(n.name+NPC_MSG[a],2400,true);
+            crowdSay(n,a);crowdWave(a,n);
+          }
         }
       }
     }
