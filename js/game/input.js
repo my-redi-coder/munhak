@@ -16,10 +16,11 @@ function onTap(cx,cy){
   if(phase!=='game'||EV.on||SS.on||PZ.on)return;
   ndc.set(cx/innerWidth*2-1,-(cy/innerHeight)*2+1);ray.setFromCamera(ndc,camera);
   var objs=[];npcs.forEach(function(n){objs.push.apply(objs,n.meshes)});objs.push.apply(objs,player.meshes);
-  if(leader)objs.push.apply(objs,leader.meshes);FP.list.forEach(function(p){objs.push.apply(objs,p.meshes)});
+  if(leader)objs.push.apply(objs,leader.meshes);objs.push.apply(objs,mascotMeshes());FP.list.forEach(function(p){objs.push.apply(objs,p.meshes)});
   objs.push(curBlock.seatMesh,curBlock.terrace);blocks.forEach(function(b){if(b!==curBlock)objs.push(b.terrace)});objs.push(field);
   var hits=ray.intersectObjects(objs,false);if(!hits.length)return;var h=hits[0],o=h.object;
   if(o.userData.bp){addLabel(o.userData.bp,o.userData.bp.label,'tag',2400);sfx('tap');return}
+  if(o.userData.mascot){var mm=o.userData.mascot;mascotTap(mm);addLabel(mm,mm.name,'tag',2400);sfx('tap');return}
   if(o.userData.char){var ch=o.userData.char;addLabel(ch,ch===player?myName():ch.name,'tag',2400);sfx('tap');return}
   if(o===curBlock.seatMesh){
     var s=curBlock.seats[h.instanceId];if(!s)return;

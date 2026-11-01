@@ -118,3 +118,10 @@
 - **핸드폰 잠금화면** `js/ui/food-phone.js` + `styles/food-phone.css`: `fdTable`이 `phoneSvg(hm)`로 작은 핸드폰을 그리고, `openFood`가 `phoneBind()`, `closeFood`·`foodEsc`가 `phoneClose()`. 펼친 잠금화면은 `#food` 안에 처음 열 때 만들어요(`phBuild`). 개막일·알림 글·링크는 `PHONE_CFG`만. 배경화면은 `phWall()` SVG.
 - **관중 멘트** `js/game/crowdtalk.js`: 멘트 목록은 `config.js`의 `TALK`(angry·good·calm × any·attack·defense)와 `LINES`(cheer 구호·wave). `talkPool`이 지금 공수(`FP.mode`)를 보고 섞어요. `crowdSay` 말풍선(3.5초 안에 같은 글자 안 겹침), `crowdWave` 화·응원 물결(근처 여러 명이 따라 하고 몇 초 뒤 멈춤 `waveFollow`, 물결끼리 `CROWD.GAP`초 쉼), `crowdCalm` 화 물결 뒤 달래기. `npc.js`가 행동 시작 때 부르고, 내가 화내면 `npcReact`가 근처 여러 명을 끌어들여요. 비율·확률은 `CROWD` 숫자만 바꾸면 돼요.
 - **티켓팅 War**: 위 불펜장 표 참고. 티켓 저장은 `LOCKER.addTicket(i,{n,tog,seat,blk})`. 발권 뒤 '티켓북에 꽂기'는 sessionStorage `tw-new`에 번호를 남기고 `locker.html#tickets`로 가요(방금 꽂은 티켓 강조).
+
+## 묶음 C: 응원단상 마스코트 (2026-11-01)
+
+- **모델(야구장과 분리)** `js/entities/mascot-kit.js` + `mascot-redi.js` + `mascot-barry.js`: THREE만 있으면 돌아가요. `makeRedi(o)`·`makeBarry(o)` → `Mascot`(`root`, `meshes`, `headG`=이름표 자리, `setUniform(uk)`, `pose('cheer'|'idle')`, `signature()`, `posing()`, `update(dt,beat)`, `dispose()`). `o = {uni, detail:'full'|'lite', scale}`. 유니폼 색은 `UNI`(config.js)가 있으면 그걸, 없으면 `MASCOT_UNI`. 생김새 숫자는 `REDI_DESIGN`·`BARRY_DESIGN`, 포즈 시간은 `MASCOT_SIG`.
+- **응원단상** `js/game/mascots.js`: `makeMascots()`(boot.js, `makeLeader()` 다음)가 `stageG`에 세움. `mascotTick(dt,beat)`(loop.js, 매 프레임 — 입장 준비 화면에서도 유니폼은 따라감): `ME.uni` 비교 → `setUniform`, `leader.act==='cheer'`면 율동, `player.act==='cheer'`이고 이벤트 중이 아니면 `MASC.next` 타이머로 랜덤 포즈. 누르기는 `input.js`가 `mascotMeshes()`를 맞힘 대상에 넣고 `userData.mascot`이면 `mascotTap` + 이름표.
+- 배리 몸통은 정면 윤곽(`barryCrownShape`)을 가운데에서 사방으로 부풀린 면(`barryCrownGeo`), 얼굴 부품은 `barryFront(x,y)`로 휜 앞면에 붙여요. 재질은 빛을 덜 타게(일부 자체 발광) 해서 야구장 빛에 하얗게 날아가지 않게.
+

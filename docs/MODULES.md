@@ -27,11 +27,15 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/entities/character.js` | 117 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, KFONT, drawBack, backTex, jerseyTex, jerseyShared, Char … |
 | `js/entities/player.js` | 71 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |
 | `js/entities/bpface.js` | 61 | BPF, bpfXY, BPF_INK, bpfTex, bpfMat |
+| `js/entities/mascot-kit.js` | 160 | MASCOT_UNI, mascotUni, MASCOT_FONT, MASCOT_REDUCED, MASCOT_SIG, mkLambert, mkShiny, mascotOnSphere, mascotOutline, mascotCapsule, mascotJerseyTex, mascotJersey, Mascot, mascotDamp … |
+| `js/entities/mascot-redi.js` | 117 | REDI_DESIGN, makeRedi |
+| `js/entities/mascot-barry.js` | 133 | BARRY_DESIGN, barryCrownShape, barryRay, barrySe, barryCrownGeo, barryFront, barryStick, makeBarry |
 | `js/audio/audio.js` | 68 | AU, BPM, MEL, MELMAP, ROOTS, hz, auEnsure, applyVol, setSound, crowdSwell, noiseHit, drum, clap, hat … |
 | `js/audio/songs.js` | 15 | SONG, songPick, songStart, songStop, songPlaying, songBeat |
 | `js/audio/eventsfx.js` | 51 | HORN_VOL, evDuck, evReady, evSound, EVCLAP, evClapBuild, evClapStop |
 | `js/audio/evbgm.js` | 29 | EVB, evBgmPlay, evBgmPrime, evBgmGo, evBgmStop, evBgmDuck |
 | `js/game/state.js` | 32 | player, cam, PL, makePlayer, placeForSetup, clearNPCs, spawnNPCs, sitChar, standAtSeat, makeLeader |
+| `js/game/mascots.js` | 51 | MASCOT_CFG, MASC, makeMascots, mascotRoll, mascotMeshes, mascotTap, mascotTick |
 | `js/ui/feedback.js` | 36 | toastT, toast, labels, addLabel, _p, updateLabels, clearLabels, drawSoundIcon, fmt |
 | `js/ui/setup.js` | 38 | buildSwatches, buildZoneList, syncBack, beaconTex, beacon, drawBeacon, overview, blockCenter, focusZone |
 | `js/game/flow.js` | 44 | fadeTo, enterGame, goZone, leaveGame, startSetup |
@@ -51,7 +55,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/food-note.js` | 58 | NOTE, NOTE_PAGES, NOTE_DOODLE, NOTE_STAMP, noteSvg, noteFonts, noteLine, noteBuild, notePaint, noteGo, noteFocus, noteOpen, noteClose, noteBind |
 | `js/ui/food-phone.js` | 127 | PHONE_CFG, PHONE, PH_DAYS, PH_ICON, phWall, phoneSvg, phDday, phBuild, phTime, phChime, phoneOpen, phoneClose, phoneBind |
 | `js/ui/bullpen.js` | 21 | MG, openBullpen, closeBullpen |
-| `js/game/input.js` | 54 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
+| `js/game/input.js` | 55 | ray, endPtr, tapMark, onTap, showTap, leaveSeat, walkTo, goToSeat |
 | `js/game/camera.js` | 34 | _t, camTarget, camDesired, snapCam, _dp, updateCam, resize, applyViewOffset |
 | `js/game/sightsee.js` | 18 | SS, ssStart, ssStop, ssCam, ssDrag |
 | `js/game/photozone.js` | 82 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab, pzDrag, pzRelease … |
@@ -61,5 +65,5 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/wall.js` | 58 | WALL, wallFonts, wallArt, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
-| `js/app/loop.js` | 19 | T, frame |
-| `js/app/boot.js` | 7 | _ro |
+| `js/app/loop.js` | 20 | T, frame |
+| `js/app/boot.js` | 8 | _ro |
