@@ -1,0 +1,39 @@
+/* SSG 팬 레디코더의 문학야구장 — 홈런볼 모으기 */
+.strip{display:flex;align-items:center;gap:10px;background:rgba(30,40,30,.86);color:#fff;border-radius:999px;padding:8px 14px;margin:14px 0 10px;perspective:400px}
+.strip .when{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.strip .when.flip{animation:hrFlip .45s ease}
+@keyframes hrFlip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+.strip .d{font-family:var(--num);font-size:17px;white-space:nowrap}
+.strip .o{font-size:14px;opacity:.9;white-space:nowrap}
+.strip .chip{font-size:12px;border:1px solid rgba(255,255,255,.5);border-radius:99px;padding:1px 8px;white-space:nowrap}
+.strip .chip.home{background:#c8102e;border-color:#c8102e}
+.strip .cnt{font-family:var(--num);font-size:17px;white-space:nowrap}
+.field{position:relative;border-radius:14px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#hrCanvas{display:block;width:100%;height:auto;cursor:grab}
+.pop{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.2,1.4,.4,1),opacity .2s;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.pop.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+.pop .hball{--s:150px}
+.pop .say{font-family:var(--num);color:#fff;font-size:21px;text-shadow:0 2px 8px rgba(0,0,0,.6);white-space:nowrap}
+.pop .say small{display:block;font-family:"Gowun Dodum",sans-serif;font-size:13px}
+.pop .nice{background:#ffe79a;color:#4a3207;border-radius:99px;padding:2px 12px;font-family:var(--num);font-size:15px}
+.msg{position:absolute;left:50%;top:40%;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,.55);padding:8px 14px;border-radius:99px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+.msg.show{opacity:1}
+.gate{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(20,30,22,.55);color:#fff;text-align:center;padding:20px}
+.gate h3{margin:0;font-family:var(--num);font-weight:400;font-size:30px}
+.gate p{margin:0;opacity:.92;font-size:15px}
+.gate .primary{width:auto;padding:0 38px;margin-top:6px}
+.howto{margin:12px 2px 0;color:var(--muted);font-size:13px;text-align:center}
+
+/* 결과 시트 */
+.overlay{position:fixed;inset:0;z-index:20;display:none;align-items:flex-end;justify-content:center;background:rgba(30,34,26,.45)}
+.overlay.show{display:flex}
+.sheet{width:100%;max-width:520px;background:var(--paper);border-radius:20px 20px 0 0;padding:22px 18px calc(20px + env(safe-area-inset-bottom,0px))}
+.sheet h3{margin:0 0 2px;font-weight:400;font-size:22px}
+.sheet p{margin:0 0 14px;color:var(--muted)}
+.result{display:flex;gap:8px;margin-bottom:14px}
+.result div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;font-size:13px;color:var(--muted)}
+.result b{display:block;font-family:var(--num);font-weight:400;font-size:22px;color:var(--ink)}
+.dev{margin-top:28px;border-top:1px solid var(--line);padding-top:12px;font-size:13px;color:var(--muted)}
+.dev .row{flex-wrap:wrap;margin-top:8px}
+.dev .secondary{height:40px;line-height:38px;font-size:13px;flex:1 1 45%}
+@media (prefers-reduced-motion:reduce){.strip .when.flip{animation:none}.pop{transition:none}}

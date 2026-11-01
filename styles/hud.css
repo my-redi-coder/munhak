@@ -1,0 +1,62 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
+/* hud */
+#hud{position:fixed;inset:0;z-index:10;pointer-events:none}
+#hud>*{pointer-events:auto}
+.top{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;pointer-events:none}
+.top>*{pointer-events:auto}
+.cap{display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow)}
+.cap button,.cap .stat{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:40px;height:40px;padding:0 8px;white-space:nowrap;border-radius:999px;font-size:13px}
+.cap .stat{color:var(--muted);padding:0 8px 0 10px}
+.left{display:flex;gap:8px;position:relative}
+.right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13px}
+#toast{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 120px);transform:translate(-50%,-6px);max-width:calc(100% - 40px);padding:9px 16px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13px;line-height:1.4;text-align:center;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.bottom{position:absolute;left:0;right:0;bottom:0;padding:0 12px calc(env(safe-area-inset-bottom,0px) + 14px);display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}
+.bottom>*{pointer-events:auto}
+#status{display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 6px 0 14px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--line);font-size:13px;box-shadow:var(--shadow)}
+#status button{height:28px;padding:0 12px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:12px}
+.bar{display:flex;gap:6px;padding:6px;border-radius:22px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow);width:100%;max-width:420px}
+.act{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:62px;border-radius:16px;font-size:12px;line-height:1.2;transition:background .2s,color .2s}
+.act svg.i{width:22px;height:22px}
+.act[aria-pressed="true"]{background:var(--red);color:var(--red-ink)}
+.act.later{color:var(--faint)}
+
+/* in-world labels */
+#labels{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.tag,.bub{position:absolute;left:0;top:0;transform:translate(-50%,-100%);white-space:nowrap;will-change:transform}
+.tag{padding:4px 10px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--line);font-size:12px;color:var(--ink)}
+.tag i{font-style:normal;color:var(--red);margin-right:6px}
+.bub{padding:7px 12px;border-radius:14px;background:#fff;color:#2e3328;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.06)}
+.bub::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:#fff;transform:translateX(-50%) rotate(45deg);border-right:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06)}
+.bub.angry{background:#fff1f1;color:#a3132b}
+.bub.angry::after{background:#fff1f1}
+/* 경기 상황 칩 (묶음 A): 누르면 '경기 상황' 시트 */
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex:none}
+/* 내 위치 펼침 메뉴 (묶음 A): 버튼 바로 아래 */
+.pmenu{position:absolute;top:calc(100% + 8px);left:0;width:224px;max-height:calc(100vh - 140px);overflow:auto;padding:6px;border-radius:18px;background:var(--glass-strong);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:var(--shadow);transform-origin:top left;animation:pmenu .16s ease-out}
+@keyframes pmenu{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.pmenu h4{margin:10px 12px 4px;font-size:12px;font-weight:400;color:var(--muted)}
+.pmenu hr{border:0;border-top:1px solid var(--line);margin:6px 8px}
+.pitem{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 12px;border-radius:12px;font-size:15px;text-align:left}
+.pitem:hover{background:var(--line)}
+.pitem[aria-current="true"]{background:rgba(200,16,46,.1);color:var(--red)}
+
+/* 좁은 폰 화면(세로): 위쪽 버튼을 줄여 한 줄에 들어가게, 안내 문구는 오른쪽 버튼들 아래로 */
+.row2{display:flex;gap:8px}
+@media (max-width:430px){
+  .top{padding:calc(env(safe-area-inset-top,0px) + 8px) 8px 0;gap:6px}
+  .left,.row2{gap:6px}
+  .right{gap:6px}
+  .cap button,.cap .stat{min-width:34px;height:36px;padding:0 6px;font-size:12px;gap:4px}
+  .cap .stat svg{display:none}
+  #zoneName{display:inline-block;max-width:5.2em;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+  .pill{height:36px;padding:0 11px;font-size:12px;gap:4px}
+  #toast{top:calc(env(safe-area-inset-top,0px) + 150px);max-width:calc(100% - 24px)}
+}
+/* 경기장 구경하기 중(body.ss): 위·아래 버튼 숨기고 '돌아가기'만 */
+body.ss #hud .top,body.ss #hud .bar{opacity:0}
+body.ss #hud .top>*{pointer-events:none}
+body.ss #hud .bar{display:none}
+body.ss #labels{opacity:0}
+@media (prefers-reduced-motion:reduce){.pmenu{animation:none}}

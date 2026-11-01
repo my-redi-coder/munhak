@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice">
+  <!-- 불펜장 일러스트: 봄 하늘, 외야 펜스, 지붕 덮인 벤치, 잔디 위 마운드 둘과 홈플레이트 둘 -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9d6ef"/><stop offset="1" stop-color="#e6f2ea"/></linearGradient>
+    <linearGradient id="turf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fa64a"/><stop offset="1" stop-color="#4f8a3a"/></linearGradient>
+    <radialGradient id="dirt" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#c79a6b"/><stop offset="1" stop-color="#a87a4d"/></radialGradient>
+    <pattern id="stripe" width="40" height="250" patternUnits="userSpaceOnUse"><rect width="20" height="250" fill="#ffffff" opacity=".06"/></pattern>
+  </defs>
+  <rect width="400" height="250" fill="url(#sky)"/>
+  <g fill="#fff" opacity=".85"><ellipse cx="70" cy="40" rx="34" ry="10"/><ellipse cx="92" cy="34" rx="20" ry="9"/><ellipse cx="300" cy="28" rx="28" ry="8"/><ellipse cx="318" cy="23" rx="16" ry="7"/></g>
+  <!-- 벚나무 -->
+  <g><rect x="22" y="78" width="5" height="40" fill="#7a5a43"/><circle cx="24" cy="74" r="20" fill="#f4c6d2"/><circle cx="10" cy="84" r="13" fill="#f7d3dc"/><circle cx="40" cy="84" r="14" fill="#efb8c7"/>
+     <rect x="372" y="82" width="5" height="36" fill="#7a5a43"/><circle cx="374" cy="78" r="18" fill="#f4c6d2"/><circle cx="388" cy="88" r="12" fill="#efb8c7"/></g>
+  <!-- 외야 펜스 (패딩 + 노란 선) -->
+  <rect x="0" y="104" width="400" height="44" fill="#2f6b45"/>
+  <g fill="#285d3b"><rect x="0" y="104" width="2" height="44"/><rect x="66" y="104" width="2" height="44"/><rect x="132" y="104" width="2" height="44"/><rect x="198" y="104" width="2" height="44"/><rect x="264" y="104" width="2" height="44"/><rect x="330" y="104" width="2" height="44"/></g>
+  <rect x="0" y="102" width="400" height="4" fill="#f2c94c"/>
+  <!-- 지붕 덮인 벤치 (오른쪽) -->
+  <g><path d="M268 84 L392 84 L384 96 L276 96 Z" fill="#c8102e"/><rect x="276" y="96" width="108" height="3" fill="#9e0c24"/>
+     <rect x="282" y="99" width="3" height="52" fill="#d9d6cc"/><rect x="375" y="99" width="3" height="52" fill="#d9d6cc"/>
+     <rect x="288" y="132" width="86" height="6" rx="2" fill="#8a6a4f"/><rect x="292" y="138" width="3" height="12" fill="#6e5440"/><rect x="367" y="138" width="3" height="12" fill="#6e5440"/>
+     <!-- 등판 대기 중인 으쓱이들 (뒷모습 아님, 앉아서 앞을 봐요) -->
+     <g><circle cx="306" cy="116" r="7" fill="#f3d7bd"/><path d="M299 113a7 7 0 0 1 14 0z" fill="#3b3128"/><rect x="299" y="122" width="14" height="11" rx="4" fill="#fff"/></g>
+     <g><circle cx="331" cy="116" r="7" fill="#f3d7bd"/><path d="M324 113a7 7 0 0 1 14 0z" fill="#3b3128"/><rect x="324" y="122" width="14" height="11" rx="4" fill="#c8102e"/></g>
+     <g><circle cx="356" cy="116" r="7" fill="#f3d7bd"/><path d="M349 113a7 7 0 0 1 14 0z" fill="#3b3128"/><rect x="349" y="122" width="14" height="11" rx="4" fill="#fff"/></g></g>
+  <!-- 잔디 -->
+  <rect x="0" y="148" width="400" height="102" fill="url(#turf)"/>
+  <rect x="0" y="148" width="400" height="102" fill="url(#stripe)"/>
+  <rect x="0" y="148" width="400" height="5" fill="#000" opacity=".08"/>
+  <!-- 마운드 둘 + 투수판 -->
+  <ellipse cx="96" cy="170" rx="46" ry="11" fill="url(#dirt)"/><rect x="88" y="166" width="16" height="3" rx="1" fill="#fff"/>
+  <ellipse cx="206" cy="170" rx="46" ry="11" fill="url(#dirt)"/><rect x="198" y="166" width="16" height="3" rx="1" fill="#fff"/>
+  <!-- 마운드에서 홈플레이트로 이어지는 흙길 -->
+  <path d="M86 178 L64 238 L132 238 L106 178 Z" fill="#b8895b" opacity=".55"/>
+  <path d="M196 178 L174 238 L242 238 L216 178 Z" fill="#b8895b" opacity=".55"/>
+  <!-- 홈플레이트 둘 -->
+  <path d="M90 228 h16 v5 l-8 6 l-8 -6 z" fill="#fff"/>
+  <path d="M200 228 h16 v5 l-8 6 l-8 -6 z" fill="#fff"/>
+  <!-- 공 바구니 + 글러브 -->
+  <g><path d="M300 196 h32 l-4 26 h-24 z" fill="#5a6470"/><g fill="#fff"><circle cx="306" cy="195" r="4"/><circle cx="314" cy="193" r="4"/><circle cx="322" cy="195" r="4"/><circle cx="317" cy="189" r="4"/></g>
+     <path d="M346 214c0-8 6-12 12-12s10 5 10 11c0 5-4 9-11 9h-6c-3 0-5-3-5-8z" fill="#8b5a2b"/><circle cx="331" cy="228" r="3.5" fill="#fff"/></g>
+</svg>
