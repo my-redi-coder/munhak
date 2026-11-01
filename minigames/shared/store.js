@@ -1,9 +1,12 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= 내 라커 (수집품 보관) =================
    불펜장 게임들이 모은 것을 이 기기 브라우저에 보관해요(localStorage). 모든 미니게임이 같이 써요.
-   cards: 등번호 매치로 모은 선수 등번호 목록 / balls: 홈런볼 모으기(준비 중) */
+   cards: 등번호 매치로 모은 선수 등번호 목록
+   balls: 홈런볼 모으기로 잡은 공 번호(HR 순서, 0부터) / nice: 나이스 캐치 누적 / seen: 본 장면(ground 그라운드 홈런, allstar 올스타 브레이크) */
 var LOCKER=(function(){
-  var KEY='munhak-locker-v1',d={cards:[],cardsDone:false,balls:[]};
+  var KEY='munhak-locker-v1',d={cards:[],cardsDone:false,balls:[],nice:0,seen:{}};
   try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);for(var k in o)d[k]=o[k]}}catch(e){}
+  if(!d.seen)d.seen={};
   function save(){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
   return {
     hasCard:function(no){return d.cards.indexOf(no)>=0},
@@ -13,7 +16,14 @@ var LOCKER=(function(){
     setCardsDone:function(v){d.cardsDone=!!v;save()},
     setCards:function(list){d.cards=list.slice();save()},
     resetCards:function(){d.cards=[];d.cardsDone=false;save()},
-    ballCount:function(){return d.balls.length}
+    hasBall:function(i){return d.balls.indexOf(i)>=0},
+    addBall:function(i){if(d.balls.indexOf(i)>=0)return false;d.balls.push(i);save();return true},
+    ballCount:function(){return d.balls.length},
+    setBalls:function(list){d.balls=list.slice();save()},
+    addNice:function(){d.nice=(d.nice||0)+1;save()},
+    seen:function(k){return !!d.seen[k]},
+    setSeen:function(k){d.seen[k]=true;save()},
+    resetBalls:function(){d.balls=[];d.nice=0;d.seen={};save()}
   };
 })();
 /* 짧은 알림 (모든 미니게임 페이지 공용) */

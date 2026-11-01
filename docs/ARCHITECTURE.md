@@ -65,12 +65,16 @@
 | 파일 | 하는 일 |
 |---|---|
 | `minigames/bullpen.html` + `bullpen/` | 불펜장 첫 화면: 일러스트(`bullpen-bg.svg`), 게임 목록 `GAMES`(마운드 위 / 등판 대기 중), 내 라커 바로가기 |
-| `minigames/locker.html` + `locker/` | 내 라커: 라커 두 칸(카드 앨범 / 공박스 준비 중), `#cards`면 카드 앨범 |
+| `minigames/locker.html` + `locker/` | 내 라커: 라커 두 칸. `#cards` 카드 앨범(등급 네 줄, 카드 누르면 뒷면 선수 정보), `#balls` 공박스(기념구 진열장·달별 선반·다시 보기) |
 | `minigames/number-match.html` + `number-match/` | 등번호 매치 게임, 결과 시트, 덱 완성 엔딩. 주소에 `?dev`면 확인용 버튼 |
+| `minigames/homerun.html` + `homerun/` | 홈런볼 모으기: `game.js`(판 진행·난이도·입력·다시 보기), `scene.js`(외야 장면·글러브·공), `cutscene.js`(그라운드 홈런·올스타 브레이크). 주소 끝 `#replay-ground`·`#replay-allstar`면 장면만 재생 후 공박스로, `?dev`면 확인용 버튼 |
 | `minigames/shared/mg.css` | 공용 색·글꼴(야구장 토큰과 같음), 위쪽 막대, 버튼, 알림 |
-| `minigames/shared/store.js` | `LOCKER`: 수집품 보관(이 기기 localStorage `munhak-locker-v1`), `mgToast`, `mgExit` |
-| `minigames/shared/roster.js` | 선수 명단 `ROSTER`(등번호·이름·등급), 동명이인 `SAME_NAME` |
-| `minigames/shared/card.js` + `card.css` | 선수 카드 앞·뒷면, 앨범 칸 |
+| `minigames/shared/store.js` | `LOCKER`: 수집품 보관(이 기기 localStorage `munhak-locker-v1`: 카드·공·나이스 캐치·본 장면), `mgToast`, `mgExit` |
+| `minigames/shared/roster.js` | 선수 명단 `ROSTER`(등번호·이름·등급 legendary/core/special/normal), 동명이인 `SAME_NAME`, `TIER_TAG`·`TIER_NAME` |
+| `minigames/shared/players.js` | 카드 뒷면 정보 `PLAYER_INFO`(포지션·투타·체격·생일·2026 기록), 은퇴 선수 `PLAYER_LEGEND`, `NO_RECORD_MSG` |
+| `minigames/shared/card.js` + `card.css` | 선수 카드 앞·뒷면, 앨범 칸, 크게 보기(`cardView`)와 선수 정보 면(`cardRear`) |
+| `minigames/shared/homeruns.js` | 2026 정규시즌 홈런 143개 `HR`, 진열장 기념구 `HR_SPECIALS`, 올스타 위치 `HR_BREAK_IDX`, 달 묶음 `HR_MONTHS`, 기념구 글귀 `hrBallLines` |
+| `minigames/shared/ball.js` + `ball.css` | 손글씨 기념구 그리기 `ballHTML`(글꼴 Nanum Pen Script), 크게 보기 모양 |
 
 ### 새 미니게임 더하는 법
 
