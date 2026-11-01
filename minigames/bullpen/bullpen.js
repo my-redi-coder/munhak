@@ -5,7 +5,9 @@ var GAMES=[
   {no:1,title:'등번호 매치',desc:'등번호 카드와 이름 카드를 짝지어 랜더스 카드를 모아요',href:'number-match.html',ready:true,
    meta:function(){return '카드 앨범 '+LOCKER.cardCount()+' / '+ROSTER.length}},
   {no:2,title:'홈런볼 모으기',desc:'외야석에서 2026 시즌 랜더스 홈런볼을 순서대로 잡아요',href:'homerun.html',ready:true,
-   meta:function(){return '공박스 '+LOCKER.ballCount()+' / '+HR_TOTAL}}
+   meta:function(){return '공박스 '+LOCKER.ballCount()+' / '+HR_TOTAL}},
+  {no:3,title:'티켓팅 War',desc:'2026 시즌 이긴 경기 티켓을 모아 티켓북을 채워요',href:'ticketing.html',ready:true,
+   meta:function(){return '티켓북 '+LOCKER.ticketCount()+' / '+TICKETS.length}}
 ];
 function bpGameHTML(g){
   var inner='<span class="jno" aria-hidden="true">'+g.no+'</span><span><b>'+cardEsc(g.title)+'</b><span class="d">'+cardEsc(g.desc)+'</span>'
@@ -17,7 +19,7 @@ function bpRender(){
   var w=GAMES.filter(function(g){return !g.ready});
   document.getElementById('waitList').innerHTML=w.map(bpGameHTML).join('');
   document.getElementById('waitSec').hidden=!w.length;
-  document.getElementById('lockerMeta').textContent='카드 앨범 '+LOCKER.cardCount()+'/'+ROSTER.length+', 공박스 '+LOCKER.ballCount()+'/'+HR_TOTAL;
+  document.getElementById('lockerMeta').textContent='카드 앨범 '+LOCKER.cardCount()+'/'+ROSTER.length+', 공박스 '+LOCKER.ballCount()+'/'+HR_TOTAL+', 티켓북 '+LOCKER.ticketCount()+'/'+TICKETS.length;
 }
 document.getElementById('exit').onclick=mgExit;
 bpRender();

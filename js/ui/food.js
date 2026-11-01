@@ -1,4 +1,6 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= 야푸먹기 =================
+   (묶음 B) 테이블 위 수첩 이스터에그는 js/ui/food-note.js
    내 자리 앞 테이블. 배경은 지금 3D 장면을 흐리게 보여주고, 관중 소리는 조금 낮춰 계속 들려요.
    주문 → 상에 차림(같은 음식은 한 접시) → 눌러서 한 입씩(새우4·물회5·홈런볼6) → 빈 그릇은 비닐봉투로.
    기록은 이번 방문 안에서만, 음식별 그릇 수. 맥주는 5번 홀짝 → '한 잔 더'(기록 없음). 짝짝이는 소리. */
@@ -83,6 +85,7 @@ function fdTable(){
   +'<text id="fdCall" x="85" y="62" font-size="12" fill="#fff" text-anchor="middle" opacity="0" style="paint-order:stroke;stroke:rgba(0,0,0,.5);stroke-width:3px"></text>'
   /* 기록지 */
   +'<g transform="translate(166 22) rotate(4)"><rect width="70" height="86" fill="#fbfaf4" stroke="#ddd8c8"/><text x="6" y="11" font-size="6.5" fill="#8a8670">기록지</text><g stroke="#cfc9b4" stroke-width=".6"><path d="M4 16H66M4 25H66M4 34H66M4 43H66M4 52H66M4 61H66M4 70H66M4 79H66M18 16V79M30 16V79M42 16V79M54 16V79"/></g><g font-size="5.5" fill="#c8102e"><text x="20" y="23">1B</text><text x="33" y="32">K</text><text x="44" y="41">BB</text><text x="20" y="50">HR</text></g><path d="M48 76L80 48" stroke="#f1c24a" stroke-width="4.5" stroke-linecap="round"/><path d="M48 76l-3 3" stroke="#444" stroke-width="2" stroke-linecap="round"/></g>'
+  +noteSvg()
   /* 핸드폰 */
   +'<g transform="translate(258 28) rotate(-8)"><rect width="48" height="92" rx="8" fill="#1d1e22"/><rect x="3" y="4" width="42" height="84" rx="5" fill="#9cbcd9"/><text id="fdClock" x="24" y="24" font-size="11" fill="#fff" text-anchor="middle">'+hm+'</text><rect x="5" y="36" width="38" height="20" rx="4" fill="rgba(255,255,255,.88)"/><text x="8" y="44" font-size="5.5" fill="#333">옂달</text><text x="8" y="52" font-size="5" fill="#555">새 글 3개</text><rect x="18" y="82" width="12" height="2" rx="1" fill="#fff" opacity=".7"/></g>'
   +'<g id="fdBag">'+fdBagSvg()+'</g>'
@@ -156,7 +159,7 @@ function openFood(){
   if(phase!=='game'||FOOD.open)return;if(EV.on){toast('이벤트가 끝나면 먹을 수 있어요');return}
   auEnsure();FOOD.open=true;var t=$('fdTbl');t.innerHTML=fdTable();
   FD_KEYS.forEach(function(k){if(FOOD.on[k]!=null)fdAddDish(k,false)});
-  fdBind($('fdBeer'),fdSip);fdBind($('fdClap'),fdClap);fdBeerLabel();
+  fdBind($('fdBeer'),fdSip);fdBind($('fdClap'),fdClap);noteBind();fdBeerLabel();
   var z=ZONES[curBlock&&ZONES[curBlock.key]?curBlock.key:ME.zone].label;$('fdWhere').textContent=z+' · 내 자리';
   $('fdSheet').hidden=true;$('food').hidden=false;fdUI();
   if(AU.ctx){var tt=AU.ctx.currentTime;AU.amb.gain.setTargetAtTime(AU.vol.amb/100*.7,tt,.3);AU.beat.gain.setTargetAtTime(AU.vol.beat/100*.7,tt,.3)}
@@ -164,9 +167,9 @@ function openFood(){
   $('fdOrder').focus();
 }
 function closeFood(){
-  if(!FOOD.open)return;FOOD.open=false;$('food').hidden=true;clearInterval(FOOD.swT);clearTimeout(FOOD.hintT);applyVol();
+  if(!FOOD.open)return;noteClose();FOOD.open=false;$('food').hidden=true;clearInterval(FOOD.swT);clearTimeout(FOOD.hintT);applyVol();
   var b=document.querySelector('.act[data-act="food"]');if(b)b.focus();
 }
-function foodEsc(){if(!$('fdSheet').hidden)fdSheet(false);else closeFood()}
+function foodEsc(){if(NOTE.on)noteClose();else if(!$('fdSheet').hidden)fdSheet(false);else closeFood()}
 $('fdClose').onclick=closeFood;$('fdOrder').onclick=function(){fdSheet(true)};$('fdSheetX').onclick=function(){fdSheet(false)};$('fdGo').onclick=fdOrder;
 var _fdEnter=enterGame;enterGame=function(){foodReset();closeFood();return _fdEnter.apply(this,arguments)};

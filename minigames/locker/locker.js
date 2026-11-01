@@ -4,18 +4,22 @@
    카드 앨범: 등급 네 줄(레전더리·코어·스페셜·선수단). 모은 카드를 누르면 크게 떠서 뒷면 선수 정보로 뒤집혀요(card.js cardView).
    공박스: 위 기념구 진열장(날짜만, 눌러야 어떤 공인지) → 달 고르기 → 선반(한 줄 5개, 시즌 순서).
      기념구는 선반 제자리에 ★ 표시만 남아요. 공을 누르면 손글씨 기념구가 크게.
-     그라운드 홈런·올스타 브레이크를 게임에서 한 번 본 사람에게만 '다시 보기' 버튼. */
+     그라운드 홈런·올스타 브레이크를 게임에서 한 번 본 사람에게만 '다시 보기' 버튼.
+   (묶음 B) 라커는 두 칸씩 두 줄: 카드 앨범 · 공박스 / 티켓북(#tickets) · 빈 라커(안 열리고 철컹 소리만).
+   티켓북: 상대 구단별 탭(많이 이긴 순), 주머니에 반쯤 꽂힌 티켓, 누르면 꺼내 보기 + 하이라이트. 그리기는 shared/ticket.js */
 var $=function(id){return document.getElementById(id)};
 var curMonth='open';
 function lkRender(){
-  var n=LOCKER.cardCount(),T=ROSTER.length,view=location.hash==='#cards'?'cards':location.hash==='#balls'?'balls':'home';
+  var n=LOCKER.cardCount(),T=ROSTER.length,view=location.hash==='#cards'?'cards':location.hash==='#balls'?'balls':location.hash==='#tickets'?'tickets':'home';
   var cvw=$('cardView');if(cvw)cvw.classList.remove('show');$('ballView').classList.remove('show');
   $('cardsMeta').textContent=n+' / '+T+'장';
   $('ballsMeta').textContent=LOCKER.ballCount()+' / '+HR_TOTAL+'개';
-  $('home').hidden=view!=='home';$('cards').hidden=view!=='cards';$('balls').hidden=view!=='balls';
-  $('title').textContent=view==='cards'?'카드 앨범':view==='balls'?'공박스':'내 라커';
+  $('ticketsMeta').textContent=LOCKER.ticketCount()+' / '+TICKETS.length+'장';
+  $('home').hidden=view!=='home';$('cards').hidden=view!=='cards';$('balls').hidden=view!=='balls';$('tickets').hidden=view!=='tickets';
+  $('title').textContent=view==='cards'?'카드 앨범':view==='balls'?'공박스':view==='tickets'?'티켓북':'내 라커';
   if(view==='cards')lkCards();
   if(view==='balls')lkBalls();
+  if(view==='tickets')lkTickets();
 }
 function lkCards(){
   var n=LOCKER.cardCount(),T=ROSTER.length,pct=Math.round(n/T*100);
@@ -53,7 +57,36 @@ $('shelf').addEventListener('click',function(e){var b=e.target.closest('.slot[da
 $('ballView').onclick=function(){$('ballView').classList.remove('show')};
 document.addEventListener('keydown',function(e){if(e.key==='Escape')$('ballView').classList.remove('show')});
 
-$('back').onclick=function(){if(location.hash==='#cards'||location.hash==='#balls')location.hash='';else location.href='bullpen.html'};
+
+/* ---------- 티켓북 (묶음 B) ---------- */
+var tkTeam=null;
+function lkTickets(){
+  var newI=null;try{var v=sessionStorage.getItem('tw-new');if(v!=null){newI=+v;sessionStorage.removeItem('tw-new');tkTeam=TICKETS[newI].opp}}catch(e){}
+  if(!tkTeam)tkTeam=TK_TEAMS[0];
+  $('tkCount').textContent=LOCKER.ticketCount()+' / '+TICKETS.length;
+  $('tkTabs').innerHTML=tkTeamTabs(tkTeam);
+  var cur=$('tkTabs').querySelector('[aria-pressed="true"]');if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:'nearest',inline:'center'});
+  $('tkGrid').innerHTML=tkBookHTML(tkTeam,newI);
+}
+$('tkTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;tkTeam=b.dataset.t;lkTickets()});
+$('tkGrid').addEventListener('click',function(e){var b=e.target.closest('.pocket.has');if(!b)return;
+  var i=+b.dataset.i,o=LOCKER.ticket(i);$('tkBox').innerHTML=tkStack(i);
+  $('tkTog').textContent=o.n+'매 · '+(o.n===1?'혼자 직관':o.tog?'같이 앉았어요':'따로 앉았어요');
+  $('tkYt').href='https://www.youtube.com/watch?v='+encodeURIComponent(TICKETS[i].v);$('tkModal').hidden=false;$('tkClose').focus()});
+function tkClose(){$('tkModal').hidden=true}
+$('tkClose').onclick=tkClose;$('tkModal').addEventListener('click',function(e){if(e.target.id==='tkModal')tkClose()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('tkModal').hidden)tkClose()});
+/* 빈 라커: 안 열리고 철컹 */
+var lkAC=null;
+function lkClank(){try{lkAC=lkAC||new(window.AudioContext||window.webkitAudioContext)();if(lkAC.state==='suspended')lkAC.resume();
+  var c=lkAC,t=c.currentTime,out=c.createGain();out.gain.value=.5;out.connect(c.destination);
+  [[523,.9],[1187,.5],[1764,.35],[2690,.2]].forEach(function(p){var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.value=p[0];
+    g.gain.setValueAtTime(p[1]*.4,t);g.gain.exponentialRampToValueAtTime(.001,t+.6);o.connect(g);g.connect(out);o.start(t);o.stop(t+.62)});
+  var n=c.sampleRate*.05,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
+  var s=c.createBufferSource(),f=c.createBiquadFilter(),g2=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=3000;g2.gain.value=.6;s.connect(f);f.connect(g2);g2.connect(out);s.start(t);
+}catch(e){}}
+$('emptyDoor').onclick=function(){var d=$('emptyDoor');lkClank();d.classList.remove('rattle');void d.offsetWidth;d.classList.add('rattle')};
+$('back').onclick=function(){if(location.hash==='#cards'||location.hash==='#balls'||location.hash==='#tickets')location.hash='';else location.href='bullpen.html'};
 window.addEventListener('hashchange',lkRender);
 window.addEventListener('pageshow',lkRender);
 lkRender();

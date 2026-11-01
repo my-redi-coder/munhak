@@ -1,3 +1,4 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= player movement ================= */
 function updatePlayer(dt){
   if(!curBlock||phase!=='game')return;
@@ -17,5 +18,5 @@ function updatePlayer(dt){
     else{var st=Math.min(d,speed*dt);pos.x+=dx/d*st;pos.z+=dz/d*st;var want=Math.atan2(dx,dz),cur=r.rotation.y,diff=Math.atan2(Math.sin(want-cur),Math.cos(want-cur));r.rotation.y=cur+diff*Math.min(1,dt*14);player.mode='walk'}
   }else if(player.mode==='walk')player.mode='stand';
   if(player.mode!=='sit')pos.y=damp(pos.y,curBlock.groundH(pos.z),16,dt);
-  if(player.act){lineT-=dt;if(lineT<=0){var L=LINES[player.act];if(Math.random()<.85)addLabel(player,pick(L),player.act==='angry'?'angry':'say',1700);lineT=player.act==='angry'?1.9:rnd(3.2,4.8)}}
+  if(player.act){lineT-=dt;if(lineT<=0){if(Math.random()<.85)addLabel(player,actLine(player.act),player.act==='angry'?'angry':'say',1700);lineT=player.act==='angry'?1.9:rnd(3.2,4.8)}}
 }

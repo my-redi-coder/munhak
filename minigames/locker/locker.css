@@ -49,3 +49,10 @@
 .seasonline{margin:6px 0 0;color:var(--muted);font-size:14px;text-align:center}
 .replays{margin-top:14px}
 .replays .secondary{font-size:13px}
+
+/* (묶음 B) 빈 라커: 이름표 없이, 누르면 덜컹 */
+.door.empty{cursor:pointer;border:0;font:inherit}
+.door.empty::after{background:#2f363c}
+.door.rattle{animation:lkRattle .32s ease-in-out}
+@keyframes lkRattle{20%{transform:translateX(-3px) rotate(-.6deg)}45%{transform:translateX(3px) rotate(.5deg)}70%{transform:translateX(-2px)}}
+@media (prefers-reduced-motion:reduce){.door.rattle{animation:none}}

@@ -2,11 +2,12 @@
 /* ================= 내 라커 (수집품 보관) =================
    불펜장 게임들이 모은 것을 이 기기 브라우저에 보관해요(localStorage). 모든 미니게임이 같이 써요.
    cards: 등번호 매치로 모은 선수 등번호 목록
-   balls: 홈런볼 모으기로 잡은 공 번호(HR 순서, 0부터) / nice: 나이스 캐치 누적 / seen: 본 장면(ground 그라운드 홈런, allstar 올스타 브레이크) */
+   balls: 홈런볼 모으기로 잡은 공 번호(HR 순서, 0부터) / nice: 나이스 캐치 누적 / seen: 본 장면(ground 그라운드 홈런, allstar 올스타 브레이크)
+   tickets: 티켓팅 War로 모은 승리 티켓 {TICKETS 번호: {n 매수, tog 같이 앉음, seat 자리, blk 구역}} (묶음 B, 2026-11-01) */
 var LOCKER=(function(){
-  var KEY='munhak-locker-v1',d={cards:[],cardsDone:false,balls:[],nice:0,seen:{}};
+  var KEY='munhak-locker-v1',d={cards:[],cardsDone:false,balls:[],nice:0,seen:{},tickets:{}};
   try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);for(var k in o)d[k]=o[k]}}catch(e){}
-  if(!d.seen)d.seen={};
+  if(!d.seen)d.seen={};if(!d.tickets)d.tickets={};
   function save(){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
   return {
     hasCard:function(no){return d.cards.indexOf(no)>=0},
@@ -23,7 +24,11 @@ var LOCKER=(function(){
     addNice:function(){d.nice=(d.nice||0)+1;save()},
     seen:function(k){return !!d.seen[k]},
     setSeen:function(k){d.seen[k]=true;save()},
-    resetBalls:function(){d.balls=[];d.nice=0;d.seen={};save()}
+    resetBalls:function(){d.balls=[];d.nice=0;d.seen={};save()},
+    ticket:function(i){return d.tickets[i]||null},
+    addTicket:function(i,o){d.tickets[i]=o;save()},
+    ticketCount:function(){return Object.keys(d.tickets).length},
+    resetTickets:function(){d.tickets={};save()}
   };
 })();
 /* 짧은 알림 (모든 미니게임 페이지 공용) */
