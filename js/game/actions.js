@@ -1,3 +1,4 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
 /* ================= actions ================= */
 var ACT_LABEL={cheer:'응원하는 중',angry:'화내는 중',wave:'유니폼 흔드는 중'};
 var ACT_BTN={cheer:'응원하기',angry:'화내기',wave:'유니폼 흔들기'};
@@ -25,7 +26,7 @@ function stopAct(silent){
   if(PL.returnSeat){var s=PL.returnSeat;PL.returnSeat=null;sitChar(player,s);PL.seat=s}
 }
 document.querySelectorAll('.act').forEach(function(b){b.onclick=function(){auEnsure();var a=b.dataset.act;if(a==='food'){openFood();return}startAct(a)}});
-$('bPhoto').onclick=function(){toast('직관 사진은 다음 단계에서 열려요')};
+$('bPhoto').onclick=function(){auEnsure();if(phase==='game')takePhoto('jikgwan')};
 $('bExit').onclick=leaveGame;
 $('bSound').onclick=function(){setSound(!AU.on);toast(AU.on?'소리를 켰어요':'소리를 껐어요',1600);if(AU.on&&player.act==='cheer')beatStart()};
 $('bZone').onclick=function(){buildZoneList($('zoneList2'),true);openModal('mZone')};

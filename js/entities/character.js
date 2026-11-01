@@ -1,3 +1,4 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
 /* ================= character ================= */
 var GEO={};
 GEO.base=mergeParts([{g:Cyl(.27,.27,.14,16),c:PANTS,p:[0,.45,0]}]);
@@ -105,7 +106,7 @@ Char.prototype.update=function(dt,beat){
   }else if(this.act==='wave'){
     P.lA=P.lB=0;var w=Math.sin(t*5.5);P.aZ=2.88+w*.12;P.bZ=-2.88+w*.12;P.tilt=w*.05;P.y=Math.abs(w)*.03;P.jz=w*.2;face='happy';
     if(this.player){var pa=this.jGeo.attributes.position,a=pa.array;for(var i=0;i<pa.count;i++){var x=a[i*3],y=a[i*3+1];a[i*3+2]=Math.sin(x*7+t*9)*.035*(.4+Math.abs(x))+Math.sin(y*6+t*7)*.02}pa.needsUpdate=true}
-  }
+  }else if(typeof PZ_POSE!=='undefined'&&PZ_POSE[this.act]){P.lA=P.lB=0;face=PZ_POSE[this.act](P,t);k=10}
   this.blinkT-=dt;if(face==='normal'){if(this.blinkT<0){face='blink';if(this.blinkT<-.13)this.blinkT=rnd(2.2,5)}}
   this.setFace(face);
   var c=this.cur;for(var key in P)c[key]=damp(c[key],P[key],k,dt);

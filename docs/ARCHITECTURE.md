@@ -22,15 +22,15 @@
 | 레이어    | 폴더           | 하는 일                                                                                                                                                                                                                                                       |
 |-----------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 앱        | `js/app/`      | 매 프레임 루프(`loop.js`), 시작 순서(`boot.js`)                                                                                                                                                                                                               |
-| 화면(UI)  | `js/ui/`       | 알림·말풍선·이름표(`feedback.js`), 입장 준비(`setup.js`), 시트·설정(`sheets.js`), 공격·수비 전환 버튼(`fieldmode.js`), 이벤트 목록 시트 + 이벤트 배경음 고르기(`event-sheet.js`), 이벤트 중 볼카운트 불(`count.js`), 불펜장 창(`bullpen.js`)                                                                              |
-| 게임 규칙 | `js/game/`     | 상태(`state.js`), 입장·구역 이동(`flow.js`), 행동(`actions.js`), 주변 으쓱이(`npc.js`), 입력(`input.js`), 카메라(`camera.js`), 걷기(`movement.js`), 그라운드 선수 배치·투구 흐름(`fieldplay.js`), 이벤트 진행 틀(`events.js`), 경기장 구경하기(`sightsee.js`), 이벤트 장면은 `events/` 폴더 |
+| 화면(UI)  | `js/ui/`       | 알림·말풍선·이름표(`feedback.js`), 입장 준비(`setup.js`), 시트·설정(`sheets.js`), 공격·수비 전환 버튼(`fieldmode.js`), 이벤트 목록 시트 + 이벤트 배경음 고르기(`event-sheet.js`), 이벤트 중 볼카운트 불(`count.js`), 불펜장 창(`bullpen.js`), 사진 찍기·미리보기(`photo.js`), 포토존 버튼·둘러보기 목록(`photozone-ui.js`)                                                                              |
+| 게임 규칙 | `js/game/`     | 상태(`state.js`), 입장·구역 이동(`flow.js`), 행동(`actions.js`), 주변 으쓱이(`npc.js`), 입력(`input.js`), 카메라(`camera.js`), 걷기(`movement.js`), 그라운드 선수 배치·투구 흐름(`fieldplay.js`), 이벤트 진행 틀(`events.js`), 경기장 구경하기(`sightsee.js`), 포토존 진행·카메라·으쓱이 포즈(`photozone.js`), 이벤트 장면은 `events/` 폴더 |
 | 소리      | `js/audio/`    | 함성·비트·효과음·내 음원 (`audio.js`), 이벤트 효과음 딱·뱃고동·파도·잠깐 낮추기·빨라지는 박수 (`eventsfx.js`), 이벤트 배경음 내 파일 보관·재생 (`evbgm.js`), 응원가 랜덤 재생 (`songs.js`, 곡 목록은 `songs/songs.js`)                                                                                                                 |
 | 캐릭터    | `js/entities/` | 으쓱이 모델, 표정, 등판, 동작 (`character.js`), 그라운드 선수 모델·등판·자세 (`player.js`), 선수 표정 그림 (`bpface.js`)                                                                                                                                                                    |
-| 공간      | `js/world/`    | 하늘, 그라운드, 펜스·소품, 빅보드(`bigboard.js`), 빅보드 화면 연출(`bbshow.js`), K보드 카드(`kboard.js`), 조명탑, 관중석 블록(이어진 블록은 `open`·`reach`·`links`), 그린존(`greenzone.js`), 홈런 현수막(`hogbanner.js`), 바비큐존(`bbq.js`), 관중 무리, 꽃잎                                                                |
+| 공간      | `js/world/`    | 하늘, 그라운드, 펜스·소품, 빅보드(`bigboard.js`), 빅보드 화면 연출(`bbshow.js`), K보드 카드(`kboard.js`), 조명탑, 관중석 블록(이어진 블록은 `open`·`reach`·`links`), 그린존(`greenzone.js`), 홈런 현수막(`hogbanner.js`), 바비큐존(`bbq.js`), 포토존 세트(`pz-kit.js` 공용, `pzone.js` 플레이어존, `hrboard.js` 홈런기념판), 관중 무리, 꽃잎                                                                |
 | 엔진      | `js/engine/`   | 렌더러, 씬, 조명, 도형 합치기 도우미 (`renderer.js`)                                                                                                                                                                                                          |
 | 바탕      | `js/core/`     | 공용 도우미(`util.js`), 데이터·문구·설정값(`config.js`)                                                                                                                                                                                                       |
 
-스타일은 `styles/`: `tokens.css`(색·글꼴 토큰, 다크 모드) → `boot.css` → `setup.css` → `hud.css` → `sheets.css` → `event.css`(이벤트 시트·장면 중 화면·여난부두 가사) → `bullpen.css`(불펜장 창). 화면 뼈대(마크업)는 `index.html`.
+스타일은 `styles/`: `tokens.css`(색·글꼴 토큰, 다크 모드) → `boot.css` → `setup.css` → `hud.css` → `sheets.css` → `event.css`(이벤트 시트·장면 중 화면·여난부두 가사) → `bullpen.css`(불펜장 창) → `photozone.css`(포토존 화면·사진 미리보기). 화면 뼈대(마크업)는 `index.html`.
 
 ## 규칙
 
@@ -81,3 +81,13 @@
 1. `minigames/<이름>.html` + `minigames/<이름>/` 폴더(js·css). `shared/` 파일들을 불러와요.
 2. `minigames/bullpen/bullpen.js`의 `GAMES`에 한 줄. 만드는 중엔 `ready:false`(등판 대기 중), 열 때 `ready:true`.
 3. 모으는 게 있으면 `shared/store.js`의 `LOCKER`에 칸을 더하고, `locker.html`에 라커 칸을 열어요.
+
+## 포토존 (플레이어존·홈런기념판)
+
+- 들어가는 길: 위쪽 구역 버튼 → **내 위치** 시트 → '둘러보기'. `pzStart('pz'|'hr')`, 나가기는 화면 왼쪽 위 '돌아가기'(`pzStop`).
+- 세트는 야구장 밖 떨어진 곳에 처음 갈 때 지어요(플레이어존 x=150, 홈런기념판 x=−150, z=380). 세트 약속은 `js/world/pz-kit.js` 맨 위 주석. 새 포토존은 `PZ_SETS.<이름>`에 세트를 등록하고 `config.js`의 `PZ_CFG`에 이름·설명, `photozone-ui.js`의 목록과 도구에 한 줄씩.
+- 사진용 으쓱이는 내 으쓱이(유니폼·등판)를 본떠 따로 세워요. 내 자리·행동은 그대로.
+- 카메라: 정면에서 좌우(`PZ.pan`)와 가까이/멀리(`PZ.zoom`, 화면에 꽉 맞는 거리의 배수)만. 으쓱이를 누른 채 끌면 좌우로 옮겨요.
+- 포즈는 `PZ_POSE`(game/photozone.js). `character.js`의 `update`가 act 이름으로 찾아 써요.
+- 찍기는 `takePhoto(이름)`(ui/photo.js): 3D 화면만 jpg로(버튼은 안 찍힘) → 미리보기 시트에서 저장·공유. 위쪽 '직관 사진' 버튼도 같은 함수를 써요(`game/actions.js`).
+- 이 기기에 저장: 플레이어존 사진(`munhak:pzPhoto`, 긴 쪽 1400px jpg), 한 줄 문구(`pzLine`), 홈런 수(`pzHr`).

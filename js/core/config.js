@@ -69,3 +69,14 @@ LINES.homer=['최정!! 최정!!','넘어갔다!!','홈런이다!!','소년장사
 /* 이벤트 끝에 주변 으쓱이가 외치는 멘트 개수 (한 번에 겹치지 않게 골라요) */
 var EV_SHOUT_N=5;
 
+
+/* ================= 포토존 (플레이어존·홈런기념판) =================
+   '내 위치' 시트의 '둘러보기'에서 들어가요. 문구·숫자는 여기서 고쳐요. */
+var PZ_CFG={
+  pz:{label:'플레이어존',desc:'3번 게이트 포토존, 내 사진 넣고 찍기',title:'PLAYER OF THE MONTH',line:'다음 시즌의 주인공은?',lineMax:22},
+  hr:{label:'홈런기념판',desc:'외야 잔디벽, 최정 홈런 숫자판',base:538,max:999,miles:[1,100,200,300,400,500],name:'CHOIJEONG',sub:'LEGENDARY',foot:'HOMERUNS',rec:'KBO HOME RUN RECORD'},
+  poses:[['pzUp','하나!'],['pzV','브이'],['pzShow','소개'],['pzBanzai','만세']],
+  hint:'드래그로 좌우를 보고, 으쓱이는 끌어서 옮겨요',
+  full:'999호! 마일스톤 판이 꽉 찼어요',
+  newMile:function(m){return m+'호 마일스톤이 새로 붙었어요!'}
+};
