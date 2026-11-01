@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>티켓팅 War — 불펜장</title>
+<!-- SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/mg.css">
+<link rel="stylesheet" href="shared/ticket.css">
+<link rel="stylesheet" href="ticketing/ticketing.css">
+</head>
+<body>
+<header class="mgbar">
+  <button class="cap" id="back" aria-label="불펜장으로"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <h1>티켓팅 War</h1>
+  <a class="cap" href="locker.html#tickets"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10" stroke-dasharray="2 2"/></svg>티켓북 <span id="bookN"></span></a>
+</header>
+<main class="wrap">
+  <div id="stage"></div>
+  <section class="dev" id="dev" hidden>
+    확인용 버튼이에요. 주소에 ?dev 가 있을 때만 보여요.
+    <div class="row"><button class="secondary" id="devFill">티켓 다 채우기</button><button class="secondary" id="devClear">티켓 다 비우기</button></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="shared/store.js"></script>
+<script src="shared/tickets.js"></script>
+<script src="shared/ticket.js"></script>
+<script src="ticketing/game.js"></script>
+</body>
+</html>

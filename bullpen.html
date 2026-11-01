@@ -1,0 +1,47 @@
+<!doctype html>
+<!-- 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>불펜장 — 문학</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/mg.css">
+<link rel="stylesheet" href="shared/card.css">
+<link rel="stylesheet" href="bullpen/bullpen.css">
+</head>
+<body>
+<header class="mgbar">
+  <button class="cap" id="exit"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>야구장</button>
+  <h1>불펜장</h1>
+  <a class="cap" href="locker.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M12 3v18M8.5 7h1M14.5 7h1M8.5 9h1M14.5 9h1M9.5 13v2M14.5 13v2"/></svg>나의 라커룸</a>
+</header>
+<div class="hero">
+  <img src="bullpen/bullpen-bg.svg" alt="">
+  <div class="sign">불펜장</div>
+  <p class="hint"><span>몸 풀면서 가볍게 한 판 해요</span></p>
+</div>
+<main class="wrap">
+  <h2 class="sec">마운드 위</h2>
+  <div id="onMound"></div>
+  <section id="waitSec">
+    <h2 class="sec">등판 대기 중</h2>
+    <div id="waitList"></div>
+  </section>
+  <h2 class="sec">모은 것들</h2>
+  <a class="lockerlink" href="locker.html">
+    <span class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M12 3v18M8.5 7h1M14.5 7h1M8.5 9h1M14.5 9h1M9.5 13v2M14.5 13v2"/></svg></span>
+    <span><b>내 라커</b><small id="lockerMeta"></small></span>
+    <svg class="i chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+  </a>
+</main>
+<script src="shared/store.js"></script>
+<script src="shared/roster.js"></script>
+<script src="shared/card.js"></script>
+<script src="shared/homeruns.js"></script>
+<script src="shared/tickets.js"></script>
+<script src="bullpen/bullpen.js"></script>
+</body>
+</html>

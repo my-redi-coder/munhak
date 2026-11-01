@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>내 라커 — 불펜장</title>
+<!-- SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/mg.css">
+<link rel="stylesheet" href="shared/card.css">
+<link rel="stylesheet" href="shared/ball.css">
+<link rel="stylesheet" href="shared/ticket.css">
+<link rel="stylesheet" href="locker/locker.css">
+</head>
+<body>
+<header class="mgbar">
+  <button class="cap" id="back" aria-label="뒤로"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <h1 id="title">내 라커</h1>
+  <span class="cap ghost" aria-hidden="true"></span>
+</header>
+<main class="wrap">
+  <section id="home">
+    <div class="lockers">
+      <a class="door" href="#cards"><span class="plate">카드 앨범<small id="cardsMeta"></small></span></a>
+      <a class="door" href="#balls"><span class="plate">공박스<small id="ballsMeta"></small></span></a>
+      <a class="door" href="#tickets"><span class="plate">티켓북<small id="ticketsMeta"></small></span></a>
+      <button class="door empty" id="emptyDoor" aria-label="빈 라커, 잠겨 있어요"></button>
+    </div>
+    <p class="lockers-note">불펜장 게임에서 모은 것들이 여기 쌓여요.</p>
+  </section>
+
+  <section id="cards" hidden>
+    <div class="progress">
+      <div class="r"><span class="big" id="albumCount"></span><span id="albumPct"></span></div>
+      <div class="bar"><i id="albumBar"></i></div>
+      <p class="done-note" id="doneNote" hidden>🏆 덱 완성! 랜더스 선수 전부를 모았어요</p>
+    </div>
+    <p class="tip">모은 카드를 누르면 뒷면의 선수 정보를 볼 수 있어요.</p>
+    <h2 class="sec">레전더리</h2>
+    <div class="album" id="albumLegendary"></div>
+    <h2 class="sec">코어</h2>
+    <div class="album" id="albumCore"></div>
+    <h2 class="sec">스페셜</h2>
+    <div class="album" id="albumSpecial"></div>
+    <h2 class="sec">선수단</h2>
+    <div class="album" id="albumAll"></div>
+    <a class="primary" href="number-match.html" style="margin-top:20px">등번호 매치 하러 가기</a>
+  </section>
+
+  <section id="balls" hidden>
+    <h2 class="sec">기념구 진열장</h2>
+    <div class="showcase" id="showcase"></div>
+    <div class="months" id="months" role="group" aria-label="달 고르기"></div>
+    <div class="shelf" id="shelf"></div>
+    <p class="seasonline" id="seasonLine"></p>
+    <div class="row replays" id="replays" hidden>
+      <a class="secondary" id="replayGround" href="homerun.html#replay-ground">그라운드 홈런 다시 보기</a>
+      <a class="secondary" id="replayAS" href="homerun.html#replay-allstar">올스타 브레이크 다시 보기</a>
+    </div>
+    <a class="primary" href="homerun.html" style="margin-top:16px">홈런볼 모으러 가기</a>
+  </section>
+  <section id="tickets" hidden>
+    <div class="tkbook">
+      <div class="tkprog"><b id="tkCount"></b><span>2026 시즌 승리 경기</span></div>
+      <div class="tktabs" id="tkTabs" role="group" aria-label="상대 구단 고르기"></div>
+      <div class="tkgrid" id="tkGrid"></div>
+    </div>
+    <p class="tip" style="text-align:center">티켓을 누르면 꺼내서 볼 수 있어요.</p>
+    <a class="primary" href="ticketing.html" style="margin-top:16px">티켓팅 하러 가기</a>
+  </section>
+</main>
+<div class="tkmodal" id="tkModal" hidden role="dialog" aria-modal="true" aria-label="티켓 꺼내 보기">
+  <div class="sheet">
+    <div id="tkBox"></div>
+    <div class="sfoot">
+      <p class="tog" id="tkTog"></p>
+      <div class="acts"><a class="yt" id="tkYt" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 2.5l4.5 4.5 4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><rect x="2.5" y="7" width="19" height="14" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M10 10.5v7l6-3.5z" fill="currentColor"/></svg>하이라이트 보기</a><button class="cl" id="tkClose">다시 꽂기</button></div>
+    </div>
+  </div>
+</div>
+<div class="ballview" id="ballView" role="dialog" aria-modal="true" aria-label="기념구 크게 보기"><div id="ballBig"></div><p>바깥을 누르면 닫혀요</p></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="shared/store.js"></script>
+<script src="shared/roster.js"></script>
+<script src="shared/players.js"></script>
+<script src="shared/card.js"></script>
+<script src="shared/homeruns.js"></script>
+<script src="shared/ball.js"></script>
+<script src="shared/tickets.js"></script>
+<script src="shared/ticket.js"></script>
+<script src="locker/locker.js"></script>
+</body>
+</html>

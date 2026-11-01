@@ -1,0 +1,70 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* 티켓팅 War (ticketing/game.js). 티켓 모양은 shared/ticket.css */
+:root{--mint:#2fae7f;--taken:#cfcab9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--taken:#4a4c42}}
+:root[data-theme="dark"]{--taken:#4a4c42}
+#stage{margin-top:14px}
+.tw-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 18px}
+.kick{margin:0;color:var(--red);font-size:14px}
+.tw-open h2{font-family:var(--num);font-weight:400;font-size:30px;margin:4px 0 2px;line-height:1.15}
+.meta{margin:0;color:var(--muted);font-size:14.5px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.chip{font-size:12.5px;border-radius:999px;padding:4px 10px;background:var(--paper);border:1px solid var(--line)}
+.chip.hot{color:var(--red);border-color:currentColor}
+.goal{margin:18px 0;padding:16px;border-radius:14px;background:var(--paper);display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center}
+.goal .ic{grid-row:span 3;display:grid;gap:3px}
+.goal .ic span{display:flex;gap:3px}
+.goal .ic i{display:block;width:14px;height:14px;border-radius:4px 4px 2px 2px;background:var(--red)}
+.goal small{color:var(--muted);font-size:12.5px}
+.goal strong{font-size:21px;font-weight:400}
+.goal .gh{font-size:13px;color:var(--muted);line-height:1.45}
+.queue{text-align:center;padding:34px 18px}
+.queue .big{font-family:var(--num);font-size:52px;margin:6px 0;font-variant-numeric:tabular-nums}
+.qbar,.tbar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.qbar i,.tbar i{display:block;height:100%;width:0;background:var(--red);border-radius:inherit}
+.qmsg{min-height:22px;color:var(--red);margin:12px 0 0;font-size:14px}
+.seathead{display:flex;justify-content:space-between;align-items:flex-end;margin:4px 2px 8px}
+.seathead b{font-size:17px;font-weight:400}
+.seathead span{display:block;color:var(--muted);font-size:12.5px}
+.pick{font-family:var(--num);font-size:22px;text-align:right}
+.pick small{font-family:'Gowun Dodum',sans-serif;font-size:12px;color:var(--muted);display:block}
+.tbar i{background:var(--mint)}
+.tbar.low i{background:var(--red)}
+.ground{margin:12px auto 8px;height:26px;border-radius:50% 50% 0 0/100% 100% 0 0;background:var(--grass);color:#fff;font-size:11.5px;display:grid;place-items:center;width:88%}
+.mapbox{position:relative}
+.seats{display:grid;grid-template-columns:16px repeat(8,1fr);gap:5px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.rowl{font-size:11px;color:var(--muted);align-self:center;text-align:center}
+.st{aspect-ratio:1;border-radius:7px 7px 3px 3px;background:var(--taken);position:relative;transition:background .12s}
+.st.open{background:var(--mint);animation:twPulse .45s ease-in-out infinite alternate}
+.st.mine{background:var(--red);animation:none}
+.st.mine::after{content:"";position:absolute;left:32%;top:24%;width:28%;height:42%;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+.st.gone{background:#8f8a78}
+.st.nope{animation:twNope .25s}
+@keyframes twPulse{to{filter:brightness(1.18);transform:scale(1.06)}}
+@keyframes twNope{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.legend{display:flex;gap:14px;justify-content:center;font-size:12.5px;color:var(--muted);margin:12px 0 0}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.hint{text-align:center;font-size:13.5px;min-height:20px;margin:10px 0 0;color:var(--muted)}
+.hint.bad{color:var(--red)}
+.isun{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.9);background:#fff;color:#333;border:1px solid #bbb;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:230px;font-size:14px;opacity:0;pointer-events:none;transition:.12s;z-index:4}
+.isun.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.isun p{margin:0;padding:18px 14px;text-align:center}
+.isun div{border-top:1px solid #ddd;text-align:center;padding:9px;color:#2a63c9}
+.pay{position:absolute;inset:-6px;background:var(--glass);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);display:grid;place-items:center;z-index:3;border-radius:12px}
+.pay .tw-card{width:88%;text-align:center}
+.pay h3{margin:0 0 4px;font-size:19px;font-weight:400}
+.pay .sl{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+.pay .cd{font-family:var(--num);font-size:34px;margin:0 0 10px;color:var(--red);font-variant-numeric:tabular-nums}
+.result{text-align:center}
+.result h2{font-family:var(--num);font-weight:400;font-size:32px;margin:6px 0 2px}
+.result .line{font-family:'Nanum Pen Script',cursive;font-size:30px;margin:0 0 6px;color:#22407a}
+.result .sub{color:var(--muted);font-size:14px;margin:0}
+.printer{position:relative;margin:18px auto 0;width:100%;max-width:360px}
+.slot{height:18px;border-radius:9px;background:#3c3f37;position:relative;z-index:2;box-shadow:inset 0 3px 0 #23251f}
+.paper{position:relative;margin:-9px 14px 0;overflow:hidden;padding:12px 8px 6px 0}
+.paper .tkwrap{animation:twPrint 1.6s cubic-bezier(.3,.6,.3,1) both}
+@keyframes twPrint{from{transform:translateY(-110%)}}
+.btns{display:grid;gap:10px;margin-top:20px}
+.dev{margin-top:24px;font-size:12.5px;color:var(--muted)}
+.dev .row{margin-top:8px}
+@media (prefers-reduced-motion:reduce){.st.open{animation:none;box-shadow:0 0 0 2px #fff inset}.paper .tkwrap{animation:none}}

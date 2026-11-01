@@ -1,13 +1,16 @@
-# 문학 — 야구장의 봄을 기다리기
+<!-- SSG 팬 레디코더의 문학야구장 -->
+# 불펜장 (미니게임)
 
-SSG 랜더스 홈구장(문학)을 3D로 만든 팬 놀이터예요. 내 자리에 앉아 응원하고, 이벤트 장면을 보고, 야푸를 먹어요.
+야구장 위쪽 **불펜장** 버튼으로 열려요. 페이지마다 따로 돌고, 공용 파일은 `shared/`에 있어요.
 
-- 게임: 깃허브 페이지 주소 (Settings → Pages에서 확인)
-- 처음 읽을 문서: `docs/ARCHITECTURE.md`(폴더·규칙·고치는 순서) → `docs/PROGRESS.md`(어디까지 했나) → `docs/MODULES.md`(파일마다 하는 일)
-- 기획·결정: `docs/DECISIONS.md`
+- `bullpen.html` 불펜장 첫 화면 — 게임 목록은 `bullpen/bullpen.js`의 `GAMES`
+- `locker.html` 내 라커 — 카드 앨범(`#cards`, 카드 누르면 뒷면 선수 정보), 공박스(`#balls`), 티켓북(`#tickets`), 빈 라커
+- `number-match.html` 등번호 매치 — 확인용 버튼은 주소 끝에 `?dev`
+- `homerun.html` 홈런볼 모으기 — 확인용 버튼은 주소 끝에 `?dev`
+- `ticketing.html` 티켓팅 War — 확인용 버튼(티켓 다 채우기·비우기)은 주소 끝에 `?dev`
+- `shared/tickets.js` 2026 승리 65경기 — 경기를 더할 땐 맨 뒤에
+- `shared/homeruns.js` 2026 시즌 홈런 143개 — 기록을 고칠 땐 이 파일만
+- `shared/players.js` 카드 뒷면 선수 정보
+- `shared/roster.js` 선수 명단 — 선수가 바뀌면 이 파일만 고쳐요
 
-## Claude에게 (새 대화에서)
-
-1. 이 저장소를 받아요 (`git clone https://github.com/<아이디>/munhak`).
-2. 위 문서로 고칠 파일만 골라 열어요. 전체를 훑지 않아요.
-3. 고친 파일만 돌려주고, 올릴 폴더를 알려줘요. 스크린샷 확인은 하지 않아요.
+모은 카드는 이 기기 브라우저에 저장돼요(폰·컴퓨터 따로, 브라우저 기록을 지우면 사라져요). 자세한 구조는 `docs/ARCHITECTURE.md`의 '불펜장'.

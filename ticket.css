@@ -1,0 +1,64 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* 승리 티켓·티켓북 (shared/ticket.js). 종이 색은 다크 모드에서도 그대로 */
+:root{--tk-navy:#1f3f78;--tk-page:#efe9d8;--tk-kraft:#d6c7a5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tk-page:#2c2d27;--tk-kraft:#7d6f52}}
+:root[data-theme="dark"]{--tk-page:#2c2d27;--tk-kraft:#7d6f52}
+.tk{--band:#c8102e;position:relative;display:grid;grid-template-columns:1fr 84px;background:#fffdf6;color:#2b2e26;border:1px solid #ddd6c2;border-radius:9px;overflow:hidden;text-align:left;box-shadow:0 2px 0 rgba(0,0,0,.06)}
+.tk.away{--band:var(--tk-navy)}
+.tk .band{grid-column:1/-1;display:flex;justify-content:space-between;background:var(--band);color:#fff;font-size:11.5px;padding:5px 12px}
+.tk .main{padding:10px 12px 12px;min-width:0}
+.tk .date{font-family:var(--num);font-size:28px;line-height:1}
+.tk .date small{font-family:'Gowun Dodum',sans-serif;font-size:14px;color:#80846f;margin-left:4px}
+.tk .vs{font-size:15px;margin:7px 0 2px}
+.tk .sp{font-size:12.5px;color:#80846f}
+.tk .seat{font-size:11.5px;color:#80846f;margin-top:6px;word-break:keep-all}
+.tk .stub{border-left:2px dashed #d5cdb6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 4px;position:relative}
+.tk .stub small{font-size:11px;color:#80846f}
+.tk .stub b{font-family:var(--num);font-weight:400;font-size:24px}
+.tk .win,.tkm .win{width:42px;height:42px;border:2.4px solid #d8263c;border-radius:50%;color:#d8263c;display:grid;place-items:center;font-family:var(--num);font-size:12px;transform:rotate(-14deg);box-shadow:inset 0 0 0 3px #fffdf6,inset 0 0 0 4px #d8263c}
+.tk .cnt{position:absolute;bottom:6px;right:8px;font-size:10.5px}
+.tkstack{position:relative}
+.tkstack .bk{position:absolute;inset:0}
+.tkstack .fr{position:relative}
+/* 티켓북 */
+.tkbook{background:var(--tk-page);border:1px solid var(--line);border-radius:18px;padding:14px 12px 18px}
+.tkprog{display:flex;justify-content:space-between;align-items:baseline;margin:0 4px 10px}
+.tkprog b{font-family:var(--num);font-weight:400;font-size:22px}
+.tkprog span{color:var(--muted);font-size:13px}
+.tktabs{display:flex;gap:6px;margin:0 -12px 16px;padding:0 12px 4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tktabs::-webkit-scrollbar{display:none}
+.tktabs button{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 12px;font-size:13.5px}
+.tktabs button small{color:var(--muted);margin-left:3px}
+.tktabs button[aria-pressed="true"]{background:var(--red);color:#fff;border-color:var(--red)}
+.tktabs button[aria-pressed="true"] small{color:#ffd9de}
+.tkgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px}
+.pocket{position:relative;height:132px;border:0;background:none;padding:0;cursor:default;text-align:left;display:block;width:100%}
+.pocket.has{cursor:pointer}
+.pk-stack{position:absolute;left:7px;right:7px;top:6px;height:108px}
+.tkm{--band:#c8102e;position:absolute;inset:0;background:#fffdf6;color:#2b2e26;border:1px solid #d9d2bd;border-radius:6px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.tkm.away{--band:var(--tk-navy)}
+.tkm .bd{height:9px;background:var(--band)}
+.tkm .r1{display:flex;justify-content:space-between;align-items:baseline;padding:6px 9px 0;font-size:13.5px;gap:4px;white-space:nowrap}
+.tkm .r1 b{font-family:var(--num);font-weight:400;font-size:17px}
+.tkm .r2{padding:1px 9px;font-size:11px;color:#80846f}
+.tkm .win{position:absolute;right:8px;top:50px;width:34px;height:34px;font-size:10px}
+.pf{position:absolute;left:0;right:0;bottom:0;height:64px;background:var(--tk-kraft);border-radius:4px 4px 9px 9px;pointer-events:none;
+  -webkit-mask:radial-gradient(ellipse 34px 11px at 50% 0,transparent 97%,#000 100%);mask:radial-gradient(ellipse 34px 11px at 50% 0,transparent 97%,#000 100%);box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
+.pf::before{content:"";position:absolute;inset:6px;border:1.3px dashed rgba(90,70,30,.45);border-radius:3px}
+.pf .pn{position:absolute;right:12px;bottom:8px;font-family:'Nanum Pen Script',cursive;font-size:20px;color:rgba(70,52,20,.75)}
+.pf .ed{position:absolute;left:0;right:0;top:24px;text-align:center;font-family:'Nanum Pen Script',cursive;font-size:22px;color:rgba(70,52,20,.6)}
+.pocket.new .pk-stack{animation:tkTuck .7s cubic-bezier(.3,1.4,.5,1) both}
+.pocket.new .tkm:last-child{box-shadow:0 0 0 3px #2fae7f}
+@keyframes tkTuck{from{transform:translateY(-60px)}}
+/* 꺼내 보기 */
+.tkmodal{position:fixed;inset:0;background:rgba(30,32,26,.6);display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 20px);z-index:30}
+.tkmodal .sheet{width:min(100%,400px);background:var(--tk-page);border:1px solid var(--line);border-radius:22px;padding:26px 16px 16px;animation:tkPull .45s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes tkPull{from{transform:translateY(90px) scale(.8);opacity:0}}
+.tkmodal .sfoot{margin-top:18px;padding-top:14px;border-top:1.5px dashed var(--line);display:grid;gap:12px}
+.tkmodal .tog{color:var(--muted);font-size:13.5px;margin:0;text-align:center}
+.tkmodal .acts{display:grid;grid-template-columns:1.4fr 1fr;gap:8px}
+.tkmodal .acts a,.tkmodal .acts button{display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;border-radius:12px;padding:13px 10px;font-size:15px}
+.tkmodal .yt{background:var(--red);color:#fff}
+.tkmodal .yt svg{width:18px;height:18px}
+.tkmodal .cl{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){.pocket.new .pk-stack,.tkmodal .sheet{animation:none}}
