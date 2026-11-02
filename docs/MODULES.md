@@ -53,8 +53,8 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/ui/count.js` | 20 | EVCOUNT, evCountEl, evCount, evCountOff, evCount0 |
 | `events/homer.js` | 120 | HR, hrRunPose, hrBallAt, hrTurn, hrBoardCam, hrFielders, hrPreField, hrLooseBat, hrLooseTick, hrRun, hrHighFive, hrOnDeck |
 | `events/kkk.js` | 108 | KK, kkMirror, kkWalk, kkTurn, kkEase, kkLerp, kkFaceCam, kkBanzaiCam |
-| `events/yeonan.js` | 158 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, ynLyricEl, ynLyric |
-| `events/yeonan-cam.js` | 99 | YN_CAM, YC, ycPort, ycTan, ycAt, ycMix, ycBoard, ycBoardClose, ycShot, _ycv, ycMe, _ycp, ycSeat, ynCam … |
+| `events/yeonan.js` | 165 | ynEase, ynLerp, YN, ynLoadLyrics, ynNightSetup, ynNight, ynBuildLights, ynLights, ynPeopleOn, ynPeopleOff, YN_FIT, ynFit, ynLyricEl, ynLyric |
+| `events/yeonan-cam.js` | 100 | YN_CAM, YC, ycPort, ycTan, ycAt, ycMix, ycBoard, ycBoardClose, ycShot, _ycv, ycMe, _ycp, ycSeat, ynCam … |
 | `js/ui/fieldmode.js` | 28 | matchSync, syncFieldBtns, pickFieldMode, pickDayTime |
 | `js/ui/event-sheet.js` | 13 | buildEventList |
 | `js/ui/food.js` | 177 | FD, FD_KEYS, FOOD, foodReset, foodOpen, fdTone, fdSnd, fdDish, fdBeer, fdBagSvg, fdTable, fdFx, fdBind, fdAddDish … |
