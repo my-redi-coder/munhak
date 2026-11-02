@@ -1,8 +1,6 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= stands ================= */
 var SP=.8,RD=1.15,RH=.5,AIS=1.4;
-/* (2026-11-02) 외야석 반지름 = 담장 반지름 + SOUT. 걷는 외야(+30°)는 이 값과 같아서(107.5+4.5=112) 그대로 둠. 바비큐존·그린존도 이 값에 맞춰요 */
-var SOUT=4.5;function standR(a){return fenceR(a)+SOUT}
 var blocks=[],decorSeats=[],crowdSpots=[];
 function pos1B(s,o,side){side=side||1;return [side*(s*.7071+o*.7071),-s*.7071+o*.7071]}
 function buildBlock(cfg){
@@ -72,7 +70,7 @@ var ZB={};
   p=pos1B(34,14);ZB.ussk=buildBlock({key:'ussk',x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0xc8102e,occ:.58});
   p=pos1B(20,14);ZB.infield=buildBlock({key:'infield',x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50,occ:.6,open:{l:.2},reach:[-14-6.9+.45,6.9-.45]});
   p=pos1B(22,29);ZB.harulala=buildBlock({key:'harulala',x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.5,open:{l:2.2,r:2.2},reach:[-16-6.9+.45,16+6.9-.45]});
-  var ph=30*Math.PI/180,rr=112;ZB.outfield=buildBlock({key:'outfield',x:Math.sin(ph)*rr,z:-Math.cos(ph)*rr,theta:Math.PI-ph,base:1.6,rows:8,cols:18,seat:0x6f9d45,occ:.6});
+  /* 외야(걷는 블록 ZB.outfield)·외야 장식·현수막 블록(ZB.hog)은 world/outfield.js가 담장 곡선을 따라 놓아요 */
   // decor
   /* 걸어서 이어지는 옆 블록 (하룰라라석 양옆, 내야 왼쪽) — 이어진 쪽 옆벽 없음 */
   p=pos1B(6,14);ZB.infield.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50,open:{r:.01}}));
@@ -84,8 +82,6 @@ var ZB={};
   p=pos1B(38,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45,open:{l:.01}}));
   p=pos1B(52,29);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45});
   [6,22,38,52].forEach(function(s){p=pos1B(s,29,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45})});
-  /* 가운데 ±10° 블록은 뺌(빅보드 앞을 비움). 반지름은 담장을 따라 standR */
-[-40,-30,-20,20].forEach(function(d){var a=d*Math.PI/180,r=standR(a),b=buildBlock({x:Math.sin(a)*r,z:-Math.cos(a)*r,theta:Math.PI-a,base:1.6,rows:8,cols:18,seat:0x6f9d45,occ:.55,empty:d===-40?function(s){return true}:null});if(d===-40)ZB.hog=b});
 })();
 /* cheer stage near 으쓱이존 */
 var stageG=new THREE.Group();
