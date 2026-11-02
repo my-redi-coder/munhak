@@ -43,7 +43,8 @@ function ynNight(n){
 function ynBuildLights(){
   if(YN.pts)return;var src=[],i,b=crowd.base,v=new THREE.Vector3();
   for(i=0;i<crowdSpots.length;i++)src.push(b[i*4],b[i*4+1]+1.74,b[i*4+2],b[i*4+3],i);
-  decorSeats.forEach(function(d){if(Math.random()<.55){v.set(d.s.x,d.s.y,d.s.z);d.blk.g.localToWorld(v);src.push(v.x,v.y+1.62,v.z,d.blk.cfg.theta,-1)}});
+  decorSeats.forEach(function(d){if(d.blk===ZB.hog)return;/* 꽃돼지 현수막 자리는 관중이 없어서 불빛도 없음(작은 패치 M) */
+    if(Math.random()<.55){v.set(d.s.x,d.s.y,d.s.z);d.blk.g.localToWorld(v);src.push(v.x,v.y+1.62,v.z,d.blk.cfg.theta,-1)}});
   var N=Math.min(src.length/5,7000);
   var P=YN.P={N:N,base:new Float32Array(N*4),ci:new Int32Array(N),ph:new Float32Array(N),on:new Float32Array(N),col:new Float32Array(N*3)};
   for(i=0;i<N;i++){var k=i*5;P.base.set([src[k],src[k+1],src[k+2],src[k+3]],i*4);P.ci[i]=src[k+4];

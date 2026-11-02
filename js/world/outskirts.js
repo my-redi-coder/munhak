@@ -42,7 +42,7 @@ var OSK={
     P.push(G.cx+cx*(G.rx-G.w/2),0,G.cz+cz*(G.rz-G.w/2), G.cx+cx*(G.rx+G.w/2),0,G.cz+cz*(G.rz+G.w/2));N.push(0,1,0,0,1,0);
     if(i<seg){var b=i*2;I.push(b,b+2,b+1,b+1,b+2,b+3)}}
   var rg=new THREE.BufferGeometry();rg.setAttribute('position',new THREE.Float32BufferAttribute(P,3));rg.setAttribute('normal',new THREE.Float32BufferAttribute(N,3));rg.setIndex(I);
-  var ring=new THREE.Mesh(rg,flatMat(G.color));ring.material.side=THREE.DoubleSide;ring.position.y=.05;scene.add(ring);
+  var ring=new THREE.Mesh(rg,flatMat(G.color));ring.material.side=THREE.DoubleSide;ring.position.y=.05;ring.userData.dimOut=true;scene.add(ring);
   var T=OSK.trees,tp=[],placed=0,tries=0;
   while(placed<T.n&&tries<600){tries++;
     var t2=rnd(0,TAU);if(Math.abs(Math.atan2(Math.sin(t2),-Math.cos(t2)))<G.behindGap)continue; // 홈 뒤(+z 쪽)는 비움
@@ -52,7 +52,7 @@ var OSK={
     var sc=rnd(.8,1.25),pink=Math.random()<.25;placed++;
     tp.push({g:Cyl(.35,.5,3.2*sc,6),c:0x6b5444,p:[tx,1.6*sc,tz]});
     tp.push({g:new THREE.SphereGeometry(2.4*sc,9,7),c:pink?pick([0xf2b8c6,0xf6c9d4]):pick([0x5f9a4a,0x6faa55,0x4f8a3e,0x76b05c]),p:[tx,3.2*sc+1.6*sc,tz],s:[1,1.1,1]})}
-  scene.add(new THREE.Mesh(mergeParts(tp),MVC));
+  var trees=new THREE.Mesh(mergeParts(tp),MVC);trees.userData.dimOut=true;scene.add(trees);
 
   /* ---------- 3. 홈런커플존 진분홍 벽 (담장 안쪽 면) ---------- */
   var K=OSK.pink,PP=[],PN=[];

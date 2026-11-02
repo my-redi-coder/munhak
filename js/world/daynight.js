@@ -88,6 +88,7 @@ function dnApply(n){
   scene.fog.color.copy(D.fog).lerp(N.fog,n);
   clouds.forEach(function(c){c.material.opacity=dnL(D.cop,DN_LOOK.cloud.op,n);c.material.color.copy(D.cc).lerp(N.cc,n)});
   dnGlow();
+  if(typeof ndApply==='function')ndApply(n);/* 구역별 밤 어둡기 (world/nightdim.js) */
 }
 function setDayNight(m){
   if(!DAY_TIME[m])return;

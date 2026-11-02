@@ -101,7 +101,7 @@ var PZ_CFG={
   hr:{label:'홈런기념판',desc:'외야 잔디벽, 최정 홈런 숫자판',base:538,max:999,miles:[1,100,200,300,400,500],name:'CHOIJEONG',sub:'LEGENDARY',foot:'HOMERUNS',rec:'KBO HOME RUN RECORD'},
   pola:{caption:'문학에서 — 봄을 기다리며',max:15},/* 폴라로이드 아래 손글씨 문구(하나로 고정) + 미리보기에서 고칠 때 최대 글자 수 — ui/photo.js (2026-11-01) */
   poses:[['pzShow','소개'],['pzBanzai','만세'],['pzV','브이'],['pzBack','뒤돌기']],/* 포즈마다 표정이 달라요: 소개 = 기본 얼굴, 만세 = 활짝(joy), 브이 = 웃는 눈(happy) — game/photozone.js의 PZ_POSE */
-  hint:'드래그로 좌우를 보고, 으쓱이는 끌어서 옮겨요',
+  hint:'좌우로 움직여 포즈를 취해요',/* 포토존에 들어갈 때 사진 칸 아래에 쓱 떴다 사라지는 작은 안내(ui/photozone-ui.js의 pzHintShow) */
   full:'999호! 마일스톤 판이 꽉 찼어요',
   newMile:function(m){return m+'호 마일스톤이 새로 붙었어요!'}
 };

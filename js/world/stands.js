@@ -41,6 +41,7 @@ function buildBlock(cfg){
   }
   g.updateMatrixWorld(true);
   var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,seats:seats,terrace:terrace,key:cfg.key||null};
+  blk.dim=!cfg.out;/* 밤 경기에서 살짝 어둡게 할 블록(내야·으쓱이존·하룰라라석·홈 뒤). 외야(cfg.out)는 밝게 — world/nightdim.js (작은 패치 M) */
   blk.groundH=function(lz){return base+(lz<0?0:Math.min(Math.floor(lz/RD),R-1)*RH)};
   blk.xMin=cfg.reach?cfg.reach[0]:-W/2+.45;blk.xMax=cfg.reach?cfg.reach[1]:W/2-.45;blk.links=[];
   blk.clampX=function(lx){return clamp(lx,blk.xMin,blk.xMax)};

@@ -36,7 +36,7 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
   function place(k){
     var s=k.s,o=s.t==='bbq'?1:1.9,x=k.mx+k.n[0]*o,z=k.mz+k.n[1]*o;     // 앞 난간이 곡선 위에 오게
     if(s.t==='bbq'){OF.bbq={x:x,z:z,theta:k.theta};return}
-    var cfg={x:x,z:z,theta:k.theta,base:OF.base,rows:OF.rows,cols:s.cols,seat:OF.seat,occ:s.t==='walk'?.6:.55};
+    var cfg={x:x,z:z,theta:k.theta,base:OF.base,rows:OF.rows,cols:s.cols,seat:OF.seat,occ:s.t==='walk'?.6:.55,out:true};/* out: 밤에도 밝게(world/nightdim.js) */
     if(s.t==='walk')cfg.key='outfield';
     if(s.t==='hog')cfg.empty=function(){return true};
     var b=buildBlock(cfg);

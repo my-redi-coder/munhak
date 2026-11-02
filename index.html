@@ -151,7 +151,7 @@
 
 <section id="pz" hidden aria-label="포토존">
   <!-- 폴라로이드 촬영 틀 (2026-11-01): 사진 칸(#pzWin) 안쪽만 사진에 담겨요. 아래 흰 여백이 바닥을 가려요. 비율은 ui/photo.js의 POLA와 같아요 -->
-  <div class="pz-frame" id="pzFrame" aria-hidden="true"><div class="pz-paper"><div class="pz-win" id="pzWin"></div><p class="pz-cap"><span id="pzCapPrev"></span><b id="pzDatePrev"></b></p></div><i class="pz-tape"></i></div>
+  <div class="pz-frame" id="pzFrame" aria-hidden="true"><div class="pz-paper"><div class="pz-win" id="pzWin"><span class="pz-hint" id="pzHint" aria-hidden="true"></span></div><p class="pz-cap"><span id="pzCapPrev"></span><b id="pzDatePrev"></b></p></div><i class="pz-tape"></i></div>
   <div class="pz-top"><button class="pill" id="pzBack"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>돌아가기</button><span class="pill pz-title" id="pzTitle"></span></div>
   <div class="pz-bottom">
     <div class="pz-tools" id="pzTools"></div>
@@ -247,6 +247,7 @@
 <script src="js/world/hrboard.js"></script>
 <script src="js/world/crowd.js"></script>
 <script src="js/world/daynight.js"></script>
+<script src="js/world/nightdim.js"></script>
 <script src="js/entities/character.js"></script>
 <script src="js/entities/player.js"></script>
 <script src="js/entities/bpface.js"></script>

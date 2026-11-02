@@ -26,7 +26,13 @@ function pzUIOpen(k){
   $('pzCapPrev').textContent=PZ_CFG.pola.caption;$('pzDatePrev').textContent=photoDate();photoFonts();/* 폴라로이드 틀 미리보기 글씨 */
   $('pz').hidden=false;pzUISync();
 }
-function pzUIClose(){$('pz').hidden=true}
+/* 들어갈 때 한 번 쓱 떴다 사라지는 안내 (작은 패치 M) */
+function pzHintShow(){
+  var h=$('pzHint');if(!h)return;
+  h.textContent=PZ_CFG.hint;h.classList.remove('on');void h.offsetWidth;h.classList.add('on');
+  h.onanimationend=function(){h.classList.remove('on')};
+}
+function pzUIClose(){$('pz').hidden=true;var h=$('pzHint');if(h)h.classList.remove('on')}
 function pzUISync(){
   if($('pz').hidden&&!PZ.on)return;
   $('pzPoses').querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.pose===PZ.pose)});

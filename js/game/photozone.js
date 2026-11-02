@@ -37,7 +37,7 @@ function pzStart(k){
     pzPose(S.pose);
     document.body.classList.add('pz');setStatus(null);pzUIOpen(k);pzWinMeasure();
     snapCam();if(S.onEnter)S.onEnter();
-    setTimeout(function(){if(PZ.on)toast(PZ_CFG.hint,3200)},300);
+    setTimeout(function(){if(PZ.on)pzHintShow()},500);/* 작은 안내가 쓱 떴다 사라짐(예전 토스트 대신, 작은 패치 M) */
   });
 }
 function pzStop(){

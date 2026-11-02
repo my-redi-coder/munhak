@@ -32,4 +32,4 @@ var fieldTex=canvasTex(FN,FN,function(x){
 });
 var field=new THREE.Mesh(new THREE.PlaneGeometry(FS,FS),new THREE.MeshLambertMaterial({map:fieldTex}));
 field.rotation.x=-Math.PI/2;field.position.set(0,0,FZ0+FS/2);scene.add(field);
-var outer=new THREE.Mesh(new THREE.CircleGeometry(700,48),new THREE.MeshLambertMaterial({color:0x93b56d}));outer.rotation.x=-Math.PI/2;outer.position.y=-.05;scene.add(outer);
+var outer=new THREE.Mesh(new THREE.CircleGeometry(700,48),new THREE.MeshLambertMaterial({color:0x93b56d}));outer.rotation.x=-Math.PI/2;outer.position.y=-.05;outer.userData.dimOut=true;scene.add(outer);

@@ -2,6 +2,18 @@
 
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
+## 작은 패치 M: 포토존 들어갈 때 안내 · 여난부두 현수막 자리 불빛 빼기 · 밤 경기 구역별 어둡기 — 완료 (2026-11-02, `munhak_2026-11-02_M-small-fixes`)
+
+- 포토존(홈런기념판·플레이어존)에 들어가면 사진 칸 아래쪽에 작은 글씨 '좌우로 움직여 포즈를 취해요'가 3.2초 동안 쓱 떴다 사라짐(`#pzHint`, `styles/photozone.css`의 `.pz-hint`, `ui/photozone-ui.js`의 `pzHintShow`). 글은 `PZ_CFG.hint`(`config.js`) 한 곳. 예전 토스트('드래그로 좌우를 보고…')는 이걸로 바꿈. 사진엔 안 찍힘(3D 화면만 담음). 동작 줄이기 설정이면 위아래 움직임 없이 흐려지기만
+- 여난부두 폰 불빛: 꽃돼지 현수막 블록(`ZB.hog`)의 장식 의자에도 켜지던 것을 뺌(`events/yeonan.js`의 `ynBuildLights`). 그 자리는 관중이 없음
+- 바뀐 파일: `js/core/config.js`, `js/game/photozone.js`, `js/ui/photozone-ui.js`, `styles/photozone.css`, `index.html`(`#pzWin` 안에 한 줄, nightdim.js 한 줄), `events/yeonan.js`, `js/world/`의 `nightdim.js`(새)·`stands.js`·`outfield.js`·`crowd.js`·`landmarks.js`·`outskirts.js`·`field.js`·`daynight.js`
+- 확인: 문법 검사 + 헤드리스 브라우저에서 콘솔 오류 없이 로드, 밤으로 바꾸면 구역 블록 26개(외야 6개 제외)·관중 1,365/1,731명·바깥 덩어리가 어두워졌다가 낮으로 돌아오는지. 폰에서 볼 것: 글씨 위치·크기, 여난부두에서 현수막 자리 불빛이 없는지, 밤에 내야·바깥이 적당히 어두운지(숫자는 `ND`)
+- 밤 경기 구역별 어둡기(새 파일 `js/world/nightdim.js`, 숫자는 `ND` 한 곳: `zone` .85 · `out` .6): 그라운드·외야 관중석은 그대로 밝게, 내야·으쓱이존·하룰라라석(양옆·홈 뒤 곡면 포함)은 85% 밝기, 구장 바깥 땅·언덕·조명탑·벚나무·바깥 흙길·나무 띠는 60% 밝기
+  - 구역: 계단·뒷벽, 의자, 관중(몸·머리·머리카락). 외야 블록은 `cfg.out`(`outfield.js`)으로 빼고, 블록마다 `blk.dim`(`stands.js`)이 어둡게 할지 알려 줌. 장식 의자는 `crowd.js`가 어두운 것·아닌 것을 따로 묶음(`userData.dimZone`)
+  - 바깥: `userData.dimOut`이 붙은 덩어리(`field.js` 바깥 땅, `landmarks.js` 언덕·탑·나무, `outskirts.js` 흙길·나무)
+  - 낮↔밤 1.5초 동안 같이 서서히(`daynight.js`의 `dnApply`가 `ndApply(n)` 호출), 실내 포토존은 낮 조명 그대로. 여난부두 암전(조명 80% 낮춤)은 이 위에 더해짐
+  - 안 건드린 것: 조명탑 불빛, 하룰라라 지붕 조명, 응원단상·으쓱이·NPC·마스코트, 바비큐존·그린존·현수막, 백스크린 앞 낮은 나무숲
+
 ## 작은 패치 L: 외야석을 담장 곡선 따라 둥글게 — 완료 (2026-11-02, `munhak_2026-11-02_L-outfield-curve`)
 
 - 문제: 담장은 타원(`fenceR`, 중앙 120·폴 95)인데 외야 블록은 반지름 112 원 위에서 홈을 보고 서 있어서, 가운데는 담장과 섞이고 폴 쪽은 떠 있었음. 반지름만 맞춘 1차 수정(J)은 블록이 계단처럼 어긋나 보였음

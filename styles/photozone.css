@@ -53,3 +53,9 @@ body.pz #labels{opacity:0}
 .photo-acts .ghost{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:16px;border:1px solid var(--line);background:var(--glass);font-size:16px}
 .pz-input{width:100%;height:48px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font:inherit;font-size:16px;color:var(--ink)}
 .photo-acts [hidden]{display:none}
+
+/* 포토존 들어갈 때 쓱 떴다 사라지는 작은 안내 (작은 패치 M, 2026-11-02) — 사진 칸 아래쪽. 사진에는 안 찍혀요(3D 화면만 담음) */
+.pz-hint{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);padding:5px 12px;border-radius:999px;background:rgba(32,36,28,.5);color:#fff;font-size:12.5px;letter-spacing:.2px;white-space:nowrap;pointer-events:none;opacity:0}
+.pz-hint.on{animation:pzHint 3.2s ease both}
+@keyframes pzHint{0%{opacity:0;transform:translateX(-50%) translateY(5px)}14%{opacity:1;transform:translateX(-50%)}74%{opacity:1;transform:translateX(-50%)}100%{opacity:0;transform:translateX(-50%) translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){@keyframes pzHint{0%{opacity:0;transform:translateX(-50%)}14%{opacity:1;transform:translateX(-50%)}74%{opacity:1;transform:translateX(-50%)}100%{opacity:0;transform:translateX(-50%)}}}
