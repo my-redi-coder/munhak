@@ -89,9 +89,15 @@ function ynPeopleOff(){
 }
 
 /* ---- 노래방 가사 ---- */
+/* 한 줄에 다 들어가게 글자 크기 맞추기: 화면 폭의 YN_FIT.w, 최대 YN_FIT.max px, 최소 YN_FIT.min px */
+var YN_FIT={w:.92,max:40,min:18};
+function ynFit(c){
+  var W=innerWidth*YN_FIT.w,fs=Math.min(YN_FIT.max,Math.max(YN_FIT.min,innerWidth*.075));c.style.fontSize=fs+'px';
+  var w=c.scrollWidth;if(w>W)c.style.fontSize=Math.max(YN_FIT.min,fs*W/w)+'px';
+}
 function ynLyricEl(){
   if(!YN.el){YN.el=document.createElement('div');YN.el.className='ylyric';YN.el.setAttribute('aria-live','off');
-    YN.el.innerHTML='<p class="box"><span class="cur"></span></p><p class="nxt"></p>';document.body.appendChild(YN.el)}
+    YN.el.innerHTML='<p class="box"><span class="cur"><span class="b"></span><span class="f" aria-hidden="true"></span></span></p><p class="nxt"></p>';document.body.appendChild(YN.el)}
   return YN.el;
 }
 function ynLyric(st){
@@ -100,8 +106,9 @@ function ynLyric(st){
   var ci=-1;for(var i=0;i<L.length;i++){var e=L[i].e!=null?L[i].e:(L[i+1]?L[i+1].t:L[i].t+4);if(st>=L[i].t&&st<e){ci=i;var p=(st-L[i].t)/Math.max(.3,e-L[i].t)}}
   var up=ci<0?L.filter(function(l){return l.t>st})[0]:null;
   var cur=ci>=0?L[ci]:(up&&up.t-st<2.5?up:null),nxt=ci>=0?L[ci+1]:null;
-  var c=el.querySelector('.cur'),n=el.querySelector('.nxt');
-  if(c.textContent!==(cur?cur.text:''))c.textContent=cur?cur.text:'';
+  var c=el.querySelector('.cur'),n=el.querySelector('.nxt'),tx=cur?cur.text:'';
+  /* 노래방 글씨: 흰 글자(.b) 위에 노란 글자(.f)를 부른 만큼(--p) 왼쪽부터 드러내요 (2026-11-03) */
+  if(c.dataset.t!==tx){c.dataset.t=tx;c.querySelector('.b').textContent=tx;c.querySelector('.f').textContent=tx;ynFit(c)}
   c.style.setProperty('--p',(ci>=0?clamp(p,0,1)*100:0).toFixed(1)+'%');
   if(n.textContent!==(nxt?nxt.text:''))n.textContent=nxt?nxt.text:'';
   el.classList.toggle('on',!!cur);
