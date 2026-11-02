@@ -5,11 +5,11 @@
    음원 EV_BGM.yeonan, 가사 YEONAN.lyrics (core/config.js) — 둘 다 사용자가 events/ 폴더에 직접 올려요.
    가사 파일은 가사 싱크 도구에서 만든 {lines:[{t,e,text}]}. 없으면 가사 없이, 음원이 없으면 YEONAN.NO_SONG초 동안 돌아요.
    흐름: 암전(0~DARK) → 불빛 번짐 → 노래(SONG_AT부터) 동안 카메라가 구장 곳곳을 비춤 → 마지막은 내 자리 → 불 켜지며 끝
-   카메라 순서(노래 길이 비율): 와이드 → 관중석 파노라마 → 응원석 가까이 → 외야에서 홈 쪽 → 하늘 위 은하수 → 내 자리 */
+   카메라 순서는 노래 초에 묶어 events/yeonan-cam.js에 따로 있어요(2026-11-03, 작은 패치 N).
+   홈 뒤 곡면 스탠드 블록 사이 쐐기 틈(world/curvestand.js의 CVS.wedges)에도 불빛을 채워요. */
 function ynEase(u){u=clamp(u,0,1);return u*u*(3-2*u)}
 function ynLerp(a,b,u){return [a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,a[2]+(b[2]-a[2])*u]}
-var YN={DARK:3.2,SONG_AT:3.6,OUT:3,lyrics:null,lyrTried:false,pts:null};
-YN.SHOTS=[[0,'wide'],[.1,'pan'],[.27,'close'],[.43,'outfield'],[.58,'drone'],[.8,'seat']];
+var YN={DARK:3.2,SONG_AT:3.6,OUT:3,WEDGE_OCC:.7,PT:.95,PT_MAX:3,mid:new THREE.Vector3(0,6,-30),lyrics:null,lyrTried:false,pts:null};
 
 /* ---- 가사 파일: 처음 한 번만 불러 둬요 ---- */
 function ynLoadLyrics(){
@@ -45,14 +45,22 @@ function ynBuildLights(){
   for(i=0;i<crowdSpots.length;i++)src.push(b[i*4],b[i*4+1]+1.74,b[i*4+2],b[i*4+3],i);
   decorSeats.forEach(function(d){if(d.blk===ZB.hog)return;/* 꽃돼지 현수막 자리는 관중이 없어서 불빛도 없음(작은 패치 M) */
     if(Math.random()<.55){v.set(d.s.x,d.s.y,d.s.z);d.blk.g.localToWorld(v);src.push(v.x,v.y+1.62,v.z,d.blk.cfg.theta,-1)}});
-  var N=Math.min(src.length/5,7000);
+  /* 홈 뒤 곡면 스탠드 쐐기 틈: 줄마다 자리 간격으로 불빛만 (으쓱이·의자 없음, 2026-11-03) */
+  (CVS.wedges||[]).forEach(function(w){
+    var bx=w.up[0]+w.un[0],bz=w.up[1]+w.un[1],th=Math.atan2(bx,bz);
+    for(var r=0;r<w.rows;r++){var d=1.9+r*RD+RD*.64,ax=w.H[0]+w.up[0]*d,az=w.H[1]+w.up[1]*d,cx=w.H[0]+w.un[0]*d,cz=w.H[1]+w.un[1]*d,
+        len=Math.hypot(cx-ax,cz-az),n=Math.floor((len-.5)/SP);
+      for(var k=0;k<n;k++){if(Math.random()>YN.WEDGE_OCC)continue;var f=(k+.5)/n,j=rnd(-.08,.08);
+        src.push(ax+(cx-ax)*f+j,w.base+r*RH+1.62,az+(cz-az)*f+j,th,-1)}}
+  });
+  var N=Math.min(src.length/5,7500);
   var P=YN.P={N:N,base:new Float32Array(N*4),ci:new Int32Array(N),ph:new Float32Array(N),on:new Float32Array(N),col:new Float32Array(N*3)};
   for(i=0;i<N;i++){var k=i*5;P.base.set([src[k],src[k+1],src[k+2],src[k+3]],i*4);P.ci[i]=src[k+4];
     P.ph[i]=rnd(-.35,.35)+src[k]*.006;var cool=Math.random()<.18;P.col.set(cool?[.82,.9,1]:[1,.93,.76],i*3)}
   var g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(N*3),3).setUsage(THREE.DynamicDrawUsage));
   g.setAttribute('color',new THREE.BufferAttribute(new Float32Array(N*3),3).setUsage(THREE.DynamicDrawUsage));
-  YN.pts=new THREE.Points(g,new THREE.PointsMaterial({size:.95,map:glowTex(),vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
+  YN.pts=new THREE.Points(g,new THREE.PointsMaterial({size:YN.PT,map:glowTex(),vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
   YN.pts.frustumCulled=false;
 }
 function ynLights(lt,fade){
@@ -63,6 +71,8 @@ function ynLights(lt,fade){
     pos[i*3]=P.base[j]+Math.cos(th)*d;pos[i*3+1]=P.base[j+1]-Math.abs(s)*.07;pos[i*3+2]=P.base[j+2]-Math.sin(th)*d;
     var tw=a*(.82+.18*Math.sin(T*2.7+i));col[i*3]=P.col[i*3]*tw;col[i*3+1]=P.col[i*3+1]*tw;col[i*3+2]=P.col[i*3+2]*tw;
   }
+  /* 멀리서 볼 때(빅보드·회전 장면) 불빛 점이 너무 작아 안 보이지 않게, 카메라가 멀수록 점을 키워요 */
+  var cd=camera.position.distanceTo(YN.mid);YN.pts.material.size=YN.PT*clamp(1+(cd-55)/45,1,YN.PT_MAX);
   YN.pts.geometry.attributes.position.needsUpdate=true;YN.pts.geometry.attributes.color.needsUpdate=true;
 }
 
@@ -97,23 +107,7 @@ function ynLyric(st){
   el.classList.toggle('on',!!cur);
 }
 
-/* ---- 카메라: 장면마다 시작→끝으로 천천히 흘러가요 ---- */
-function ynShot(name,u){
-  var V=YN.V;u=ynEase(u);
-  if(name==='wide')return [ynLerp([0,27,42],[0,21,26],u),[0,7,-70]];
-  if(name==='pan'){var a=V.out,b=V.ussk,c=V.inf,l=u<.5?ynLerp(a,b,u*2):ynLerp(b,c,u*2-1);return [ynLerp([-8,5,-34],[-10,6,-22],u),[l[0],l[1]+2,l[2]]]}
-  if(name==='close'){var f=V.fw,o=V.ussk,d=14-6*u;return [[o[0]+f[0]*d,o[1]+2.6+u,o[2]+f[2]*d],[o[0],o[1]+2.2,o[2]]]}
-  if(name==='outfield')return [ynLerp([-14,24,-112],[10,20,-104],u),[4,4,4]];
-  if(name==='drone'){var r=34,an=-.7+1.4*u;return [[Math.sin(an)*r,118-14*u,-44+Math.cos(an)*r],[0,0,-46]]}
-  return null;
-}
-function ynCam(lt,frac){
-  if(lt<YN.SONG_AT){var w=ynShot('wide',0);evCam(w[0],w[1],2.2,lt<.05);return}
-  var i=YN.SHOTS.length-1;while(i>0&&frac<YN.SHOTS[i][0])i--;
-  var s0=YN.SHOTS[i][0],s1=i+1<YN.SHOTS.length?YN.SHOTS[i+1][0]:1,nm=YN.SHOTS[i][1];
-  if(nm==='seat'){EV.cam=null;return}
-  var sh=ynShot(nm,clamp((frac-s0)/(s1-s0),0,1));evCam(sh[0],sh[1],1.4);
-}
+/* ---- 카메라 순서·마지막 안내 문구는 events/yeonan-cam.js (ynCam) ---- */
 
 EV_SCENES.yeonan={
   start:function(){
@@ -125,7 +119,7 @@ EV_SCENES.yeonan={
     var th=ZB.ussk.cfg.theta;YN.V={ussk:bc('ussk'),inf:bc('infield'),out:bc('outfield'),fw:[-Math.sin(th),0,-Math.cos(th)]};
     YN.st={song:false,songOk:false,end:null,on:false,shout:0};YN.dur=YEONAN.NO_SONG;
     YN.primed=evBgmPrime('yeonan');/* 버튼 누른 직후에 미리 재생(소리 0) → 노래 시작 때 막히지 않게 */
-    bbShow('yeonan');ynCam(0,0);ynLyricEl();
+    bbShow('yeonan');ycReset();ynCam(0,null);ynLyricEl();
     toast(EV_TEXT.yeonan.start,2400);crowdSwell(.5);EV.excite=.1;
   },
   tick:function(t,dt){
@@ -151,8 +145,7 @@ EV_SCENES.yeonan={
       /* 노래 중간중간 주변 으쓱이 말풍선 */
       if(st.end==null&&st_>st.shout*40+20&&st.shout<3){st.shout++;evCrowdShout(LINES.yeonan,1)}
     }
-    var frac=st.song?clamp(st_/YN.dur,0,1):0;
-    if(st.end==null)ynCam(t,frac);
+    if(st.end==null)ynCam(t,st.song?st_:null);
     ynLights(t,st.end==null?1:1-clamp((t-st.end)/(YN.OUT*.8),0,1));
     if(st.end!=null&&t>=st.end+YN.OUT){evRelease(EV_TEXT.yeonan.back);return true}
     return false;
@@ -160,6 +153,6 @@ EV_SCENES.yeonan={
   stop:function(){
     ynNight(0);if(YN.pts&&YN.pts.parent)scene.remove(YN.pts);
     if(YN.el)YN.el.classList.remove('on');evBgmStop(.8);ynPeopleOff();if(!YN.st||YN.st.end==null)crowdSwell(.5);YN.primed=false;
-    if(BBS.kind)bbShowOff();BBS.cyc=null;
+    if(BBS.kind)bbShowOff();BBS.cyc=null;ycReset();
   }
 };

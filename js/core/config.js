@@ -77,7 +77,7 @@ var EV_CALM={homer:30,kkk:30,yeonan:30};
 var EV_BGM={homer:'events/homer-bgm.mp3',yeonan:'songs/song2.mp3'};
 /* 8회말 여난부두: 음원(EV_BGM.yeonan)·가사(lyrics)는 사용자가 events/ 폴더에 직접 올려요. 둘 다 없어도 장면은 돌아가요.
    SWAY: 불빛을 왼쪽→오른쪽→왼쪽 한 번 흔드는 데 걸리는 초 / NO_SONG: 음원이 없을 때 장면 길이(초) */
-var YEONAN={lyrics:'events/yeonan-lyrics.json',SWAY:3.2,NO_SONG:48};
+var YEONAN={lyrics:'events/yeonan-lyrics.json',SWAY:3.2,NO_SONG:48,hint:'주변을 둘러보세요'};
 var EV_TEXT={
   kkk:{start:'29번 김광현이 마운드에 올라요',k:['루킹 삼진!','루킹 삼진!','헛스윙 삼진!'],back:'KKK! 주변 으쓱이들이 일어나 환호해요',watch:'KKK 보는 중'},
   yeonan:{start:'8회말, 구장 조명이 꺼져요',on:'하나둘 폰 불빛이 켜져요',mute:'소리를 켜면 떼창이 들려요',back:'여난부두 떼창 끝! 다시 불이 켜져요',watch:'여난부두 응원 중'},

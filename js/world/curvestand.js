@@ -10,7 +10,8 @@ var CVS={
   levels:[         // o=대각선 블록이 놓인 거리(stands.js의 pos1B 두 번째 값), n=호를 나누는 블록 수
     {base:.6,  rows:9, o:14, n:3, occ:.55},   // 아래층
     {base:13.5,rows:8, o:29, n:5, occ:.45}    // 위층(띠 전광판 붙음)
-  ]
+  ],
+  wedges:[]        // 블록 사이 쐐기 틈 {H 이음 꼭짓점, up·un 양쪽 뒤로 뻗는 방향, base, rows} — 아래에서 채워요
 };
 (function(){
   var S=.7071,rep0=ledTex.repeat.x,rad=Math.PI/180,wedges=[];
@@ -23,6 +24,7 @@ var CVS={
 
   /* 2. 이웃 블록 사이 벌어진 틈을 계단 콘크리트로 메우기 (H=이음 꼭짓점, up/un=양쪽 블록이 뒤로 뻗는 방향) */
   function wedge(L,H,up,un){
+    CVS.wedges.push({H:H,up:up,un:un,base:L.base,rows:L.rows});   // 여난부두 불빛이 이 틈에도 켜져요(events/yeonan.js)
     var bottom=L.base>3?L.base-1.1:-.05,steps=[[0,1.9,L.base,0xdedad0]];
     for(var r=0;r<L.rows;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,L.base+r*RH,r%2?0xe2ded3:0xd9d5c9]);
     steps.forEach(function(s){
