@@ -7,7 +7,7 @@ function frame(now){
   var beat=beatPos(T);
   if(player){updatePlayer(dt);player.update(dt,beat)}
   if(phase==='game'){updateNPCs(dt,beat);if(leader){var want=(player.act==='cheer'||npcs.some(function(n){return n.act==='cheer'}))?'cheer':(Math.sin(T*.25)>.4?'cheer':null);if(leader.act!==want)leader.setAct(want);leader.update(dt,beat)}}
-  mascotTick(dt,beat);/* 응원단상 레디·배리 (js/game/mascots.js) */
+  mascotTick(dt,beat);/* 응원단상 래디·배디 (js/game/mascots.js) */
   var wantEx=phase==='game'&&player.act==='cheer'?1:phase==='game'&&player.act?.5:0;if(EV.run)wantEx=Math.max(wantEx,EV.excite);excite=damp(excite,wantEx,3,dt);
   crowdTick+=dt;if(crowdTick>1/30){crowdTick=0;var n=crowdSpots.length,b=crowd.base;
     for(var i=0;i<n;i++){var ph=crowd.phase[i];var lift=Math.max(0,Math.sin(T*2.2+ph))*.02+(ph<3.6?excite*Math.abs(Math.sin(Math.PI*(beat+ph*.02)))*.22:excite*.04);crowdSet(i,lift)}crowdFlush()}

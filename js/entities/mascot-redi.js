@@ -1,5 +1,5 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
-/* ================= 레디: 진회색 진돗개 마스코트 =================
+/* ================= 래디: 진회색 진돗개 마스코트 =================
    필요: js/entities/mascot-kit.js
    makeRedi({uni:'red'|'green'|'white', detail:'full'|'lite', scale:1})
    키 1.35(귀 끝까지). 발바닥이 y=0, 정면이 +z.
@@ -25,11 +25,11 @@ var REDI_DESIGN = {
 
 function makeRedi(o) {
   o = o || {}; var D = REDI_DESIGN, full = (o.detail || 'full') === 'full';
-  var m = new Mascot({ name: '레디', uni: o.uni, detail: o.detail, scale: o.scale, rest: 0.42 });
+  var m = new Mascot({ name: '래디', uni: o.uni, detail: o.detail, scale: o.scale, rest: 0.42 });
   var fur = mkLambert(D.fur), ink = mkShiny(D.ink, 60), seg = full ? 32 : 18;
 
   /* 몸: 유니폼 + 어깨 덮개(유니폼 색) */
-  mascotJersey(m, Object.assign({ name: '레디', num: 'V6', seg: seg }, D.jersey));
+  mascotJersey(m, Object.assign({ name: '래디', num: 'V6', seg: seg }, D.jersey));
   var cap = mkLambert(mascotUni(m.uk).hex); m.uniMats = [cap];
   var sh = m.add(m.body, new THREE.Mesh(new THREE.SphereGeometry(D.jersey.rTop, seg, 10, 0, Math.PI * 2, 0, Math.PI / 2), cap));
   sh.position.y = D.jersey.yTop - 0.01; sh.scale.set(1, 0.3, D.jersey.zs);

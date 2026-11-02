@@ -1,12 +1,12 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
-/* ================= 배리: 이빨(어금니) 마스코트 =================
+/* ================= 배디: 이빨(어금니) 마스코트 =================
    필요: js/entities/mascot-kit.js
    makeBarry({uni:'red'|'green'|'white', detail:'full'|'lite', scale:1})
-   설계 키 1.35(봉우리 끝까지)에 size 0.86을 곱해 실제 키 약 1.16 — 몸통이 레디와 같은 크기. 뿌리 끝이 y=0, 정면이 +z.
+   설계 키 1.35(봉우리 끝까지)에 size 0.86을 곱해 실제 키 약 1.16 — 몸통이 래디와 같은 크기. 뿌리 끝이 y=0, 정면이 +z.
    꼭 지킬 것: 위가 두 봉우리인 어금니 머리, 뿌리 두 개가 다리, 미색 + 반짝 하이라이트,
               입 없음, 까만 점 눈(안광 없음), 분홍 볼터치는 늘 있음(포즈 중에도), 무표정 */
 var BARRY_DESIGN = {
-  size: 0.86,         /* 전체 크기 배율 — 몸통(유니폼) 폭이 레디와 같아지게(2026-11-01) */
+  size: 0.86,         /* 전체 크기 배율 — 몸통(유니폼) 폭이 래디와 같아지게(2026-11-01) */
   ivory: 0xf5efe0,
   ivoryLit: 0xf8dfe6, /* 빛 받는 부분 색(야구장 초록 반사를 상쇄하려고 살짝 분홍기) */   /* 미색. 빛을 덜 타게(일부는 스스로 빛나게) 칠해서 야구장 빛 아래서도 하얗게 날아가지 않음 */
   line: 0xd6ccb0,     /* 베이지 윤곽선 */
@@ -82,11 +82,11 @@ function barryStick(mesh, f) { mesh.position.copy(f.p); mesh.quaternion.setFromU
 
 function makeBarry(o) {
   o = o || {}; var D = BARRY_DESIGN, full = (o.detail || 'full') === 'full';
-  var m = new Mascot({ name: '배리', uni: o.uni, detail: o.detail, scale: (o.scale || 1) * D.size, rest: 0.5, shakeAmp: 0.028, labelY: 0.8 });
+  var m = new Mascot({ name: '배디', uni: o.uni, detail: o.detail, scale: (o.scale || 1) * D.size, rest: 0.5, shakeAmp: 0.028, labelY: 0.8 });
   var ivory = new THREE.MeshPhongMaterial({ color: new THREE.Color(D.ivoryLit).multiplyScalar(0.28), emissive: new THREE.Color(D.ivory).multiplyScalar(0.61), shininess: 12, specular: 0x080808 }), C = D.crown, seg = full ? 32 : 18;
 
   /* 유니폼(왕관 아랫부분을 감쌈) */
-  mascotJersey(m, Object.assign({ name: '배리', num: 'V6', seg: seg }, D.jersey));
+  mascotJersey(m, Object.assign({ name: '배디', num: 'V6', seg: seg }, D.jersey));
 
   /* 왕관(머리 겸 몸): 정면 윤곽을 앞뒤로 둥글게 부풀림 */
   var cg = barryCrownGeo(C, full ? 72 : 40, full ? 26 : 16), CP = cg.userData.P;

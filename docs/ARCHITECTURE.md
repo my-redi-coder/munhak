@@ -124,7 +124,7 @@
 
 - **모델(야구장과 분리)** `js/entities/mascot-kit.js` + `mascot-redi.js` + `mascot-barry.js`: THREE만 있으면 돌아가요. `makeRedi(o)`·`makeBarry(o)` → `Mascot`(`root`, `meshes`, `headG`=이름표 자리, `setUniform(uk)`, `pose('cheer'|'idle')`, `signature()`, `posing()`, `update(dt,beat)`, `dispose()`). `o = {uni, detail:'full'|'lite', scale}`. 유니폼 색은 `UNI`(config.js)가 있으면 그걸, 없으면 `MASCOT_UNI`. 생김새 숫자는 `REDI_DESIGN`·`BARRY_DESIGN`, 포즈 시간은 `MASCOT_SIG`.
 - **응원단상** `js/game/mascots.js`: `makeMascots()`(boot.js, `makeLeader()` 다음)가 `stageG`에 세움. `mascotTick(dt,beat)`(loop.js, 매 프레임 — 입장 준비 화면에서도 유니폼은 따라감): `ME.uni` 비교 → `setUniform`, `leader.act==='cheer'`면 율동, `player.act==='cheer'`이고 이벤트 중이 아니면 `MASC.next` 타이머로 랜덤 포즈. 누르기는 `input.js`가 `mascotMeshes()`를 맞힘 대상에 넣고 `userData.mascot`이면 `mascotTap` + 이름표.
-- 배리 몸통은 정면 윤곽(`barryCrownShape`)을 가운데에서 사방으로 부풀린 면(`barryCrownGeo`), 얼굴 부품은 `barryFront(x,y)`로 휜 앞면에 붙여요. 재질은 빛을 덜 타게(일부 자체 발광) 해서 야구장 빛에 하얗게 날아가지 않게.
+- 배디 몸통은 정면 윤곽(`barryCrownShape`)을 가운데에서 사방으로 부풀린 면(`barryCrownGeo`), 얼굴 부품은 `barryFront(x,y)`로 휜 앞면에 붙여요. 재질은 빛을 덜 타게(일부 자체 발광) 해서 야구장 빛에 하얗게 날아가지 않게.
 
 
 ## 묶음 F: 티켓북 바로가기 · 퍼펙트 판 · 글꼴 (2026-11-01)

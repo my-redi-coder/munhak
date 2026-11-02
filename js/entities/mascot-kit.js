@@ -1,8 +1,9 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
-/* ================= mascot-kit: 레디·배리 공용 뼈대 =================
+/* ================= mascot-kit: 래디·배디 공용 뼈대 =================
    야구장 코드를 몰라도 돌아가요(THREE만 있으면 됨). 다른 페이지에서도 이 파일 + 캐릭터 파일만 불러 쓰면 돼요.
    쓰는 법: var m=makeRedi({uni:'red'}); scene.add(m.root); 매 프레임 m.update(dt,beat);
-            m.setUniform('white'); m.pose('cheer'|'idle'); m.signature();
+            m.setUniform('white'); m.pose('cheer'|'idle'|'light'); m.signature();
+            m.walk(true|false)  ← 걷는 중 몸짓(통통 + 팔 살짝). pose('light') = 폰 불빛 들고 좌우로(여난부두)
    생김새 규칙은 docs/MASCOTS.md */
 
 /* 유니폼 색 — core/config.js의 UNI와 같은 값(있으면 그걸 씀) */
@@ -88,6 +89,7 @@ function Mascot(o) {
   this.root = new THREE.Group(); this.body = new THREE.Group(); this.root.add(this.body);
   this.meshes = []; this.arms = []; this.ears = [];
   this.state = 'idle'; this.sigT = -1; this.t = Math.random() * 10; this.beatOff = 0;
+  this.walking = false; this.glow = null;
   this.cur = { a: 0, b: 0, ax: 0, bx: 0, y: 0, tilt: 0 };
   this.rest = o.rest || 0.42; this.vUp = o.vUp || 2.5; this.shakeAmp = o.shakeAmp || 0.03;   /* 2.5 ≈ 위로 대각선 V(세로에서 약 37°) */
   if (o.scale) this.root.scale.setScalar(o.scale);
@@ -107,7 +109,28 @@ Mascot.prototype.setUniform = function (uk) {
   if (this.jerseyMat) { if (this.jerseyMat.map) this.jerseyMat.map.dispose(); this.jerseyMat.map = mascotJerseyTex(uk, this.jerseyOpt); this.jerseyMat.needsUpdate = true; }
   (this.uniMats || []).forEach(function (mt) { mt.color.setHex(u.hex); });
 };
-Mascot.prototype.pose = function (p) { this.state = p === 'cheer' ? 'cheer' : 'idle'; };
+Mascot.prototype.pose = function (p) {
+  this.state = p === 'cheer' ? 'cheer' : p === 'light' ? 'light' : 'idle';
+  if (this.state === 'light' && !this.glow) this.makeGlow();
+};
+Mascot.prototype.walk = function (on) { this.walking = !!on; };
+/* 폰 불빛: +x쪽 팔 끝에 작은 빛 */
+var MASCOT_GLOWTEX = null;
+function mascotGlowTex() {
+  if (MASCOT_GLOWTEX) return MASCOT_GLOWTEX;
+  var cv = document.createElement('canvas'); cv.width = cv.height = 64; var x = cv.getContext('2d');
+  var g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.18, 'rgba(255,246,220,.9)'); g.addColorStop(0.45, 'rgba(255,226,160,.28)'); g.addColorStop(1, 'rgba(255,220,150,0)');
+  x.fillStyle = g; x.fillRect(0, 0, 64, 64);
+  MASCOT_GLOWTEX = new THREE.CanvasTexture(cv); return MASCOT_GLOWTEX;
+}
+Mascot.prototype.makeGlow = function () {
+  var arm = this.arms.filter(function (a) { return a.userData.side > 0; })[0]; if (!arm) return;
+  var len = 0.4, mesh = arm.children[0];
+  if (mesh && mesh.geometry) { mesh.geometry.computeBoundingBox(); len = -mesh.geometry.boundingBox.min.y; }
+  this.glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: mascotGlowTex(), color: 0xfff0c8, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+  this.glow.scale.set(0.6, 0.6, 1); this.glow.position.set(0, -len, 0.02); this.glow.visible = false; arm.add(this.glow);
+};
 Mascot.prototype.signature = function () { this.sigT = 0; };
 Mascot.prototype.posing = function () { return this.sigT >= 0; };
 function mascotDamp(c, t, k, dt) { return c + (t - c) * (1 - Math.exp(-k * dt)); }
@@ -119,7 +142,7 @@ Mascot.prototype.update = function (dt, beat) {
   /* 기본 자세(a = +x팔, b = -x팔; 값이 클수록 바깥·위로) */
   var P = { a: R, b: R, ax: 0, bx: 0, y: Math.sin(t * 2) * 0.006, tilt: 0 };
   if (this.state === 'cheer') {
-    /* 응원단장 으쓱이와 같은 8박 율동 */
+    /* 응원단장 민주와 같은 8박 율동 */
     var bb = beat + this.beatOff, bf = Math.floor(bb), bi = ((bf % 8) + 8) % 8, f = bb - bf;
     P.y = Math.abs(Math.sin(Math.PI * bb)) * 0.05; k = 18;
     if (bi < 2) { P.a = 2.6; P.ax = -0.2; P.b = 0.32; P.tilt = -0.07; }
@@ -127,6 +150,17 @@ Mascot.prototype.update = function (dt, beat) {
     else if (bi < 6) { var sw = Math.sin(Math.PI * (bb - 4) * 0.5 + Math.PI / 2); P.a = 2.7; P.b = 2.7; P.tilt = sw * 0.14; }
     else { var cl = Math.max(0, Math.sin(Math.PI * 2 * f)); P.ax = P.bx = -1.3; P.a = P.b = 0.3 - 0.24 * cl; }
   }
+  if (this.state === 'light') {
+    /* 폰 불빛을 든 손을 위로, 으쓱이들과 같은 박자로 좌우 (여난부두: YEONAN.SWAY초에 한 번) */
+    var lt = (typeof T !== 'undefined' && typeof YEONAN !== 'undefined') ? T / YEONAN.SWAY : this.t / 2.4;
+    var lw = Math.sin(Math.PI * 2 * lt + this.beatOff * 3);
+    P.a = 2.55 + lw * 0.4; P.ax = -0.1; P.b = R; P.tilt = lw * 0.08; k = 9;
+  } else if (this.state !== 'cheer' && this.walking) {
+    /* 걷는 중: 통통 뛰며 팔을 살짝 흔들어요 */
+    var ws = Math.sin(t * 9);
+    P.y = Math.abs(Math.cos(t * 9)) * 0.05; P.tilt = ws * 0.06; P.a = R + ws * 0.18; P.b = R - ws * 0.18; k = 14;
+  }
+  if (this.glow) this.glow.visible = this.state === 'light';
   /* 시그니처 포즈가 위에 덮어씀 */
   var shake = 0, S = MASCOT_SIG;
   if (this.sigT >= 0) {
