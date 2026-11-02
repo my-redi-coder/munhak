@@ -8,7 +8,7 @@
      · 바깥(ND.out): userData.dimOut이 붙은 것 — 바깥 땅(field.js), 언덕·조명탑·벚나무(landmarks.js), 흙길·나무 띠(outskirts.js)
    - 여난부두 암전은 이 위에 더해져요(조명 자체를 80% 낮춤). 실내 포토존이 dnOverride(0)을 부르면 n=0이라 원래 밝기로 돌아와요.
    - 새 구역을 어둡게 하려면: 블록이면 cfg.out을 안 붙이면 되고, 그 밖의 덩어리는 mesh.userData.dimOut=true. 이 파일은 crowd.js·daynight.js 다음에 불려야 해요. */
-var ND={zone:.85,out:.6,mats:[],crowd:null,last:-1};
+var ND={zone:.75,out:.6,mats:[],crowd:null,last:-1};
 
 (function(){
   var terrM=MVC.clone(),outM=MVC.clone();/* 정점 색 재질은 공용(MVC)이라, 어둡게 할 것만 복사본을 따로 써요 */
