@@ -34,3 +34,40 @@ function ssPan(dx,dy){
   SS.T.x+=-cs*dx*s-sn*dy*sy;
   SS.T.z+=sn*dx*s-cs*dy*sy;
   ssClamp();ssSync();
+}
+function ssClamp(){var L=SS.LIM;SS.T.x=clamp(SS.T.x,-L.x,L.x);SS.T.z=clamp(SS.T.z,L.zMin,L.zMax);SS.T.y=clamp(SS.T.y,0,L.yMax)}
+
+/* 두 번 톡: 350ms 안에, 손가락이 40px 안쪽에서 다시 누르면 */
+function ssTap(cx,cy){
+  var now=performance.now();
+  if(now-SSTAP.t<350&&Math.hypot(cx-SSTAP.x,cy-SSTAP.y)<40){SSTAP.t=0;ssFocus(cx,cy)}
+  else{SSTAP.t=now;SSTAP.x=cx;SSTAP.y=cy}
+}
+/* 누른 곳에 실제로 있는 것(포스터·관중석 등)을 찾아 그 자리를 중심으로. 하늘·구름·빛 같은 건 건너뜀 */
+function ssFocus(cx,cy){
+  ssRay.setFromCamera(new THREE.Vector2(cx/innerWidth*2-1,-(cy/innerHeight)*2+1),camera);
+  var hits=ssRay.intersectObjects(scene.children,true),p=null;
+  for(var i=0;i<hits.length;i++){
+    var o=hits[i].object;if(!o.isMesh)continue;
+    var vis=true,q=o;while(q){if(!q.visible){vis=false;break}q=q.parent}if(!vis)continue;
+    var m=Array.isArray(o.material)?o.material[0]:o.material;
+    if(!m||m.side===THREE.BackSide||(m.transparent&&m.opacity<.9))continue;
+    p=hits[i].point;break;
+  }
+  if(!p){p=new THREE.Vector3();if(!ssRay.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),0),p))return}
+  SS.T.copy(p);SS.dist=clamp(SS.dist*.55,SS.MIN,SS.MAX);ssClamp();ssSync();sfx('tap');
+}
+
+/* '가운데로' 버튼 — 중심이 처음 자리에서 멀어졌을 때만 보여요 */
+function ssBtn(){
+  if(SS.btn)return SS.btn;
+  var b=document.createElement('button');b.type='button';b.textContent='가운데로';
+  b.style.cssText='position:fixed;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;padding:9px 15px;border:0;border-radius:999px;background:rgba(241,239,229,.94);color:#454a3c;font-size:14px;font-weight:600;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.2);display:none;cursor:pointer';
+  b.addEventListener('click',function(e){e.stopPropagation();ssHome()});
+  document.body.appendChild(b);SS.btn=b;return b;
+}
+function ssHome(){SS.T.copy(SS.T0);SS.dist=SS.D0;ssSync()}
+function ssSync(){
+  var b=ssBtn(),d=Math.hypot(SS.T.x-SS.T0.x,SS.T.z-SS.T0.z)+Math.abs(SS.T.y-SS.T0.y);
+  b.style.display=SS.on&&d>3?'block':'none';
+}
