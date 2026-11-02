@@ -1,9 +1,12 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 그린존 (3루 외야 돗자리 잔디 언덕) =================
    좌석 안내도 기준: 3루 외야 관중석(114B~111B) 뒤쪽, 왼쪽 폴 근처부터 좌중간까지 이어지는 잔디 언덕.
    옆에 초가정자, 폴 쪽 끝에 모래놀이장. 각도 a는 홈에서 본 방향(0=중앙, 음수=3루 쪽). */
 var GZ={a0:-46*Math.PI/180,a1:-21*Math.PI/180,r0:123,r1:141};
 function gzY(r){return 5.9+(r-GZ.r0)/(GZ.r1-GZ.r0)*1.3}
-function gzP(a,r){return [Math.sin(a)*r,-Math.cos(a)*r]}
+/* (2026-11-02) 그린존 전체를 담장 곡선을 따라 앞뒤로 밀어요(앞 옹벽이 외야석 뒤끝에 붙게). 크기·장식은 그대로 */
+function gzD(a){return fenceR(a)+16.5-GZ.r0}
+function gzP(a,r){r+=gzD(a);return [Math.sin(a)*r,-Math.cos(a)*r]}
 (function(){
   // 잔디 언덕 (부채꼴, 바깥으로 살짝 높아짐)
   var NA=40,NR=8,P=[],UV=[],I=[];
@@ -13,13 +16,14 @@ function gzP(a,r){return [Math.sin(a)*r,-Math.cos(a)*r]}
   var tex=canvasTex(512,128,function(x,w,h){x.fillStyle='#7fb357';x.fillRect(0,0,w,h);for(var s=0;s<16;s++){if(s%2)continue;x.fillStyle='rgba(255,255,255,.07)';x.fillRect(s*w/16,0,w/16,h)}for(s=0;s<500;s++){x.fillStyle='rgba(40,80,20,.08)';x.fillRect(rnd(0,w),rnd(0,h),2,2)}});
   var hill=new THREE.Mesh(g,new THREE.MeshLambertMaterial({map:tex,side:THREE.DoubleSide}));scene.add(hill);
   // 앞쪽 옹벽 + 난간
-  var th0=Math.PI-GZ.a1,tl=GZ.a1-GZ.a0,h=gzY(GZ.r0);
-  var wall=new THREE.Mesh(new THREE.CylinderGeometry(GZ.r0,GZ.r0,h,40,1,true,th0,tl),new THREE.MeshLambertMaterial({color:0x2c6a47,side:THREE.DoubleSide}));wall.position.y=h/2;scene.add(wall);
-  var back=new THREE.Mesh(new THREE.CylinderGeometry(GZ.r1,GZ.r1,gzY(GZ.r1),40,1,true,th0,tl),new THREE.MeshLambertMaterial({color:0x6f8a5a,side:THREE.DoubleSide}));back.position.y=gzY(GZ.r1)/2;scene.add(back);
-  var parts=[];
-  for(var a=GZ.a0;a<GZ.a1;a+=.012){var p=gzP(a,GZ.r0+.3);parts.push({g:Box(.08,1,.08),c:0xf4f2ec,p:[p[0],h+.5,p[1]]})}
-  var nRail=Math.round((GZ.a1-GZ.a0)/.04);for(i=0;i<nRail;i++){var am=GZ.a0+(i+.5)*(GZ.a1-GZ.a0)/nRail,pm=gzP(am,GZ.r0+.3),len=GZ.r0*(GZ.a1-GZ.a0)/nRail+.05;parts.push({g:Box(len,.08,.08),c:0xf4f2ec,p:[pm[0],h+1,pm[1]],r:[0,-am,0]})}
-  // 뒤쪽 나무
+  var h=gzY(GZ.r0);
+function gzWall(r,hh,color){var P2=[],I2=[];for(var i2=0;i2<=NA;i2++){var a2=GZ.a0+(GZ.a1-GZ.a0)*i2/NA,p2=gzP(a2,r);P2.push(p2[0],0,p2[1],p2[0],hh,p2[1])}for(i2=0;i2<NA;i2++){var k2=i2*2;I2.push(k2,k2+1,k2+2,k2+1,k2+3,k2+2)}var gw=new THREE.BufferGeometry();gw.setAttribute('position',new THREE.Float32BufferAttribute(P2,3));gw.setIndex(I2);gw.computeVertexNormals();scene.add(new THREE.Mesh(gw,new THREE.MeshLambertMaterial({color:color,side:THREE.DoubleSide})))}
+gzWall(GZ.r0,h,0x2c6a47);gzWall(GZ.r1,gzY(GZ.r1),0x6f8a5a);
+var parts=[];
+for(var a=GZ.a0;a<GZ.a1;a+=.012){var p=gzP(a,GZ.r0+.3);parts.push({g:Box(.08,1,.08),c:0xf4f2ec,p:[p[0],h+.5,p[1]]})}
+var nRail=Math.round((GZ.a1-GZ.a0)/.04);for(i=0;i<nRail;i++){var q0=gzP(GZ.a0+i*(GZ.a1-GZ.a0)/nRail,GZ.r0+.3),q1=gzP(GZ.a0+(i+1)*(GZ.a1-GZ.a0)/nRail,GZ.r0+.3),len=Math.hypot(q1[0]-q0[0],q1[1]-q0[1])+.05;parts.push({g:Box(len,.08,.08),c:0xf4f2ec,p:[(q0[0]+q1[0])/2,h+1,(q0[1]+q1[1])/2],r:[0,-Math.atan2(q1[1]-q0[1],q1[0]-q0[0]),0]})}
+
+// 뒤쪽 나무
   for(i=0;i<26;i++){a=rnd(GZ.a0,GZ.a1);var r=rnd(GZ.r1+1,GZ.r1+6);p=gzP(a,r);parts.push({g:Cyl(.4,.55,5,6),c:0x6b5444,p:[p[0],gzY(GZ.r1)+2.5,p[1]]});parts.push({g:new THREE.SphereGeometry(rnd(2.8,3.8),10,8),c:pick([0x5f9a4a,0x6faa55,0xf3b3c6,0x4f8a3e]),p:[p[0],gzY(GZ.r1)+6.2,p[1]],s:[1,1.1,1]})}
   // 모래놀이장 (폴 쪽 끝)
   var sa=-43.6*Math.PI/180,sr=127.5;p=gzP(sa,sr);var sy=gzY(sr);
