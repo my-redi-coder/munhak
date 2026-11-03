@@ -78,8 +78,8 @@ function Char(o){
   add(hg,new THREE.Mesh(GEO.head,M.skin));
   this.face=add(hg,new THREE.Mesh(GEO.face,FACE.normal));this.faceKind='normal';
   add(hg,new THREE.Mesh(GEO.hair,M.hair));
-  if(o.hat)uniHat(this,true);/* 모자: 내 으쓱이는 입장 준비에서 고르고, 관객은 HAT_RATE만큼 랜덤 */
   this.jersey=new THREE.Group();this.jersey.position.set(0,1.64,-.12);this.jersey.visible=false;body.add(this.jersey);
+  if(o.hat)uniHat(this,true);/* 모자: 내 으쓱이는 입장 준비에서 고르고, 관객은 HAT_RATE만큼 랜덤 (판 높이를 같이 맞추려고 jersey 뒤에서 부름) */
   this.jGeo=this.player?GEO.jersey.clone():GEO.jersey;
   this.jMat=new THREE.MeshLambertMaterial({transparent:true,alphaTest:.3,side:THREE.FrontSide});
   var j1=new THREE.Mesh(this.jGeo,this.jMat),j2=new THREE.Mesh(this.jGeo,this.jMat);j2.rotation.y=Math.PI;this.jersey.add(j1);this.jersey.add(j2);
