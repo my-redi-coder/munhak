@@ -78,7 +78,7 @@ function Char(o){
   add(hg,new THREE.Mesh(GEO.head,M.skin));
   this.face=add(hg,new THREE.Mesh(GEO.face,FACE.normal));this.faceKind='normal';
   add(hg,new THREE.Mesh(GEO.hair,M.hair));
-  this.jersey=new THREE.Group();this.jersey.position.set(0,1.64,-.12);this.jersey.visible=false;body.add(this.jersey);
+  this.jersey=new THREE.Group();this.jersey.position.set(0,1.82,-.12);/* (작은 패치 T) 유니폼 판 높이 1.64 → 1.82: 모자 유무와 상관없이 같은 높이. 숫자는 머리·모자 위로 다 보이고 아랫단만 살짝 머리에 걸침 */this.jersey.visible=false;body.add(this.jersey);
   if(o.hat)uniHat(this,true);/* 모자: 내 으쓱이는 입장 준비에서 고르고, 관객은 HAT_RATE만큼 랜덤 (판 높이를 같이 맞추려고 jersey 뒤에서 부름) */
   this.jGeo=this.player?GEO.jersey.clone():GEO.jersey;
   this.jMat=new THREE.MeshLambertMaterial({transparent:true,alphaTest:.3,side:THREE.FrontSide});
