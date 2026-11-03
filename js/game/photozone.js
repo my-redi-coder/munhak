@@ -32,7 +32,7 @@ function pzStart(k){
     if(!S.g){S.build();scene.add(S.g)}
     if(PZ_CFG[k].indoor)dnOverride(0);/* 실내 포토존은 밤 경기여도 낮 조명 그대로 (world/daynight.js) */
     PZ.on=true;PZ.key=k;PZ.set=S;S.g.visible=true;PZ.pan=0;PZ.zoom=1;PZ.hidden=false;PZ.grab=false;
-    PZ.ch=new Char({name:myName(),uni:ME.uni,backName:ME.backName,backNum:ME.backNum});
+    PZ.ch=new Char({name:myName(),uni:ME.uni,backName:ME.backName,backNum:ME.backNum,hat:ME.hat});
     S.g.add(PZ.ch.root);PZ.ch.root.position.set(S.startX,0,S.standZ);PZ.ch.root.rotation.y=0;PZ.ch.mode='stand';
     pzPose(S.pose);
     document.body.classList.add('pz');setStatus(null);pzUIOpen(k);pzWinMeasure();

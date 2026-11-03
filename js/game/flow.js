@@ -39,6 +39,6 @@ $('again').onclick=function(){
 function startSetup(){
   phase='setup1';$('setup').hidden=false;$('step1').hidden=false;$('step2').hidden=true;
   $('meName').textContent=myName();$('inName').value=ME.backName;$('inNum').value=ME.backNum;
-  buildSwatches();buildZoneList($('zoneList'));placeForSetup();
+  buildSwatches();buildDeco();buildZoneList($('zoneList'));placeForSetup();
   cam.yaw=player.root.rotation.y+.5;cam.dist=3.9;cam.pitch=.12;cam.auto=1;snapCam();
 }
