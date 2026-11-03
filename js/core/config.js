@@ -45,6 +45,8 @@ var TALK={
 var ME={adj:pick(ADJ),uni:pick(UKEYS),backName:store.get('backName',''),backNum:store.get('backNum',''),zone:store.get('zone','ussk'),hat:store.get('hat',false)};
 /* (작은 패치 R) 관객 으쓱이 중 모자 쓴 비율. 내 으쓱이는 입장 준비에서 직접 고름(ME.hat) */
 var HAT_RATE=.4;
+/* (작은 패치 S) 반응형 관객(얼굴·대사가 있는 가까운 으쓱이) 수 22 → 33 */
+var NPC_COUNT=33;
 if(!ZONES[ME.zone])ME.zone='ussk';
 function myName(){return ME.adj+' 으쓱이'}
 
