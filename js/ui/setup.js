@@ -5,6 +5,13 @@ function buildSwatches(){
   UKEYS.forEach(function(k){var b=document.createElement('button');b.className='sw';b.setAttribute('role','radio');b.setAttribute('aria-checked',k===ME.uni);b.innerHTML='<i style="background:'+UNI[k].css+'"></i>'+UNI[k].label;
     b.onclick=function(){ME.uni=k;player.setUniform(k);buildSwatches();sfx('tap')};box.appendChild(b)});
 }
+/* (작은 패치 R) 꾸미기: 모자 쓰기 체크박스. 고른 값은 저장돼서 다음에 와도 그대로예요 */
+function buildDeco(){
+  var box=$('decos');box.innerHTML='';
+  var b=document.createElement('button');b.className='sw';b.setAttribute('role','checkbox');b.setAttribute('aria-checked',!!ME.hat);b.textContent='모자 쓰기';
+  b.onclick=function(){ME.hat=!ME.hat;player.setHat(ME.hat);store.set('hat',ME.hat);buildDeco();sfx('tap')};
+  box.appendChild(b);
+}
 /* 입장 준비 2단계의 구역 고르기. (게임 안에서 옮기는 건 '내 위치' 메뉴, ui/places.js) */
 function buildZoneList(el){
   el.innerHTML='';
