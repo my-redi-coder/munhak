@@ -3,9 +3,9 @@
 /* ================= data ================= */
 var ADJ=['기쁜','화난','외로운','신난','설레는','졸린','배고픈','들뜬','씩씩한','수줍은','억울한','느긋한','두근거리는','목이 쉰','행복한','초조한','당당한','뿌듯한','감격한','지친'];
 var UNI={
-  red:{label:'빨강',hex:0xc8102e,css:'#c8102e',ink:'#ffffff',trim:'#f1d9a6'},
-  green:{label:'초록',hex:0x1d6a46,css:'#1d6a46',ink:'#ffffff',trim:'#e9c45c'},
-  white:{label:'흰색',hex:0xf6f4ed,css:'#f6f4ed',ink:'#c8102e',trim:'#1d2c4f'}
+  red:{label:'빨강',hex:0xc8102e,css:'#c8102e',ink:'#ffffff',trim:'#f1d9a6',pipe:0xffffff,cap:0xc8102e},
+  green:{label:'초록',hex:0x1d6a46,css:'#1d6a46',ink:'#ffffff',trim:'#e9c45c',pipe:0xffffff,cap:0x1d6a46},
+  white:{label:'흰색',hex:0xf6f4ed,css:'#f6f4ed',ink:'#c8102e',trim:'#1d2c4f',pipe:0xc8102e,cap:0xc8102e}
 };
 var UKEYS=['red','green','white'];
 var SKIN=0xffdcc4,HAIR=0x3b2a22,PANTS=0xf2f0e9,SHOE=0x34343a,TEE=0xf3f1ea;
@@ -42,7 +42,9 @@ var TALK={
   }
 };
 
-var ME={adj:pick(ADJ),uni:pick(UKEYS),backName:store.get('backName',''),backNum:store.get('backNum',''),zone:store.get('zone','ussk')};
+var ME={adj:pick(ADJ),uni:pick(UKEYS),backName:store.get('backName',''),backNum:store.get('backNum',''),zone:store.get('zone','ussk'),hat:store.get('hat',false)};
+/* (작은 패치 R) 관객 으쓱이 중 모자 쓴 비율. 내 으쓱이는 입장 준비에서 직접 고름(ME.hat) */
+var HAT_RATE=.4;
 if(!ZONES[ME.zone])ME.zone='ussk';
 function myName(){return ME.adj+' 으쓱이'}
 
