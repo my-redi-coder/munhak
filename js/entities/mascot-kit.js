@@ -4,6 +4,7 @@
    쓰는 법: var m=makeRedi({uni:'red'}); scene.add(m.root); 매 프레임 m.update(dt,beat);
             m.setUniform('white'); m.pose('cheer'|'idle'|'light'); m.signature();
             m.walk(true|false)  ← 걷는 중 몸짓(통통 + 팔 살짝). pose('light') = 폰 불빛 들고 좌우로(여난부두)
+            (작은 패치 R) 배 L은 entities/uniform-kit.js가 같이 있을 때 그려져요
    생김새 규칙은 docs/MASCOTS.md */
 
 /* 유니폼 색 — core/config.js의 UNI와 같은 값(있으면 그걸 씀) */
@@ -18,6 +19,24 @@ function mascotUni(k) {
   return u;
 }
 var MASCOT_FONT = '"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif';
+/* (작은 패치 R) 마스코트 키 배율: 으쓱이(머리까지 약 1.6)보다 커야 해서 다리를 붙인 기본 크기의 1.2배 */
+var MASCOT_GROW = 1.2;
+/* 다리: 으쓱이와 똑같은 흰 바지 + 빨간 양말 + 신발(core/config.js의 PANTS·SHOE가 있으면 그 색). 몸은 그만큼 들어 올려요 */
+var MASCOT_LEG = { lift: 0.41 };   /* 유니폼 아랫단이 서는 높이(다리 윗끝 .40에 맞춤) */
+var MASCOT_LEGGEO = null;
+function mascotLegs(m, jerseyYBot) {
+  if (!MASCOT_LEGGEO) MASCOT_LEGGEO = { pants: new THREE.CylinderGeometry(0.09, 0.085, 0.25, 10), sock: new THREE.CylinderGeometry(0.072, 0.07, 0.08, 10), shoe: new THREE.BoxGeometry(0.15, 0.09, 0.22) };
+  var G = MASCOT_LEGGEO;
+  var pants = mkLambert(typeof PANTS !== 'undefined' ? PANTS : 0xf2f0e9), sock = mkLambert(0xc8102e), shoe = mkLambert(typeof SHOE !== 'undefined' ? SHOE : 0x34343a);
+  var up = new THREE.Group(); up.position.y = MASCOT_LEG.lift - jerseyYBot;
+  m.root.remove(m.body); up.add(m.body); m.root.add(up);
+  [1, -1].forEach(function (s) {
+    var g = new THREE.Group(); g.position.set(0.11 * s, 0.4, 0); m.root.add(g);
+    m.add(g, new THREE.Mesh(G.pants, pants)).position.y = -0.125;
+    m.add(g, new THREE.Mesh(G.sock, sock)).position.y = -0.29;
+    m.add(g, new THREE.Mesh(G.shoe, shoe)).position.set(0, -0.355, 0.035);
+  });
+}
 var MASCOT_REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 /* 시그니처 포즈 시간표(초): 팔 올리기 → 덜덜덜 → 팔 내리기 */
@@ -50,7 +69,7 @@ function mascotCapsule(r, len, seg) {
 
 /* ---------- 유니폼 ----------
    통(원통)에 그림을 감아요. 정면 = 그림의 양 끝(u=0), 등 = 그림 가운데(u=.5).
-   o: { yBot, yTop, rTop, rBot, zs(앞뒤 납작), vDepth(V넥 깊이 비율), vHalf(V넥 반폭, 둘레 비율), stripe(가슴 줄 높이 비율), name, num, seg } */
+   o: { yBot, yTop, rTop, rBot, zs(앞뒤 납작), name, num, seg } (vDepth·vHalf·stripe는 예전 V넥·가슴 줄 값이라 지금은 안 써요) */
 function mascotJerseyTex(uk, o) {
   var u = mascotUni(uk), h = o.yTop - o.yBot, a = (o.rTop + o.rBot) / 2, b = a * o.zs;
   var circ = 2 * Math.PI * Math.sqrt((a * a + b * b) / 2);
@@ -59,15 +78,9 @@ function mascotJerseyTex(uk, o) {
   var x = cv.getContext('2d');
   x.fillStyle = u.css; x.fillRect(0, 0, W, H);
   var trim = uk === 'white' ? '#c8102e' : '#ffffff';
-  /* 가슴 흰 줄: 앞쪽 반 바퀴만 */
-  var sy = o.stripe * H, st = Math.max(6, H * 0.035);
-  x.fillStyle = trim; x.fillRect(0, sy - st / 2, W * 0.25, st); x.fillRect(W * 0.75, sy - st / 2, W * 0.25, st);
-  /* V넥(흰 테두리 선) — 정면이 그림 양 끝이라 두 번 그림 */
-  x.strokeStyle = trim; x.lineWidth = Math.max(7, H * 0.035); x.lineJoin = 'miter'; x.lineCap = 'butt';
-  [0, W].forEach(function (fx) {
-    var vw = W * o.vHalf;
-    x.beginPath(); x.moveTo(fx - vw, -4); x.lineTo(fx, o.vDepth * H); x.lineTo(fx + vw, -4); x.stroke();
-  });
+  /* (작은 패치 R) 가슴 줄·V넥은 없애고, 으쓱이와 똑같이 배 한가운데에 대문자 L. 정면이 그림 양 끝이라 두 번 그림.
+     L 그리기는 entities/uniform-kit.js(uniDrawL)가 있을 때만 해요. o.stripe·vDepth·vHalf는 더 쓰지 않아요 */
+  if (typeof uniDrawL === 'function') [0, W].forEach(function (fx) { uniDrawL(x, fx, H * 0.5, H * 0.42, u.ink); });
   /* 등판: 위에 이름, 아래 큰 V6 */
   x.fillStyle = u.ink; x.textAlign = 'center'; x.textBaseline = 'middle';
   if (o.name) { x.font = '700 ' + Math.round(H * 0.16) + 'px ' + MASCOT_FONT; x.fillText(o.name, W / 2, H * 0.24); }

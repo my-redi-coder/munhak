@@ -2,8 +2,8 @@
 /* ================= 래디: 진회색 진돗개 마스코트 =================
    필요: js/entities/mascot-kit.js
    makeRedi({uni:'red'|'green'|'white', detail:'full'|'lite', scale:1})
-   키 1.35(귀 끝까지). 발바닥이 y=0, 정면이 +z.
-   꼭 지킬 것: 뾰족한 세모 귀, 진회색 털, 까만 굵은 눈썹·코, 흰자 있는 동그란 눈, 입 대신 작은 분홍 혀, 꼬리 없음 */
+   키: 설계 1.35(귀 끝까지) + 다리 + MASCOT_GROW 1.2배 ≈ 2.0. 발바닥이 y=0, 정면이 +z.
+   꼭 지킬 것: 뾰족한 세모 귀, 진회색 털, 까만 굵은 눈썹·코, 흰자 있는 동그란 눈, 입 대신 작은 분홍 혀, 꼬리 없음, 으쓱이와 같은 흰 다리 */
 var REDI_DESIGN = {
   fur: 0x3a3b40,      /* 진회색 털 */
   earIn: 0x5a5b63,    /* 귀 안쪽(조금 밝게) */
@@ -18,14 +18,14 @@ var REDI_DESIGN = {
   muzzle: { y: 0.79, x: 0.058, s: [0.084, 0.064, 0.066], smile: 0.36, out: 0.045, dots: 0x2a2b2f },
   chin: { y: 0.71, s: [0.075, 0.036, 0.055] },
   nose: { y: 0.843, s: [0.052, 0.032, 0.03] },
-  feet: { x: 0.11, y: 0.05, s: [0.105, 0.05, 0.085] },
+  /* feet(납작한 타원 발)은 (작은 패치 R)에서 으쓱이와 같은 흰 다리로 바뀌어 없앴어요 */
   arm: { x: 0.27, y: 0.52, r: 0.05, len: 0.40 },
   jersey: { yBot: 0.10, yTop: 0.60, rTop: 0.28, rBot: 0.31, zs: 0.8, vDepth: 0.28, vHalf: 0.045, stripe: 0.59 }
 };
 
 function makeRedi(o) {
   o = o || {}; var D = REDI_DESIGN, full = (o.detail || 'full') === 'full';
-  var m = new Mascot({ name: '래디', uni: o.uni, detail: o.detail, scale: o.scale, rest: 0.42 });
+  var m = new Mascot({ name: '래디', uni: o.uni, detail: o.detail, scale: (o.scale || 1) * MASCOT_GROW, rest: 0.42 });
   var fur = mkLambert(D.fur), ink = mkShiny(D.ink, 60), seg = full ? 32 : 18;
 
   /* 몸: 유니폼 + 어깨 덮개(유니폼 색) */
@@ -33,12 +33,6 @@ function makeRedi(o) {
   var cap = mkLambert(mascotUni(m.uk).hex); m.uniMats = [cap];
   var sh = m.add(m.body, new THREE.Mesh(new THREE.SphereGeometry(D.jersey.rTop, seg, 10, 0, Math.PI * 2, 0, Math.PI / 2), cap));
   sh.position.y = D.jersey.yTop - 0.01; sh.scale.set(1, 0.3, D.jersey.zs);
-
-  /* 발 */
-  [1, -1].forEach(function (s) {
-    var f = m.add(m.body, new THREE.Mesh(new THREE.SphereGeometry(1, 16, 10), fur));
-    f.scale.set(D.feet.s[0], D.feet.s[1], D.feet.s[2]); f.position.set(D.feet.x * s, D.feet.y, 0.03);
-  });
 
   /* 팔 */
   var armGeo = mascotCapsule(D.arm.r, D.arm.len, full ? 6 : 4);
@@ -113,5 +107,6 @@ function makeRedi(o) {
   nose.scale.set(D.nose.s[0], D.nose.s[1], D.nose.s[2]); nose.position.set(0, D.nose.y, padFront - 0.012);
 
   m.setUniform(m.uk);
+  mascotLegs(m, D.jersey.yBot);   /* (작은 패치 R) 으쓱이와 같은 흰 다리 — 몸을 그만큼 들어 올림 */
   return m;
 }
