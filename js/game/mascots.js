@@ -20,7 +20,8 @@ var MASCOT_CFG = {
   show: [[1, 1], [1, 0], [0, 1]],
   pop: 0.35,        /* 나타날 때 커지는 시간(초) */
   /* 관중석 걷기: 가운데 통로(위아래) + 맨 앞 통로(좌우)만 다녀요 */
-  walk: { speed: 1.05, pause: [1.5, 4], front: -0.75, toPlayer: 0.35, sep: 0.75 },
+  /* (작은 패치 Q) toPlayer: 내 쪽으로 걸어올 확률 35→10%. keep: 나와 이만큼(m)은 늘 띄워요. feet: 발판 높이를 잴 때 몸 반지름(계단 턱에 파묻히지 않게) */
+  walk: { speed: 1.05, pause: [1.5, 4], front: -0.75, toPlayer: 0.1, keep: 1.6, feet: 0.38, sep: 0.75 },
   greet: { dist: 1.9, hold: 1.3, cool: 14, text: '인사하기' },
   /* 지나갈 때 근처 관중 반응: 2~3명이 말풍선, 가끔 한 명이 유니폼 흔들기 */
   react: { every: [2.5, 4.5], radius: 2.8, max: 3, cool: 9, wave: 0.25, ms: 1900 },
@@ -64,8 +65,12 @@ function mascotPlace(where, pop) {
       stageG.add(m.root); m.root.position.set(i ? -C.x : C.x, C.y, 0); m.root.rotation.y = m.baseRot;
     } else {
       /* 내 구역 통로 입구(맨 뒤 가운데)에서 나타나요 */
-      var z = curBlock.R * RD - 0.95;
-      curBlock.g.add(m.root); m.root.position.set(i ? -0.25 : 0.25, curBlock.groundH(z), z); m.root.rotation.y = Math.PI;
+      var z = curBlock.R * RD - 0.95, sx = i ? -0.25 : 0.25, K = C.walk.keep;
+      if (typeof player !== 'undefined' && player) {   /* (작은 패치 Q) 내가 입구 근처에 있으면 그 앞(keep 거리)에 나타나요 */
+        var pq = player.root.position, ddx = sx - pq.x;
+        if (Math.hypot(ddx, z - pq.z) < K) z = clamp(pq.z - Math.sqrt(Math.max(0, K * K - ddx * ddx)), C.walk.front, z);
+      }
+      curBlock.g.add(m.root); m.root.position.set(sx, curBlock.groundH(z), z); m.root.rotation.y = Math.PI;
     }
     s.pop = pop ? 0 : 1; m.root.scale.setScalar(m.baseScale * (pop ? 0.001 : 1));
   });
@@ -80,18 +85,40 @@ function mascotPickPath(m, s) {
   var W = MASCOT_CFG.walk, b = curBlock, p = m.root.position, pp = player.root.position;
   var zf = W.front, zE = b.R * RD - 0.95, lim = b.W / 2 - 0.6;
   var onCenter = Math.abs(p.x) < 0.3, onFront = Math.abs(p.z - zf) < 0.3, toP = Math.random() < W.toPlayer;
-  var front = Math.random() < (pp.z < 5 ? 0.5 : 0.15), path = [];
+  var front = Math.random() < (pp.z < 5 ? 0.5 : 0.15), path = [], from, last;
   if (front) {
     var tx = toP ? clamp(pp.x, -lim, lim) : rnd(-lim, lim);
     if (!onFront) path.push({ x: 0, z: zf });
-    path.push({ x: tx, z: zf });
+    path.push({ x: tx, z: zf }); from = onFront ? p : { x: 0, z: zf };
   } else {
     var tz = toP ? clamp(pp.z, zf, zE) : rnd(zf, zE);
+    if (tz >= 0) tz = Math.min(zE, (Math.floor(tz / RD) + 0.5) * RD);   /* 계단 한 칸의 가운데에 서요(턱에 걸치지 않게) */
     if (!onCenter) path.push({ x: 0, z: zf });
-    path.push({ x: 0, z: tz });
+    path.push({ x: 0, z: tz }); from = onCenter ? p : { x: 0, z: zf };
+  }
+  /* (작은 패치 Q) 마지막 걸음이 나와 keep 안으로 들어가면 그 앞에서 멈추게 줄여요. 그래도 안 되면 이번엔 안 걸어요 */
+  if (!mascotKeepAway(from, path[path.length - 1], front ? 'x' : 'z', pp, front ? -lim : zf, front ? lim : zE)) {
+    s.path = []; s.st = 'idle'; s.wait = rnd(W.pause[0], W.pause[1]); return;
   }
   s.path = path; s.st = 'walk';
 }
+/* from→last 걸음(axis 방향 직선)이 나(pp) 둘레 keep 원을 지나지 않게 last를 줄이거나 멀어지는 쪽으로 바꿔요. 못 걸으면 false */
+function mascotKeepAway(from, last, axis, pp, lo, hi) {
+  var K = MASCOT_CFG.walk.keep, A = axis === 'x', c0 = A ? from.x : from.z, c1 = A ? last.x : last.z, base = A ? pp.x : pp.z;
+  var oth = A ? last.z - pp.z : last.x - pp.x;
+  if (Math.abs(oth) >= K) return true;                       /* 길이 나와 keep 이상 떨어져 있어요 */
+  var h = Math.sqrt(K * K - oth * oth), a = base - h, b = base + h;
+  if (c0 > a && c0 < b) c1 = c0 >= base ? Math.max(c1, b) : Math.min(c1, a);   /* 이미 가까우면 멀어지는 쪽으로만 */
+  else if (c0 <= a) c1 = Math.min(c1, a);                    /* 나 앞에서 멈춰요 */
+  else c1 = Math.max(c1, b);
+  c1 = clamp(c1, lo, hi);
+  if (c1 > a + 0.01 && c1 < b - 0.01) return false;
+  if (Math.abs(c1 - c0) < 0.3) return false;
+  if (A) last.x = c1; else last.z = c1;
+  return true;
+}
+/* 발 아래 높이: 앞뒤 몸 반지름 안에서 가장 높은 계단 칸(턱 바로 앞에 서도 한 칸 위 계단에 파묻히지 않게) */
+function mascotGroundH(b, z) { var r = MASCOT_CFG.walk.feet; return Math.max(b.groundH(z - r), b.groundH(z + r)); }
 function mascotWalk(m, s, i, dt) {
   var W = MASCOT_CFG.walk, p = m.root.position, t = s.path[0];
   var dx = t.x - p.x, dz = t.z - p.z, d = Math.hypot(dx, dz);
@@ -103,7 +130,12 @@ function mascotWalk(m, s, i, dt) {
   /* 둘이 부딪히지 않게: 배디가 래디 가까이면 잠깐 기다려요 */
   var o = MASC.list[1 - i], so = MASC.s[1 - i];
   if (i === 1 && so && !so.hidden && Math.hypot(o.root.position.x - p.x, o.root.position.z - p.z) < W.sep) { m.walk(false); return; }
-  var st = Math.min(d, W.speed * dt); p.x += dx / d * st; p.z += dz / d * st; m.walk(true);
+  var st = Math.min(d, W.speed * dt), pp = player.root.position;
+  var nx = p.x + dx / d * st, nz = p.z + dz / d * st, dn = Math.hypot(nx - pp.x, nz - pp.z);
+  if (dn < W.keep && dn < Math.hypot(p.x - pp.x, p.z - pp.z)) {   /* 나와 너무 가까워지면 멈춰요 */
+    s.path = []; s.st = 'idle'; s.wait = rnd(W.pause[0], W.pause[1]); m.walk(false); return;
+  }
+  p.x = nx; p.z = nz; m.walk(true);
   mascotTurnRoot(m.root, Math.atan2(dx, dz), 10, dt);
 }
 /* 지나가는 마스코트에 근처 관중이 반응 */
@@ -120,7 +152,8 @@ function mascotReact(m) {
 }
 function mascotStands(m, s, i, dt, f) {
   var C = MASCOT_CFG, p = m.root.position, pp = player.root.position;
-  p.y = damp(p.y, curBlock.groundH(p.z), 16, dt);
+  var gh = mascotGroundH(curBlock, p.z);
+  p.y = damp(p.y, gh, gh > p.y ? 30 : 16, dt);   /* 올라갈 땐 빨리(턱에 잠깐 파묻히지 않게) */
   /* 이벤트 중: 가만히(여난부두는 폰 불빛), 그라운드 쪽을 봐요 */
   if (f.ev) { m.walk(false); m.pose(f.light ? 'light' : 'idle'); mascotTurnRoot(m.root, Math.PI, 6, dt); return; }
   /* 내가 응원하기 중: 멈춰서 같이 율동 */
@@ -162,7 +195,9 @@ function mascotTick(dt, beat) {
   if (!MASC.list.length) return;
   var C = MASCOT_CFG;
   /* 유니폼 따라 입기 */
-  if (MASC.uk !== ME.uni) { MASC.uk = ME.uni; MASC.list.forEach(function (m) { m.setUniform(ME.uni); }); }
+  if (MASC.uk !== ME.uni) { MASC.uk = ME.uni; MASC.list.forEach(function (m) { m.setUniform(ME.uni); }); npcUsskUni(); }
+  /* (작은 패치 Q) 응원단장 민주도 마스코트처럼 늘 내 유니폼 색 */
+  if (leader && leader.uk !== ME.uni) leader.setUniform(ME.uni);
   var game = phase === 'game', ev = !!EV.on;
   /* 어디에 있을지: 수비 = 내 구역 관중석, 그 밖엔 단상 */
   var where = (game && curBlock && FP.mode === 'defense') ? 'stands' : 'stage';
