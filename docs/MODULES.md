@@ -5,7 +5,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
-| `js/core/config.js` | 119 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, myName, TEAMS, HOME_SIDE … |
+| `js/core/config.js` | 121 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, myName, TEAMS … |
 | `songs/songs.js` | 19 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |
@@ -30,7 +30,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/daynight.js` | 109 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
 | `js/world/nightdim.js` | 50 | ND, ndK, ndApply |
 | `js/entities/character.js` | 137 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
-| `js/entities/uniform-kit.js` | 89 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
+| `js/entities/uniform-kit.js` | 92 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
 | `js/entities/player.js` | 71 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |
 | `js/entities/bpface.js` | 61 | BPF, bpfXY, BPF_INK, bpfTex, bpfMat |
 | `js/entities/mascot-kit.js` | 207 | MASCOT_UNI, mascotUni, MASCOT_FONT, MASCOT_GROW, MASCOT_LEG, MASCOT_LEGGEO, mascotLegs, MASCOT_REDUCED, MASCOT_SIG, mkLambert, mkShiny, mascotOnSphere, mascotOutline, mascotCapsule … |
@@ -40,7 +40,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/audio/songs.js` | 15 | SONG, songPick, songStart, songStop, songPlaying, songBeat |
 | `js/audio/eventsfx.js` | 60 | HORN_VOL, CRACK, evDuck, evReady, evSound, EVCLAP, evClapBuild, evClapStop |
 | `js/audio/evbgm.js` | 29 | EVB, evBgmPlay, evBgmPrime, evBgmGo, evBgmStop, evBgmDuck |
-| `js/game/state.js` | 36 | player, cam, PL, makePlayer, placeForSetup, clearNPCs, spawnNPCs, npcUsskUni, sitChar, standAtSeat, makeLeader |
+| `js/game/state.js` | 63 | player, cam, PL, makePlayer, placeForSetup, clearNPCs, NPC_SPREAD, npcPickSeats, spawnNPCs, npcUsskUni, sitChar, standAtSeat, makeLeader |
 | `js/game/mascots.js` | 229 | MASCOT_CFG, MASC, mascotState, mascotTurnRoot, makeMascots, mascotRoll, mascotPlace, mascotMeshes, mascotTap, mascotPickPath, mascotKeepAway, mascotGroundH, mascotWalk, mascotReact … |
 | `js/ui/feedback.js` | 36 | toastT, toast, labels, addLabel, _p, updateLabels, clearLabels, drawSoundIcon, fmt |
 | `js/ui/setup.js` | 45 | buildSwatches, buildDeco, buildZoneList, syncBack, beaconTex, beacon, drawBeacon, overview, blockCenter, focusZone |
