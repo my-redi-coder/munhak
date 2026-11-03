@@ -5,6 +5,8 @@
    evSound('surf')  파도가 밀려와 부서지는 소리
    evClapBuild(초) / evClapStop()  2스트라이크 때 빨라지는 관중 박수 */
 var HORN_VOL=1.4;  // 뱃고동 크기 (예전 0.34)
+/* 방망이 '딱' 소리 숫자(Hz=높낮이, vol=크기). 더 묵직하게: body·low를 낮추고 lowVol·tail을 올려요. 더 날카롭게: clickHz·click을 올려요 */
+var CRACK={clickHz:2600,click:.5,noiseHz:700,noise:.6,tailHz:380,tail:.5,body:[520,230],bodyVol:.75,bodyDur:.15,low:[170,80],lowVol:.7};
 /* 잠깐 낮추기: 관중 함성과 이벤트 배경음을 sec초 동안 줄였다가 되돌려요 */
 function evDuck(sec){if(!AU.ctx)return;var t=AU.ctx.currentTime,g=AU.crowdG.gain;g.cancelScheduledValues(t);g.setTargetAtTime(.18,t,.12);g.setTargetAtTime(.9,t+sec,.6);if(typeof evBgmDuck==='function')evBgmDuck(sec)}
 function evReady(){return AU.ctx&&AU.on&&AU.ctx.state==='running'}
@@ -16,9 +18,16 @@ function evSound(kind){
     var po=c.createOscillator(),pg=c.createGain();po.type='sine';po.frequency.setValueAtTime(190,t);po.frequency.exponentialRampToValueAtTime(70,t+.12);
     pg.gain.setValueAtTime(.6,t);pg.gain.exponentialRampToValueAtTime(.001,t+.16);po.connect(pg);pg.connect(AU.sfx);po.start(t);po.stop(t+.18);
   }else if(kind==='crack'){
-    noiseHit(t,.06,'highpass',2200,.8,.9,AU.sfx);noiseHit(t,.18,'bandpass',900,1.4,.5,AU.sfx);
-    var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(1900,t);o.frequency.exponentialRampToValueAtTime(700,t+.08);
-    g.gain.setValueAtTime(.35,t);g.gain.exponentialRampToValueAtTime(.001,t+.12);o.connect(g);g.connect(AU.sfx);o.start(t);o.stop(t+.14);
+    /* (작은 패치 P) 묵직한 '딱': 예전엔 높은 소리(1900Hz·2200Hz 이상)뿐이라 '띡'이었어요.
+       나무 방망이 몸통 소리(200~500Hz)와 낮은 '퉁'(100~180Hz)을 더하고 높은 딸깍은 짧게 줄였어요. 숫자는 맨 위 CRACK에서 고쳐요. */
+    var K=CRACK;
+    noiseHit(t,.022,'highpass',K.clickHz,.8,K.click,AU.sfx);   // 맞는 순간 짧은 딸깍
+    noiseHit(t,.11,'bandpass',K.noiseHz,1.3,K.noise,AU.sfx);   // 나무 부딪히는 마른 소리
+    noiseHit(t,.26,'lowpass',K.tailHz,.8,K.tail,AU.sfx);       // 뒤에 남는 낮은 울림
+    var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(K.body[0],t);o.frequency.exponentialRampToValueAtTime(K.body[1],t+.09);
+    g.gain.setValueAtTime(K.bodyVol,t);g.gain.exponentialRampToValueAtTime(.001,t+K.bodyDur);o.connect(g);g.connect(AU.sfx);o.start(t);o.stop(t+K.bodyDur+.02);   // 몸통 '딱'
+    var o2=c.createOscillator(),g2=c.createGain();o2.type='sine';o2.frequency.setValueAtTime(K.low[0],t);o2.frequency.exponentialRampToValueAtTime(K.low[1],t+.2);
+    g2.gain.setValueAtTime(K.lowVol,t);g2.gain.exponentialRampToValueAtTime(.001,t+.22);o2.connect(g2);g2.connect(AU.sfx);o2.start(t);o2.stop(t+.24);   // 낮은 '퉁'(무게감)
   }else if(kind==='horn'){
     /* 휴대폰 스피커는 100Hz 아래가 거의 안 나와서, 낮은 바탕(98Hz) 위에 잘 들리는 배음(196·294Hz)을 두껍게 얹어요.
        압축기로 크게 키우고, 울리는 동안 관중 함성·이벤트 배경음을 잠깐 낮춰요(evDuck). */
