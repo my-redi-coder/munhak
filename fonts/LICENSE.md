@@ -8,6 +8,7 @@
 - Nanum Pen Script: Copyright (c) 2010, NHN Corporation (http://www.nhncorp.com),
 - Nanum Brush Script: Copyright (c) 2010, NHN Corporation (http://www.nhncorp.com),
 - Gaegu: Copyright 2018 The Gaegu Project Authors
+- Alfa Slab One: Copyright 2016 The Alfa Slab One Project Authors (http://www.jmsole.cl) — 글꼴 파일은 넣지 않고, 배 L(대문자 L 하나)의 윤곽만 `js/entities/uniform-kit.js`에 그림 좌표로 옮겨 담았어요
 
 전문: https://openfontlicense.org/open-font-license-official-text/
 
