@@ -3,7 +3,7 @@
    · 담장(field.js의 fenceR, 타원)에서 OF.LIP m 뒤에 '앞 난간 곡선'을 긋고, 폴 쪽(OF.START도)부터 가운데로
      블록을 하나씩 '앞 모서리끼리 맞닿게' 놓아요. 블록은 홈이 아니라 담장 곡선을 정면으로 봐요(실제 구장처럼).
    · 블록 사이 뒤쪽으로 벌어지는 쐐기 틈은 계단으로 메우고, 줄마다 들어가는 만큼 좌석·관중을 앉혀요(보는 풍경, 걷기 X).
-   · 순서: 오른쪽(1루) 바비큐존 → 걷는 외야(ZB.outfield) → 장식 / 왼쪽(3루) 작은 장식 → 현수막(ZB.hog) → 장식 → 장식.
+   · 순서: 오른쪽(1루) 바비큐존 → 걷는 외야(ZB.outfield) → 장식 / 왼쪽(3루) 작은 장식 → 현수막(ZB.hog) → 세탁소 두 칸(ZB.laundry, 2026-11-04) → 장식.
      양쪽 길이를 맞춰 좌우가 거울처럼 같은 곡선에서 끝나요(가운데는 빅보드 앞이라 비움).
    · 걷기·앉기는 블록 안 좌표로만 돌아서, 블록이 돌고 옮겨져도 그대로 따라가요(input.js·movement.js 손대지 않음).
    · 숫자를 바꿀 땐 OF만 고치면 블록·쐐기·바비큐존(bbq.js의 OF.bbq)이 같이 움직여요.
@@ -13,7 +13,7 @@ var OF={
   START:46.5,         // 폴 쪽 첫 칸이 시작하는 각도(도). 폴은 45°
   base:1.6,rows:8,seat:0x6f9d45,
   right:[{t:'bbq',w:24},{t:'walk',cols:18},{t:'decor',cols:18}],
-  left:[{t:'decor',cols:6},{t:'hog',cols:18},{t:'decor',cols:18},{t:'decor',cols:18}],
+  left:[{t:'decor',cols:6},{t:'hog',cols:18},{t:'laundry',cols:18},{t:'laundry',cols:18}],/* 현수막 옆 두 칸 = 세탁소(world/laundry.js). 폴 쪽→가운데 순서라 홈에서 보면 왼쪽 칸이 먼저 */
   bbq:null            // 바비큐존 자리 {x,z,theta} — bbq.js가 읽어요
 };
 function ofFence(p){var r=fenceR(p);return [Math.sin(p)*r,-Math.cos(p)*r]}
@@ -41,6 +41,7 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
     if(s.t==='hog')cfg.empty=function(){return true};
     var b=buildBlock(cfg);
     if(s.t==='walk')ZB.outfield=b;if(s.t==='hog')ZB.hog=b;
+    if(s.t==='laundry')(ZB.laundry=ZB.laundry||[]).push(b);/* [왼쪽 칸(십의 자리), 오른쪽 칸(일의 자리)] — 홈에서 바라본 기준 */
   }
   /* 쐐기: H=맞닿은 앞 모서리, up·un=양쪽 블록이 뒤로 뻗는 방향. 계단 + 뒷벽 + 줄마다 좌석 */
   function wedge(H,up,un){
