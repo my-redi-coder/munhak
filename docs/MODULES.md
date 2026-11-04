@@ -15,8 +15,8 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/bigboard.js` | 87 | BB, bbEq, bbScreenTex, bbPanelTex, boardTick |
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
 | `js/world/kboard.js` | 24 | KB, kbTex, kbAdd, kbTick, kbClear |
-| `js/world/stands.js` | 91 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
-| `js/world/outfield.js` | 73 | OF, ofFence, ofOut, ofLip |
+| `js/world/stands.js` | 93 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
+| `js/world/outfield.js` | 88 | OF, ofFence, ofOut, ofLip |
 | `js/world/greenzone.js` | 63 | GZ, gzY, gzD, gzP, gzWall, parts, nRail |
 | `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
 | `js/world/bbq.js` | 65 | BBQ, bbqSmoke, bbqTick |
