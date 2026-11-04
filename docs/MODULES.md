@@ -16,7 +16,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
 | `js/world/kboard.js` | 24 | KB, kbTex, kbAdd, kbTick, kbClear |
 | `js/world/stands.js` | 91 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
-| `js/world/outfield.js` | 72 | OF, ofFence, ofOut, ofLip |
+| `js/world/outfield.js` | 73 | OF, ofFence, ofOut, ofLip |
 | `js/world/greenzone.js` | 63 | GZ, gzY, gzD, gzP, gzWall, parts, nRail |
 | `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
 | `js/world/bbq.js` | 65 | BBQ, bbqSmoke, bbqTick |
@@ -27,6 +27,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/world/pzone.js` | 146 | PZP, pzPanelDraw, pzDefaultArt, pzIcoGlove, pzIcoTicket, pzIcoBat, pzIcoCap, pzSetPhoto, pzSetLine, PZ_STAGE, PZB, pzTileTex, pzPoolTex, pzBackdropTex … |
 | `js/world/hrboard.js` | 118 | HRB, HRB_TILE, hrDigitMat, HRB_SIDE, hrTile, hrSetTile, hrShield, hrMiles, hrBoard, hrShow, hrSetCount, hrTick |
 | `js/world/crowd.js` | 40 | _m, crowd, crowdSet, crowdFlush |
+| `js/world/laundry.js` | 141 | LDY, LDY_FONT, LDY_GEO, ldyJerseyTex, LDY_FAR, LDY_NEAR, LDYB, ldyFill, ldyOff, ldyOn, LDY_NUM, laundrySet, LDY_T, ldyLod … |
 | `js/world/daynight.js` | 109 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
 | `js/world/nightdim.js` | 50 | ND, ndK, ndApply |
 | `js/entities/character.js` | 137 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
@@ -74,5 +75,5 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/game/movement.js` | 22 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
 | `js/world/ribbon.js` | 53 | RIB, ribLyricUrl, ribSongNo, ribLoad, ribLineAt, ribbonFeed, ribDraw, ribbonTick |
-| `js/app/loop.js` | 20 | T, frame |
+| `js/app/loop.js` | 21 | T, frame |
 | `js/app/boot.js` | 8 | _ro |
