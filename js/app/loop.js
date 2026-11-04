@@ -7,6 +7,7 @@ function frame(now){
   var beat=beatPos(T);
   if(player){updatePlayer(dt);player.update(dt,beat)}
   if(phase==='game'){updateNPCs(dt,beat);if(leader){var want=(player.act==='cheer'||npcs.some(function(n){return n.act==='cheer'}))?'cheer':(Math.sin(T*.25)>.4?'cheer':null);if(leader.act!==want)leader.setAct(want);leader.update(dt,beat)}}
+  laundryTick(dt);/* 외야 세탁소 멀리/가까이 (world/laundry.js) */
   mascotTick(dt,beat);/* 응원단상 래디·배디 (js/game/mascots.js) */
   var wantEx=phase==='game'&&player.act==='cheer'?1:phase==='game'&&player.act?.5:0;if(EV.run)wantEx=Math.max(wantEx,EV.excite);excite=damp(excite,wantEx,3,dt);
   crowdTick+=dt;if(crowdTick>1/30){crowdTick=0;var n=crowdSpots.length,b=crowd.base;
