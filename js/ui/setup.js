@@ -24,7 +24,7 @@ function buildZoneList(el){
     el.appendChild(b);
   });
 }
-function syncBack(){var n=$('inName').value.trim(),num=$('inNum').value.replace(/\D/g,'').slice(0,2);$('inNum').value=num;ME.backName=n;ME.backNum=num;player.setBack(n,num);store.set('backName',n);store.set('backNum',num)}
+function syncBack(){var n=$('inName').value.trim(),num=$('inNum').value.replace(/\D/g,'').slice(0,2);$('inNum').value=num;ME.backName=n;ME.backNum=num;player.setBack(n,num);laundrySet(num);/* 외야 세탁소 번호도 따라가요 (world/laundry.js) */store.set('backName',n);store.set('backNum',num)}
 $('inName').addEventListener('input',syncBack);$('inNum').addEventListener('input',syncBack);
 $('reroll').onclick=function(){var a;do{a=pick(ADJ)}while(a===ME.adj);ME.adj=a;$('meName').textContent=myName();player.name=myName();sfx('tap')};
 $('toStep2').onclick=function(){$('step1').hidden=true;$('step2').hidden=false;phase='setup2';focusZone(ME.zone);auEnsure()};
