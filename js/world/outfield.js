@@ -6,6 +6,7 @@
    · 순서: 오른쪽(1루) 바비큐존 → 걷는 외야(ZB.outfield) → 장식 / 왼쪽(3루) 작은 장식 → 현수막(ZB.hog) → 세탁소 블록(ZB.laundry, 2026-11-04) → 장식.
      양쪽 길이를 맞춰 좌우가 거울처럼 같은 곡선에서 끝나요(가운데는 빅보드 앞이라 비움).
    · 걷기·앉기는 블록 안 좌표로만 돌아서, 블록이 돌고 옮겨져도 그대로 따라가요(input.js·movement.js 손대지 않음).
+   · 폴 바깥 모서리 장식 블록(OF.corner, 작은 패치 W, 2026-11-04): 폴 쪽 첫 칸에서 반대 방향(파울 지역 쪽)으로 한 칸. 내야 연장 블록(stands.js)과 쐐기로 이어져요. 1루·3루 대칭
    · 숫자를 바꿀 땐 OF만 고치면 블록·쐐기·바비큐존(bbq.js의 OF.bbq)이 같이 움직여요.
    · stands.js 다음, greenzone.js·hogbanner.js·bbq.js·crowd.js 앞에서 불려야 해요. */
 var OF={
@@ -14,7 +15,9 @@ var OF={
   base:1.6,rows:8,seat:0x6f9d45,
   right:[{t:'bbq',w:24},{t:'walk',cols:18},{t:'decor',cols:18}],
   left:[{t:'decor',cols:6},{t:'hog',cols:18},{t:'laundry',cols:18},{t:'decor',cols:18}],/* 현수막 바로 옆 한 블록 = 세탁소(world/laundry.js). 블록 가운데 통로를 사이에 둔 좌우 두 구역에 십의 자리·일의 자리. 그 옆 블록은 평소 장식 관중석 */
-  bbq:null            // 바비큐존 자리 {x,z,theta} — bbq.js가 읽어요
+  bbq:null,           // 바비큐존 자리 {x,z,theta} — bbq.js가 읽어요
+  cornerCols:9,       // 폴 바깥 모서리 장식 블록 폭(칸). 작은 패치 W
+  corner:{}           // 모서리 블록 자리 corner[1](1루)·corner[-1](3루) = {x,z,theta,n}
 };
 function ofFence(p){var r=fenceR(p);return [Math.sin(p)*r,-Math.cos(p)*r]}
 function ofOut(x,z,nx,nz){return nx*x+nz*z<0?[-nx,-nz]:[nx,nz]}           // 홈 반대쪽(바깥)을 보게
@@ -65,8 +68,20 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
       }
     }
   }
-  [chain(1,OF.right),chain(-1,OF.left)].forEach(function(ks){
-    ks.forEach(place);
+  /* 폴 바깥 모서리 한 칸(작은 패치 W, 2026-11-04): 첫 칸이 시작하는 점에서 '반대 방향'(파울 지역 쪽)으로 담장 곡선을 따라 장식 블록 하나.
+     내야 연장 블록(stands.js)과 바비큐존/3루 첫 칸 사이 빈 곳을 메워요. 1루·3루 대칭. 앞에 불펜(world/pen.js) */
+  function rchain(side,cols){
+    var p0=side*OF.START*D,c0=ofLip(p0),w=cols*SP+AIS+1.2+.5,lo=Math.abs(p0),hi=lo+40*D;
+    for(var i=0;i<50;i++){var m=(lo+hi)/2,c=ofLip(side*m);if(Math.hypot(c[0]-c0[0],c[1]-c0[1])<w)lo=m;else hi=m}
+    var c1=ofLip(side*(lo+hi)/2),mx=(c0[0]+c1[0])/2,mz=(c0[1]+c1[1])/2,dx=c1[0]-c0[0],dz=c1[1]-c0[1],L=Math.hypot(dx,dz),n=ofOut(mx,mz,-dz/L,dx/L);
+    return {s:{t:'corner',cols:cols},c0:c0,c1:c1,mx:mx,mz:mz,n:n,theta:Math.atan2(n[0],n[1])};
+  }
+  [[1,OF.right],[-1,OF.left]].forEach(function(e){
+    var ks=chain(e[0],e[1]),cn=rchain(e[0],OF.cornerCols);
+    ks.forEach(place);place(cn);
+    OF.corner[e[0]]={x:cn.mx+cn.n[0]*1.9,z:cn.mz+cn.n[1]*1.9,theta:cn.theta,n:cn.n};
+    wedge(cn.c0,cn.n,ks[0].n);
+    wedge(cn.c1,[e[0]*.7071,.7071],cn.n);/* 내야 연장 끝 블록(stands.js)과 모서리 블록 사이 뒤쪽으로 벌어지는 쐐기: 계단 + 줄마다 좌석·관중(여난부두 불빛도 crowdSpots·decorSeats로 따라감) */
     for(var i=0;i<ks.length-1;i++)wedge(ks[i].c1,ks[i].n,ks[i+1].n);
   });
   scene.add(new THREE.Mesh(mergeParts(wedges),MVC));

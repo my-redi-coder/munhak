@@ -77,6 +77,8 @@ var ZB={};
   p=pos1B(6,14);ZB.infield.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50,open:{r:.01}}));
   [48,62].forEach(function(s){p=pos1B(s,14);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:pick([0x2f6e50,0xc8102e])})});
   [6,20,34,48,62].forEach(function(s){p=pos1B(s,14,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50})});
+  /* 내야 연장(작은 패치 W, 2026-11-04): 내야석 끝에서 폴 쪽 모서리 블록(outfield.js의 OF.corner)까지 장식 블록 두 칸(폭 14칸 + 좁은 6칸). 1루·3루 대칭. 걷기·앉기 X, 가운데 조명탑과 겹치지 않는 자리 */
+  [[76,14],[86.9,6]].forEach(function(e){[1,-1].forEach(function(sd){p=pos1B(e[0],14,sd);buildBlock({x:p[0],z:p[1],theta:sd*Math.PI/4,base:.6,rows:9,cols:e[1],seat:pick([0x2f6e50,0xc8102e])})})});
   buildBlock({x:0,z:17,theta:0,base:.6,rows:9,cols:14,seat:0x34548a});
   buildBlock({x:0,z:30.5,theta:0,base:13.5,rows:8,cols:14,seat:0x34548a});
   p=pos1B(6,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45,open:{r:.01}}));
