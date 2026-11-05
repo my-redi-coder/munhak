@@ -1,0 +1,112 @@
+/* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요.
+   Original work by Redi Coder, an SSG Landers fan. Reuse is welcome, commercial use is not. Please credit "Based on Munhak Ballpark by Redi Coder (SSG fan)". */
+/* 로비(lobby.html) 전용 스타일. 장면 안의 색은 js/lobby/*.js 그림 코드에 있어요. */
+/* ============================================================
+   1. 스타일 레이어 — 화면 바깥(헤더·안내·카드)의 색과 모양
+   ============================================================ */
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --ui-bg:#fbfaf3; --ui-text:#3a3f33; --ui-sub:#5f6350; --ui-line:#dcd8c6;
+  --ui-accent:#c8102e; --ui-accent-text:#ffffff; --veil:rgba(30,40,30,.45);
+  --pill-bg:rgba(255,253,246,.94); --pill-text:#454a3c;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ui-bg:#262a22; --ui-text:#f1efe5; --ui-sub:#c0c3ad; --ui-line:#4a4f3f;
+    --ui-accent:#e0414f; --veil:rgba(0,0,0,.62);
+    --pill-bg:rgba(38,42,34,.92); --pill-text:#f1efe5;
+  }
+}
+:root[data-theme="dark"]{
+  --ui-bg:#262a22; --ui-text:#f1efe5; --ui-sub:#c0c3ad; --ui-line:#4a4f3f;
+  --ui-accent:#e0414f; --veil:rgba(0,0,0,.62);
+  --pill-bg:rgba(38,42,34,.92); --pill-text:#f1efe5;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;height:100%;overflow:hidden;background:#8fd0ee;
+  font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 장면은 화면 전체. 400x760 기준 그림을 가운데 맞추고, 남는 곳은 풀·하늘로 이어짐 */
+#stage{position:fixed;inset:0;width:100%;height:100%;display:block;overflow:visible;touch-action:manipulation}
+#stage *{pointer-events:none}
+#stage .hit{pointer-events:all;cursor:pointer}
+.hot,.toy{outline:none}
+
+.t-title{font-family:'Black Han Sans','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+.t-slab{font-family:'Alfa Slab One','Rockwell','Georgia',serif}
+.t-body{font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+
+/* 위쪽 이름 */
+.top{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + clamp(20px,5vh,46px));text-align:center;pointer-events:none;z-index:2}
+.top h1{
+  margin:0;font-family:'Black Han Sans','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-weight:400;
+  font-size:clamp(26px,5.4vw,38px);line-height:1.1;color:#fff;letter-spacing:.02em;
+  text-shadow:2px 2px 0 #3b93c0,-2px 2px 0 #3b93c0,2px -2px 0 #3b93c0,-2px -2px 0 #3b93c0,0 3px 0 #3b93c0,0 5px 10px rgba(40,120,170,.35);
+}
+.top p{margin:2px 0 0;font-size:clamp(13px,2.6vw,16px);color:#fff;text-shadow:0 1px 0 #3b93c0,0 0 6px rgba(40,120,170,.6)}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 70px);transform:translate(-50%,10px);
+  padding:10px 18px;border-radius:999px;background:rgba(40,44,36,.92);color:#fff;font-size:14px;
+  opacity:0;transition:opacity .25s,transform .25s;z-index:4;pointer-events:none;white-space:nowrap;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* 말풍선(SVG 안) */
+.bub{animation:pop .18s ease-out;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes pop{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
+.bub .bg,.bub .tl{fill:#fffdf6;stroke:#d8d3bf;stroke-width:1}
+.bub .sh{fill:rgba(0,0,0,.13)}
+.bub .lb{font-family:'Black Han Sans','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:14px;fill:#3a3f33}
+.bub .sb{font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:9.6px;fill:#5f6350}
+.talk{animation:talkIn .25s ease-out,talkOut .35s ease-in 2.3s forwards}
+.talk .bg{fill:#fffdf6;stroke:#e3ddc9;stroke-width:.8}
+.talk text{font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:9px;fill:#454a3c}
+@keyframes talkIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+@keyframes talkOut{to{opacity:0}}
+
+/* 움직임: 꼭 필요한 만큼만 */
+.cloud .cl-in{animation:drift var(--t,60s) ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+@keyframes drift{from{transform:translateX(-26px)}to{transform:translateX(26px)}}
+.bob{animation:bob var(--t,2.6s) ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+.petal{animation:fall var(--dur,14s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes fall{
+  0%{transform:translate(var(--x0),-90px) rotate(0deg);opacity:0}
+  5%{opacity:1}
+  30%{transform:translate(calc(var(--x0) + var(--sw)),220px) rotate(120deg)}
+  62%{transform:translate(calc(var(--x1) - var(--sw)),500px) rotate(250deg)}
+  94%{opacity:1}
+  100%{transform:translate(var(--x1),860px) rotate(380deg);opacity:0}
+}
+.spark{transform-box:fill-box;transform-origin:center;animation:spark .8s ease-out 2 both}
+@keyframes spark{
+  0%{transform:scale(0) rotate(0deg);opacity:0}
+  40%{transform:scale(1.15) rotate(25deg);opacity:1}
+  100%{transform:scale(0) rotate(60deg);opacity:0}
+}
+.shake .art{animation:shake .4s ease-in-out}
+.star{transform-box:fill-box;transform-origin:50% 55%}
+.star.wiggle{animation:wiggle .7s ease-in-out}
+@keyframes wiggle{0%{transform:rotate(0) scale(1)}18%{transform:rotate(-16deg) scale(1.14)}40%{transform:rotate(13deg) scale(1.1)}62%{transform:rotate(-8deg) scale(1.05)}82%{transform:rotate(4deg) scale(1.01)}100%{transform:rotate(0) scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-2.4px)}40%{transform:translateX(2.4px)}60%{transform:translateX(-1.6px)}80%{transform:translateX(1.6px)}}
+
+@media (prefers-reduced-motion:reduce){
+  .petal{display:none}
+  .cloud .cl-in,.bob,.spark,.shake .art,.star.wiggle,.bub,.talk,.go .dot{animation:none!important}
+  .toast,.go{transition:none}
+}
+
+/* 가는 중 화면: 다른 화면으로 넘어가는 잠깐 동안(저장소의 로딩 화면과 같은 미색 + 숨 쉬는 점) */
+.go{position:fixed;inset:0;z-index:5;display:grid;place-content:center;justify-items:center;gap:14px;background:var(--ui-bg);color:var(--ui-text);opacity:0;transition:opacity .3s}
+.go.on{opacity:1}
+.go[hidden]{display:none}
+.go p{margin:0;font-size:16px}
+.go .dot{width:8px;height:8px;border-radius:50%;background:var(--ui-accent);animation:breathe 1.2s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.7);opacity:.5}50%{transform:scale(1.2);opacity:1}}
