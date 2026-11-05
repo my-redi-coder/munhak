@@ -23,23 +23,34 @@ function idleReset(){ clearTimeout(state.idle); state.idle=setTimeout(clearSel, 
 
 function showBubble(id){
   const c=cfgOf(id), A=CONFIG.anchors[id], subs=subsOf(c);
-  const g=document.createElementNS(NS,'g'); g.setAttribute('class','bub');
-  g.innerHTML=`<rect class="sh"/><rect class="bg"/><text class="lb" text-anchor="middle">${c.label}</text>`
+  const hasLabel=!!c.label;                       // label이 없으면 sub만 보여줘요
+  const g=document.createElementNS(NS,'g');
+  g.setAttribute('class','bub'+(hasLabel?'':' solo'));
+  g.innerHTML=`<rect class="sh"/><rect class="bg"/>`
+    + (hasLabel?`<text class="lb" text-anchor="middle">${c.label}</text>`:'')
     + subs.map(t=>`<text class="sb" text-anchor="middle">${t}</text>`).join('')
-    + `<circle class="tl"/><circle class="tl"/>`;
+    + `<path class="tl"/><path class="tp"/>`;
   bubble.replaceChildren(g);
   const texts=[...g.querySelectorAll('text')];
   let w=0; texts.forEach(t=>{ w=Math.max(w,t.getComputedTextLength()); });
-  const bw=Math.ceil(w)+28, bh=subs.length? 35+(subs.length-1)*12+10 : 31;
-  const bx=Math.min(Math.max(A.x-bw/2,20),380-bw), by=A.y-15-bh, cx=bx+bw/2;
-  const [sh,bg]=g.querySelectorAll('rect'); 
+  const bw=Math.ceil(w)+28;
+  const bh=hasLabel ? (subs.length? 35+(subs.length-1)*12+10 : 31) : 13+subs.length*15;
+  const TAIL=10;                                  // 꼬리 높이: 말풍선 바닥 ~ 건물에 닿는 끝
+  const bx=Math.min(Math.max(A.x-bw/2,20),380-bw), by=A.y-TAIL-bh, cx=bx+bw/2;
+  const [sh,bg]=g.querySelectorAll('rect');
   for(const [el,dy] of [[sh,2],[bg,0]]){ el.setAttribute('x',bx); el.setAttribute('y',by+dy); el.setAttribute('width',bw); el.setAttribute('height',bh); el.setAttribute('rx',12); }
-  texts[0].setAttribute('x',cx); texts[0].setAttribute('y',by+20);
-  texts.slice(1).forEach((t,i)=>{ t.setAttribute('x',cx); t.setAttribute('y',by+35+i*12); });
-  const [c1,c2]=g.querySelectorAll('circle');
-  c1.setAttribute('cx',A.x); c1.setAttribute('cy',A.y-9); c1.setAttribute('r',3.6);
-  c2.setAttribute('cx',A.x); c2.setAttribute('cy',A.y-3); c2.setAttribute('r',2);
-  live.textContent=c.label+'. '+subs.join(' ');
+  if(hasLabel){
+    texts[0].setAttribute('x',cx); texts[0].setAttribute('y',by+20);
+    texts.slice(1).forEach((t,i)=>{ t.setAttribute('x',cx); t.setAttribute('y',by+35+i*12); });
+  }else{
+    texts.forEach((t,i)=>{ t.setAttribute('x',cx); t.setAttribute('y',by+19+i*15); });
+  }
+  // 꼬리: 말풍선 바닥에서 건물을 향해 뾰족하게 내려가는 화살표(끝이 건물 지붕에 닿음)
+  const [tl,tp]=g.querySelectorAll('path');
+  const tx=Math.min(Math.max(A.x,bx+16),bx+bw-16), by2=by+bh, hw=7;
+  tl.setAttribute('d',`M${tx-hw},${by2-1} L${A.x},${A.y} L${tx+hw},${by2-1} Z`);
+  tp.setAttribute('d',`M${tx-hw+1.2},${by2-1.6} L${tx+hw-1.2},${by2-1.6} L${tx+hw-1.2},${by2+.8} L${tx-hw+1.2},${by2+.8} Z`);
+  live.textContent=[c.label,...subs].filter(Boolean).join('. ');   // 화면 읽어주는 기능용 문구
 }
 
 function sparkle(){
