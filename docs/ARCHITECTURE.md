@@ -139,3 +139,10 @@
 
 - 계산·그림은 `minigames/shared/ticket.js`(`tkTeamPerfect` `tkTeamSplit` `tkSeal` `tkPerfHead` `tkRebookHead`, 티켓팅·티켓북 공용), 연출·다시 예매·확률은 `minigames/ticketing/perfect.js`(game.js 앞에 불러옴).
 - 저장 칸은 그대로(티켓 기록만 보고 계산). 확인용으로 `LOCKER.removeTicket(i)`만 더함.
+
+## 로비 (lobby.html, 2026-11-05)
+
+- 3D 야구장과 **따로 도는 가벼운 페이지**예요. `three.js`를 불러오지 않고, 그림은 SVG 글자(문자열)로 그려요. 파일은 `js/lobby/`에 층(layer)별로 나눠 있고 `lobby.html`의 `<script>` 순서대로 불러요: `config` → `kit` → `scenery` → `stadium` → `props` → `people` → `scene` → `interact`.
+- 야구장 본체와 코드를 나누지 않고 쓰는 것은 글꼴(`fonts/fonts.css`)뿐이에요. `styles/tokens.css` 같은 야구장 스타일은 불러오지 않아요.
+- 자세한 설명·고치는 곳·교체하는 법은 `docs/LOBBY.md`. 담벼락 글은 `index.html`의 `#wall`과 `wall.html` 두 곳에 있어요.
+
