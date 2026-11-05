@@ -9,13 +9,13 @@ const CONFIG = {
   museumOpen: false,            // true로 바꾸면 문학기념관 문이 열려요(url도 함께 채우기)
   idleClearSec: 10,             // 이름표가 떠 있다가 저절로 꺼지는 시간
   hotspots: {
-    stadium: { kind:'enter', label:'경기장 입장', sub:'티켓부스', url:'stadium.html', go:'경기장으로 입장하는 중',
+    stadium: { kind:'enter', label:'티켓부스', sub:'경기장 입장', url:'stadium.html', go:'경기장으로 입장하는 중',
                prefetch:['stadium.html','https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'] },
     bullpen: { kind:'enter', label:'불펜장', sub:'미니게임', url:'minigames/bullpen.html', go:'불펜장으로 가는 중',
                prefetch:['minigames/bullpen.html'] },
     locker:  { kind:'enter', label:'라커룸', sub:'수집품 보관소', url:'minigames/locker.html', go:'라커룸으로 가는 중',
                prefetch:['minigames/locker.html'] },
-    wall:    { kind:'enter', label:'담벼락', sub:'제작자의 한마디', url:'wall.html', go:'담벼락으로 가는 중',
+    wall:    { kind:'enter', label:'담벼락', sub:'제작자의 말', url:'wall.html', go:'담벼락으로 가는 중',
                prefetch:['wall.html'] },
     gate:    { kind:'info',  label:'정문', sub:['표가 있어야 들어갈 수 있어요','티켓부스로 가볼까요?'] },
     museum:  { kind:'museum', label:'문학기념관', sub:()=> CONFIG.museumOpen ? '' : '준비 중이에요',
