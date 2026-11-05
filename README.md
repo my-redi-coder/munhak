@@ -3,6 +3,7 @@
 SSG 랜더스 홈구장(문학)을 3D로 만든 팬 놀이터예요. 내 자리에 앉아 응원하고, 이벤트 장면을 보고, 야푸를 먹어요.
 
 - 게임: 깃허브 페이지 주소 (Settings → Pages에서 확인)
+- 로비(갈 곳 고르는 첫 화면): `lobby.html` — 설명은 `docs/LOBBY.md`
 - 처음 읽을 문서: `docs/ARCHITECTURE.md`(폴더·규칙·고치는 순서) → `docs/PROGRESS.md`(어디까지 했나) → `docs/MODULES.md`(파일마다 하는 일)
 - 기획·결정: `docs/DECISIONS.md`
 

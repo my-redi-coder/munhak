@@ -1,0 +1,66 @@
+<!doctype html>
+<!-- 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="야구 없는 계절, 3D 문학에서 봄을 기다려요 🌸⚾">
+<title>문학야구장 - 봄을 기다리는</title>
+<!-- 링크 미리보기 카드 (카톡·SNS 공유용) — 로비가 index.html가 되는 날 그대로 쓰려고 index.html과 같게 둬요 -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="문학야구장">
+<meta property="og:title" content="문학야구장 - 봄을 기다리는">
+<meta property="og:description" content="야구 없는 계절, 3D 문학에서 봄을 기다려요 🌸⚾">
+<meta property="og:url" content="https://my-redi-coder.github.io/munhak/">
+<meta property="og:image" content="https://my-redi-coder.github.io/munhak/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="밤 조명이 켜진 3D 문학야구장, 빅보드에 '봄을 기다리는 문학'">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="styles/lobby.css">
+</head>
+<body>
+<!-- 로비(첫 화면). 그림과 동작은 js/lobby/*.js, 모양은 styles/lobby.css. 설정은 js/lobby/config.js, 설명은 docs/LOBBY.md -->
+<header class="top">
+  <h1>문학야구장</h1>
+  <p>봄을 기다리는</p>
+</header>
+
+<svg id="stage" viewBox="0 0 400 760" preserveAspectRatio="xMidYMid meet" role="group" aria-label="문학야구장 앞마당 지도">
+  <defs>
+    <linearGradient id="gSky" gradientUnits="userSpaceOnUse" x1="0" y1="-260" x2="0" y2="330">
+      <stop offset="0" stop-color="#78c6ec"/>
+      <stop offset=".65" stop-color="#bfe5f6"/>
+      <stop offset="1" stop-color="#e6f5fb"/>
+    </linearGradient>
+    <pattern id="pBrick" width="16" height="8" patternUnits="userSpaceOnUse">
+      <rect width="16" height="8" fill="#d6ac8c"/>
+      <path d="M0 .5H16M0 4.5H16M8 .5V4.5M0 4.5V8M16 4.5V8" stroke="#ecd0bd" stroke-width=".9" fill="none"/>
+    </pattern>
+    <filter id="fSel" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="2.4" result="d"/>
+      <feFlood flood-color="#ffffff" result="w"/>
+      <feComposite in="w" in2="d" operator="in" result="o"/>
+      <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g id="world"></g>
+</svg>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="live" class="sr" aria-live="polite"></div>
+<div id="go" class="go" hidden role="status" aria-live="polite"><p id="goMsg"></p><span class="dot" aria-hidden="true"></span></div>
+
+<script src="js/lobby/config.js"></script>
+<script src="js/lobby/kit.js"></script>
+<script src="js/lobby/scenery.js"></script>
+<script src="js/lobby/stadium.js"></script>
+<script src="js/lobby/props.js"></script>
+<script src="js/lobby/people.js"></script>
+<script src="js/lobby/scene.js"></script>
+<script src="js/lobby/interact.js"></script>
+</body>
+</html>
