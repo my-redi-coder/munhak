@@ -5,24 +5,13 @@
    1. 스타일 레이어 — 화면 바깥(헤더·안내·카드)의 색과 모양
    ============================================================ */
 :root{
+  color-scheme:only light;   /* 폰이 다크 모드여도 로비는 늘 같은 색(봄 낮)으로 보여요 */
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
   --ui-bg:#fbfaf3; --ui-text:#3a3f33; --ui-sub:#5f6350; --ui-line:#dcd8c6;
   --ui-accent:#c8102e; --ui-accent-text:#ffffff; --veil:rgba(30,40,30,.45);
   --pill-bg:rgba(255,253,246,.94); --pill-text:#454a3c;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --ui-bg:#262a22; --ui-text:#f1efe5; --ui-sub:#c0c3ad; --ui-line:#4a4f3f;
-    --ui-accent:#e0414f; --veil:rgba(0,0,0,.62);
-    --pill-bg:rgba(38,42,34,.92); --pill-text:#f1efe5;
-  }
-}
-:root[data-theme="dark"]{
-  --ui-bg:#262a22; --ui-text:#f1efe5; --ui-sub:#c0c3ad; --ui-line:#4a4f3f;
-  --ui-accent:#e0414f; --veil:rgba(0,0,0,.62);
-  --pill-bg:rgba(38,42,34,.92); --pill-text:#f1efe5;
 }
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{
