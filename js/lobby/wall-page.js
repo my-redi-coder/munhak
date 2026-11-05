@@ -2,8 +2,8 @@
    Original work by Redi Coder, an SSG Landers fan. Reuse is welcome, commercial use is not. Please credit "Based on Munhak Ballpark by Redi Coder (SSG fan)". */
 /* ================= 담벼락 페이지 (wall.html) =================
    로비에서 3D 야구장 없이 담벼락만 따로 열어요. 벽 그림(wallArt)은 js/ui/wall.js의 것과 같은 그림이에요.
-   '돌아가기'·Esc는 로비로 가요. 로비를 index.html로 바꾸는 날 WALL_BACK_URL만 'index.html'로 고쳐요. */
-var WALL_BACK_URL='lobby.html';
+   '돌아가기'·Esc는 로비(index.html)로 가요. */
+var WALL_BACK_URL='index.html';
 var WALL={art:false};
 function $(id){return document.getElementById(id)}
 function wallArt(){

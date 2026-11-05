@@ -3,14 +3,14 @@
 /* ================= 로비 설정 (lobby.html) =================
    글귀 · 열림 여부 · 눌렀을 때 가는 곳(주소)을 여기서만 고쳐요. 그림 모양은 scenery·stadium·props·people.js.
    - kind: 'enter'(두 번째 누르면 url로 이동) / 'info'(안내만) / 'museum'(museumOpen이 true일 때만 열려요)
-   - url: 가는 곳. 로비를 index.html로 바꾸는 날, stadium의 url만 'stadium.html'로 고쳐요(docs/LOBBY.md '교체하는 법')
+   - url: 가는 곳(3D 야구장 본체는 stadium.html, 로비 자신은 index.html)
    - prefetch: 첫 번째 누를 때 미리 받아 두는 파일(두 번째 누를 때 덜 기다리게) */
 const CONFIG = {
   museumOpen: false,            // true로 바꾸면 문학기념관 문이 열려요(url도 함께 채우기)
   idleClearSec: 10,             // 이름표가 떠 있다가 저절로 꺼지는 시간
   hotspots: {
-    stadium: { kind:'enter', label:'경기장 입장', sub:'티켓부스', url:'index.html', go:'경기장으로 입장하는 중',
-               prefetch:['index.html','https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'] },
+    stadium: { kind:'enter', label:'경기장 입장', sub:'티켓부스', url:'stadium.html', go:'경기장으로 입장하는 중',
+               prefetch:['stadium.html','https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'] },
     bullpen: { kind:'enter', label:'불펜장', sub:'미니게임', url:'minigames/bullpen.html', go:'불펜장으로 가는 중',
                prefetch:['minigames/bullpen.html'] },
     locker:  { kind:'enter', label:'라커룸', sub:'수집품 보관소', url:'minigames/locker.html', go:'라커룸으로 가는 중',
