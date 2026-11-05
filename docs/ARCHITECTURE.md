@@ -67,7 +67,7 @@
 | 파일 | 하는 일 |
 |---|---|
 | `minigames/bullpen.html` + `bullpen/` | 불펜장 첫 화면: 일러스트(`bullpen-bg.svg`), 게임 목록 `GAMES`(마운드 위 / 등판 대기 중), 내 라커 바로가기 |
-| `minigames/locker.html` + `locker/` | 내 라커: 라커 두 칸씩 두 줄. `#cards` 카드 앨범(등급 네 줄, 카드 누르면 뒷면 선수 정보), `#balls` 공박스(기념구 진열장·달별 선반·다시 보기), `#tickets` 티켓북(상대 구단별 탭, 누르면 꺼내 보기 + 하이라이트), 빈 라커(안 열리고 철컹 소리만, `lkClank`) |
+| `minigames/locker.html` + `locker/` | 라커룸(옛 '내 라커'): 첫 화면은 입체 라커룸 한 장면 — `room-kit.js`(그림 부품) → `room-box.js`(입체 도구: 소실점으로 깊어지는 속 빈 상자) → `room-scene.js`(장면 놓기, 설정 `RS`) → `room.js`(누르기·이름표·✦ 반짝·`roomRefresh`). 유니폼=`#cards` 카드 앨범(등급 네 줄, 카드 누르면 뒷면 선수 정보), 유리 케이스 기념구·금 글러브=`#balls` 공박스(기념구 진열장·달별 선반·다시 보기), 찬장 속 티켓=`#tickets` 티켓북(상대 구단별 탭, 누르면 꺼내 보기 + 하이라이트) |
 | `minigames/number-match.html` + `number-match/` | 등번호 매치 게임, 결과 시트, 덱 완성 엔딩. 주소에 `?dev`면 확인용 버튼 |
 | `minigames/homerun.html` + `homerun/` | 홈런볼 모으기: `game.js`(판 진행·난이도·입력·다시 보기), `scene.js`(외야 장면·글러브·공), `cutscene.js`(그라운드 홈런·올스타 브레이크). 주소 끝 `#replay-ground`·`#replay-allstar`면 장면만 재생 후 공박스로, `?dev`면 확인용 버튼 |
 | `minigames/ticketing.html` + `ticketing/` | 티켓팅 War: `game.js`(예매 오픈·대기열·좌석도·판정·결제·발권), `ticketing.css`. 숫자(빈자리 시간 `LIFE`, 섞는 비율 `MIX`, 제한 시간)는 `game.js` 맨 위. `?dev`면 티켓 다 채우기·비우기 |
