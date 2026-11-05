@@ -31,11 +31,9 @@ function leaveGame(){
   $('hud').hidden=true;$('bye').hidden=false;phase='bye';
   if(AU.ctx)AU.ctx.suspend();
 }
-$('again').onclick=function(){
-  $('bye').hidden=true;ME.adj=pick(ADJ);ME.uni=pick(UKEYS);
-  if(player.root.parent)player.root.parent.remove(player.root);
-  makePlayer();startSetup();if(AU.ctx&&AU.on)AU.ctx.resume();
-};
+/* (2026-11-05 로비) '다시 입장하기'는 로비(첫 화면 index.html)로 가요 — 로비에서 경기장·불펜장·라커룸을 다시 골라요 */
+var LOBBY_URL='index.html';
+$('again').onclick=function(){location.href=LOBBY_URL};
 function startSetup(){
   phase='setup1';$('setup').hidden=false;$('step1').hidden=false;$('step2').hidden=true;
   $('meName').textContent=myName();$('inName').value=ME.backName;$('inNum').value=ME.backNum;
