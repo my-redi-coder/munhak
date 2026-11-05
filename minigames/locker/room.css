@@ -1,0 +1,16 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* 라커룸 장면(room-scene.js): 밝은 라커룸 고정(다크 모드에서도 같은 색), 누르는 곳(.hot)·이름표 */
+.room{position:relative;margin:14px 0 0;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#e9e5da;line-height:0;touch-action:manipulation}
+.room svg{display:block;width:100%;height:auto}
+.room .hot{cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.room .hot:focus-visible{outline:2px solid #c8102e;outline-offset:2px}
+.room .hot.pop{animation:rmPop .28s ease-out;transform-box:fill-box;transform-origin:center}
+@keyframes rmPop{40%{transform:scale(1.035)}}
+.roomtag{position:absolute;z-index:3;transform:translate(-50%,calc(-100% - 8px));padding:7px 14px;border-radius:999px;background:#fbfaf5;color:#3a3f33;border:1px solid rgba(69,74,60,.16);box-shadow:0 4px 14px rgba(48,56,36,.2);font-size:14px;line-height:1.3;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .18s}
+.roomtag.on{opacity:1}
+.roomtag.below{transform:translate(-50%,8px)}
+@media (prefers-reduced-motion:reduce){.room .hot.pop{animation:none}.roomtag{transition:none}}
+/* ✦ 반짝: 두 번 켜졌다 꺼지고 사라져요(동작 줄이기면 크기 변화 없이 깜빡임만) */
+.rm-glint{opacity:0;transform-box:fill-box;transform-origin:center;animation:rmGlint .9s ease-in-out 2 both}
+@keyframes rmGlint{0%{opacity:0;transform:scale(.2) rotate(0)}35%{opacity:1;transform:scale(1.15) rotate(25deg)}70%{opacity:0;transform:scale(.45) rotate(50deg)}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){@keyframes rmGlint{0%,100%{opacity:0}40%{opacity:1}}}

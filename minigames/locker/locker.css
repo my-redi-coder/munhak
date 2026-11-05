@@ -1,13 +1,4 @@
-/* SSG 팬 레디코더의 문학야구장 — 내 라커: 철제 라커 두 칸(카드 앨범·공박스) + 카드 앨범 화면 + 공박스 화면 */
-.lockers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;padding:12px;border-radius:14px;background:#4d5761;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18)}
-.door{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;aspect-ratio:3/5;padding:14px 10px;border-radius:8px;background:linear-gradient(90deg,#8a96a2,#a7b2bc 45%,#8a96a2);color:#1f262c;text-decoration:none;text-align:center;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
-.door::before{content:"";position:absolute;top:14px;left:22%;right:22%;height:44px;background:repeating-linear-gradient(180deg,#5d6872 0 4px,transparent 4px 9px);border-radius:2px;opacity:.75}
-.door::after{content:"";position:absolute;right:10px;top:46%;width:5px;height:26px;border-radius:3px;background:#3b444c}
-.door .plate{background:#f5f3ea;border:1px solid rgba(0,0,0,.15);border-radius:4px;padding:6px 8px;font-size:15px;line-height:1.25;min-width:80%}
-.door .plate small{display:block;color:#6a6f62;font-size:12px}
-.door.locked{filter:grayscale(.3);opacity:.75}
-.door.locked .plate small{color:#8b6a1a}
-.door .badge{position:absolute;top:66px;left:50%;transform:translateX(-50%);background:#c8102e;color:#fff;border-radius:999px;padding:3px 10px;font-size:12px;white-space:nowrap}
+/* SSG 팬 레디코더의 문학야구장 — 라커룸 첫 화면의 안내 글 + 카드 앨범 화면 + 공박스 화면 + 티켓북 화면 (라커룸 그림은 room.css) */
 .lockers-note{color:var(--muted);font-size:13px;text-align:center;margin:10px 0 0}
 
 .progress{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:16px}
@@ -49,13 +40,6 @@
 .seasonline{margin:6px 0 0;color:var(--muted);font-size:14px;text-align:center}
 .replays{margin-top:14px}
 .replays .secondary{font-size:13px}
-
-/* (묶음 B) 빈 라커: 이름표 없이, 누르면 덜컹 */
-.door.empty{cursor:pointer;border:0;font:inherit}
-.door.empty::after{background:#2f363c}
-.door.rattle{animation:lkRattle .32s ease-in-out}
-@keyframes lkRattle{20%{transform:translateX(-3px) rotate(-.6deg)}45%{transform:translateX(3px) rotate(.5deg)}70%{transform:translateX(-2px)}}
-@media (prefers-reduced-motion:reduce){.door.rattle{animation:none}}
 
 /* (2026-11-01) 티켓이 없을 때 안내 */
 .tkempty{margin:0 4px 12px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:13.5px;text-align:center}

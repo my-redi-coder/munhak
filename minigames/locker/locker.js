@@ -1,12 +1,13 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
-/* ================= 내 라커 =================
-   첫 화면: 라커 두 칸(카드 앨범 / 공박스). 주소 끝 #cards = 카드 앨범, #balls = 공박스.
+/* ================= 라커룸 =================
+   (2026-11-05 패치 Y) 첫 화면은 입체 라커룸 한 장면(room-kit·room-box·room-scene·room.js): 유니폼=카드 앨범, 유리 케이스 기념구·금 글러브=공박스, 코르크 찬장의 티켓=티켓북. 예전 철제 라커 네 칸은 없어졌어요.
+   주소 끝 #cards = 카드 앨범, #balls = 공박스.
    카드 앨범: 등급 네 줄(레전더리·코어·스페셜·선수단). 모은 카드를 누르면 크게 떠서 뒷면 선수 정보로 뒤집혀요(card.js cardView).
    공박스: 위 기념구 진열장(날짜만, 눌러야 어떤 공인지) → 달 고르기 → 선반(한 줄 5개, 시즌 순서).
      기념구는 선반 제자리에 ★ 표시만 남아요. 공을 누르면 손글씨 기념구가 크게.
      그라운드 홈런·올스타 브레이크를 게임에서 한 번 본 사람에게만 '다시 보기' 버튼.
      (2026-11-01) 퍼펙트 판을 한 번이라도 하면 '기념구 진열장' 옆에 금 글러브 배지(퍼펙트 n회). 공을 크게 보면 아래 실밥 밑에 〈언제나 처음은 소중하다〉(shared/ball.js)
-   (묶음 B) 라커는 두 칸씩 두 줄: 카드 앨범 · 공박스 / 티켓북(#tickets) · 빈 라커(안 열리고 철컹 소리만).
+   (묶음 B) 티켓북(#tickets).
    티켓북: 상대 구단별 탭(많이 이긴 순), 주머니에 반쯤 꽂힌 티켓, 누르면 꺼내 보기 + 하이라이트. 그리기는 shared/ticket.js
    (2026-11-01) 티켓이 하나도 없으면 안내 문구(#tkEmpty).
    (2026-11-01) ?embed 로 열리면 야구장 야푸먹기 테이블 위에 띄운 티켓북(js/ui/food-ticket.js): 뒤로·Esc는 창 닫기, '티켓팅 하러 가기'는 야구장의 불펜장 창으로 티켓팅 War를 열어요 */
@@ -19,11 +20,9 @@ if(LK_EMBED){document.documentElement.classList.add('embed');$('back').setAttrib
 function lkRender(){
   var n=LOCKER.cardCount(),T=ROSTER.length,view=location.hash==='#cards'?'cards':location.hash==='#balls'?'balls':location.hash==='#tickets'?'tickets':'home';
   var cvw=$('cardView');if(cvw)cvw.classList.remove('show');$('ballView').classList.remove('show');
-  $('cardsMeta').textContent=n+' / '+T+'장';
-  $('ballsMeta').textContent=LOCKER.ballCount()+' / '+HR_TOTAL+'개';
-  $('ticketsMeta').textContent=LOCKER.ticketCount()+' / '+TICKETS.length+'장';
   $('home').hidden=view!=='home';$('cards').hidden=view!=='cards';$('balls').hidden=view!=='balls';$('tickets').hidden=view!=='tickets';
-  $('title').textContent=view==='cards'?'카드 앨범':view==='balls'?'공박스':view==='tickets'?'티켓북':'내 라커';
+  $('title').textContent=view==='cards'?'카드 앨범':view==='balls'?'공박스':view==='tickets'?'티켓북':'라커룸';
+  if(view==='home')roomRefresh();/* 라커룸 장면(room.js): 이름·번호·티켓 수를 새로 그려요 */
   if(view==='cards')lkCards();
   if(view==='balls')lkBalls();
   if(view==='tickets')lkTickets();
@@ -90,16 +89,6 @@ $('tkGrid').addEventListener('click',function(e){var b=e.target.closest('.pocket
 function tkClose(){$('tkModal').hidden=true}
 $('tkClose').onclick=tkClose;$('tkModal').addEventListener('click',function(e){if(e.target.id==='tkModal')tkClose()});
 document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;if(!$('tkModal').hidden)tkClose();else if(LK_EMBED)lkCloseEmbed()});
-/* 빈 라커: 안 열리고 철컹 */
-var lkAC=null;
-function lkClank(){try{lkAC=lkAC||new(window.AudioContext||window.webkitAudioContext)();if(lkAC.state==='suspended')lkAC.resume();
-  var c=lkAC,t=c.currentTime,out=c.createGain();out.gain.value=.5;out.connect(c.destination);
-  [[523,.9],[1187,.5],[1764,.35],[2690,.2]].forEach(function(p){var o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.value=p[0];
-    g.gain.setValueAtTime(p[1]*.4,t);g.gain.exponentialRampToValueAtTime(.001,t+.6);o.connect(g);g.connect(out);o.start(t);o.stop(t+.62)});
-  var n=c.sampleRate*.05,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
-  var s=c.createBufferSource(),f=c.createBiquadFilter(),g2=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=3000;g2.gain.value=.6;s.connect(f);f.connect(g2);g2.connect(out);s.start(t);
-}catch(e){}}
-$('emptyDoor').onclick=function(){var d=$('emptyDoor');lkClank();d.classList.remove('rattle');void d.offsetWidth;d.classList.add('rattle')};
 $('back').onclick=function(){if(LK_EMBED){lkCloseEmbed();return}if(location.hash==='#cards'||location.hash==='#balls'||location.hash==='#tickets')location.hash='';else location.href='bullpen.html'};
 window.addEventListener('hashchange',lkRender);
 window.addEventListener('pageshow',lkRender);
