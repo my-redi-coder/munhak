@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="color-scheme" content="light dark">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>내 라커 — 불펜장</title>
+<title>라커룸 — 불펜장</title>
 <!-- SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. -->
 <link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="stylesheet" href="shared/mg.css">
@@ -12,21 +12,17 @@
 <link rel="stylesheet" href="shared/ball.css">
 <link rel="stylesheet" href="shared/ticket.css">
 <link rel="stylesheet" href="locker/locker.css">
+<link rel="stylesheet" href="locker/room.css">
 </head>
 <body>
 <header class="mgbar">
   <button class="cap" id="back" aria-label="뒤로"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
-  <h1 id="title">내 라커</h1>
+  <h1 id="title">라커룸</h1>
   <span class="cap ghost" aria-hidden="true"></span>
 </header>
 <main class="wrap">
   <section id="home">
-    <div class="lockers">
-      <a class="door" href="#cards"><span class="plate">카드 앨범<small id="cardsMeta"></small></span></a>
-      <a class="door" href="#balls"><span class="plate">공박스<small id="ballsMeta"></small></span></a>
-      <a class="door" href="#tickets"><span class="plate">티켓북<small id="ticketsMeta"></small></span></a>
-      <button class="door empty" id="emptyDoor" aria-label="빈 라커, 잠겨 있어요"></button>
-    </div>
+    <div class="room" id="roomScene"><div class="roomtag" id="roomTag" role="status" aria-live="polite"></div></div>
     <p class="lockers-note">불펜장 게임에서 모은 것들이 여기 쌓여요.</p>
   </section>
 
@@ -93,6 +89,10 @@
 <script src="shared/glove.js"></script>
 <script src="shared/tickets.js"></script>
 <script src="shared/ticket.js"></script>
+<script src="locker/room-kit.js"></script>
+<script src="locker/room-box.js"></script>
+<script src="locker/room-scene.js"></script>
+<script src="locker/room.js"></script>
 <script src="locker/locker.js"></script>
 </body>
 </html>

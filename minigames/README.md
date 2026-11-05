@@ -4,7 +4,7 @@
 야구장 위쪽 **불펜장** 버튼으로 열려요. 페이지마다 따로 돌고, 공용 파일은 `shared/`에 있어요.
 
 - `bullpen.html` 불펜장 첫 화면 — 게임 목록은 `bullpen/bullpen.js`의 `GAMES`
-- `locker.html` 내 라커 — 카드 앨범(`#cards`, 카드 누르면 뒷면 선수 정보), 공박스(`#balls`), 티켓북(`#tickets`), 빈 라커
+- `locker.html` 라커룸 — 첫 화면은 입체 라커룸 장면(`locker/room-*.js`): 유니폼→카드 앨범(`#cards`, 카드 누르면 뒷면 선수 정보), 유리 케이스 기념구·금 글러브→공박스(`#balls`), 코르크 찬장의 티켓→티켓북(`#tickets`)
 - `number-match.html` 등번호 매치 — 확인용 버튼은 주소 끝에 `?dev`
 - `homerun.html` 홈런볼 모으기 — 확인용 버튼은 주소 끝에 `?dev`
 - `ticketing.html` 티켓팅 War — 확인용 버튼(티켓 다 채우기·비우기)은 주소 끝에 `?dev`
