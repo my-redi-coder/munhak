@@ -1,12 +1,12 @@
-# 로비 (첫 화면) — lobby.html
+# 로비 (첫 화면) — index.html
 
-3D 야구장을 불러오기 전에, 가벼운 2D '문학경기장 앞마당' 지도에서 갈 곳을 고르는 화면이에요. (2026-11-05, 묶음 `X-lobby`)
-지금은 `lobby.html`로 따로 올려 두고, 폰에서 확인한 뒤 첫 화면(`index.html`)으로 바꿔요(아래 '교체하는 법').
+3D 야구장을 불러오기 전에, 가벼운 2D '문학경기장 앞마당' 지도에서 갈 곳을 고르는 화면이에요. (2026-11-05, 묶음 `X-lobby` → `X4-landing`에서 첫 화면이 됨)
+**사이트 주소로 들어오면 로비가 먼저 떠요.** 3D 야구장 본체는 `stadium.html`로 옮겼어요(내용은 예전 `index.html` 그대로). 옛 주소 `lobby.html`은 `index.html`로 보내 주는 안내 페이지예요.
 
 ## 어떻게 동작하나요
 
 - 폰·PC 똑같이 **누르기 → 이름표(말풍선) → 한 번 더 누르면 입장**. hover는 쓰지 않아요. 이름표에 '한 번 더 누르면…' 같은 설명 문구는 넣지 않아요.
-- **첫 번째 누름**에서 갈 곳의 파일을 미리 받기 시작해요(`prefetch`). 경기장은 `index.html`과 three.js를 미리 받아 둬서 두 번째 누를 때 덜 기다려요.
+- **첫 번째 누름**에서 갈 곳의 파일을 미리 받기 시작해요(`prefetch`). 경기장은 `stadium.html`과 three.js를 미리 받아 둬서 두 번째 누를 때 덜 기다려요.
 - **두 번째 누름**: 가는 중 화면(미색 + 숨 쉬는 점)을 잠깐 보여 준 뒤 이동해요.
 - 그림은 가로 400 × 세로 760 한 장(SVG 코드)이고, 화면에 맞춰 가운데 놓여요. 남는 곳(폰은 위아래, PC는 양옆)은 하늘·잔디·벚나무로 이어져요. 중요한 곳은 가운데 안전 영역(가로 약 20~380)에만 둬요.
 
@@ -14,7 +14,7 @@
 
 | 곳 | 그림 | 첫 번째 누름 | 두 번째 누름 |
 |---|---|---|---|
-| 경기장 입장 | 티켓부스(왼쪽 아래) | 이름표 '경기장 입장 / 티켓부스' | `index.html`(3D 야구장)으로 |
+| 경기장 입장 | 티켓부스(왼쪽 아래) | 이름표 '경기장 입장 / 티켓부스' | `stadium.html`(3D 야구장)으로 |
 | 정문 | 가운데 활짝 열린 문 + 표 받는 직원 | '표가 있어야 들어갈 수 있어요. 티켓부스로 가볼까요?' + **티켓부스에 ✦ 반짝**(정문을 눌렀을 때만) | 안내와 반짝 다시 |
 | 불펜장 | 빨간 길찾기 표지판(왼쪽) | '불펜장 / 미니게임' | `minigames/bullpen.html` |
 | 라커룸 | 빨간 길찾기 표지판(오른쪽) | '라커룸 / 수집품 보관소' | `minigames/locker.html` |
@@ -26,7 +26,9 @@
 
 | 파일 | 하는 일 |
 |---|---|
-| `lobby.html` | 뼈대(제목 글자·SVG 틀·안내 자리)와 불러올 파일 목록. 링크 미리보기(OG) 태그는 `index.html`과 같게 |
+| `index.html` | **로비(첫 화면)** 뼈대(제목 글자·SVG 틀·안내 자리)와 불러올 파일 목록. 링크 미리보기(OG) 태그 포함 |
+| `stadium.html` | 3D 야구장 본체(예전 `index.html` 그대로) |
+| `lobby.html` | 옛 주소 → `index.html`로 보내는 안내 페이지 |
 | `styles/lobby.css` | 화면 바깥 모양(제목·이름표 글꼴·토스트·가는 중 화면)과 움직임(벚꽃잎·구름·흔들림) |
 | `js/lobby/config.js` | **설정** — 글귀·갈 곳(url)·열림 여부·이름표 위치·으쓱이 한마디 |
 | `js/lobby/kit.js` | 도구 — 난수, 지붕 곡선, 눌러지는 곳 `hot(...)`, 나무·덤불·벚나무. `L`(그림 층 모음)을 만듦 |
@@ -54,18 +56,37 @@
 - 상징물은 로고 대신 **굵은 하얀 글씨 + 빨간 테두리 + 노란 별** 글자 조형물('Munhak').
 - 이 페이지는 `styles/tokens.css`를 불러오지 않아요(그 안의 `[tabindex]:focus-visible` 테두리가 상징물에 보기 싫게 나왔어요). 새 소품에 `tabindex`를 줄 땐 `lobby.css`의 `.hot,.toy{outline:none}`에 더해요.
 
-## 교체하는 법 (로비를 첫 화면으로)
+- **다크 모드에서도 똑같은 색**: `index.html`·`wall.html`의 `<meta name="color-scheme" content="only light">`와 `lobby.css`의 `color-scheme:only light`가 폰·브라우저의 강제 다크 모드를 막아요. 이 줄들을 지우지 않아요(로비 색은 다크 모드용 값이 따로 없어요).
 
-폰에서 로비·담벼락·이동을 확인한 뒤에 한 묶음으로 해요. 파일 이름을 바꾸는 일이라 한 번에 같이 올려요.
+## 나가는 길
 
-1. 지금 `index.html`(3D 야구장)을 `stadium.html`로 이름 바꾸기(내용은 그대로).
-2. `lobby.html`을 `index.html`로 이름 바꾸기.
-3. `js/lobby/config.js`의 `stadium`의 `url`과 `prefetch`의 첫 주소를 `'stadium.html'`로.
-4. `js/lobby/wall-page.js`의 `WALL_BACK_URL`을 `'index.html'`로.
-5. `tools/modmap.py`가 읽는 파일 이름 `index.html`을 `stadium.html`로 고치고 `docs/MODULES.md`를 다시 만들기.
-6. 문서의 '야구장 본체는 `index.html`' 설명(ARCHITECTURE·MODULES·README·각 파일 맨 위 주석)을 `stadium.html`로. 코드 동작에는 영향 없는 설명이라 천천히 해도 돼요.
-- 미니게임의 '야구장' 버튼(바깥에서 열렸을 때)은 이미 `../index.html`로 돌아가게 되어 있어서, 교체하면 로비로 돌아와요.
+| 어디서 | 누르면 |
+|---|---|
+| 야구장(3D) '나가기' → '다시 입장하기' | **로비**로(`js/game/flow.js`의 `LOBBY_URL`) |
+| 불펜장(로비에서 따로 열었을 때) 왼쪽 위 '로비' | 로비로 |
+| 불펜장 맨 아래 '다른 곳으로' — '로비' / '야구장' | 로비 / 야구장(3D) |
+| 불펜장(야구장 위 창으로 열었을 때) 왼쪽 위 '야구장' | 창을 닫고 야구장으로(그대로) |
+| 불펜장(야구장 위 창) 맨 아래 '로비' | 야구장을 나가 로비로 |
+| 라커룸 '뒤로' | 불펜장으로(그대로) → 불펜장에서 위 길로 |
+| 담벼락(wall.html) '돌아가기'·Esc | 로비로(`wall-page.js`의 `WALL_BACK_URL`) |
+
+불펜장 쪽 공용 함수와 주소는 `minigames/shared/store.js`(`mgExit` `mgGoLobby` `mgGoStadium`, `MG_LOBBY_URL` `MG_STADIUM_URL`).
+
+## 주소가 적힌 곳 (이름이 바뀌었을 때 고칠 곳)
+
+첫 화면 교체(2026-11-05, `X4-landing`)로 이렇게 정해졌어요. 파일 이름을 또 바꾸게 되면 아래를 같이 고쳐요.
+
+| 파일 | 이름 | 지금 값 |
+|---|---|---|
+| `js/lobby/config.js` | `hotspots.stadium`의 `url`, `prefetch` 첫 주소 | `'stadium.html'` |
+| `js/lobby/wall-page.js` | `WALL_BACK_URL` | `'index.html'` |
+| `js/game/flow.js` | `LOBBY_URL` | `'index.html'` |
+| `minigames/shared/store.js` | `MG_LOBBY_URL` / `MG_STADIUM_URL` | `'../index.html'` / `'../stadium.html'` |
+| `tools/modmap.py` | 읽는 파일 | `stadium.html` (고친 뒤 `python3 tools/modmap.py`로 `docs/MODULES.md` 다시 만들기) |
+
+- 각 파일 맨 위 주석의 "`index.html`에서 …불러요"는 3D 야구장 시절 이름이에요. **`stadium.html`**을 뜻해요(주석이라 동작에는 영향 없음).
+- 폰에서 올릴 때: 이름 바꾸기가 안 되니 새 이름의 파일로 올리고, 옛 이름 파일은 덮어쓰거나 안내 페이지로 만들어요(`lobby.html`처럼).
 
 ## 담벼락 글은 두 곳
 
-야구장 안 담벼락(`index.html`의 `#wall`)과 로비에서 여는 `wall.html`에 같은 글이 들어 있어요. 글을 고칠 땐 두 곳 다 고쳐요(교체 뒤에는 `stadium.html`과 `wall.html`).
+야구장 안 담벼락(`stadium.html`의 `#wall`)과 로비에서 여는 `wall.html`에 같은 글이 들어 있어요. 글을 고칠 땐 두 곳 다 고쳐요.

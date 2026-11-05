@@ -2,13 +2,14 @@
 
 ## 왜 이렇게 나눴나
 
-파일을 작게 나눠 두고, 고칠 때는 관련 파일만 열어 봐요. 깃허브 페이지에 그대로 올리면 `index.html`이 아래 파일들을 차례로 불러와요. 빌드(합치기) 과정은 없어요.
+파일을 작게 나눠 두고, 고칠 때는 관련 파일만 열어 봐요. 깃허브 페이지에 그대로 올리면 `stadium.html`(3D 야구장 본체)이 아래 파일들을 차례로 불러와요. 첫 화면 `index.html`은 가벼운 로비예요(아래 '로비' 절). 빌드(합치기) 과정은 없어요.
 
 ## 폴더
 
 | 폴더 | 내용 |
 |---|---|
-| `index.html` | 화면 뼈대 + 불러올 파일 목록(아래 순서대로 `<script>`) |
+| `index.html` | **로비(첫 화면)** — 갈 곳 고르는 2D 지도. 아래 '로비' 절 |
+| `stadium.html` | 3D 야구장의 화면 뼈대 + 불러올 파일 목록(아래 순서대로 `<script>`) |
 | `styles/` | 모양(css) |
 | `js/` | 야구장 본체 (아래 레이어 표) |
 | `events/` | 이벤트 장면 하나 = 파일 하나 (`homer.js` 최정 홈런, `kkk.js` KKK, `yeonan.js` 8회말 여난부두) + 이벤트 배경음 mp3 + 여난부두 가사 json |
@@ -34,10 +35,10 @@
 
 ## 규칙
 
-- **불러오는 순서 = `index.html`의 `<script>` 순서.** 모든 파일이 같은 전역 공간을 써요. 뒤 파일은 앞 파일의 이름을 바로 쓸 수 있고, 앞 파일은 뒤 파일을 함수 안에서만(실행 시점에) 불러요.
+- **불러오는 순서 = `stadium.html`의 `<script>` 순서.** 모든 파일이 같은 전역 공간을 써요. 뒤 파일은 앞 파일의 이름을 바로 쓸 수 있고, 앞 파일은 뒤 파일을 함수 안에서만(실행 시점에) 불러요.
 - 파일 맨 바깥에서 `return` 금지(멈춰야 하면 `throw`). `name`·`status`·`top` 같은 브라우저 이름과 겹치는 전역 이름 금지.
 - **문구와 숫자는 `js/core/config.js`.** 응원가 목록만 `songs/songs.js`.
-- **새 기능은 새 파일로.** 새 파일을 만들면 `index.html`에 `<script>` 한 줄을 알맞은 자리에 추가.
+- **새 기능은 새 파일로.** 새 파일을 만들면 `stadium.html`에 `<script>` 한 줄을 알맞은 자리에 추가.
 - 확인은 사용자가 직접(스크린샷 확인 안 함). 문서는 작업 끝날 때 한 번 정리.
 - **출처 주석:** 파일을 고칠 때마다 맨 위에 출처 한 줄(`출처: SSG 팬 레디코더의 문학야구장 …`)이 없으면 넣어요. 가져다 써도 되지만 돈 받고 쓰는 건 안 되고, 'SSG 팬 레디코더의 문학야구장 참조'를 남기는 게 조건.
 
@@ -56,7 +57,7 @@
 - 빅보드 화면 연출은 `js/world/bbshow.js`, 효과음은 `js/audio/eventsfx.js`, 배경음은 `js/audio/evbgm.js`(파일은 `events/`, 목록은 `config.js`의 `EV_BGM`).
 - 이벤트 중 + 내 자리로 돌아온 뒤 `EV_CALM[id]`초(config.js, 기본 30)는 `evCalm()`이 참 → 주변 으쓱이가 화내기를 고르지 않고(npc.js) 화 물결·달래기도 쉬어요(crowdtalk.js). 시작할 때 화내던 으쓱이는 `evCalmCrowd()`로 진정. 새 이벤트도 `EV_CALM`에 한 줄 추가.
 - 공용 도우미: `evBoardCam()` 빅보드 꽉 차게, `evCaption(글자,대상,높이,ms)` 3D 위치 위 자막, `evCount(b,s,o)`/`evCountOff()` 볼카운트 불, `evClapBuild(초)`/`evClapStop()` 빨라지는 박수, 선수 `setFace(종류)`/`clearFace()` 표정. 숨길 이벤트는 `EVENTS`에 `hidden:true`.
-- `index.html`에 `<script src="events/<이름>.js">`를 `events/homer.js` 다음 줄에 추가.
+- `stadium.html`에 `<script src="events/<이름>.js">`를 `events/homer.js` 다음 줄에 추가.
 
 ## 불펜장 (미니게임)
 
@@ -102,7 +103,7 @@
 - 위쪽 오른쪽: 관중 수·소리·설정·직관 사진 / 이벤트·불펜장 / **상황 칩**(`#bMatch`, 예: '수비 · 낮'). 칩 → '경기 상황' 시트(`#mMatch`)에서 공수·낮밤 (`js/ui/fieldmode.js`). 이벤트 장면 중엔 안 열려요.
 - 새 둘러보기 더하기: `config.js`의 `TOURS`에 이름 + `TOUR_CFG`에 `label` → `places.js`의 `TOUR_GO`(들어가는 함수)·`PLACE_ICO`(아이콘 path)에 한 줄씩.
 - 경기장 구경: 둘러보기에서 `ssStart()`(`js/game/sightsee.js`), 나가기는 아래 '돌아가기'.
-- 담벼락: `wallOpen()`/`wallClose()`(`js/ui/wall.js`). 글은 `index.html`의 `#wall` 안에만 있어요(고칠 땐 거기만). 벽 그림은 `wallArt()`. 손글씨 글꼴 3개는 처음 들어갈 때만 불러요. 담벼락이 열려 있는 동안 야구장 그리기는 쉬어요(`loop.js`의 `WALL.on`).
+- 담벼락: `wallOpen()`/`wallClose()`(`js/ui/wall.js`). 글은 `stadium.html`의 `#wall` 안에 있어요(로비에서 여는 `wall.html`에도 같은 글이 있어서 고칠 땐 두 곳 다). 벽 그림은 `wallArt()`. 손글씨 글꼴 3개는 처음 들어갈 때만 불러요. 담벼락이 열려 있는 동안 야구장 그리기는 쉬어요(`loop.js`의 `WALL.on`).
 
 ## 낮·밤 경기 (묶음 A, 2026-11-01)
 
@@ -144,5 +145,6 @@
 
 - 3D 야구장과 **따로 도는 가벼운 페이지**예요. `three.js`를 불러오지 않고, 그림은 SVG 글자(문자열)로 그려요. 파일은 `js/lobby/`에 층(layer)별로 나눠 있고 `lobby.html`의 `<script>` 순서대로 불러요: `config` → `kit` → `scenery` → `stadium` → `props` → `people` → `scene` → `interact`.
 - 야구장 본체와 코드를 나누지 않고 쓰는 것은 글꼴(`fonts/fonts.css`)뿐이에요. `styles/tokens.css` 같은 야구장 스타일은 불러오지 않아요.
-- 자세한 설명·고치는 곳·교체하는 법은 `docs/LOBBY.md`. 담벼락 글은 `index.html`의 `#wall`과 `wall.html` 두 곳에 있어요.
+- 자세한 설명·고치는 곳·주소가 적힌 곳은 `docs/LOBBY.md`. 담벼락 글은 `stadium.html`의 `#wall`과 `wall.html` 두 곳에 있어요.
+- **이름 주의**: 3D 야구장은 예전에 `index.html`이었고 지금은 `stadium.html`이에요. 각 파일 맨 위 주석·옛 문서의 "`index.html`에서 …불러요"는 `stadium.html`을 뜻해요.
 

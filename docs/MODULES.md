@@ -1,6 +1,6 @@
 # 모듈 지도 (자동 생성: tools/modmap.py)
 
-index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이름을 쓸 수 있어요.
+stadium.html(3D 야구장)이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이름을 쓸 수 있어요.
 
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
@@ -45,7 +45,7 @@ index.html이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이�
 | `js/game/mascots.js` | 229 | MASCOT_CFG, MASC, mascotState, mascotTurnRoot, makeMascots, mascotRoll, mascotPlace, mascotMeshes, mascotTap, mascotPickPath, mascotKeepAway, mascotGroundH, mascotWalk, mascotReact … |
 | `js/ui/feedback.js` | 36 | toastT, toast, labels, addLabel, _p, updateLabels, clearLabels, drawSoundIcon, fmt |
 | `js/ui/setup.js` | 45 | buildSwatches, buildDeco, buildZoneList, syncBack, beaconTex, beacon, drawBeacon, overview, blockCenter, focusZone |
-| `js/game/flow.js` | 44 | fadeTo, enterGame, goZone, leaveGame, startSetup |
+| `js/game/flow.js` | 42 | fadeTo, enterGame, goZone, leaveGame, LOBBY_URL, startSetup |
 | `js/game/actions.js` | 35 | ACT_LABEL, ACT_BTN, lineT, setActButtons, startAct, stopAct, setStatus |
 | `js/ui/sheets.js` | 7 | lastFocus, openModal, closeModal |
 | `js/game/crowdtalk.js` | 48 | CROWD, talkPool, actLine, crowdPick, crowdSay, crowdNear, crowdWave, crowdCalm |

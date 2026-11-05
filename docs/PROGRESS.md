@@ -2,9 +2,23 @@
 
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
+## 묶음 X4: 방문 첫 화면을 로비로 · 나가는 길 · 다크 모드 고정 — 올릴 준비 완료 (2026-11-05, `munhak_2026-11-05_X4-landing`)
+
+세 가지를 한 묶음으로(폰에서 파일 단위로 올리는 방식이라 `docs/LOBBY.md` '주소가 적힌 곳' 참고).
+
+1. **다크 모드에서도 똑같은 색**: `index.html`(로비)·`wall.html`에 `color-scheme: only light`, `styles/lobby.css`에도 선언. 폰 다크 모드에서 '가는 중' 화면이 어두운 회색이 되던 문제 해결(로비 색은 다크 모드 값이 따로 없음)
+2. **불펜장·야구장 나가는 길**
+   - 야구장 '나가기' → **'다시 입장하기'가 로비로**(전엔 입장 준비로 바로 돌아감). `js/game/flow.js`의 `LOBBY_URL`
+   - 불펜장: 로비에서 따로 열었을 때 왼쪽 위 버튼이 '로비'로 바뀌고, 맨 아래 '다른 곳으로' 줄에 **로비 · 야구장** 둘 다 있음(`minigames/bullpen.html` `bullpen/bullpen.js` `bullpen/bullpen.css`). 야구장 위 창으로 열었을 때 왼쪽 위 '야구장'은 창 닫기(그대로), 아래 '로비'는 야구장을 나가 로비로. 공용 함수·주소는 `minigames/shared/store.js`(`mgGoLobby` `mgGoStadium` `MG_LOBBY_URL` `MG_STADIUM_URL`). 라커룸은 기존 '뒤로'(불펜장) 그대로
+3. **방문 첫 랜딩 = 로비**: `index.html` = 로비, **3D 야구장은 `stadium.html`**(예전 `index.html` 내용 그대로), 옛 주소 `lobby.html`은 `index.html`로 보내는 안내 페이지. 로비의 '경기장 입장'은 `stadium.html`로, 담벼락 '돌아가기'는 `index.html`로. `tools/modmap.py`는 이제 `stadium.html`을 읽고, `docs/MODULES.md`도 그 기준으로 다시 만듦(내용은 같고 머리말만 바뀜)
+- 고친 파일: `index.html`(새 로비) `stadium.html`(새 이름) `lobby.html`(안내) `wall.html` `styles/lobby.css` `js/lobby/config.js` `js/lobby/wall-page.js` `js/game/flow.js` `minigames/bullpen.html` `minigames/bullpen/bullpen.js` `minigames/bullpen/bullpen.css` `minigames/shared/store.js` `tools/modmap.py` `README.md` `docs/`(LOBBY·PROGRESS·DECISIONS·ARCHITECTURE·MODULES). 야구장·미니게임의 나머지 코드는 안 건드림
+- 확인: 로컬 서버에서 주소 첫 화면이 로비인지, 로비 → 경기장(`stadium.html`, 3D 불러오기) · 불펜장 · 라커룸 · 담벼락 이동, 야구장 '다시 입장하기' → 로비, 불펜장(따로 열림·야구장 위 창) 나가는 길, 옛 주소 `lobby.html` → 첫 화면, 다크 모드(강제 다크 포함)에서 로비·가는 중 화면, 콘솔 오류·404 없음
+- 폰에서 볼 것: 주소로 들어오자마자 로비가 뜨는지(캐시 때문에 안 바뀌면 새로고침), 경기장 입장 체감, 나가기 → 다시 입장하기, 불펜장 맨 아래 두 버튼. 카톡 링크 미리보기는 예전 것이 한동안 남을 수 있음
+- 남은 일: 불펜장 위쪽의 '나의 라커룸' 글자를 '라커룸'으로 할지 / 문학기념관이 열리면 `config.js`의 `museumOpen`과 `url`
+
 ## 묶음 X: 로비(앞마당 지도) 첫 화면 — 올릴 준비 완료 (2026-11-05, `munhak_2026-11-05_X-lobby`)
 
-- 들어가자마자 무거운 3D 야구장을 불러오지 않고, 가벼운 2D 앞마당 지도에서 갈 곳을 고르는 화면. **새 파일만 더해서** `lobby.html`로 올림(기존 `index.html`은 그대로). 폰에서 확인한 뒤 첫 화면으로 교체(`docs/LOBBY.md` '교체하는 법')
+- 들어가자마자 무거운 3D 야구장을 불러오지 않고, 가벼운 2D 앞마당 지도에서 갈 곳을 고르는 화면. **새 파일만 더해서** `lobby.html`로 올림(기존 `index.html`은 그대로). 확인 뒤 **X4에서 첫 화면(`index.html`)으로 교체함**
 - 장면: 문학경기장 앞(1루 광장) 외부 시점, 맑은 봄 낮 + 벚꽃잎·깃발·만국기. 건물은 휜 지붕선·하얀 뾰족 기둥·기둥 사이 빨간 삼각 장식·포스터 3장(빨강·흰색, 'Go for it!' / 'V6')·환영 현수막·GATE 간판. 로고는 쓰지 않고 'Munhak' 글자 조형물(굵은 흰 글씨 + 빨간 테두리 + 노란 별)로 대신함
 - 누르는 곳: 티켓부스(경기장 입장) · 활짝 열린 정문(티켓 안내 + 티켓부스 반짝) · 빨간 길찾기 표지판 한 쌍(불펜장 '미니게임' / 라커룸 '수집품 보관소') · 부스 옆 벽돌벽(담벼락) · 건물 옆 작은 문(문학기념관, 준비 중) · 상징물(별 흔들기). 모두 **누르기 → 이름표 → 한 번 더 누르면 입장**(폰·PC 같음)
 - 첫 번째 누름에서 갈 곳 파일을 미리 받아 둠(경기장은 `index.html` + three.js). 두 번째 누르면 가는 중 화면 → 이동. 뒤로 가기로 돌아오면 가는 중 화면을 걷음(`pageshow`)
