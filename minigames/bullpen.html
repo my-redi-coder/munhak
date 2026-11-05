@@ -13,7 +13,7 @@
 </head>
 <body>
 <header class="mgbar">
-  <button class="cap" id="exit"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>야구장</button>
+  <button class="cap" id="exit"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg><span id="exitLbl">야구장</span></button>
   <h1>불펜장</h1>
   <a class="cap" href="locker.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M12 3v18M8.5 7h1M14.5 7h1M8.5 9h1M14.5 9h1M9.5 13v2M14.5 13v2"/></svg>나의 라커룸</a>
 </header>
@@ -35,6 +35,11 @@
     <span><b>내 라커</b><small id="lockerMeta"></small></span>
     <svg class="i chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
   </a>
+  <h2 class="sec">다른 곳으로</h2>
+  <nav class="gonav" aria-label="다른 곳으로">
+    <button type="button" id="goLobby"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7M6 10v9h12v-9M10 19v-5h4v5"/></svg>로비</button>
+    <button type="button" id="goStadium"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7.6 4.3c1.9 2.3 1.9 13.1 0 15.4M16.4 4.3c-1.9 2.3-1.9 13.1 0 15.4"/></svg>야구장</button>
+  </nav>
 </main>
 <script src="shared/store.js"></script>
 <script src="shared/roster.js"></script>
