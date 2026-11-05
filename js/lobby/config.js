@@ -11,7 +11,7 @@ const CONFIG = {
   hotspots: {
     stadium: { kind:'enter', label:'티켓부스', sub:'경기장 입장', url:'stadium.html', go:'경기장으로 입장하는 중',
                prefetch:['stadium.html','https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'] },
-    bullpen: { kind:'enter', label:'불펜장', sub:'미니게임', url:'minigames/bullpen.html', go:'불펜장으로 가는 중',
+    bullpen: { kind:'enter', sub:'미니게임', url:'minigames/bullpen.html', go:'불펜장으로 가는 중',
                prefetch:['minigames/bullpen.html'] },
     locker:  { kind:'enter', label:'라커룸', sub:'수집품 보관소', url:'minigames/locker.html', go:'라커룸으로 가는 중',
                prefetch:['minigames/locker.html'] },
