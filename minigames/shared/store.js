@@ -38,5 +38,12 @@ var LOCKER=(function(){
 })();
 /* 짧은 알림 (모든 미니게임 페이지 공용) */
 function mgToast(msg,ms,gold){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.toggle('gold',!!gold);t.classList.add('on');clearTimeout(mgToast.k);mgToast.k=setTimeout(function(){t.classList.remove('on')},ms||2200)}
-/* 야구장으로 돌아가기: 야구장 위 창이면 창을 닫고, 따로 열었으면 야구장 첫 화면으로 */
-function mgExit(){if(window.parent!==window)window.parent.postMessage({munhak:'bullpen-close'},'*');else location.href='../index.html'}
+/* (2026-11-05 로비) 나가는 길: 야구장 위 창(iframe)으로 열렸는지에 따라 달라요.
+   - 야구장 위 창: mgExit = 창 닫기(야구장으로), mgGoLobby = 야구장을 나가 로비로
+   - 따로 열림(로비에서 온 경우): mgExit = 로비로, mgGoStadium = 야구장(3D)으로
+   주소: 로비(첫 화면) = index.html, 3D 야구장 = stadium.html (docs/LOBBY.md) */
+var MG_LOBBY_URL='../index.html', MG_STADIUM_URL='../stadium.html';
+function mgInGame(){return window.parent!==window}
+function mgExit(){if(mgInGame())window.parent.postMessage({munhak:'bullpen-close'},'*');else location.href=MG_LOBBY_URL}
+function mgGoLobby(){var u=new URL(MG_LOBBY_URL,location.href).href;if(mgInGame()){try{window.top.location.href=u;return}catch(e){}}location.href=u}
+function mgGoStadium(){if(mgInGame())mgExit();else location.href=MG_STADIUM_URL}
