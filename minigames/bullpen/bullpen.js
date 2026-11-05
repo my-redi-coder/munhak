@@ -22,6 +22,11 @@ function bpRender(){
   document.getElementById('lockerMeta').textContent='카드 앨범 '+LOCKER.cardCount()+'/'+ROSTER.length+', 공박스 '+LOCKER.ballCount()+'/'+HR_TOTAL+', 티켓북 '+LOCKER.ticketCount()+'/'+TICKETS.length;
 }
 document.getElementById('exit').onclick=mgExit;
+/* (2026-11-05 로비) 따로 열렸으면(로비에서 온 경우) 왼쪽 위 버튼은 '로비', 야구장 위 창이면 '야구장'(창 닫기).
+   아래 '다른 곳으로' 줄에는 어느 쪽에서 열렸든 로비·야구장 둘 다 있어요 */
+if(!mgInGame())document.getElementById('exitLbl').textContent='로비';
+document.getElementById('goLobby').onclick=mgGoLobby;
+document.getElementById('goStadium').onclick=mgGoStadium;
 bpRender();
 /* 게임에서 돌아왔을 때 숫자 다시 */
 window.addEventListener('pageshow',bpRender);

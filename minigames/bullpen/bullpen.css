@@ -23,3 +23,7 @@
 .lockerlink b{display:block;font-weight:400;font-size:16px}
 .lockerlink small{color:var(--muted);font-size:13px}
 .lockerlink .chev{margin-left:auto;color:var(--muted)}
+
+/* 다른 곳으로(로비·야구장) — 2026-11-05 */
+.gonav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gonav button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border-radius:16px;background:var(--glass-strong);border:1px solid var(--line);font-size:16px}
