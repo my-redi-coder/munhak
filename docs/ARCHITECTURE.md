@@ -67,14 +67,15 @@
 | 파일 | 하는 일 |
 |---|---|
 | `minigames/bullpen.html` + `bullpen/` | 불펜장 첫 화면: 일러스트(`bullpen-bg.svg`), 게임 목록 `GAMES`(마운드 위 / 등판 대기 중), 내 라커 바로가기 |
-| `minigames/locker.html` + `locker/` | 라커룸(옛 '내 라커'): 첫 화면은 입체 라커룸 한 장면 — `room-kit.js`(그림 부품) → `room-box.js`(입체 도구: 소실점으로 깊어지는 속 빈 상자) → `room-scene.js`(장면 놓기, 설정 `RS`) → `room.js`(누르기·이름표·✦ 반짝·`roomRefresh`). 유니폼=`#cards` 카드 앨범(등급 네 줄, 카드 누르면 뒷면 선수 정보), 유리 케이스 기념구·금 글러브=`#balls` 공박스(기념구 진열장·달별 선반·다시 보기), 찬장 속 티켓=`#tickets` 티켓북(상대 구단별 탭, 누르면 꺼내 보기 + 하이라이트) |
+| `minigames/locker.html` + `locker/` | 라커룸(옛 '내 라커'): 첫 화면은 입체 라커룸 한 장면 — `room-kit.js`(그림 부품) → `room-box.js`(입체 도구: 소실점으로 깊어지는 속 빈 상자) → `room-scene.js`(장면 놓기, 설정 `RS` — 선반 두 번째 칸의 으쓱이 다이어리 `rkDiary`는 폭을 재서 칸 가운데로) → `room.js`(누르기·이름표·✦ 반짝·`roomRefresh`). 유니폼=`#cards` 카드 앨범(등급 네 줄, 카드 누르면 뒷면 선수 정보), 유리 케이스 기념구·금 글러브=`#balls` 공박스(기념구 진열장·달별 선반·다시 보기), 찬장 속 티켓=`#tickets` 티켓북(상대 구단별 탭, 누르면 꺼내 보기 + 하이라이트) |
 | `minigames/number-match.html` + `number-match/` | 등번호 매치 게임, 결과 시트, 덱 완성 엔딩. 주소에 `?dev`면 확인용 버튼 |
 | `minigames/homerun.html` + `homerun/` | 홈런볼 모으기: `game.js`(판 진행·난이도·입력·다시 보기), `scene.js`(외야 장면·글러브·공), `cutscene.js`(그라운드 홈런·올스타 브레이크). 주소 끝 `#replay-ground`·`#replay-allstar`면 장면만 재생 후 공박스로, `?dev`면 확인용 버튼 |
 | `minigames/ticketing.html` + `ticketing/` | 티켓팅 War: `game.js`(예매 오픈·대기열·좌석도·판정·결제·발권), `ticketing.css`. 숫자(빈자리 시간 `LIFE`, 섞는 비율 `MIX`, 제한 시간)는 `game.js` 맨 위. `?dev`면 티켓 다 채우기·비우기 |
+| `minigames/packing.html` + `packing/` | 직관 짐싸기(층 순서대로): `data.js`(구단·유니폼·물건 그림과 목록·구장별 음식·이벤트·달력 묶음) → `schedule.js`(2026 144경기 `REAL_GAMES`, 경기별 조건 `missionFor`) → `rules.js`(정답 `expected`·채점 `judge`) → `diary-lines.js`(일기 문장) → `save.js`(`LOCKER` 연결) → `sound.js` → `ui.js`(`h`·`show`·`pkExit`) → `break.js`(올스타 브레이크 그림) → `calendar.js`(으쓱이 다이어리 달력·경기 팝업) → `play.js`(조건 화면·카운트다운·책상→옷장→야푸) → `result.js`(일기 결과·도장·축하) → `dev.js`(`?dev` 확인용) → `main.js`. 스타일 `packing.css`·`calendar.css`·`result.css`·`dev.css`, 그림 `img/*.webp` 13장. 주소 끝 `#diary`면 달력부터 |
 | `minigames/shared/tickets.js` | 2026 시즌 승리 경기 65개 `TICKETS`(날짜·선발·상대·홈/원정·구장·점수·하이라이트 영상 번호). 새 경기는 맨 뒤에 붙이기(번호가 저장 키) |
 | `minigames/shared/ticket.js` + `ticket.css` | 승리 티켓 그리기 `tkHTML`·`tkStack`(겹친 매수)·`tkMini`(주머니에 꽂힌 절반), 티켓북 `tkBookHTML`·`tkTeamTabs`, 구단 탭 순서 `TK_TEAMS` |
 | `minigames/shared/mg.css` | 공용 색·글꼴(야구장 토큰과 같음), 위쪽 막대, 버튼, 알림 |
-| `minigames/shared/store.js` | `LOCKER`: 수집품 보관(이 기기 localStorage `munhak-locker-v1`: 카드·공·나이스 캐치·본 장면·티켓), `mgToast`, `mgExit` |
+| `minigames/shared/store.js` | `LOCKER`: 수집품 보관(이 기기 localStorage `munhak-locker-v1`: 카드·공·나이스 캐치·본 장면·티켓·으쓱이 다이어리 `diary`), `mgToast`, `mgExit` |
 | `minigames/shared/roster.js` | 선수 명단 `ROSTER`(등번호·이름·등급 legendary/core/special/normal), 동명이인 `SAME_NAME`, `TIER_TAG`·`TIER_NAME` |
 | `minigames/shared/players.js` | 카드 뒷면 정보 `PLAYER_INFO`(포지션·투타·체격·생일·2026 기록), 은퇴 선수 `PLAYER_LEGEND`, `NO_RECORD_MSG` |
 | `minigames/shared/card.js` + `card.css` | 선수 카드 앞·뒷면, 앨범 칸, 크게 보기(`cardView`)와 선수 정보 면(`cardRear`) |
@@ -119,6 +120,8 @@
 - **스페인어 수첩** `js/ui/food-note.js` + `styles/food-note.css`: 야푸먹기 테이블(`food.js`의 `fdTable`)이 `noteSvg()`로 수첩을 그리고, `openFood`가 `noteBind()`, `closeFood`·`foodEsc`가 `noteClose()`. 펼친 수첩은 `#food` 안에 처음 열 때 만들어요(`noteBuild`). 글은 `NOTE_PAGES`만 고치면 돼요. 손글씨 글꼴은 처음 열 때만 불러와요.
 - **핸드폰 잠금화면** `js/ui/food-phone.js` + `styles/food-phone.css`: `fdTable`이 `phoneSvg(hm)`로 작은 핸드폰을 그리고, `openFood`가 `phoneBind()`, `closeFood`·`foodEsc`가 `phoneClose()`. 펼친 잠금화면은 `#food` 안에 처음 열 때 만들어요(`phBuild`). 개막일·알림 글·링크는 `PHONE_CFG`만. 배경화면은 `phWall()` SVG.
 - **관중 멘트** `js/game/crowdtalk.js`: 멘트 목록은 `config.js`의 `TALK`(angry·good·calm × any·attack·defense)와 `LINES`(cheer 구호·wave). `talkPool`이 지금 공수(`FP.mode`)를 보고 섞어요. `crowdSay` 말풍선(3.5초 안에 같은 글자 안 겹침), `crowdWave` 화·응원 물결(근처 여러 명이 따라 하고 몇 초 뒤 멈춤 `waveFollow`, 물결끼리 `CROWD.GAP`초 쉼), `crowdCalm` 화 물결 뒤 달래기. `npc.js`가 행동 시작 때 부르고, 내가 화내면 `npcReact`가 근처 여러 명을 끌어들여요. 비율·확률은 `CROWD` 숫자만 바꾸면 돼요.
+- **직관 짐싸기**: 위 불펜장 표 참고. 기록 저장은 `LOCKER.diaryAll()`(저장된 객체 그대로 — 고친 뒤 `LOCKER.saveDiary()`), 소리는 `LOCKER.pkSound()`. 일정을 바꿀 땐 `schedule.js`의 `REAL_GAMES` 한 줄(경기번호가 저장 키라 순서를 바꾸지 않기). 라커룸 등에서 다이어리를 열려면 `minigames/packing.html#diary`. 확인용 버튼은 `?dev`일 때만 `dev.js`가 만들어요(`play.js`의 `QA_STOPS` 훅, `calendar.js`의 `qaCalendarTools` 자리).
+- 불펜장 목록은 `bullpen/bullpen.js`의 `GAMES` 4번 `직관 짐싸기`(`PK_TOTAL` = 144).
 - **티켓팅 War**: 위 불펜장 표 참고. 티켓 저장은 `LOCKER.addTicket(i,{n,tog,seat,blk})`. 발권 뒤 '티켓북에 꽂기'는 sessionStorage `tw-new`에 번호를 남기고 `locker.html#tickets`로 가요(방금 꽂은 티켓 강조).
 
 ## 묶음 C: 응원단상 마스코트 (2026-11-01)
