@@ -7,8 +7,11 @@ var GAMES=[
   {no:2,title:'홈런볼 모으기',desc:'외야석에서 2026 시즌 랜더스 홈런볼을 순서대로 잡아요',href:'homerun.html',ready:true,
    meta:function(){return '공박스 '+LOCKER.ballCount()+' / '+HR_TOTAL}},
   {no:3,title:'티켓팅 War',desc:'2026 시즌 이긴 경기 티켓을 모아 티켓북을 채워요',href:'ticketing.html',ready:true,
-   meta:function(){return '티켓북 '+LOCKER.ticketCount()+' / '+TICKETS.length}}
+   meta:function(){return '티켓북 '+LOCKER.ticketCount()+' / '+TICKETS.length}},
+  {no:4,title:'직관 짐싸기',desc:'경기 조건에 맞게 직관가방을 싸서 으쓱이 다이어리를 채워요',href:'packing.html',ready:true,
+   meta:function(){return '으쓱이 다이어리 '+LOCKER.diaryCount()+' / '+PK_TOTAL}}
 ];
+var PK_TOTAL=144;/* 직관 짐싸기: 2026 정규시즌 144경기 (packing/schedule.js) */
 function bpGameHTML(g){
   var inner='<span class="jno" aria-hidden="true">'+g.no+'</span><span><b>'+cardEsc(g.title)+'</b><span class="d">'+cardEsc(g.desc)+'</span>'
     +'<span class="meta"><small>'+cardEsc(g.meta())+'</small><span class="go">'+(g.ready?'등판하기':'준비 중')+'</span></span></span>';
