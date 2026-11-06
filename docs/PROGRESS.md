@@ -3,6 +3,14 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 작은 패치 Z: 팀 이름 글자 바꾸기 — 올릴 준비 완료 (2026-11-06, `munhak_2026-11-06_Z-ssc-randas`)
+
+- 야구장 안쪽에 보이는 글자만: **SSG → SSC**, **랜더스 → 란다스**, 영어 가사 **Landers → La\*d\*\*s**
+- 가사 5곡(`lyrics/song1·3·5·8·11.json`, "text" 47줄만. 곡 `title`은 화면에 안 나와서 그대로) · 빅보드(`js/world/bigboard.js`: 이름 띠 "인천 SSC 란다스필드", 점수판 칸 "란다스") · 야푸먹기 태블릿 점수판 "SSC"(`js/ui/food.js`) · 으쓱이 대사 7줄(`js/core/config.js`) · 핸드폰 알림 이름 **잉스타그램**·**너튜브**(`js/ui/food-phone.js`, 아이콘 옆 작은 글자도 같이) · 수첩 낙서 속 SSC(`js/ui/food-note.js`, 접근성 설명문 포함)
+- **안 바꾼 것**: 링크 주소·알림 본문(`ssglanders.incheon님이…`, `SSG LANDERS 채널에…`), 담벼락, 불펜장·미니게임·티켓, 응원가 음원(소리는 그대로), 링크 미리보기 이미지(따로 바꿀 예정), 출처 주석
+- 확인: 고친 JS 5개 `node --check` 통과, 가사 JSON 5개 형식 통과, 바꾼 뒤 `SSG`·`랜더스`·`Landers`가 남은 곳은 의도한 곳뿐(출처 주석, 알림 본문·링크, 담벼락, 곡 제목). 폰에서 볼 것: 가사가 노랑으로 차오를 때 `La*d**s` 별표 자리, 빅보드 "인천 SSC 란다스필드" 글자 폭, 핸드폰 알림 이름 길이, 으쓱이 말풍선 길이
+- 남은 일: 링크 미리보기 이미지(`og-image.jpg`) 새로 만들기(사용자가 따로)
+
 ## 작은 패치 Y: 라커룸(내 라커 첫 화면 새로) — 완료 (2026-11-05, `munhak_2026-11-05_Y-locker-room`)
 
 - 제목 '내 라커' → **'라커룸'**(`minigames/locker.html`의 `<title>`·`<h1>`, `locker.js`의 `lkRender`). 카드 앨범·공박스·티켓북 화면 안쪽은 그대로
