@@ -5,11 +5,12 @@
    balls: 홈런볼 모으기로 잡은 공 번호(HR 순서, 0부터) / nice: 나이스 캐치 누적 / seen: 본 장면(ground 그라운드 홈런, allstar 올스타 브레이크)
    tickets: 티켓팅 War로 모은 승리 티켓 {TICKETS 번호: {n 매수, tog 같이 앉음, seat 자리, blk 구역}} (묶음 B, 2026-11-01)
    perfect: 홈런볼 모으기 퍼펙트 판 횟수 = 금 글러브 수 (2026-11-01 추가. 예전 기록엔 없어서 0부터)
+   diary: 직관 짐싸기로 쓴 으쓱이 다이어리 {경기번호(2026 시즌 날짜순 1~144): {s 'ok'|'perfect', miss [실책 이름], lines [일기 줄]}} (2026-11-07 추가) / pkSnd: 직관 짐싸기 소리 켬(기본)·끔
    ※ 저장 칸 이름(KEY)과 항목 모양은 바꾸지 않기 — 바꾸면 다들 모은 기록이 안 보여요. 꼭 바꿔야 하면 옛 기록을 옮기는 코드를 같이 넣어요 */
 var LOCKER=(function(){
   var KEY='munhak-locker-v1',d={cards:[],cardsDone:false,balls:[],nice:0,seen:{},tickets:{}};
   try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);for(var k in o)d[k]=o[k]}}catch(e){}
-  if(!d.seen)d.seen={};if(!d.tickets)d.tickets={};if(!d.perfect)d.perfect=0;
+  if(!d.seen)d.seen={};if(!d.tickets)d.tickets={};if(!d.perfect)d.perfect=0;if(!d.diary)d.diary={};
   function save(){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
   return {
     hasCard:function(no){return d.cards.indexOf(no)>=0},
@@ -33,7 +34,13 @@ var LOCKER=(function(){
     resetTickets:function(){d.tickets={};save()},
     removeTicket:function(i){delete d.tickets[i];save()},
     addPerfect:function(){d.perfect=(d.perfect||0)+1;save();return d.perfect},
-    perfectCount:function(){return d.perfect||0}
+    perfectCount:function(){return d.perfect||0},
+    /* 으쓱이 다이어리(직관 짐싸기): diaryAll은 저장된 객체 그 자체라서 고친 뒤 saveDiary()로 저장해요 */
+    diaryAll:function(){return d.diary},
+    saveDiary:function(){save()},
+    diaryCount:function(){return Object.keys(d.diary).length},
+    pkSound:function(){return d.pkSnd!==false},
+    setPkSound:function(v){d.pkSnd=!!v;save()}
   };
 })();
 /* 짧은 알림 (모든 미니게임 페이지 공용) */
