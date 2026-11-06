@@ -1,7 +1,7 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= 라커룸 누르기·새로고침 (2026-11-05, 패치 Y) =================
    누르면 이름표(예: 카드 앨범 · 84 / 84장) → 같은 곳을 한 번 더 누르면 열려요(로비와 같은 방식).
-   열린다 = 주소 끝을 #cards / #balls / #tickets 로 바꾸기(locker.js 가 화면을 바꿔요). 찬장·라커 안 빈 곳은 눌러도 반응 없음.
+   열린다 = 주소 끝을 #cards / #balls / #tickets 로 바꾸기(locker.js 가 화면을 바꿔요). 으쓱이 다이어리만 packing.html#diary 로 가요. 찬장·라커 안 빈 곳은 눌러도 반응 없음.
    roomState() — 보여 줄 값: 이름·번호는 입장 준비에서 정한 값(야구장과 같은 브라우저 저장 'munhak:backName'·'munhak:backNum').
      입장 준비를 안 했으면 번호는 'V6', 이름은 번호판에만 '으쓱이'(유니폼 등판엔 이름 없음).
      ※ 유니폼 색은 저장되지 않아서 흰 홈 유니폼으로 고정이에요.
@@ -11,10 +11,11 @@ var ROOM={armed:null,timer:0,glinted:false};
 function roomSaved(k){try{var v=localStorage.getItem('munhak:'+k);return v==null?'':String(JSON.parse(v)||'')}catch(e){return ''}}
 function roomState(){
   return {name:roomSaved('backName').slice(0,8),num:roomSaved('backNum').replace(/\D/g,'').slice(0,2)||'V6',/* 번호를 안 정했으면 V6 */
-    perfect:LOCKER.perfectCount(),tickets:LOCKER.ticketCount(),cards:LOCKER.cardCount(),balls:LOCKER.ballCount()};
+    perfect:LOCKER.perfectCount(),tickets:LOCKER.ticketCount(),cards:LOCKER.cardCount(),balls:LOCKER.ballCount(),diary:LOCKER.diaryCount()};
 }
 function roomTagText(go,st){
   if(go==='cards')return '카드 앨범 · '+st.cards+' / '+ROSTER.length+'장';
+  if(go==='diary')return '으쓱이 다이어리 · '+st.diary+' / 144경기';
   if(go==='tickets')return '티켓북 · '+st.tickets+' / '+TICKETS.length+'장';
   if(go==='balls')return st.perfect>0&&ROOM.armedEl&&ROOM.armedEl.getAttribute('aria-label').indexOf('금 글러브')===0?'금 글러브 · 퍼펙트 '+st.perfect+'회':'공박스 · '+st.balls+' / '+HR_TOTAL+'개';
   return '';
@@ -31,7 +32,7 @@ function roomShowTag(el,text){
 }
 function roomTap(el){
   var go=el.getAttribute('data-go');
-  if(ROOM.armedEl===el){roomHideTag();location.hash='#'+go;return}
+  if(ROOM.armedEl===el){roomHideTag();if(go==='diary'){location.href='packing.html#diary';return}/* 으쓱이 다이어리는 직관 짐싸기 페이지 */location.hash='#'+go;return}
   roomHideTag();ROOM.armed=go;ROOM.armedEl=el;
   el.classList.remove('pop');void el.getBoundingClientRect();el.classList.add('pop');
   roomShowTag(el,roomTagText(go,roomState()));

@@ -3,7 +3,7 @@
    그림 400 × 600 한 장(SVG). 내 라커 앞에 서서 정면에서 본 방. 소실점 RS.VP(눈높이)로 모든 칸이 안쪽으로 깊어져요(도구는 room-box.js, 부품은 room-kit.js).
      왼쪽: 긴 내 라커(빨간 틀 + 번호판 + 열린 칸, 유니폼 두 벌만 걸림, 아래 흰 서랍) = 카드 앨범
      오른쪽 위: 열린 찬장 — 안쪽 벽이 코르크, 티켓 두 장이 도드라지고 나머지(작은 일정표·메모)는 눈에 안 띄는 디테일 = 티켓북
-     오른쪽 아래: 선반 4칸 — 맨 위 칸에 유리 케이스 속 기념구 + 금 글러브 자리(퍼펙트 한 번이라도 하면 옆에 놓이고, 글러브엔 퍼펙트 횟수 1~12가 박힘) = 공박스, 아래 세 칸은 비워 둠(나중에 더할 곳)
+     오른쪽 아래: 선반 4칸 — 맨 위 칸에 유리 케이스 속 기념구 + 금 글러브 자리(퍼펙트 한 번이라도 하면 옆에 놓이고, 글러브엔 퍼펙트 횟수 1~12가 박힘) = 공박스, 두 번째 칸에 누워 있는 두꺼운 으쓱이 다이어리 = 으쓱이 다이어리(packing.html#diary, 2026-11-07 묶음 AA), 아래 두 칸은 비워 둠(나중에 더할 곳)
    누르는 곳은 data-go 가 붙은 그룹(.hot): cards · balls · tickets (✦ 반짝 자리는 data-spark="x,y": 유니폼 소매 · 티켓 모서리)
    st = roomState()(room.js): name·num(입장 준비에서 정한 등판), perfect, 숫자들
    ★ 나중에 더할 때: 선반 칸 위치 RS.tiers, 글러브·유리 케이스 놓는 자리 RS.topShelf */
@@ -129,6 +129,16 @@ function roomShelves(svg,st){
     rkGlove(g2s,pg.x-15,pg.y-25,.95*pg.s,Math.min(st.perfect,12));/* 글러브 숫자 = 퍼펙트 횟수(1~12, 12가 넘어도 12) */
     rk('rect',{x:pg.x-19,y:pg.y-32,width:38,height:35,fill:'#000','fill-opacity':0,'pointer-events':'all'},g2);
   }
+  /* 두 번째 칸(공 아래): 누워 있는 두꺼운 으쓱이 다이어리 = 으쓱이 다이어리(달력). 칸 가운데에 오도록 그린 뒤 폭을 재서 옆으로 밀어요 */
+  var b2=boxes[1],pd=b2.at(.26,.46,1);
+  var gd=rk('g',{class:'hot','data-go':'diary',tabindex:0,role:'button','aria-label':'으쓱이 다이어리, '+st.diary+'경기'},svg);
+  var gdf=rk('g',{filter:'url(#rmDrop)'},gd);
+  rkDiary(gdf,pd.x,pd.y,1.0*pd.s,RS.VP);
+  var bb=gdf.getBBox(),dx=(x0+w/2)-(bb.x+bb.width/2),cx=bb.x+bb.width/2+dx;
+  gdf.setAttribute('transform','translate('+dx+',0)');
+  rk('ellipse',{cx:cx,cy:pd.y+1,rx:bb.width*.5,ry:4,fill:'rgba(0,0,0,.24)'},b2.g);
+  gd.setAttribute('data-spark',(bb.x+bb.width+dx-8)+','+(bb.y+4));
+  rk('rect',{x:bb.x+dx-2,y:bb.y-2,width:bb.width+4,height:bb.height+4,fill:'#000','fill-opacity':0,'pointer-events':'all'},gd);
   rbFrame(svg,f,holes,'#f3efe4');
 }
 

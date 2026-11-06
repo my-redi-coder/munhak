@@ -10,6 +10,7 @@
    rkBall(부모, x, y, 반지름)    공 하나(남색 실밥)
    rkGlass(부모, x, y, 크기)     유리 케이스에 든 기념구(x,y = 받침 아래 가운데)
    rkSparkle(부모, x, y, 늦춤초) 귀퉁이 ✦ 반짝(들어올 때 두 번, 누르는 곳 알려 주기)
+   rkDiary(부모, x, y, 크기, 소실점)  선반에 누워 있는 두꺼운 으쓱이 다이어리(표지 '2026 DIARY' · 책등 · 책갈피 끈 둘). 라커룸 소실점에 맞춰 윗면·앞면·책등면이 보여요 (2026-11-07, 묶음 AA)
    ※ 색은 모두 이 장면 안에서만 써요(다크 모드와 상관없이 밝은 라커룸). */
 var RK_NS='http://www.w3.org/2000/svg';
 var RK_FONT='"Black Han Sans","Gowun Dodum",sans-serif';
@@ -118,5 +119,43 @@ function rkGlass(parent,x,y,sc){
   rk('rect',{x:-20,y:-41,width:40,height:34,fill:'none',stroke:'rgba(255,255,255,.85)','stroke-width':1},g);
   rk('path',{d:'M-15,-37L-6,-37L-14,-14L-15,-14Z',fill:'rgba(255,255,255,.55)'},g);
   rk('path',{d:'M-3,-37L0,-37L-8,-16L-10,-16Z',fill:'rgba(255,255,255,.35)'},g);
+  return g;
+}
+
+/* 두꺼운 으쓱이 다이어리: 선반에 누워 있는 두꺼운 책. 라커룸의 소실점(vp)에 맞춰 윗면(표지)·앞면(쪽 옆면)·왼쪽 끝면(책등)이 보여요.
+   x,y = 책 앞면 바닥 가운데, sc = 크기, vp = 장면 소실점[x,y]. 길이 58 · 두께 14 · 깊이는 소실점 쪽으로 줄어듦.
+   표지: 빨강 + 이름표('2026 DIARY') + 작은 금색 별. 책등: 볼록한 띠 네 줄 + 'DIARY'. 쪽은 표지보다 살짝 안쪽. 책갈피 끈 둘이 앞 바닥으로 */
+function rkDiary(parent,x,y,sc,vp){
+  var g=rk('g',{transform:'translate('+x+','+y+') scale('+sc+')'},parent),O='#6b3a2a',L=58,H=14,D=38,K=.8;
+  var Vx=(vp[0]-x)/sc,Vy=(vp[1]-y)/sc;
+  function B(p){return [Vx+(p[0]-Vx)*K,Vy+(p[1]-Vy)*K]}
+  function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}
+  function fmt(n){return n.toFixed(3)}
+  function poly(pts,fill,sw){return rk('polygon',{points:pts.map(function(p){return p[0].toFixed(2)+','+p[1].toFixed(2)}).join(' '),fill:fill,stroke:O,'stroke-width':sw==null?1.1:sw,'stroke-linejoin':'round'},g)}
+  var FL=[-L/2,0],FR=[L/2,0],TL=[-L/2,-H],TR=[L/2,-H],BBL=B(FL),BTL=B(TL),BTR=B(TR),BBR=B(FR);
+  /* ---- 왼쪽 끝면 = 책등 ---- */
+  poly([FL,BBL,BTL,TL],'#a8132a');
+  poly([lerp(FL,TL,.62),lerp(BBL,BTL,.62),lerp(BBL,BTL,.9),lerp(FL,TL,.9)],'rgba(255,255,255,.13)',0);   /* 볼록한 느낌의 빛 */
+  [.1,.3,.7,.9].forEach(function(t){var p=lerp(FL,BBL,t),q=lerp(TL,BTL,t);   /* 책등 띠: 깊이 방향 위치 t */
+    rk('line',{x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:(t===.3||t===.7)?'#E8B923':'#7a0f20','stroke-width':(t===.3||t===.7)?1.1:1.6},g)});
+  var sp=rk('g',{transform:'matrix('+[(BTL[0]-TL[0])/D,(BTL[1]-TL[1])/D,(FL[0]-TL[0])/H,(FL[1]-TL[1])/H,TL[0],TL[1]].map(fmt).join(',')+')'},g);
+  rk('rect',{x:13,y:H*.2,width:12,height:H*.6,rx:1,fill:'#fbf4de',stroke:'#7a0f20','stroke-width':.5},sp);
+  var st=rk('text',{x:19,y:H*.5+1.2,'font-size':3.6,'text-anchor':'middle',fill:'#a8132a','font-family':RK_FONT},sp);st.textContent='DIARY';
+  /* ---- 윗면 = 앞표지 ---- */
+  poly([TL,TR,BTR,BTL],'#b3192f');
+  var u=[(TR[0]-TL[0])/L,(TR[1]-TL[1])/L],v=[(TL[0]-BTL[0])/D,(TL[1]-BTL[1])/D];
+  var art=rk('g',{transform:'matrix('+[u[0],u[1],v[0],v[1],BTL[0],BTL[1]].map(fmt).join(',')+')'},g);
+  rk('rect',{x:3,y:3,width:L-6,height:D-6,rx:2,fill:'none',stroke:'rgba(255,225,160,.55)','stroke-width':.8},art);   /* 표지 안쪽 가는 테두리 */
+  rk('rect',{x:11,y:10,width:36,height:19,rx:3,fill:'#fbf4de',stroke:O,'stroke-width':.9},art);
+  var t1=rk('text',{x:29,y:21.2,'font-size':9.6,'text-anchor':'middle',fill:'#b3192f','font-family':RK_FONT},art);t1.textContent='2026';
+  var t2=rk('text',{x:29,y:26.6,'font-size':4.6,'text-anchor':'middle',fill:'#14233D','font-family':RK_FONT,'letter-spacing':1.2},art);t2.textContent='DIARY';
+  rk('polygon',{points:'49,26 50.2,29.2 53.6,29.4 50.9,31.5 51.8,34.8 49,32.9 46.2,34.8 47.1,31.5 44.4,29.4 47.8,29.2',fill:'#E8B923',stroke:O,'stroke-width':.5},art);
+  /* ---- 앞면: 아래 표지 · 쪽(표지보다 살짝 안쪽) · 위 표지 ---- */
+  var cv=[[0,.17,'#8c1024'],[.83,1,'#a8132a']];
+  cv.forEach(function(bd){var y0=-H*bd[0],y1=-H*bd[1];poly([[-L/2,y0],[L/2,y0],[L/2,y1],[-L/2,y1]],bd[2])});
+  poly([[-L/2,-H*.17],[L/2-2.2,-H*.17],[L/2-2.2,-H*.83],[-L/2,-H*.83]],'#f4ecd6');
+  [.34,.5,.66].forEach(function(t){rk('line',{x1:-L/2+1,y1:-H*t,x2:L/2-3.4,y2:-H*t,stroke:'#d4c8a8','stroke-width':.7},g)});
+  /* ---- 책갈피 끈(노랑·청록)이 앞 바닥으로 ---- */
+  [[-17,'#E8B923'],[-11,'#2fb5a3']].forEach(function(r){rk('polygon',{points:(r[0])+',-5 '+(r[0]+4)+',-5 '+(r[0]+5)+',7 '+(r[0]+2)+',4.4 '+(r[0]-1)+',7',fill:r[1],stroke:O,'stroke-width':.6,'stroke-linejoin':'round'},g)});
   return g;
 }
