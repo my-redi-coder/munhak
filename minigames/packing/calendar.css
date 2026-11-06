@@ -1,0 +1,89 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* ================= 직관 짐싸기: 으쓱이 다이어리(달력) · 경기 팝업 · 올스타 브레이크 · 그림 달력 ================= */
+/* ===================== 달력 화면 ===================== */
+.badge-gold { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 999px; background: var(--gold-bg); color: var(--gold); font-weight: bold; font-size: 13px; }
+.notice { color: var(--sub); font-size: 12.5px; margin: 0 0 10px; }
+.bundles { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 10px; scrollbar-width: none; }
+.bundles::-webkit-scrollbar { display: none; }
+.bundles button { flex: none; border: 1.5px solid var(--line); background: var(--paper); border-radius: 999px; padding: 4px 14px; min-height: 38px; }
+.bundles button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.bundles button.gold { border-color: var(--gold); }
+.summary { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; position: relative; }
+.summary .row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.summary b.big { font-size: 20px; }
+.summary .rate { font-size: 15px; }
+.summary .cmt { color: var(--sub); font-size: 13.5px; margin-top: 2px; }
+.summary .king { position: absolute; right: 12px; bottom: 10px; }
+.summary:has(.king) .cmt { padding-right: 140px; }
+.wk, .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.wk { text-align: center; font-size: 12px; color: var(--sub); margin-bottom: 4px; }
+.wk span:first-child { color: var(--red); }
+.cell { position: relative; aspect-ratio: 1 / 1.22; border-radius: 6px; border: 1px solid var(--line); background: var(--paper); padding: 0; text-align: left; overflow: hidden; }
+.cell.blank { border: 0; background: transparent; }
+.cell.off { background: transparent; border-style: dashed; opacity: .6; }
+.cell .dn { position: absolute; left: 4px; top: 2px; font-size: 11px; color: var(--sub); }
+.cell .tm { position: absolute; left: 0; right: 0; bottom: 0; font-size: 10.5px; text-align: center; color: #fff; background: var(--c, #555); line-height: 16px; white-space: nowrap; }
+.cell.done { border-color: var(--ink); }
+.stp { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%) rotate(-7deg); font-family: "Nanum Pen Script", "Gowun Dodum", cursive; font-size: 26px; line-height: 1; padding: 0 5px; border: 2.5px solid currentColor; border-radius: 6px; }
+.stp.W { color: var(--red); } .stp.L { color: var(--blue); } .stp.D { color: var(--sub); }
+.legend { color: var(--sub); font-size: 12px; margin: 8px 0 14px; }
+.nextbar { margin-top: 10px; display: flex; gap: 8px; }
+.nextbar .btn { flex: 1; }
+
+/* ===================== 팝업 ===================== */
+.overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, .5); display: flex; align-items: flex-end; justify-content: center; z-index: 50; }
+.sheet { width: 100%; max-width: 560px; max-height: 88%; overflow-y: auto; background: var(--bg); border-radius: 18px 18px 0 0; padding: 16px 16px calc(18px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -6px 24px var(--shadow); }
+.sheet h2 { font-size: 18px; margin: 0 0 6px; }
+.sheet .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+.sheet h3 { font-size: 14px; margin: 14px 0 6px; }
+.score { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: center; background: var(--paper); }
+.score th, .score td { border: 1px solid var(--line); padding: 3px 0; }
+.score td:first-child, .score th:first-child { text-align: left; padding-left: 6px; width: 54px; }
+textarea { width: 100%; min-height: 76px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--paper); color: var(--ink); font: inherit; resize: vertical; }
+.mini-diary { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; font-size: 13.5px; }
+.mini-diary p { margin: 0 0 3px; }
+
+/* 실제 경기(진짜) vs 게임 속 조건(랜덤) 구분 */
+.sheet .sec { border-radius: 12px; padding: 9px 12px 8px; margin: 8px 0; }
+.sheet .sec .chips { margin: 0 0 6px; }
+.sheet .sec.real { background: var(--paper); border: 1.5px solid var(--ink); }
+.sheet .board { display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 2px 0 2px; font-size: 15px; }
+.sheet .board b { font-family: var(--num); font-weight: 400; font-size: 27px; letter-spacing: 1px; }
+.sheet .board .res { font-style: normal; font-weight: bold; border: 2px solid currentColor; border-radius: 6px; padding: 0 8px; margin-left: 6px; transform: rotate(-6deg); }
+.sheet .board .res.W { color: var(--red); } .sheet .board .res.L { color: var(--blue); } .sheet .board .res.D { color: var(--sub); }
+.sheet .board.hide { color: var(--sub); }
+.sheet .board.hide b { opacity: .45; }
+/* 올스타 브레이크 칸 + 사진 프레임 */
+.cell.break { background: linear-gradient(#1f3566, #14233D); border-color: #14233D; }
+.cell.break .dn { color: #cfd8ee; }
+.cell.break .bstar { position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%); font-size: 20px; line-height: 1; color: #7FD1FF; }
+.brframe { position: relative; margin: 24px 8px 6px; padding: 10px 10px 4px; background: var(--paper); border: 1.5px solid var(--line); border-radius: 4px; box-shadow: 0 4px 12px var(--shadow); transform: rotate(-1.2deg); }
+.brframe::before, .brframe::after { content: ""; position: absolute; top: -10px; width: 56px; height: 18px; background: rgba(226, 205, 150, .8); box-shadow: 0 1px 2px rgba(0, 0, 0, .15); }
+.brframe::before { left: -12px; transform: rotate(-32deg); }
+.brframe::after { right: -12px; transform: rotate(32deg); }
+.brcanvas { display: block; width: 100%; aspect-ratio: 1 / .78; border: 1.5px solid var(--ink); border-radius: 2px; background: #8EC5F0; }
+.brcap { font-family: "Nanum Pen Script", "Gowun Dodum", cursive; font-size: 25px; line-height: 1.2; text-align: center; padding: 8px 0 6px; color: var(--ink); }
+/* ===== 그림 달력 (ChatGPT로 그린 빈 달력 위에 얹기) =====
+   그림 1024x1536 기준 칸 위치: 격자 x 44~979 · y 473~1318 (정사각 칸 7x6), 요일 칸 y 402~452, 리본 x 190~745 · y 190~315, 둥근 칸 x 810~970 · y 278~352
+   글자 크기는 그림 폭에 비례(cqw)하고, 색은 그림이 항상 밝은 종이라서 다크 모드에서도 고정이에요. */
+.calcard { position: relative; width: 100%; max-width: 460px; margin: 4px auto 0; aspect-ratio: 2 / 3; container-type: inline-size; color: #2e3329;
+  background: url(img/calendar-bg.webp) center / 100% 100% no-repeat; }
+.calcard > * { position: absolute; }
+.calcard .ctitle { left: 19.5%; top: 12%; width: 52.7%; height: 7.2%; display: flex; align-items: center; justify-content: center; font-family: var(--num); font-size: 7.4cqw; line-height: 1; color: #3a2a22; white-space: nowrap; }
+.calcard .crecord { left: 25%; top: 22.6%; width: 45%; height: 3.2%; display: flex; align-items: center; justify-content: center; font-size: 3.9cqw; font-weight: bold; color: #4a3a30; white-space: nowrap; }
+.calcard .clabel { left: 79.1%; top: 15.6%; width: 15.6%; height: 2.4%; display: flex; align-items: center; justify-content: center; font-size: 2.6cqw; font-weight: bold; color: #6a6e5a; }
+.calcard .crt { left: 79.1%; top: 18.1%; width: 15.6%; height: 4.8%; display: flex; align-items: center; justify-content: center; font-family: var(--num); font-size: 4.2cqw; line-height: 1; color: #3a2a22; }
+.calcard .cwk { left: 5.1%; top: 26.2%; width: 89.8%; height: 3.4%; display: grid; grid-template-columns: repeat(7, 1fr); column-gap: 1.35cqw; align-items: center; text-align: center; font-size: 3.4cqw; font-weight: bold; color: #4a3a30; }
+.calcard .cwk span:first-child { color: #c8102e; }
+.calcard .cgrid { left: 4.3%; top: 30.79%; width: 91.31%; height: 55.01%; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(6, 1fr); column-gap: .52cqw; row-gap: 1.25cqw; }
+.calcard .cell { aspect-ratio: auto; min-width: 0; min-height: 0; border: 0; border-radius: 2.2cqw; background: transparent; }
+.calcard .cell.off { border: 0; background: transparent; opacity: .5; }
+.calcard .cell .dn { left: 1.1cqw; top: .4cqw; font-size: 3.3cqw; line-height: 1.2; color: #6a6e5a; }
+.calcard .cell .tm { height: 4.7cqw; line-height: 4.7cqw; font-size: 2.9cqw; }
+.calcard .pstar { position: absolute; right: .7cqw; top: .2cqw; font-size: 3.8cqw; line-height: 1; color: #E8B923; text-shadow: 0 0 .3cqw rgba(110, 70, 0, .6); }
+.calcard .cell.done { box-shadow: inset 0 0 0 .4cqw #6b3a2a; }
+.calcard .stp { font-size: 5.8cqw; line-height: 1; border-width: .5cqw; border-radius: 1cqw; padding: 0 .9cqw; left: 54%; top: 40%; }
+.calcard .stp.W { color: #c8102e; } .calcard .stp.L { color: #3d4a8a; } .calcard .stp.D { color: #6a6e5a; }
+.calcard .cell.break { background: linear-gradient(#1f3566, #14233D); }
+.calcard .cell.break .dn { color: #cfd8ee; }
+.calcard .cell.break .bstar { font-size: 5.6cqw; }

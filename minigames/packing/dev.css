@@ -1,0 +1,6 @@
+/* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
+/* 확인용(?dev) 버튼 모양 — 실제 화면에는 안 나와요 */
+.qa-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; padding: 7px 10px; border: 1.5px dashed var(--blue); border-radius: 10px; }
+.qa-lb { font-size: 11px; font-weight: bold; color: var(--blue); }
+.qa-b { font-size: 12px; padding: 3px 10px; border: 1px solid var(--blue); border-radius: 999px; background: var(--paper); color: var(--blue); }
+.qa-btn { position: fixed; top: env(safe-area-inset-top, 0px); left: 50%; transform: translateX(-50%); z-index: 60; font-size: 10px; line-height: 1.5; padding: 1px 12px 2px; border: 1.5px dashed var(--blue); border-top: 0; border-radius: 0 0 9px 9px; background: var(--paper); color: var(--blue); opacity: .85; }
