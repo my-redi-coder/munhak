@@ -1,7 +1,7 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= 야푸먹기: 테이블 위 핸드폰 잠금화면 (작은 패치 B3, 2026-11-01) =================
    테이블 위 핸드폰을 누르면 손에 든 것처럼 아래에서 쓱 올라와요. 잠금화면 = 해 질 녘 문학 조명탑 배경화면
-   + 큰 시계 + 개막 D-day 위젯 + 알림 2장(랜더스 Insta, 쓱튜브). 알림을 누르면 새 탭으로 열려요.
+   + 큰 시계 + 개막 D-day 위젯 + 알림 2장(잉스타그램, 너튜브). 알림을 누르면 새 탭으로 열려요.
    닫기: 바깥 누르기 · × · 아래 홈 바 · 핸드폰을 아래로 쓸어내리기 · Esc
    글·링크·개막일을 고칠 땐 PHONE_CFG만. 모양은 styles/food-phone.css
    food.js와 연결: fdTable()이 phoneSvg()를 그리고, openFood가 phoneBind(), closeFood·foodEsc가 phoneClose()를 불러요. */
@@ -11,8 +11,8 @@ var PHONE_CFG={
   season:'2027',
   carrier:'문학 5G',
   apps:[
-    {id:'insta',name:'랜더스 Insta',time:'방금',body:'ssglanders.incheon님이 새 게시물을 올렸어요 📸',url:'https://www.instagram.com/ssglanders.incheon/'},
-    {id:'tube',name:'쓱튜브',time:'12분 전',body:'SSG LANDERS 채널에 새 영상이 올라왔어요',url:'https://www.youtube.com/@SSGLANDERS'}
+    {id:'insta',name:'잉스타그램',time:'방금',body:'ssglanders.incheon님이 새 게시물을 올렸어요 📸',url:'https://www.instagram.com/ssglanders.incheon/'},
+    {id:'tube',name:'너튜브',time:'12분 전',body:'SSG LANDERS 채널에 새 영상이 올라왔어요',url:'https://www.youtube.com/@SSGLANDERS'}
   ]
 };
 var PHONE={on:false,built:false,t:0,drag:null};
@@ -57,8 +57,8 @@ function phoneSvg(hm){
    +'<path d="M3 76q10-3 21-2t21-3V83a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z" fill="#2a2040"/><path d="M10 76V60M8 58h5v3h-5z" stroke="#2a2040" stroke-width="1.4" fill="#fff3d6"/>'
    +'<text id="fdClock" x="24" y="17" font-size="9" fill="#fff" text-anchor="middle">'+hm+'</text>'
    +'<rect x="11" y="21" width="26" height="10" rx="3" fill="rgba(20,16,40,.35)"/><text x="24" y="28.6" font-size="6" font-weight="700" fill="#fff" text-anchor="middle">'+d.big+'</text>'
-   +'<g><rect x="5" y="36" width="38" height="10" rx="3" fill="rgba(255,255,255,.88)"/><rect x="7" y="38" width="6" height="6" rx="1.6" fill="#e8562e"/><text x="15" y="43" font-size="4.3" fill="#333">랜더스 Insta</text></g>'
-   +'<g><rect x="5" y="48" width="38" height="10" rx="3" fill="rgba(255,255,255,.88)"/><rect x="7" y="50" width="6" height="6" rx="1.6" fill="#d81f36"/><text x="15" y="55" font-size="4.3" fill="#333">쓱튜브</text></g>'
+   +'<g><rect x="5" y="36" width="38" height="10" rx="3" fill="rgba(255,255,255,.88)"/><rect x="7" y="38" width="6" height="6" rx="1.6" fill="#e8562e"/><text x="15" y="43" font-size="4.3" fill="#333">잉스타그램</text></g>'
+   +'<g><rect x="5" y="48" width="38" height="10" rx="3" fill="rgba(255,255,255,.88)"/><rect x="7" y="50" width="6" height="6" rx="1.6" fill="#d81f36"/><text x="15" y="55" font-size="4.3" fill="#333">너튜브</text></g>'
    +'<rect x="18" y="83" width="12" height="2" rx="1" fill="#fff" opacity=".7"/></g></g>';
 }
 /* 개막 D-day: 개막 전 'D-146' / 당일 'D-DAY' / 지난 뒤 '시즌 진행 중' */

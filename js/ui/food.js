@@ -1,7 +1,7 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= 야푸먹기 =================
    (묶음 B) 테이블 위 수첩 이스터에그는 js/ui/food-note.js
-   (B3) 테이블 위 핸드폰 잠금화면(개막 D-day·SSG 인스타·쓱튜브 알림)은 js/ui/food-phone.js
+   (B3) 테이블 위 핸드폰 잠금화면(개막 D-day·잉스타그램·너튜브 알림)은 js/ui/food-phone.js
    (2026-11-01) 테이블 위 입장권을 누르면 티켓북이 그 자리에서 펼쳐져요 → js/ui/food-ticket.js
    내 자리 앞 테이블. 배경은 지금 3D 장면을 흐리게 보여주고, 관중 소리는 조금 낮춰 계속 들려요.
    주문 → 상에 차림(같은 음식은 한 접시) → 눌러서 한 입씩(새우4·물회5·홈런볼6) → 빈 그릇은 비닐봉투로.
@@ -83,7 +83,7 @@ function fdTable(){
   /* 태블릿 중계 */
   +'<path d="M42 130L54 104M126 130L114 104" stroke="#4a4a4a" stroke-width="4" stroke-linecap="round"/><rect x="18" y="14" width="134" height="92" rx="8" fill="#2b2d30"/><rect x="24" y="20" width="122" height="80" rx="3" fill="#3f8a46"/>'
   +'<path d="M85 92L109 70L85 48L61 70Z" fill="#b9824f"/><path d="M85 86L103 70L85 54L67 70Z" fill="#4f9a52"/><circle cx="85" cy="72" r="4" fill="#b9824f"/><g fill="#fff"><rect x="83.5" y="89" width="3" height="3"/><rect x="106" y="68.5" width="3" height="3"/><rect x="83.5" y="46.5" width="3" height="3"/><rect x="61" y="68.5" width="3" height="3"/></g><circle class="fd-ball" cx="85" cy="74" r="1.6" fill="#fff"/>'
-  +'<rect x="27" y="23" width="60" height="14" rx="2" fill="rgba(0,0,0,.62)"/><text x="31" y="33" font-size="7.5" fill="#fff">SSG</text><text id="fdScore" x="52" y="33" font-size="7.5" fill="#fff">'+FOOD.score+' : 0</text><text x="71" y="33" font-size="6" fill="#ffd6dc">3회말</text><rect x="118" y="24" width="24" height="10" rx="2" fill="#c8102e"/><text x="130" y="31.5" font-size="6" fill="#fff" text-anchor="middle">LIVE</text>'
+  +'<rect x="27" y="23" width="60" height="14" rx="2" fill="rgba(0,0,0,.62)"/><text x="31" y="33" font-size="7.5" fill="#fff">SSC</text><text id="fdScore" x="52" y="33" font-size="7.5" fill="#fff">'+FOOD.score+' : 0</text><text x="71" y="33" font-size="6" fill="#ffd6dc">3회말</text><rect x="118" y="24" width="24" height="10" rx="2" fill="#c8102e"/><text x="130" y="31.5" font-size="6" fill="#fff" text-anchor="middle">LIVE</text>'
   +'<text id="fdCall" x="85" y="62" font-size="12" fill="#fff" text-anchor="middle" opacity="0" style="paint-order:stroke;stroke:rgba(0,0,0,.5);stroke-width:3px"></text>'
   /* 기록지 */
   +'<g transform="translate(166 22) rotate(4)"><rect width="70" height="86" fill="#fbfaf4" stroke="#ddd8c8"/><text x="6" y="11" font-size="6.5" fill="#8a8670">기록지</text><g stroke="#cfc9b4" stroke-width=".6"><path d="M4 16H66M4 25H66M4 34H66M4 43H66M4 52H66M4 61H66M4 70H66M4 79H66M18 16V79M30 16V79M42 16V79M54 16V79"/></g><g font-size="5.5" fill="#c8102e"><text x="20" y="23">1B</text><text x="33" y="32">K</text><text x="44" y="41">BB</text><text x="20" y="50">HR</text></g><path d="M48 76L80 48" stroke="#f1c24a" stroke-width="4.5" stroke-linecap="round"/><path d="M48 76l-3 3" stroke="#444" stroke-width="2" stroke-linecap="round"/></g>'
