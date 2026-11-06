@@ -18,7 +18,7 @@ var bbScreenTex=canvasTex(2048,Math.round(2048*BB.H/BB.W),function(x,w,h){
   x.fillStyle='#173326';x.fillRect(L,T,PW,PH);x.strokeStyle='#2f5a43';x.lineWidth=5;x.strokeRect(L+6,T+6,PW-12,PH-12);
   var cols=['1','2','3','4','5','6','7','8','9','R','H','E'],cx0=L+230,cw=(PW-260)/cols.length;
   x.font='34px '+F;x.fillStyle='#bcd3c4';cols.forEach(function(c,i){x.fillText(c,cx0+i*cw+cw/2,T+62)});
-  x.textAlign='left';x.fillStyle='#f7f2df';x.font='40px '+F;x.fillText('원정',L+40,T+150);x.fillText('랜더스',L+40,T+240);
+  x.textAlign='left';x.fillStyle='#f7f2df';x.font='40px '+F;x.fillText('원정',L+40,T+150);x.fillText('란다스',L+40,T+240);
   x.textAlign='center';x.fillStyle='#f6c64a';for(var r=0;r<2;r++)for(i=0;i<cols.length;i++)x.fillText('–',cx0+i*cw+cw/2,T+150+r*90);
   var lab=[['B',3],['S',2],['O',2]],px=L+120;x.textAlign='left';x.font='34px '+F;
   lab.forEach(function(l){x.fillStyle='#bcd3c4';x.fillText(l[0],px,T+PH-50);for(var k=0;k<l[1];k++){x.fillStyle='#2c4a3a';x.beginPath();x.arc(px+50+k*36,T+PH-50,13,0,TAU);x.fill()}px+=220});
@@ -44,7 +44,7 @@ function bbPanelTex(lines){return canvasTex(512,180,function(x,w,h){
   g.add(new THREE.Mesh(mergeParts(parts),MVC));
   // 건물 유리 띠 + 이름 띠
   var glass=new THREE.Mesh(Box(66,2.6,.2),new THREE.MeshLambertMaterial({color:0x9fc6d4}));glass.position.set(0,7.4,7.05);g.add(glass);
-  var nameTex=canvasTex(1024,96,function(x,w,h){x.fillStyle='#262b29';x.fillRect(0,0,w,h);x.fillStyle='#f3efe2';x.font='bold 52px "Gowun Dodum","Apple SD Gothic Neo",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('인천 SSG 랜더스필드',w/2,h/2+3)});
+  var nameTex=canvasTex(1024,96,function(x,w,h){x.fillStyle='#262b29';x.fillRect(0,0,w,h);x.fillStyle='#f3efe2';x.font='bold 52px "Gowun Dodum","Apple SD Gothic Neo",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText('인천 SSC 란다스필드',w/2,h/2+3)});
   var nm=new THREE.Mesh(new THREE.PlaneGeometry(26,2.4),new THREE.MeshBasicMaterial({map:nameTex,fog:false}));nm.position.set(0,12.2,7.12);g.add(nm);
   // 화면 (실측 비율)
   var scr=new THREE.Mesh(new THREE.PlaneGeometry(W,H),new THREE.MeshBasicMaterial({map:bbScreenTex,fog:false}));scr.position.set(0,CY,1.32);g.add(scr);BB.scr=scr;
