@@ -24,7 +24,18 @@ var CVS={
 
   /* 2. 이웃 블록 사이 벌어진 틈을 계단 콘크리트로 메우기 (H=이음 꼭짓점, up/un=양쪽 블록이 뒤로 뻗는 방향) */
   function wedge(L,H,up,un){
-    CVS.wedges.push({H:H,up:up,un:un,base:L.base,rows:L.rows});   // 여난부두 불빛이 이 틈에도 켜져요(events/yeonan.js)
+    /* 쐐기 틈에도 좌석·관중·4인 테이블을 채워요(작은 패치 AI). 관중은 crowdSpots·decorSeats에 넣어서 여난부두 불빛·밤 어둡기도 따라가요(그래서 예전 CVS.wedges 불빛 목록은 이제 비워 둬요) */
+    var mn=[up[0]+un[0],up[1]+un[1]],ml=Math.hypot(mn[0],mn[1]),bw=[mn[0]/ml,mn[1]/ml],th=Math.atan2(bw[0],bw[1]),dir=[Math.cos(th),-Math.sin(th)],
+        sblk={g:new THREE.Group(),cfg:{theta:th},key:null,dim:true};sblk.g.updateMatrixWorld(true);
+    for(var r=0;r<L.rows;r++){
+      var d=1.9+r*RD+RD*.64,a=[H[0]+d*up[0],H[1]+d*up[1]],b=[H[0]+d*un[0],H[1]+d*un[1]],cw=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.floor((cw-.5)/SP+1e-6);
+      if(n<1)continue;
+      var c=[(a[0]+b[0])/2,(a[1]+b[1])/2],T=tbLayout(n),y=L.base+r*RH;
+      for(var i=0;i<n;i++){var st={x:c[0]+dir[0]*T.xs[i],y:y,z:c[1]+dir[1]*T.xs[i],occ:null,crowd:-1};
+        if(Math.random()<L.occ){st.crowd=crowdSpots.length;crowdSpots.push({blk:sblk,seat:st})}
+        decorSeats.push({blk:sblk,s:st,col:CVS.seat})}
+      T.groups.forEach(function(gp){tbParts(wedges,c[0]+dir[0]*gp.xc-bw[0]*.5,y,c[1]+dir[1]*gp.xc-bw[1]*.5,gp.w,[0,th,0],-bw[0],-bw[1])});
+    }
     var bottom=-.05,/* 4층(sky)도 땅까지 꽉 채워요(작은 패치 AH) */steps=[[0,1.9,L.base,0xdedad0]];
     for(var r=0;r<L.rows;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,L.base+r*RH,r%2?0xe2ded3:0xd9d5c9]);
     steps.forEach(function(s){
@@ -43,13 +54,13 @@ var CVS={
     for(var k=0;k<L.n;k++){
       var phi=(-45+seg*(k+.5))*rad,u=[Math.sin(phi),Math.cos(phi)],d=[Math.cos(phi),-Math.sin(phi)],
           F=[rc*u[0],zc+rc*u[1]];                                   // 앞줄 중앙
-      buildBlock({x:F[0]+1.9*u[0],z:F[1]+1.9*u[1],theta:phi,base:L.base,sky:L.sky,rows:L.rows,cols:cols,seat:CVS.seat,occ:L.occ});
+      buildBlock({x:F[0]+1.9*u[0],z:F[1]+1.9*u[1],theta:phi,base:L.base,sky:L.sky,rows:L.rows,cols:Math.floor((W-1)/SP+1e-6),W:W,table:true,seat:CVS.seat,occ:L.occ});/* 폭 W는 예전과 같게(앞 난간·KKK 카드 자리 KB.P 그대로), 좌석만 통로 없이 4인 테이블로 (작은 패치 AI) */
       ends.push({u:u,l:[F[0]-W/2*d[0],F[1]-W/2*d[1]],r:[F[0]+W/2*d[0],F[1]+W/2*d[1]]});
     }
     wedge(L,ends[0].l,[-S,S],ends[0].u);                              // 3루 쪽 끝: 대각선 블록과 이어짐
     wedge(L,ends[L.n-1].r,ends[L.n-1].u,[S,S]);                       // 1루 쪽 끝
     for(k=0;k<L.n-1;k++)wedge(L,[(ends[k].r[0]+ends[k+1].l[0])/2,(ends[k].r[1]+ends[k+1].l[1])/2],ends[k].u,ends[k+1].u);
   });
-  scene.add(new THREE.Mesh(mergeParts(wedges),MVC));
+  var wm=new THREE.Mesh(mergeParts(wedges),MVC.clone());wm.userData.dimZone=true;scene.add(wm);/* 밤 경기 어둡기(nightdim.js)가 이 재질을 같이 어둡게 해요 */
   ledTex.repeat.set(rep0,1);   // 좁은 블록이 띠 그림 비율을 바꿔 놓은 걸 되돌려요(기존 띠 글자가 안 찌그러지게)
 })();
