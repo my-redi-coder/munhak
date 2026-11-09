@@ -7,7 +7,7 @@
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
-| `js/core/config.js` | 128 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, STAGE_DY … |
+| `js/core/config.js` | 129 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, STAGE_DY … |
 | `songs/songs.js` | 19 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |
@@ -17,7 +17,6 @@
 | `js/world/bigboard.js` | 87 | BB, bbEq, bbScreenTex, bbPanelTex, boardTick |
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
 | `js/world/kboard.js` | 24 | KB, kbTex, kbAdd, kbTick, kbClear |
-| `js/world/mural.js` | 62 | MURAL, muralRng, muralSitter, muralDraw, muralBase, muralMake |
 | `js/world/stands.js` | 96 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
 | `js/world/outfield.js` | 90 | OF, ofFence, ofOut, ofLip |
 | `js/world/greenzone.js` | 63 | GZ, gzY, gzD, gzP, gzWall, parts, nRail |
@@ -27,6 +26,7 @@
 | `js/world/outskirts.js` | 86 | OSK |
 | `js/world/couplezone.js` | 84 | CPL |
 | `js/world/curvestand.js` | 55 | CVS |
+| `js/world/ribbonline.js` | 24 | RL |
 | `js/world/roofs.js` | 136 | ROOF |
 | `js/world/pz-kit.js` | 39 | PZ_SETS, pzFlat, pzArch, pzStar, pzSpark, pzScribble, pzRound, pzCover, pzMat, pzTexMat, pzNoiseTex |
 | `js/world/pzone.js` | 146 | PZP, pzPanelDraw, pzDefaultArt, pzIcoGlove, pzIcoTicket, pzIcoBat, pzIcoCap, pzSetPhoto, pzSetLine, PZ_STAGE, PZB, pzTileTex, pzPoolTex, pzBackdropTex … |
@@ -34,7 +34,7 @@
 | `js/world/crowd.js` | 41 | _m, crowd, crowdSet, crowdFlush |
 | `js/world/laundry.js` | 134 | LDY, LDY_FONT, LDY_GW, LDY_H, LDY_GEO, ldyJerseyTex, LDY_FAR, LDY_NEAR, LDYB, ldyFill, ldyCrowd, LDY_NUM, laundrySet, LDY_T … |
 | `js/world/daynight.js` | 109 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
-| `js/world/nightdim.js` | 51 | ND, ndK, ndApply |
+| `js/world/nightdim.js` | 50 | ND, ndK, ndApply |
 | `js/entities/character.js` | 137 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
 | `js/entities/uniform-kit.js` | 91 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
 | `js/entities/player.js` | 71 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |

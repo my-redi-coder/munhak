@@ -18,7 +18,6 @@ var ND={zone:.70,out:.6,mats:[],crowd:null,last:-1};
     if(!b.dim)return;
     b.terrace.material=terrM;reg(terrM,'zone');
     if(b.seatMesh)reg(b.seatMesh.material,'zone');
-    if(b.muralMat)reg(b.muralMat,'zone');/* 4층 아래 벽 벽화(mural.js) */
   });
   /* 2. 장식 의자 묶음(crowd.js) + 바깥(userData.dimOut) */
   scene.children.forEach(function(o){

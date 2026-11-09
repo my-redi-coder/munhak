@@ -9,7 +9,7 @@ var CVS={
   seat:0x34548a,   // 가운데 블록과 같은 파랑
   levels:[         // o=대각선 블록이 놓인 거리(stands.js의 pos1B 두 번째 값), n=호를 나누는 블록 수
     {base:FLOOR.inf,rows:9, o:14, n:3, occ:.55},   // 아래층(높이는 config.js의 FLOOR)
-    {base:13.5,sky:true,rows:8, o:29, n:5, occ:.45}    // 위층(띠 전광판 붙음, sky = 땅에서 뜬 4층)
+    {base:FLOOR.sky,sky:true,rows:8, o:29, n:5, occ:.45}    // 위층(2층, 높이는 config.js의 FLOOR.sky, sky = 땅에서 뜬 층)
   ],
   wedges:[]        // 블록 사이 쐐기 틈 {H 이음 꼭짓점, up·un 양쪽 뒤로 뻗는 방향, base, rows} — 아래에서 채워요
 };
