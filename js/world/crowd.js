@@ -1,6 +1,6 @@
 /* decor seats instanced */
 (function(){
-  var cols={};decorSeats.forEach(function(d){var ck=d.col+(d.blk.dim?'d':'');(cols[ck]=cols[ck]||[]).push(d)});/* 'd'가 붙은 묶음은 밤에 어두워져요(world/nightdim.js) */
+  var cols={};decorSeats.forEach(function(d){if(d.gone)return;var ck=d.col+(d.blk.dim?'d':'');(cols[ck]=cols[ck]||[]).push(d)});/* 'd'가 붙은 묶음은 밤에 어두워져요(world/nightdim.js) */
   var m=new THREE.Matrix4(),q=new THREE.Quaternion(),v=new THREE.Vector3(),s1=new THREE.Vector3(1,1,1);
   Object.keys(cols).forEach(function(k){
     var arr=cols[k],im=new THREE.InstancedMesh(SEATGEO,new THREE.MeshLambertMaterial({color:arr[0].col}),arr.length);im.userData.dimZone=!!arr[0].blk.dim;

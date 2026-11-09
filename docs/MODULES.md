@@ -22,7 +22,7 @@
 | `js/world/greenzone.js` | 63 | GZ, gzY, gzD, gzP, gzWall, parts, nRail |
 | `js/world/hogbanner.js` | 43 | HOGP, hogPosterDraw, hogPosterTex |
 | `js/world/bbq.js` | 65 | BBQ, bbqSmoke, bbqTick |
-| `js/world/bullpen.js` | 106 | PEN |
+| `js/world/bullpen.js` | 114 | PEN |
 | `js/world/outskirts.js` | 86 | OSK |
 | `js/world/couplezone.js` | 84 | CPL |
 | `js/world/curvestand.js` | 55 | CVS |

@@ -18,11 +18,11 @@ function buildBlock(cfg){
   }
   var lastTop=base+(R-1)*RH;
   parts.push({g:Box(W+.5,1.1,.2),c:0xd2cbbd,p:[0,lastTop+.55,R*RD+.1]});parts.push({g:Box(W+.5,.06,.1),c:0x5b5f55,p:[0,lastTop+1.12,R*RD+.1]});
-  parts.push({g:Box(W,.07,.09),c:0x5b5f55,p:[0,base+1,-1.88]});
+  if(!cfg.noRail)parts.push({g:Box(W,.07,.09),c:0x5b5f55,p:[0,base+1,-1.88]});/* noRail: 불펜 앞 블록은 앞 난간·유리가 없어요(광고띠·포스터 위로 지나가면 안 돼서, 작은 패치 AF) */
   /* 이어진 쪽: 앞 통로·뒷벽·난간도 틈만큼 이어 붙여요 */
   ['l','r'].forEach(function(k){var gap=cfg.open&&cfg.open[k];if(!gap)return;var s=k==='r'?1:-1,cx=s*(W/2+gap/2),gw=gap+.04;
     parts.push({g:Box(gw,base-bottom,1.9),c:0xdedad0,p:[cx,(base+bottom)/2,-.95]});
-    parts.push({g:Box(gw,1.1,.2),c:0xd2cbbd,p:[cx,lastTop+.55,R*RD+.1]});parts.push({g:Box(gw,.07,.09),c:0x5b5f55,p:[cx,base+1,-1.88]})});
+    parts.push({g:Box(gw,1.1,.2),c:0xd2cbbd,p:[cx,lastTop+.55,R*RD+.1]});if(!cfg.noRail)parts.push({g:Box(gw,.07,.09),c:0x5b5f55,p:[cx,base+1,-1.88]})});
   if(sky){
     parts.push({g:Cyl(.45,.45,base,10),c:0xbfb8aa,p:[-W/2+.6,base/2,R*RD-.6]});
     parts.push({g:Cyl(.45,.45,base,10),c:0xbfb8aa,p:[W/2-.6,base/2,R*RD-.6]});
@@ -32,7 +32,7 @@ function buildBlock(cfg){
   }
   var terrace=new THREE.Mesh(mergeParts(parts),MVC);g.add(terrace);
   var OL=cfg.open&&cfg.open.l||0,OR=cfg.open&&cfg.open.r||0,GW=W+OL+OR;
-  var glass=new THREE.Mesh(Box(GW,.95,.04),new THREE.MeshLambertMaterial({color:0xd5ecf2,transparent:true,opacity:.32,depthWrite:false}));glass.position.set((OR-OL)/2,base+.5,-1.9);g.add(glass);
+  var glass=new THREE.Mesh(Box(GW,.95,.04),new THREE.MeshLambertMaterial({color:0xd5ecf2,transparent:true,opacity:.32,depthWrite:false}));glass.position.set((OR-OL)/2,base+.5,-1.9);if(!cfg.noRail)g.add(glass);
   if(sky){var led=new THREE.Mesh(new THREE.PlaneGeometry(W,.9),ledMat);led.material.map.repeat.set(W/24,1);led.rotation.y=Math.PI;led.position.set(0,base-.6,-1.97);g.add(led)}
   var seats=[];
   for(r=0;r<R;r++)for(var c=0;c<C;c++){

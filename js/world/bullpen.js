@@ -78,7 +78,15 @@ var PEN={
     var v=new THREE.Vector3(cs.seat.x,cs.seat.y,cs.seat.z);cs.blk.g.localToWorld(v);
     var p=Math.atan2(v.x,-v.z),deg=Math.abs(p)/D;if(deg>45||deg<20)return;
     var d=Math.hypot(v.x,v.z)-fenceR(p),l=lAt(deg);
-    if(l>=PEN.roof[0]-.8&&l<=PEN.roof[1]+.3&&d>0&&d<PEN.dEnd+.7){cs.gone=true;PEN.cleared++}
+    if(l>=PEN.roof[0]-1.6&&l<=PEN.roof[1]+.5&&d>0&&d<PEN.dEnd+.4){cs.gone=true;PEN.cleared++}
+  });
+  /* 의자도 비워요: 의자 등받이가 포스터를 뚫고 나와 보여서(2026-11-09 폰 확인). crowd.js·yeonan.js가 d.gone을 보고 건너뛰어요 */
+  PEN.chairs=0;
+  decorSeats.forEach(function(ds){
+    var v=new THREE.Vector3(ds.s.x,ds.s.y,ds.s.z);ds.blk.g.localToWorld(v);
+    var p=Math.atan2(v.x,-v.z),deg=Math.abs(p)/D;if(deg>45||deg<20)return;
+    var d=Math.hypot(v.x,v.z)-fenceR(p),l=lAt(deg);
+    if(l>=PEN.roof[0]-1.6&&l<=PEN.roof[1]+.5&&d>0&&d<PEN.dEnd+.4){ds.gone=true;PEN.chairs++}
   });
   PEN.built=[];
   [1,-1].forEach(function(side){

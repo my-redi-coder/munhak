@@ -43,7 +43,7 @@ function ynNight(n){
 function ynBuildLights(){
   if(YN.pts)return;var src=[],i,b=crowd.base,v=new THREE.Vector3();
   for(i=0;i<crowdSpots.length;i++)src.push(b[i*4],b[i*4+1]+1.74,b[i*4+2],b[i*4+3],i);
-  decorSeats.forEach(function(d){/* (작은 패치 AE) 예전 현수막 블록(ZB.hog)은 이제 관중이 앉는 장식 관중석이라 불빛도 켜져요 */
+  decorSeats.forEach(function(d){if(d.gone)return;/* 포스터 밑 의자는 없어요(작은 패치 AF). 예전 현수막 블록(ZB.hog)은 이제 관중이 앉는 장식 관중석이라 불빛도 켜져요(AE) */
     if(Math.random()<.55){v.set(d.s.x,d.s.y,d.s.z);d.blk.g.localToWorld(v);src.push(v.x,v.y+1.62,v.z,d.blk.cfg.theta,-1)}});
   /* 홈 뒤 곡면 스탠드 쐐기 틈: 줄마다 자리 간격으로 불빛만 (으쓱이·의자 없음, 2026-11-03) */
   (CVS.wedges||[]).forEach(function(w){
