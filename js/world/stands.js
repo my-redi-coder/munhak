@@ -59,7 +59,7 @@ function buildBlock(cfg){
     seats.push({r:r,c:c,x:x,z:r*RD+RD*.64,y:base+r*RH,occ:null,crowd:-1});
   }
   g.updateMatrixWorld(true);
-  var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,sky:sky,under:sky?{y1:bottom,x0:-W/2-ul,x1:W/2+ur,z0:-1.9-FLOOR.gap,z1:R*RD+.2}:null,ribbon:tall?{w:W,y:lastTop+wh-.5,z:R*RD-.02,y0:lastTop,y1:lastTop+wh}:null,seats:seats,terrace:terrace,key:cfg.key||null};
+  var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,sky:sky,under:sky?{y1:bottom,x0:-W/2-ul,x1:W/2+ur,z0:-1.9-FLOOR.gap,z1:R*RD+.2}:null,ribbon:tall?{w:W,y:lastTop+wh-.5,z:R*RD-.04,y0:lastTop,y1:lastTop+wh}:null,seats:seats,terrace:terrace,key:cfg.key||null};
   blk.dim=!cfg.out;/* 밤 경기에서 살짝 어둡게 할 블록(내야·으쓱이존·하룰라라석·홈 뒤). 외야(cfg.out)는 밝게 — world/nightdim.js (작은 패치 M) */
   blk.groundH=function(lz){return base+(lz<0?0:Math.min(Math.floor(lz/RD),R-1)*RH)};
   blk.xMin=cfg.reach?cfg.reach[0]:-W/2+.45;blk.xMax=cfg.reach?cfg.reach[1]:W/2-.45;blk.links=[];

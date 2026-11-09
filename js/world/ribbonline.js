@@ -8,6 +8,9 @@
    - (작은 패치 AI) 띠는 **지붕이 끝나는 자리까지만**(roofs.js의 ROOF.farS, 대각선 위치 s). 그 너머 블록은 띠 없음, 걸친 블록은 잘라 붙여요.
    - 이 파일은 roofs.js 다음에 불려야 해요(ROOF.farS를 읽어요). 이음 벽은 밤 경기 어둡기(nightdim.js)에 같이 들어가요. */
 var RL={per:24,h:.9,list:[],total:0};
+/* 번쩍임 막기(작은 패치 AJ): 이음 벽 띠가 벽 앞면에서 5mm밖에 안 떨어져 있어서, 멀리서(경기장 구경) 벽과 깊이가 겹쳐 줄무늬로 깜빡였어요.
+   판을 벽에서 4cm 띄우고, 재질에 깊이 우선(polygonOffset)을 줘서 벽보다 늘 앞에 그려요 */
+ledMat.polygonOffset=true;ledMat.polygonOffsetFactor=-4;ledMat.polygonOffsetUnits=-4;ledMat.needsUpdate=true;
 (function(){
   var S=.7071,zc=1.27,farS=(typeof ROOF!=='undefined'&&ROOF.farS)||59.4,bl=blocks.filter(function(b){return b.ribbon}),wallP=[];
   var X=new THREE.Vector3(1,0,0),NZ=new THREE.Vector3(0,0,-1),v=new THREE.Vector3();
@@ -44,7 +47,7 @@ var RL={per:24,h:.9,list:[],total:0};
     if(nrm.x*(0-M.x)+nrm.z*(zc-M.z)<0)return;                          /* 필드(홈) 쪽을 보지 않으면 순서가 어긋난 틈이라 건너뛰어요 */
     var R=cn.R,wh=R.y1-R.y0;
     if(cn.L>.35)wallP.push({g:Box(cn.L+.05,wh,.2),c:0xd2cbbd,p:[M.x-nrm.x*.1,R.y0+wh/2,M.z-nrm.z*.1],r:[0,Math.atan2(-dd.z,dd.x),0]});
-    plane(cn.L,M.clone().addScaledVector(nrm,.005),nrm,R.y,cn.t+cn.L/2);
+    plane(cn.L,M.clone().addScaledVector(nrm,.04),nrm,R.y,cn.t+cn.L/2);
   });
   if(wallP.length){var wm=new THREE.Mesh(mergeParts(wallP),MVC.clone());wm.userData.dimZone=true;scene.add(wm)}
 })();
