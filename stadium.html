@@ -164,7 +164,7 @@
   </div>
   <input type="file" id="pzFile" accept="image/*" hidden>
 </section>
-<!-- 담벼락 (묶음 A, 2026-11-01) — 글을 고칠 땐 여기만. 그림·동작은 js/ui/wall.js, 모양은 styles/wall.css -->
+<!-- 담벼락 (묶음 A, 2026-11-01) — 글을 고칠 땐 여기와 wall.html 두 곳 다(같은 글). 벽 그림은 js/ui/wall-art.js(공용), 동작은 js/ui/wall.js, 모양은 styles/wall.css -->
 <section id="wall" hidden role="dialog" aria-modal="true" aria-label="담벼락">
   <div class="wall-art" id="wallArt"></div>
   <div class="wall-top"><button class="pill" id="wallBack"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>돌아가기</button></div>
@@ -294,6 +294,7 @@
 <script src="js/ui/photo.js"></script>
 <script src="js/ui/photozone-ui.js"></script>
 <script src="js/ui/places.js"></script>
+<script src="js/ui/wall-art.js"></script>
 <script src="js/ui/wall.js"></script>
 <script src="js/game/movement.js"></script>
 <script src="js/world/petals.js"></script>

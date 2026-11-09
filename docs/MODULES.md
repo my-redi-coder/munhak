@@ -1,6 +1,8 @@
 # 모듈 지도 (자동 생성: tools/modmap.py)
 
-stadium.html(3D 야구장)이 불러오는 순서대로예요. 뒤 파일은 앞 파일의 이름을 쓸 수 있어요.
+## 3D 야구장 — `stadium.html`
+
+불러오는 순서대로예요. 뒤 파일은 앞 파일의 이름을 쓸 수 있어요.
 
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
@@ -71,9 +73,34 @@ stadium.html(3D 야구장)이 불러오는 순서대로예요. 뒤 파일은 앞
 | `js/ui/photo.js` | 125 | PHOTO, POLA, photoStamp, photoDate, photoFonts, photoWin, polaPetal, polaTape, polaCompose, polaFlat, polaRender, takePhoto, polaCapDone |
 | `js/ui/photozone-ui.js` | 67 | pzBtn, pzUIOpen, pzHintShow, pzUIClose, pzUISync, pzHold |
 | `js/ui/places.js` | 53 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
-| `js/ui/wall.js` | 54 | WALL, wallFonts, wallArt, wallOpen, wallClose |
+| `js/ui/wall-art.js` | 30 | wallArt |
+| `js/ui/wall.js` | 31 | WALL, wallFonts, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |
 | `js/world/petals.js` | 16 | petals, updatePetals |
 | `js/world/ribbon.js` | 53 | RIB, ribLyricUrl, ribSongNo, ribLoad, ribLineAt, ribbonFeed, ribDraw, ribbonTick |
 | `js/app/loop.js` | 21 | T, frame |
 | `js/app/boot.js` | 8 | _ro |
+
+## 로비(첫 화면) — `index.html`
+
+3D 야구장과 따로 도는 가벼운 2D 앞마당이에요. 자세한 건 docs/LOBBY.md.
+
+| 파일 | 줄 | 내놓는 이름 |
+|---|---|---|
+| `js/lobby/config.js` | 31 | CONFIG |
+| `js/lobby/kit.js` | 23 | L, NS, rng, arcY, hot, pine, bush, cherry |
+| `js/lobby/scenery.js` | 78 | L.sky, L.hills, L.ground, L.plaza, L.lawn, L.petals |
+| `js/lobby/stadium.js` | 118 | L.stadium, L.gate, L.queue, L.annex |
+| `js/lobby/props.js` | 89 | L.pines, L.poles, L.booth, L.wall, L.monument, L.sign |
+| `js/lobby/people.js` | 53 | PEOPLE, person, L.people |
+| `js/lobby/scene.js` | 9 |  |
+| `js/lobby/interact.js` | 153 | $, stage, reduced, state, hotEl, cfgOf, subsOf, clearSel, idleReset, showBubble, sparkle, toast, shake, wiggleStar … |
+
+## 담벼락 페이지 — `wall.html`
+
+로비에서 3D 없이 담벼락만 여는 페이지예요. js/ui/wall-art.js는 3D 야구장 안 담벼락과 같이 써요.
+
+| 파일 | 줄 | 내놓는 이름 |
+|---|---|---|
+| `js/ui/wall-art.js` | 30 | wallArt |
+| `js/lobby/wall-page.js` | 13 | WALL_BACK_URL, WALL, $, wallBack |

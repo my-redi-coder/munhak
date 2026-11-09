@@ -38,7 +38,7 @@
 | `js/lobby/people.js` | 응원 나온 으쓱이와 표 받는 직원(`PEOPLE` 목록) |
 | `js/lobby/scene.js` | 층을 아래에서 위로 쌓음(순서를 바꾸면 겹침이 바뀜) |
 | `js/lobby/interact.js` | 누르기·이름표·미리 받기·이동·반짝·흔들기·으쓱이 한마디 |
-| `wall.html` + `js/lobby/wall-page.js` + `styles/wall-page.css` | 담벼락만 따로 여는 페이지(3D 없이) |
+| `wall.html` + `js/lobby/wall-page.js` + `styles/wall-page.css` | 담벼락만 따로 여는 페이지(3D 없이). 벽 그림은 `js/ui/wall-art.js`(3D 야구장 안 담벼락과 공용) |
 | `fonts/AlfaSlabOne-Regular.woff2` | 포스터·깃발·으쓱이 배 글자('Go for it!' 'V6' 'L')용 영문 글꼴(약 9KB) |
 
 ## 자주 고치는 것
@@ -82,7 +82,7 @@
 | `js/lobby/wall-page.js` | `WALL_BACK_URL` | `'index.html'` |
 | `js/game/flow.js` | `LOBBY_URL` | `'index.html'` |
 | `minigames/shared/store.js` | `MG_LOBBY_URL` / `MG_STADIUM_URL` | `'../index.html'` / `'../stadium.html'` |
-| `tools/modmap.py` | 읽는 파일 | `stadium.html` (고친 뒤 `python3 tools/modmap.py`로 `docs/MODULES.md` 다시 만들기) |
+| `tools/modmap.py` | 읽는 파일 | `stadium.html`·`index.html`·`wall.html` (고친 뒤 `python3 tools/modmap.py`로 `docs/MODULES.md` 다시 만들기) |
 
 - 각 파일 맨 위 주석의 "`index.html`에서 …불러요"는 3D 야구장 시절 이름이에요. **`stadium.html`**을 뜻해요(주석이라 동작에는 영향 없음).
 - 폰에서 올릴 때: 이름 바꾸기가 안 되니 새 이름의 파일로 올리고, 옛 이름 파일은 덮어쓰거나 안내 페이지로 만들어요(`lobby.html`처럼).

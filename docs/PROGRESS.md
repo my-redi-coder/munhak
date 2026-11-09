@@ -3,6 +3,16 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 작은 패치 AB: 직관 짐싸기 제한 시간 줄이기 · 정리(4층 표시 분리·담벼락 그림 하나로·모듈 지도) — 올릴 준비 완료 (2026-11-08, `munhak_2026-11-08_AB-cleanup-packspeed`)
+
+- **직관 짐싸기 난이도**(`minigames/packing/play.js`의 `pkLimit`): 제한 시간 **깬 경기 5개까지 60초 → 45초, 다음 40경기 45초 → 30초, 나머지 99경기 30초 → 20초**(너무 쉬워서). 숫자는 이 함수 한 줄. 확인: 깬 경기 0·4·5·44·45·100개일 때 `pkLimit()`이 45·45·30·30·20·20, 실제 화면 타이머 첫 숫자 45. `docs/PACKING-GAME.md`·`DECISIONS.md`의 시간 문구도 같이 고침(아래 묶음 AA 줄은 올릴 당시 기록이라 60·45·30 그대로 둠)
+- **정리 1 — '4층인지'를 숫자 대신 표시로**(`js/world/stands.js`·`js/world/curvestand.js`): 예전엔 `base>3`(높이가 3 넘으면)이면 땅에서 뜬 4층 모양(받침 기둥·유리 난간·LED 띠·바닥을 높이에서 시작)으로 만들었음 → 1층 높이를 3 넘게 올리면 스탠드가 공중에 떴을 거라 먼저 분리. 이제 `buildBlock`의 `cfg.sky`(블록은 `blk.sky`)로 표시: 하룰라라석 블록 6곳(`stands.js`의 `base:13.5` 전부)과 `curvestand.js`의 위층 `levels`에 `sky:true`. `base>3`은 코드에서 0곳. **화면은 하나도 안 바뀌는 게 정상**
+- **정리 2 — 담벼락 그림 한 벌로**: `wallArt()`(회색 벽 그림 SVG)가 `js/ui/wall.js`(3D 야구장 안)와 `js/lobby/wall-page.js`(로비에서 여는 `wall.html`)에 똑같이 두 벌 있었음 → 새 파일 `js/ui/wall-art.js` 한 곳으로(두 쪽에서 지움). `stadium.html`·`wall.html`에 불러오는 줄 한 줄씩. 담벼락 **글**은 아직 `stadium.html`의 `#wall`과 `wall.html` 두 곳에 있음(HTML이라 합칠 방법이 마땅찮아 그대로, 고칠 땐 두 곳 다). 낡은 안내 주석('글은 index.html만')도 바로잡음
+- **정리 3 — 모듈 지도에 로비 넣기**(`tools/modmap.py`, `docs/MODULES.md`): 전엔 `stadium.html`만 읽어서 로비(`js/lobby/`)가 빠져 있었음 → 3D 야구장·로비(`index.html`)·담벼락 페이지(`wall.html`) 세 표로. 로비 파일은 `const`·`L.함수 =` 형태라 그 이름도 읽게 고침
+- 이미 끝나 있던 것: `js/lobby/munhak_2026-11-05_X4-landing.zip`(99KB)은 11-06에 저장소에서 지움 — 이번엔 할 일 없음
+- 바뀐 파일: `minigames/packing/play.js`, `js/world/stands.js`, `js/world/curvestand.js`, `js/ui/wall-art.js`(새), `js/ui/wall.js`, `js/lobby/wall-page.js`, `stadium.html`, `wall.html`, `tools/modmap.py`, `docs/` (MODULES·ARCHITECTURE·LOBBY·PACKING-GAME·DECISIONS·PROGRESS)
+- 확인(헤드리스, 같은 난수로 고치기 전·후 비교): 3D 구장의 물체 450개·꼭짓점 310,218개·관중 인스턴스 10,834명·모든 점 좌표 합계·스탠드 블록 38개 높이가 **완전히 같음**. `sky`를 일부러 하나 빼면 달라지는 것도 확인(검사가 제대로 보는지). 3D 안 담벼락·`wall.html` 벽 그림 SVG가 글자 하나까지 같고, 두 페이지 콘솔 오류 없음. 문법 검사 통과. 폰에서 볼 것: 하룰라라석(높은 4층)·홈 뒤 곡면 위층이 전과 똑같은지, 담벼락 들어가기, 직관 짐싸기 타이머가 더 빨리 줄어드는 느낌
+
 ## 묶음 AA: 직관 짐싸기(불펜장 미니게임 4) + 라커룸 으쓱이 다이어리 — 올릴 준비 완료 (2026-11-07, `munhak_2026-11-07_AA-packing`)
 
 - 불펜장 **네 번째 게임 '직관 짐싸기'**: 2026 정규시즌 144경기 중 한 경기의 조건(상대·홈/원정·날씨·기온·이벤트)을 외워서 제한 시간 안에 직관가방을 싸요. 결과는 **으쓱이 다이어리**(일기 + 달력)에 쌓여요. 기획 확정본은 `docs/PACKING-GAME.md`

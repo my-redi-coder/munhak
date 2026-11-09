@@ -75,8 +75,8 @@ function briefing(g, m, go) {
   if (typeof QA_STOPS !== 'undefined') QA_STOPS.cur = function () { clearInterval(iv); started = true; };   // 확인용(?dev) 훅 — dev.js
 }
 
-/* 제한 시간: 깬 경기가 5개 미만이면 60초 → 45개 미만이면 45초 → 그다음(나머지 99경기)은 30초 */
-function pkLimit() { var n = Object.keys(store.rec).length; return n < 5 ? 60 : n < 45 ? 45 : 30; }
+/* 제한 시간: 깬 경기가 5개 미만이면 45초 → 45개 미만이면 30초 → 그다음(나머지 99경기)은 20초 (2026-11-08 패치 AB: 너무 쉬워서 줄임) */
+function pkLimit() { var n = Object.keys(store.rec).length; return n < 5 ? 45 : n < 45 ? 30 : 20; }
 
 function startPlay(g) {
   closeSheet();

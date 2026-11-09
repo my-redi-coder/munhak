@@ -4,9 +4,9 @@ var SP=.8,RD=1.15,RH=.5,AIS=1.4;
 var blocks=[],decorSeats=[],crowdSpots=[];
 function pos1B(s,o,side){side=side||1;return [side*(s*.7071+o*.7071),-s*.7071+o*.7071]}
 function buildBlock(cfg){
-  var R=cfg.rows,C=cfg.cols,W=C*SP+AIS+1.2,base=cfg.base;
+  var R=cfg.rows,C=cfg.cols,W=C*SP+AIS+1.2,base=cfg.base,sky=!!cfg.sky;/* sky: 땅에서 뜬 4층 스탠드(하룰라라석 쪽). 높이(base)와 따로 표시해서 base를 올려도 안 떠 보이게 (패치 AB) */
   var g=new THREE.Group();g.position.set(cfg.x,0,cfg.z);g.rotation.y=cfg.theta;scene.add(g);
-  var bottom=base>3?base-1.1:-.05,parts=[];
+  var bottom=sky?base-1.1:-.05,parts=[];
   parts.push({g:Box(W,base-bottom,1.9),c:0xdedad0,p:[0,(base+bottom)/2,-.95]});
   for(var r=0;r<R;r++){
     var top=base+r*RH;
@@ -23,7 +23,7 @@ function buildBlock(cfg){
   ['l','r'].forEach(function(k){var gap=cfg.open&&cfg.open[k];if(!gap)return;var s=k==='r'?1:-1,cx=s*(W/2+gap/2),gw=gap+.04;
     parts.push({g:Box(gw,base-bottom,1.9),c:0xdedad0,p:[cx,(base+bottom)/2,-.95]});
     parts.push({g:Box(gw,1.1,.2),c:0xd2cbbd,p:[cx,lastTop+.55,R*RD+.1]});parts.push({g:Box(gw,.07,.09),c:0x5b5f55,p:[cx,base+1,-1.88]})});
-  if(base>3){
+  if(sky){
     parts.push({g:Cyl(.45,.45,base,10),c:0xbfb8aa,p:[-W/2+.6,base/2,R*RD-.6]});
     parts.push({g:Cyl(.45,.45,base,10),c:0xbfb8aa,p:[W/2-.6,base/2,R*RD-.6]});
     parts.push({g:Box(W+.6,.25,R*RD*.62),c:0xf4f2ec,p:[0,lastTop+5.2,R*RD*.72],r:[-.08,0,0]});
@@ -33,14 +33,14 @@ function buildBlock(cfg){
   var terrace=new THREE.Mesh(mergeParts(parts),MVC);g.add(terrace);
   var OL=cfg.open&&cfg.open.l||0,OR=cfg.open&&cfg.open.r||0,GW=W+OL+OR;
   var glass=new THREE.Mesh(Box(GW,.95,.04),new THREE.MeshLambertMaterial({color:0xd5ecf2,transparent:true,opacity:.32,depthWrite:false}));glass.position.set((OR-OL)/2,base+.5,-1.9);g.add(glass);
-  if(base>3){var led=new THREE.Mesh(new THREE.PlaneGeometry(W,.9),ledMat);led.material.map.repeat.set(W/24,1);led.rotation.y=Math.PI;led.position.set(0,base-.6,-1.97);g.add(led)}
+  if(sky){var led=new THREE.Mesh(new THREE.PlaneGeometry(W,.9),ledMat);led.material.map.repeat.set(W/24,1);led.rotation.y=Math.PI;led.position.set(0,base-.6,-1.97);g.add(led)}
   var seats=[];
   for(r=0;r<R;r++)for(var c=0;c<C;c++){
     var x=(c-(C-1)/2)*SP+(c<C/2?-AIS/2:AIS/2);
     seats.push({r:r,c:c,x:x,z:r*RD+RD*.64,y:base+r*RH,occ:null,crowd:-1});
   }
   g.updateMatrixWorld(true);
-  var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,seats:seats,terrace:terrace,key:cfg.key||null};
+  var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,sky:sky,seats:seats,terrace:terrace,key:cfg.key||null};
   blk.dim=!cfg.out;/* 밤 경기에서 살짝 어둡게 할 블록(내야·으쓱이존·하룰라라석·홈 뒤). 외야(cfg.out)는 밝게 — world/nightdim.js (작은 패치 M) */
   blk.groundH=function(lz){return base+(lz<0?0:Math.min(Math.floor(lz/RD),R-1)*RH)};
   blk.xMin=cfg.reach?cfg.reach[0]:-W/2+.45;blk.xMax=cfg.reach?cfg.reach[1]:W/2-.45;blk.links=[];
@@ -70,7 +70,7 @@ var ZB={};
   var p;
   p=pos1B(34,14);ZB.ussk=buildBlock({key:'ussk',x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0xc8102e,occ:.58});
   p=pos1B(20,14);ZB.infield=buildBlock({key:'infield',x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50,occ:.6,open:{l:.2},reach:[-14-6.9+.45,6.9-.45]});
-  p=pos1B(22,29);ZB.harulala=buildBlock({key:'harulala',x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.5,open:{l:2.2,r:2.2},reach:[-16-6.9+.45,16+6.9-.45]});
+  p=pos1B(22,29);ZB.harulala=buildBlock({key:'harulala',x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.5,open:{l:2.2,r:2.2},reach:[-16-6.9+.45,16+6.9-.45]});
   /* 외야(걷는 블록 ZB.outfield)·외야 장식·현수막 블록(ZB.hog)은 world/outfield.js가 담장 곡선을 따라 놓아요 */
   // decor
   /* 걸어서 이어지는 옆 블록 (하룰라라석 양옆, 내야 왼쪽) — 이어진 쪽 옆벽 없음 */
@@ -80,11 +80,11 @@ var ZB={};
   /* 내야 연장(작은 패치 W, 2026-11-04): 내야석 끝에서 폴 쪽 모서리 블록(outfield.js의 OF.corner)까지 장식 블록 두 칸(폭 14칸 + 좁은 6칸). 1루·3루 대칭. 걷기·앉기 X, 가운데 조명탑과 겹치지 않는 자리 */
   [[76,14],[86.9,6]].forEach(function(e){[1,-1].forEach(function(sd){p=pos1B(e[0],14,sd);buildBlock({x:p[0],z:p[1],theta:sd*Math.PI/4,base:.6,rows:9,cols:e[1],seat:pick([0x2f6e50,0xc8102e])})})});
   buildBlock({x:0,z:17,theta:0,base:.6,rows:9,cols:14,seat:0x34548a});
-  buildBlock({x:0,z:30.5,theta:0,base:13.5,rows:8,cols:14,seat:0x34548a});
-  p=pos1B(6,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45,open:{r:.01}}));
-  p=pos1B(38,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45,open:{l:.01}}));
-  p=pos1B(52,29);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45});
-  [6,22,38,52].forEach(function(s){p=pos1B(s,29,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:13.5,rows:8,cols:14,seat:0x34548a,occ:.45})});
+  buildBlock({x:0,z:30.5,theta:0,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a});
+  p=pos1B(6,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45,open:{r:.01}}));
+  p=pos1B(38,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45,open:{l:.01}}));
+  p=pos1B(52,29);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45});
+  [6,22,38,52].forEach(function(s){p=pos1B(s,29,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45})});
 })();
 /* cheer stage near 으쓱이존 */
 var stageG=new THREE.Group();

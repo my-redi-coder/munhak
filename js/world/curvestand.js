@@ -9,7 +9,7 @@ var CVS={
   seat:0x34548a,   // 가운데 블록과 같은 파랑
   levels:[         // o=대각선 블록이 놓인 거리(stands.js의 pos1B 두 번째 값), n=호를 나누는 블록 수
     {base:.6,  rows:9, o:14, n:3, occ:.55},   // 아래층
-    {base:13.5,rows:8, o:29, n:5, occ:.45}    // 위층(띠 전광판 붙음)
+    {base:13.5,sky:true,rows:8, o:29, n:5, occ:.45}    // 위층(띠 전광판 붙음, sky = 땅에서 뜬 4층)
   ],
   wedges:[]        // 블록 사이 쐐기 틈 {H 이음 꼭짓점, up·un 양쪽 뒤로 뻗는 방향, base, rows} — 아래에서 채워요
 };
@@ -25,7 +25,7 @@ var CVS={
   /* 2. 이웃 블록 사이 벌어진 틈을 계단 콘크리트로 메우기 (H=이음 꼭짓점, up/un=양쪽 블록이 뒤로 뻗는 방향) */
   function wedge(L,H,up,un){
     CVS.wedges.push({H:H,up:up,un:un,base:L.base,rows:L.rows});   // 여난부두 불빛이 이 틈에도 켜져요(events/yeonan.js)
-    var bottom=L.base>3?L.base-1.1:-.05,steps=[[0,1.9,L.base,0xdedad0]];
+    var bottom=L.sky?L.base-1.1:-.05,steps=[[0,1.9,L.base,0xdedad0]];
     for(var r=0;r<L.rows;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,L.base+r*RH,r%2?0xe2ded3:0xd9d5c9]);
     steps.forEach(function(s){
       var P=[[H[0]+s[0]*up[0],H[1]+s[0]*up[1]],[H[0]+s[1]*up[0],H[1]+s[1]*up[1]],[H[0]+s[1]*un[0],H[1]+s[1]*un[1]],[H[0]+s[0]*un[0],H[1]+s[0]*un[1]]];
@@ -43,7 +43,7 @@ var CVS={
     for(var k=0;k<L.n;k++){
       var phi=(-45+seg*(k+.5))*rad,u=[Math.sin(phi),Math.cos(phi)],d=[Math.cos(phi),-Math.sin(phi)],
           F=[rc*u[0],zc+rc*u[1]];                                   // 앞줄 중앙
-      buildBlock({x:F[0]+1.9*u[0],z:F[1]+1.9*u[1],theta:phi,base:L.base,rows:L.rows,cols:cols,seat:CVS.seat,occ:L.occ});
+      buildBlock({x:F[0]+1.9*u[0],z:F[1]+1.9*u[1],theta:phi,base:L.base,sky:L.sky,rows:L.rows,cols:cols,seat:CVS.seat,occ:L.occ});
       ends.push({u:u,l:[F[0]-W/2*d[0],F[1]-W/2*d[1]],r:[F[0]+W/2*d[0],F[1]+W/2*d[1]]});
     }
     wedge(L,ends[0].l,[-S,S],ends[0].u);                              // 3루 쪽 끝: 대각선 블록과 이어짐

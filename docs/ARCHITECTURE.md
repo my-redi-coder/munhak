@@ -16,7 +16,7 @@
 | `minigames/` | 불펜장(미니게임): 독립 페이지들 + 공용 `shared/` (아래 '불펜장') |
 | `songs/` | 직접 만든 응원가 mp3 + 목록 `songs.js` |
 | `docs/` | 기획·구조·진행·모듈 지도, 직접 올리는 파일 안내(`USER-FILES.md`) |
-| `tools/modmap.py` | `docs/MODULES.md`(파일마다 내놓는 이름) 다시 만들기 |
+| `tools/modmap.py` | `docs/MODULES.md`(파일마다 내놓는 이름) 다시 만들기 — 3D 야구장(`stadium.html`)·로비(`index.html`)·담벼락 페이지(`wall.html`) 셋 다 |
 
 ## 레이어 (아래가 바탕, 위로 갈수록 바탕을 사용)
 
@@ -104,7 +104,8 @@
 - 위쪽 오른쪽: 관중 수·소리·설정·직관 사진 / 이벤트·불펜장 / **상황 칩**(`#bMatch`, 예: '수비 · 낮'). 칩 → '경기 상황' 시트(`#mMatch`)에서 공수·낮밤 (`js/ui/fieldmode.js`). 이벤트 장면 중엔 안 열려요.
 - 새 둘러보기 더하기: `config.js`의 `TOURS`에 이름 + `TOUR_CFG`에 `label` → `places.js`의 `TOUR_GO`(들어가는 함수)·`PLACE_ICO`(아이콘 path)에 한 줄씩.
 - 경기장 구경: 둘러보기에서 `ssStart()`(`js/game/sightsee.js`), 나가기는 아래 '돌아가기'.
-- 담벼락: `wallOpen()`/`wallClose()`(`js/ui/wall.js`). 글은 `stadium.html`의 `#wall` 안에 있어요(로비에서 여는 `wall.html`에도 같은 글이 있어서 고칠 땐 두 곳 다). 벽 그림은 `wallArt()`. 손글씨 글꼴 3개는 처음 들어갈 때만 불러요. 담벼락이 열려 있는 동안 야구장 그리기는 쉬어요(`loop.js`의 `WALL.on`).
+- 담벼락: `wallOpen()`/`wallClose()`(`js/ui/wall.js`). 글은 `stadium.html`의 `#wall` 안에 있어요(로비에서 여는 `wall.html`에도 같은 글이 있어서 고칠 땐 두 곳 다). 벽 그림 `wallArt()`는 `js/ui/wall-art.js` 한 곳(3D 야구장 안과 `wall.html`이 같이 불러 써요 — 고칠 땐 이 파일만). 손글씨 글꼴 3개는 처음 들어갈 때만 불러요. 담벼락이 열려 있는 동안 야구장 그리기는 쉬어요(`loop.js`의 `WALL.on`).
+- 스탠드 블록 높이(`js/world/stands.js`의 `buildBlock`): `base`는 **높이 숫자일 뿐**이고, '땅에서 뜬 4층 모양'(받침 기둥·유리 난간·LED 띠)은 따로 `sky:true`로 표시해요(하룰라라석 블록들·`curvestand.js`의 위층 `levels`). 예전엔 `base>3`이면 4층으로 쳐서 1층 높이를 3 넘게 올리면 스탠드가 공중에 떴어요(패치 AB에서 분리). 1층 높이를 올릴 땐 `base`만 바꾸면 돼요. 외야(`outfield.js`의 `OF.base`)와 바비큐존(`bbq.js`의 `BBQ.base`)은 자기 높이 값을 따로 가져요.
 
 ## 낮·밤 경기 (묶음 A, 2026-11-01)
 
