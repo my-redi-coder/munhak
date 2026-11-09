@@ -1,26 +1,27 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= 불펜 (작은 패치 AE, 2026-11-09) =================
    실제 문학: 폴 바로 옆 담장 뒤의 뚫린 칸(불펜). 한쪽 끝은 하늘이 열려 있고 포수가 앉아요.
-   가운데 쪽 끝은 '꽃돼지 한돈 포스터'가 지붕이 되어 불펜 깊이 전체를 덮어요(처마가 담장 윗면에 얹힘). 그 아래 마운드에 투수가 서요.
+   가운데 쪽 끝은 '꽃돼지 한돈 포스터'가 지붕이 되어 불펜 깊이 전체를 덮고, 판판한 한 장으로 뒤 관중석 앞 3줄 위에 걸쳐요(처마는 담장 윗면에 얹힘, 폭 8m×경사 8m 정사각형). 그 아래 마운드에 투수가 서요.
    열린 쪽 위 관중석 난간에는 긴 광고띠(<조선B&B깍두기> … 홈런존)가 걸려요.
-   · 길이·위치: 안내도(축척 확인) 기준 불펜 길이 약 24m. 폴(45°)에서 가운데 쪽으로 PEN.len m (약 32.5°까지). 1루·3루 똑같이 대칭.
+   · 길이·위치: 안내도(축척 확인) 기준 약 24m였으나, 포스터가 한 블록에만 걸치도록 블록 이음매에 맞춰 21.9m로 줄였어요(작은 패치 AF). 폴(45°)에서 가운데 쪽으로 PEN.len m (약 33.7°까지). 1루·3루 똑같이 대칭.
    · 깊이: 담장 ~ 관중석 앞 난간(OF.LIP 2.6m, 실제 블록 앞면은 약 2.2m). 블록은 하나도 안 옮겨요.
    · 걸어 다니는 구역은 건드리지 않아요. 보는 풍경이에요.
    · 선수는 js/game/penplay.js가 세워요(이 파일은 PEN.pt()로 자리만 알려 줘요).
    · 홈런커플존·분홍 담장 띠(outskirts.js의 OSK.pink)는 PEN.a1에서 시작해요 → 이 파일이 outskirts.js·couplezone.js보다 먼저 불려야 해요.
    · outfield.js(OF·ofFence·ofLip)와 hogbanner.js(hogPosterTex) 다음에 불려야 해요. 숫자는 PEN 한 곳. */
 var PEN={
-  len:24,                 // 불펜 길이(m): 폴에서 가운데 쪽으로
-  roof:[14,24],           // 포스터 지붕이 덮는 구간(폴에서 m) — 가운데 쪽 약 10m
-  banner:[.6,13.4],       // 광고띠 구간(폴에서 m) — 열린 쪽 위
-  catcherAt:2.8,          // 포수 자리(폴에서 m)
+  len:21.9,               // 불펜 길이(m): 폴에서 가운데 쪽으로. 3루 큰 블록·1루 가짜 관중석 칸의 가운데 쪽 이음매(33.7°)와 같음
+  roof:[13.9,21.9],       // 포스터가 놓이는 구간(폴에서 m) — 가운데 쪽 8m, 한 블록 안
+  banner:[.6,12.9],       // 광고띠 구간(폴에서 m) — 열린 쪽 위
+  catcherAt:2.4,          // 포수 자리(폴에서 m)
   plate:18.44,            // 포수 ~ 투수 거리(m, 규정 거리 그대로)
   floor:.8,               // 불펜 바닥 높이(담장 3.1 뒤로 숨게)
   d:1.1,                  // 투구 줄이 담장에서 떨어진 거리(m)
   benchD:1.75,            // 벤치 자리(담장에서 m)
-  wallTop:3.28,           // 담장 윗면(노란 줄 위) — 지붕 처마가 얹히는 높이
+  wallTop:3.28,           // 담장 윗면(노란 줄 위) — 포스터 처마가 얹히는 높이
   rail:4.2,               // 관중석 앞 난간 높이(config.js의 FLOOR.out + 1)
-  topD:2.62,              // 지붕 위쪽 끝(난간 쪽) 담장에서 거리
+  dEnd:7.85,              // 포스터 위쪽 끝이 담장에서 떨어진 거리 = 뒤 블록 3번째 줄 끝
+  hEnd:5.0,               // 그 끝의 높이(3번째 줄 끝 높이 4.7 + 0.3) → 한 장의 판판한 면, 경사 약 12°
   bannerD:1.95,           // 광고띠가 걸리는 거리(블록 앞면보다 앞)
   bannerY:[3.4,4.7],      // 광고띠 아래·위 높이
   scale:1.0,              // 불펜 선수 크기: 그라운드 선수(1.25배)보다 작게 = 실제 비율
@@ -68,15 +69,27 @@ var PEN={
   var dirt=new THREE.MeshLambertMaterial({color:0xb98f62,side:THREE.DoubleSide}),conc=new THREE.MeshLambertMaterial({color:0xd9d5c9,side:THREE.DoubleSide});
   var posterMat=new THREE.MeshLambertMaterial({map:hogPosterTex(),side:THREE.DoubleSide});
   var bannerMat={};bannerMat[-1]=new THREE.MeshBasicMaterial({map:bannerTex(false),side:THREE.DoubleSide});bannerMat[1]=new THREE.MeshBasicMaterial({map:bannerTex(true),side:THREE.DoubleSide});
+  /* 각도(도) → 폴에서 잰 거리(m) (degAt의 거꾸로) */
+  function lAt(deg){var lo=0,hi=tab.length-1;while(hi-lo>1){var m=(lo+hi)>>1;if(tab[m].deg>deg)lo=m;else hi=m}
+    var A=tab[lo],B=tab[hi],u=B.deg===A.deg?0:(deg-A.deg)/(B.deg-A.deg);return A.L+(B.L-A.L)*u}
+  /* 포스터 밑(폭 8m × 담장에서 dEnd) 좌석의 관중은 비워요: crowd.js가 cs.gone 표시를 보고 숨겨요(관중이 포스터를 뚫고 나오지 않게) */
+  PEN.cleared=0;
+  crowdSpots.forEach(function(cs){
+    var v=new THREE.Vector3(cs.seat.x,cs.seat.y,cs.seat.z);cs.blk.g.localToWorld(v);
+    var p=Math.atan2(v.x,-v.z),deg=Math.abs(p)/D;if(deg>45||deg<20)return;
+    var d=Math.hypot(v.x,v.z)-fenceR(p),l=lAt(deg);
+    if(l>=PEN.roof[0]-.8&&l<=PEN.roof[1]+.3&&d>0&&d<PEN.dEnd+.7){cs.gone=true;PEN.cleared++}
+  });
   PEN.built=[];
   [1,-1].forEach(function(side){
     var flip=side>0,fl=PEN.floor,parts=[];
     // 바닥(흙) + 폴 쪽 끝 벽 + 가운데 쪽 끝 벽(지붕 모양 따라 사다리꼴)
     scene.add(new THREE.Mesh(strip(side,0,PEN.len,.05,fl,2.75,fl,false),dirt));
     scene.add(new THREE.Mesh(wall(side,0,[[0,0],[2.75,0],[2.75,3.2],[0,3.2]]),conc));
-    scene.add(new THREE.Mesh(wall(side,PEN.len,[[0,0],[2.75,0],[2.75,PEN.rail],[PEN.topD,PEN.rail],[0,PEN.wallTop]]),conc));
-    // 포스터 지붕: 난간(위) → 담장 윗면(처마)로 비스듬히. 불펜 깊이 전체를 덮고 처마는 담장에 얹혀요
-    var roof=new THREE.Mesh(strip(side,PEN.roof[0],PEN.roof[1],0,PEN.wallTop,PEN.topD,PEN.rail,flip),posterMat);scene.add(roof);
+    var sl=(PEN.hEnd-PEN.wallTop)/PEN.dEnd;                                    // 포스터 경사(높이/거리)
+    scene.add(new THREE.Mesh(wall(side,PEN.len,[[0,0],[2.75,0],[2.75,PEN.wallTop+sl*2.75],[0,PEN.wallTop]]),conc));
+    // 포스터: 담장 윗면(처마)에서 시작해 한 장의 판판한 면으로 뒤 관중석 3줄 위에 걸쳐요. 불펜 깊이 전체를 덮고 처마는 담장에 얹혀요
+    var roof=new THREE.Mesh(strip(side,PEN.roof[0],PEN.roof[1],0,PEN.wallTop,PEN.dEnd,PEN.hEnd,flip),posterMat);scene.add(roof);
     // 광고띠: 열린 쪽 위 관중석 앞 난간에 걸림(1루는 '홈런존' 글자가 가운데 쪽(왼쪽)에 오게 따로 그림)
     var ban=new THREE.Mesh(strip(side,PEN.banner[0],PEN.banner[1],PEN.bannerD,PEN.bannerY[0],PEN.bannerD,PEN.bannerY[1],flip),bannerMat[side]);scene.add(ban);
     // 마운드 + 투구판, 홈 플레이트, 벤치 둘

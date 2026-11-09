@@ -3,14 +3,14 @@
    사진 기준: 외야 담장 뒤로 계단처럼 올라가는 칸막이 부스. (작은 패치 AE: 4줄 → 2줄. 실제로는 불펜 뒤에 겹쳐 있어 줄여서 앞 불펜(world/bullpen.js)과 어울리게) 칸마다 빨강·주황 낮은 벽, 짙은 나무 테이블과 양쪽 벤치,
    테이블 위 불판과 고기, 민트색 난간, 맨 윗줄은 빨간 차양 지붕. 연기는 bbqTick에서 매 프레임 올라감.
    자리·방향은 world/outfield.js가 담장 곡선을 따라 정해 OF.bbq에 넣어 줘요(1루 폴 쪽 첫 칸). */
-var BBQ={rows:2,D:3,rise:1,base:FLOOR.out,cols:6,bw:3.6};/* base = 외야석과 같은 높이(config.js의 FLOOR.out) */
+var BBQ={rows:2,D:3,rise:1.3,base:FLOOR.out+3*RH,cols:6,bw:3.83};/* base = 가짜 관중석 3줄 끝 높이(FLOOR.out + 3줄×RH = 4.7), 줄마다 1.3씩 올라 옆 블록 계단 높이와 맞아요. bw 3.83 → 폭 25.4m = 3루 두 블록 폭(작은 패치 AF) */
 var bbqSmoke=[];
 (function(){
   var g=new THREE.Group();g.position.set(OF.bbq.x,0,OF.bbq.z);g.rotation.y=OF.bbq.theta;scene.add(g);
   var R=BBQ.rows,D=BBQ.D,C=BBQ.cols,BW=BBQ.bw,W=C*BW+2.4,parts=[],grills=[],ppl=[];
   function fy(i){return BBQ.base+i*BBQ.rise}
   // 계단 바닥 + 앞 옹벽
-  parts.push({g:Box(W,BBQ.base,1),c:0x2c6a47,p:[0,BBQ.base/2,-.5]});
+  /* (작은 패치 AF) 앞쪽 초록 옹벽은 뺐어요: 바로 앞이 가짜 관중석이라 */
   for(var i=0;i<R;i++){var y=fy(i);parts.push({g:Box(W,y,D),c:i%2?0xd9d5c9:0xcfcabd,p:[0,y/2,i*D+D/2]})}
   // 양옆 계단 + 민트 난간
   [-1,1].forEach(function(s){var sx=s*(W/2-.6);

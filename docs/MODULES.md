@@ -18,11 +18,11 @@
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
 | `js/world/kboard.js` | 24 | KB, kbTex, kbAdd, kbTick, kbClear |
 | `js/world/stands.js` | 93 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
-| `js/world/outfield.js` | 87 | OF, ofFence, ofOut, ofLip |
+| `js/world/outfield.js` | 90 | OF, ofFence, ofOut, ofLip |
 | `js/world/greenzone.js` | 63 | GZ, gzY, gzD, gzP, gzWall, parts, nRail |
 | `js/world/hogbanner.js` | 43 | HOGP, hogPosterDraw, hogPosterTex |
 | `js/world/bbq.js` | 65 | BBQ, bbqSmoke, bbqTick |
-| `js/world/bullpen.js` | 93 | PEN |
+| `js/world/bullpen.js` | 106 | PEN |
 | `js/world/outskirts.js` | 86 | OSK |
 | `js/world/couplezone.js` | 84 | CPL |
 | `js/world/curvestand.js` | 55 | CVS |
@@ -30,7 +30,7 @@
 | `js/world/pz-kit.js` | 39 | PZ_SETS, pzFlat, pzArch, pzStar, pzSpark, pzScribble, pzRound, pzCover, pzMat, pzTexMat, pzNoiseTex |
 | `js/world/pzone.js` | 146 | PZP, pzPanelDraw, pzDefaultArt, pzIcoGlove, pzIcoTicket, pzIcoBat, pzIcoCap, pzSetPhoto, pzSetLine, PZ_STAGE, PZB, pzTileTex, pzPoolTex, pzBackdropTex … |
 | `js/world/hrboard.js` | 118 | HRB, HRB_TILE, hrDigitMat, HRB_SIDE, hrTile, hrSetTile, hrShield, hrMiles, hrBoard, hrShow, hrSetCount, hrTick |
-| `js/world/crowd.js` | 40 | _m, crowd, crowdSet, crowdFlush |
+| `js/world/crowd.js` | 41 | _m, crowd, crowdSet, crowdFlush |
 | `js/world/laundry.js` | 134 | LDY, LDY_FONT, LDY_GW, LDY_H, LDY_GEO, ldyJerseyTex, LDY_FAR, LDY_NEAR, LDYB, ldyFill, ldyCrowd, LDY_NUM, laundrySet, LDY_T … |
 | `js/world/daynight.js` | 109 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
 | `js/world/nightdim.js` | 50 | ND, ndK, ndApply |

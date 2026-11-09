@@ -30,6 +30,7 @@ var crowd={};
     crowdSet(i,0);
   });
   crowd.body.instanceColor.needsUpdate=true;
+  crowdSpots.forEach(function(cs,i){if(cs.gone){crowd.hidden[i]=1;crowdSet(i,0)}});/* 포스터 밑 좌석(world/bullpen.js의 PEN.cleared)은 관중을 비움 — 작은 패치 AF */
 })();
 function crowdSet(i,lift){
   var b=crowd.base,x=b[i*4],y=b[i*4+1],z=b[i*4+2],th=b[i*4+3],k=crowd.hidden[i]?0:1;

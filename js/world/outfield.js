@@ -13,8 +13,9 @@ var OF={
   LIP:2.6,            // 담장 → 관중석 앞 난간 거리(m)
   START:46.5,         // 폴 쪽 첫 칸이 시작하는 각도(도). 폴은 45°
   base:FLOOR.out,rows:8,seat:0x6f9d45,   // 높이는 config.js의 FLOOR.out (패치 AC: 1.6 → 3.2)
-  right:[{t:'bbq',w:24},{t:'walk',cols:18},{t:'decor',cols:18}],
+  right:[{t:'bbq',w:25.4,cols:28},{t:'walk',cols:18},{t:'decor',cols:18}],/* 첫 칸(w 25.4) = 3루의 '작은 장식 + 큰 장식'(7.9 + 17.5m)과 같은 폭: 앞에 가짜 관중석 3줄(OF.fakeRows), 그 뒤 바비큐존. 이음매가 3루와 같은 각도가 돼요(작은 패치 AF) */
   left:[{t:'decor',cols:6},{t:'decor',cols:18},{t:'laundry',cols:18},{t:'decor',cols:18}],/* 폴 쪽 두 칸(작은 장식 + 장식) 앞이 3루 불펜(world/bullpen.js) 자리라 이제 관중이 다시 앉아요(작은 패치 AE, 예전엔 현수막 블록이라 비웠음). 그 옆 블록 = 세탁소(world/laundry.js): 블록 가운데 통로를 사이에 둔 좌우 두 구역에 십의 자리·일의 자리 */
+  fakeRows:3,         // 1루 첫 칸 앞쪽 가짜 관중석 줄 수(바비큐존을 그만큼 뒤로 밀어요). 3루 큰 블록의 앞 3줄과 같은 높이·크기
   bbq:null,           // 바비큐존 자리 {x,z,theta} — bbq.js가 읽어요
   cornerCols:9,       // 폴 바깥 모서리 장식 블록 폭(칸). 작은 패치 W
   corner:{}           // 모서리 블록 자리 corner[1](1루)·corner[-1](3루) = {x,z,theta,n}
@@ -37,8 +38,10 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
     return out;
   }
   function place(k){
-    var s=k.s,o=s.t==='bbq'?1:1.9,x=k.mx+k.n[0]*o,z=k.mz+k.n[1]*o;     // 앞 난간이 곡선 위에 오게
-    if(s.t==='bbq'){OF.bbq={x:x,z:z,theta:k.theta};return}
+    var s=k.s,o=1.9,x=k.mx+k.n[0]*o,z=k.mz+k.n[1]*o;     // 앞 난간이 곡선 위에 오게
+    if(s.t==='bbq'){/* 바비큐 칸: 앞 OF.fakeRows줄은 가짜 관중석(보는 풍경), 바비큐존은 그 뒤로 밀려 이웃 블록 뒤 끝과 맞아요 */
+      var ob=o+OF.fakeRows*RD;OF.bbq={x:k.mx+k.n[0]*ob,z:k.mz+k.n[1]*ob,theta:k.theta};
+      buildBlock({x:x,z:z,theta:k.theta,base:OF.base,rows:OF.fakeRows,cols:s.cols,seat:OF.seat,occ:.55,out:true});return}
     var cfg={x:x,z:z,theta:k.theta,base:OF.base,rows:OF.rows,cols:s.cols,seat:OF.seat,occ:s.t==='walk'?.6:.55,out:true};/* out: 밤에도 밝게(world/nightdim.js) */
     if(s.t==='walk')cfg.key='outfield';
     var b=buildBlock(cfg);
