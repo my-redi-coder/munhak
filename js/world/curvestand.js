@@ -25,7 +25,7 @@ var CVS={
   /* 2. 이웃 블록 사이 벌어진 틈을 계단 콘크리트로 메우기 (H=이음 꼭짓점, up/un=양쪽 블록이 뒤로 뻗는 방향) */
   function wedge(L,H,up,un){
     CVS.wedges.push({H:H,up:up,un:un,base:L.base,rows:L.rows});   // 여난부두 불빛이 이 틈에도 켜져요(events/yeonan.js)
-    var bottom=L.sky?L.base-1.1:-.05,steps=[[0,1.9,L.base,0xdedad0]];
+    var bottom=-.05,/* 4층(sky)도 땅까지 꽉 채워요(작은 패치 AH) */steps=[[0,1.9,L.base,0xdedad0]];
     for(var r=0;r<L.rows;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,L.base+r*RH,r%2?0xe2ded3:0xd9d5c9]);
     steps.forEach(function(s){
       var P=[[H[0]+s[0]*up[0],H[1]+s[0]*up[1]],[H[0]+s[1]*up[0],H[1]+s[1]*up[1]],[H[0]+s[1]*un[0],H[1]+s[1]*un[1]],[H[0]+s[0]*un[0],H[1]+s[0]*un[1]]];

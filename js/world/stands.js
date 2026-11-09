@@ -5,7 +5,7 @@ var blocks=[],decorSeats=[],crowdSpots=[];
 function pos1B(s,o,side){side=side||1;return [side*(s*.7071+o*.7071),-s*.7071+o*.7071]}
 function buildBlock(cfg){
   var R=cfg.rows,C=cfg.cols,W=C*SP+AIS+1.2,base=cfg.base,sky=!!cfg.sky;/* sky: 땅에서 뜬 4층 스탠드(하룰라라석 쪽). 높이(base)와 따로 표시해서 base를 올려도 안 떠 보이게 (패치 AB) */
-  var g=new THREE.Group();g.position.set(cfg.x,0,cfg.z);g.rotation.y=cfg.theta;scene.add(g);
+  var ul=0,ur=0,g=new THREE.Group();g.position.set(cfg.x,0,cfg.z);g.rotation.y=cfg.theta;scene.add(g);
   var bottom=sky?base-1.1:-.05,parts=[];
   parts.push({g:Box(W,base-bottom,1.9),c:0xdedad0,p:[0,(base+bottom)/2,-.95]});
   for(var r=0;r<R;r++){
@@ -24,8 +24,9 @@ function buildBlock(cfg){
     parts.push({g:Box(gw,base-bottom,1.9),c:0xdedad0,p:[cx,(base+bottom)/2,-.95]});
     parts.push({g:Box(gw,1.1,.2),c:0xd2cbbd,p:[cx,lastTop+.55,R*RD+.1]});if(!cfg.noRail)parts.push({g:Box(gw,.07,.09),c:0x5b5f55,p:[cx,base+1,-1.88]})});
   if(sky){
-    parts.push({g:Cyl(.45,.45,base,10),c:0xbfb8aa,p:[-W/2+.6,base/2,R*RD-.6]});
-    parts.push({g:Cyl(.45,.45,base,10),c:0xbfb8aa,p:[W/2-.6,base/2,R*RD-.6]});
+    /* 4층 아래는 기둥 대신 땅에서 4층 바닥까지 속이 꽉 찬 콘크리트 덩어리(건물 느낌, 작은 패치 AH). 양옆은 열린 틈(open)이나 cfg.pad만큼 더 채워 이웃과 이어요 */
+    ul=(cfg.open&&cfg.open.l)||cfg.pad||0;ur=(cfg.open&&cfg.open.r)||cfg.pad||0;var uz0=-1.9,uz1=R*RD+.2;
+    parts.push({g:Box(W+ul+ur,bottom+.05,uz1-uz0),c:0xd6d1c4,p:[(ur-ul)/2,(bottom-.05)/2,(uz0+uz1)/2]});
     parts.push({g:Box(W+.6,.25,R*RD*.62),c:0xf4f2ec,p:[0,lastTop+5.2,R*RD*.72],r:[-.08,0,0]});
     parts.push({g:Box(.3,4,.3),c:0xbfb8aa,p:[-W/2+.4,lastTop+3,R*RD-.2]});
     parts.push({g:Box(.3,4,.3),c:0xbfb8aa,p:[W/2-.4,lastTop+3,R*RD-.2]});
@@ -40,7 +41,7 @@ function buildBlock(cfg){
     seats.push({r:r,c:c,x:x,z:r*RD+RD*.64,y:base+r*RH,occ:null,crowd:-1});
   }
   g.updateMatrixWorld(true);
-  var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,sky:sky,seats:seats,terrace:terrace,key:cfg.key||null};
+  var blk={cfg:cfg,g:g,W:W,R:R,C:C,base:base,sky:sky,under:sky?{y1:bottom,x0:-W/2-ul,x1:W/2+ur,z0:-1.9,z1:R*RD+.2}:null,seats:seats,terrace:terrace,key:cfg.key||null};
   blk.dim=!cfg.out;/* 밤 경기에서 살짝 어둡게 할 블록(내야·으쓱이존·하룰라라석·홈 뒤). 외야(cfg.out)는 밝게 — world/nightdim.js (작은 패치 M) */
   blk.groundH=function(lz){return base+(lz<0?0:Math.min(Math.floor(lz/RD),R-1)*RH)};
   blk.xMin=cfg.reach?cfg.reach[0]:-W/2+.45;blk.xMax=cfg.reach?cfg.reach[1]:W/2-.45;blk.links=[];
@@ -60,6 +61,7 @@ function buildBlock(cfg){
     seats.forEach(function(s){decorSeats.push({blk:blk,s:s,col:cfg.seat})});
   }
   blocks.push(blk);
+  if(sky&&typeof muralMake==='function')muralMake(blk);/* 4층 아래 벽 안쪽 면 벽화 (world/mural.js, 작은 패치 AH) */
   return blk;
 }
 var SEATGEO=mergeParts([{g:Box(.6,.09,.48),c:0xffffff,p:[0,.42,0]},{g:Box(.6,.52,.08),c:0xffffff,p:[0,.7,.25],r:[-.12,0,0]},{g:Box(.08,.4,.08),c:0xb8b8b8,p:[0,.2,.05]}]);
@@ -84,10 +86,11 @@ var ZB={};
   p=pos1B(6,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45,open:{r:.01}}));
   p=pos1B(38,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45,open:{l:.01}}));
   p=pos1B(52,29);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45});
-  [6,22,38,52].forEach(function(s){p=pos1B(s,29,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45})});
+  [6,22,38,52].forEach(function(s){p=pos1B(s,29,-1);buildBlock({pad:1.1,x:p[0],z:p[1],theta:-Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45})});
 })();
 /* cheer stage near 으쓱이존 */
 var stageG=new THREE.Group();
 (function(){var p=pos1B(34,8.6);stageG.position.set(p[0],0,p[1]);stageG.rotation.y=Math.PI/4;scene.add(stageG);
-  stageG.add(new THREE.Mesh(mergeParts([{g:Box(4.4,1.4,2.6),c:0xc8102e,p:[0,.7,0]},{g:Box(4.6,.12,2.8),c:0xf4f2ec,p:[0,1.46,0]},{g:Box(4.4,.06,.06),c:0xf4f2ec,p:[0,2.4,-1.3]},{g:Box(.06,1,.06),c:0xf4f2ec,p:[-2.17,1.95,-1.3]},{g:Box(.06,1,.06),c:0xf4f2ec,p:[2.17,1.95,-1.3]}]),MVC));
+  var sy=STAGE_DY;/* 1층이 올라간 만큼 단상도 같이 (작은 패치 AH). 몸통은 땅에서 윗면까지 꽉 차게 */
+  stageG.add(new THREE.Mesh(mergeParts([{g:Box(4.4,1.4+sy,2.6),c:0xc8102e,p:[0,(1.4+sy)/2,0]},{g:Box(4.6,.12,2.8),c:0xf4f2ec,p:[0,1.46+sy,0]},{g:Box(4.4,.06,.06),c:0xf4f2ec,p:[0,2.4+sy,-1.3]},{g:Box(.06,1,.06),c:0xf4f2ec,p:[-2.17,1.95+sy,-1.3]},{g:Box(.06,1,.06),c:0xf4f2ec,p:[2.17,1.95+sy,-1.3]}]),MVC));
 })();

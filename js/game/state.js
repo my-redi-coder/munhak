@@ -60,4 +60,4 @@ function sitChar(ch,s){ch.root.position.set(s.x,s.y+.07,s.z-.03);ch.root.rotatio
 function standAtSeat(ch,s,blk){ch.root.position.set(s.x,blk.groundH(s.z),s.z-.32);ch.root.rotation.y=Math.PI;ch.mode='stand';if(ch.shadow)ch.shadow.visible=true}
 
 /* leader on stage */
-function makeLeader(){leader=new Char({name:'응원단장 민주',uni:'white',backName:'박민주',backNum:'V6',shadow:true});uniWhistle(leader);/* 모자는 안 씀, 대신 목에 호루라기 */leader.root.position.set(0,1.52,0);stageG.add(leader.root);leader.npc=true}
+function makeLeader(){leader=new Char({name:'응원단장 민주',uni:'white',backName:'박민주',backNum:'V6',shadow:true});uniWhistle(leader);/* 모자는 안 씀, 대신 목에 호루라기 */leader.root.position.set(0,1.52+STAGE_DY,0);stageG.add(leader.root);leader.npc=true}
