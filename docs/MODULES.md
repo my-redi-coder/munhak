@@ -7,7 +7,7 @@
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
-| `js/core/config.js` | 121 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, myName, TEAMS … |
+| `js/core/config.js` | 126 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, myName … |
 | `songs/songs.js` | 19 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |

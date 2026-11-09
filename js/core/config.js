@@ -47,6 +47,11 @@ var ME={adj:pick(ADJ),uni:pick(UKEYS),backName:store.get('backName',''),backNum:
 var HAT_RATE=.4;
 /* (작은 패치 S) 반응형 관객(얼굴·대사가 있는 가까운 으쓱이) 수 22 → 33 */
 var NPC_COUNT=33;
+/* 1층 관중석 바닥 높이(m) — 여기 한 곳에서만 바꿔요 (작은 패치 AC, 2026-11-09: 각자 2배로 올림, 예전 내야 .6·외야 1.6)
+   inf = 내야·으쓱이존·장식 블록·홈 뒤 곡면 아래층(stands.js·curvestand.js), KKK 카드 높이(kboard.js)도 따라가요
+   out = 외야석·쐐기·모서리 블록(outfield.js)·바비큐존(bbq.js), 그린존 언덕(greenzone.js)도 같은 만큼 올라가요
+   하룰라라석(4층, base 13.5·sky)은 따로예요 */
+var FLOOR={inf:1.2,out:3.2};
 if(!ZONES[ME.zone])ME.zone='ussk';
 function myName(){return ME.adj+' 으쓱이'}
 

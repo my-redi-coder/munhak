@@ -7,7 +7,7 @@
    카드가 관중석 속에 파묻혔어요. 그래서 카드마다 난간 위 자리(x,z)와 난간이 바라보는 각도(ang, 도)를 따로 적어요.
    난간 앞줄: 가운데 블록 x −2.9~2.9 (z 12.09), 1루 쪽 블록은 (2.9,12.09)에서 30° 꺾여 (7.92,9.19)까지.
    ※ 이 스탠드를 테이블석 등으로 다시 바꾸면 아래 P 숫자만 새 난간에 맞춰 고치면 돼요. */
-var KB={P:[{x:1.8,z:11.88,ang:0},{x:3.36,z:11.6,ang:30},{x:4.53,z:10.92,ang:30}],Y:1.64,W:1.05,H:1.3,cards:[],tex:{}};
+var KB={P:[{x:1.8,z:11.88,ang:0},{x:3.36,z:11.6,ang:30},{x:4.53,z:10.92,ang:30}],Y:FLOOR.inf+1.04,W:1.05,H:1.3,cards:[],tex:{}};
 function kbTex(look){var k=look?'look':'swing';return KB.tex[k]||(KB.tex[k]=canvasTex(128,160,function(x,w,h){
   x.fillStyle='#ffffff';x.fillRect(0,0,w,h);x.strokeStyle='#c8102e';x.lineWidth=6;x.strokeRect(5,5,w-10,h-10);
   x.save();x.translate(w/2,h/2+6);if(look)x.scale(-1,1);x.textAlign='center';x.textBaseline='middle';

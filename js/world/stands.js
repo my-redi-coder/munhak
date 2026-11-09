@@ -68,18 +68,18 @@ SEATGEO.deleteAttribute('color');
 var ZB={};
 (function(){
   var p;
-  p=pos1B(34,14);ZB.ussk=buildBlock({key:'ussk',x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0xc8102e,occ:.58});
-  p=pos1B(20,14);ZB.infield=buildBlock({key:'infield',x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50,occ:.6,open:{l:.2},reach:[-14-6.9+.45,6.9-.45]});
+  p=pos1B(34,14);ZB.ussk=buildBlock({key:'ussk',x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0xc8102e,occ:.58});
+  p=pos1B(20,14);ZB.infield=buildBlock({key:'infield',x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0x2f6e50,occ:.6,open:{l:.2},reach:[-14-6.9+.45,6.9-.45]});
   p=pos1B(22,29);ZB.harulala=buildBlock({key:'harulala',x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.5,open:{l:2.2,r:2.2},reach:[-16-6.9+.45,16+6.9-.45]});
   /* 외야(걷는 블록 ZB.outfield)·외야 장식·현수막 블록(ZB.hog)은 world/outfield.js가 담장 곡선을 따라 놓아요 */
   // decor
   /* 걸어서 이어지는 옆 블록 (하룰라라석 양옆, 내야 왼쪽) — 이어진 쪽 옆벽 없음 */
-  p=pos1B(6,14);ZB.infield.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50,open:{r:.01}}));
-  [48,62].forEach(function(s){p=pos1B(s,14);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:.6,rows:9,cols:14,seat:pick([0x2f6e50,0xc8102e])})});
-  [6,20,34,48,62].forEach(function(s){p=pos1B(s,14,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:.6,rows:9,cols:14,seat:0x2f6e50})});
+  p=pos1B(6,14);ZB.infield.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0x2f6e50,open:{r:.01}}));
+  [48,62].forEach(function(s){p=pos1B(s,14);buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:pick([0x2f6e50,0xc8102e])})});
+  [6,20,34,48,62].forEach(function(s){p=pos1B(s,14,-1);buildBlock({x:p[0],z:p[1],theta:-Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0x2f6e50})});
   /* 내야 연장(작은 패치 W, 2026-11-04): 내야석 끝에서 폴 쪽 모서리 블록(outfield.js의 OF.corner)까지 장식 블록 두 칸(폭 14칸 + 좁은 6칸). 1루·3루 대칭. 걷기·앉기 X, 가운데 조명탑과 겹치지 않는 자리 */
-  [[76,14],[86.9,6]].forEach(function(e){[1,-1].forEach(function(sd){p=pos1B(e[0],14,sd);buildBlock({x:p[0],z:p[1],theta:sd*Math.PI/4,base:.6,rows:9,cols:e[1],seat:pick([0x2f6e50,0xc8102e])})})});
-  buildBlock({x:0,z:17,theta:0,base:.6,rows:9,cols:14,seat:0x34548a});
+  [[76,14],[86.9,6]].forEach(function(e){[1,-1].forEach(function(sd){p=pos1B(e[0],14,sd);buildBlock({x:p[0],z:p[1],theta:sd*Math.PI/4,base:FLOOR.inf,rows:9,cols:e[1],seat:pick([0x2f6e50,0xc8102e])})})});
+  buildBlock({x:0,z:17,theta:0,base:FLOOR.inf,rows:9,cols:14,seat:0x34548a});
   buildBlock({x:0,z:30.5,theta:0,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a});
   p=pos1B(6,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45,open:{r:.01}}));
   p=pos1B(38,29);ZB.harulala.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.45,open:{l:.01}}));

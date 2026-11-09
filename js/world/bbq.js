@@ -3,7 +3,7 @@
    사진 기준: 외야 담장 뒤로 계단처럼 올라가는 칸막이 부스. 칸마다 빨강·주황 낮은 벽, 짙은 나무 테이블과 양쪽 벤치,
    테이블 위 불판과 고기, 민트색 난간, 맨 윗줄은 빨간 차양 지붕. 연기는 bbqTick에서 매 프레임 올라감.
    자리·방향은 world/outfield.js가 담장 곡선을 따라 정해 OF.bbq에 넣어 줘요(1루 폴 쪽 첫 칸). */
-var BBQ={rows:4,D:3,rise:1,base:1.6,cols:6,bw:3.6};
+var BBQ={rows:4,D:3,rise:1,base:FLOOR.out,cols:6,bw:3.6};/* base = 외야석과 같은 높이(config.js의 FLOOR.out) */
 var bbqSmoke=[];
 (function(){
   var g=new THREE.Group();g.position.set(OF.bbq.x,0,OF.bbq.z);g.rotation.y=OF.bbq.theta;scene.add(g);

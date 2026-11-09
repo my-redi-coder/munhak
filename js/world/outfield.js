@@ -12,7 +12,7 @@
 var OF={
   LIP:2.6,            // 담장 → 관중석 앞 난간 거리(m)
   START:46.5,         // 폴 쪽 첫 칸이 시작하는 각도(도). 폴은 45°
-  base:1.6,rows:8,seat:0x6f9d45,
+  base:FLOOR.out,rows:8,seat:0x6f9d45,   // 높이는 config.js의 FLOOR.out (패치 AC: 1.6 → 3.2)
   right:[{t:'bbq',w:24},{t:'walk',cols:18},{t:'decor',cols:18}],
   left:[{t:'decor',cols:6},{t:'hog',cols:18},{t:'laundry',cols:18},{t:'decor',cols:18}],/* 현수막 바로 옆 한 블록 = 세탁소(world/laundry.js). 블록 가운데 통로를 사이에 둔 좌우 두 구역에 십의 자리·일의 자리. 그 옆 블록은 평소 장식 관중석 */
   bbq:null,           // 바비큐존 자리 {x,z,theta} — bbq.js가 읽어요

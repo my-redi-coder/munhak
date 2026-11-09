@@ -3,7 +3,7 @@
    좌석 안내도 기준: 3루 외야 관중석(114B~111B) 뒤쪽, 왼쪽 폴 근처부터 좌중간까지 이어지는 잔디 언덕.
    옆에 초가정자, 폴 쪽 끝에 모래놀이장. 각도 a는 홈에서 본 방향(0=중앙, 음수=3루 쪽). */
 var GZ={a0:-46*Math.PI/180,a1:-21*Math.PI/180,r0:123,r1:141};
-function gzY(r){return 5.9+(r-GZ.r0)/(GZ.r1-GZ.r0)*1.3}
+function gzY(r){return 5.9+(FLOOR.out-1.6)+(r-GZ.r0)/(GZ.r1-GZ.r0)*1.3}/* 외야석을 올린 만큼 언덕도 같이(패치 AC). 외야석 뒷벽과 높이가 맞게 */
 /* (2026-11-02) 그린존 전체를 담장 곡선을 따라 앞뒤로 밀어요(앞 옹벽이 외야석 뒤끝에 붙게). 크기·장식은 그대로 */
 function gzD(a){return fenceR(a)+16.5-GZ.r0}
 function gzP(a,r){r+=gzD(a);return [Math.sin(a)*r,-Math.cos(a)*r]}
