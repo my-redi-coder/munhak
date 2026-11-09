@@ -23,6 +23,7 @@
 | `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
 | `js/world/bbq.js` | 65 | BBQ, bbqSmoke, bbqTick |
 | `js/world/outskirts.js` | 86 | OSK |
+| `js/world/couplezone.js` | 84 | CPL |
 | `js/world/curvestand.js` | 55 | CVS |
 | `js/world/roofs.js` | 136 | ROOF |
 | `js/world/pz-kit.js` | 39 | PZ_SETS, pzFlat, pzArch, pzStar, pzSpark, pzScribble, pzRound, pzCover, pzMat, pzTexMat, pzNoiseTex |

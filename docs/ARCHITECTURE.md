@@ -105,7 +105,7 @@
 - 새 둘러보기 더하기: `config.js`의 `TOURS`에 이름 + `TOUR_CFG`에 `label` → `places.js`의 `TOUR_GO`(들어가는 함수)·`PLACE_ICO`(아이콘 path)에 한 줄씩.
 - 경기장 구경: 둘러보기에서 `ssStart()`(`js/game/sightsee.js`), 나가기는 아래 '돌아가기'.
 - 담벼락: `wallOpen()`/`wallClose()`(`js/ui/wall.js`). 글은 `stadium.html`의 `#wall` 안에 있어요(로비에서 여는 `wall.html`에도 같은 글이 있어서 고칠 땐 두 곳 다). 벽 그림 `wallArt()`는 `js/ui/wall-art.js` 한 곳(3D 야구장 안과 `wall.html`이 같이 불러 써요 — 고칠 땐 이 파일만). 손글씨 글꼴 3개는 처음 들어갈 때만 불러요. 담벼락이 열려 있는 동안 야구장 그리기는 쉬어요(`loop.js`의 `WALL.on`).
-- 스탠드 블록 높이(`js/world/stands.js`의 `buildBlock`): `base`는 **높이 숫자일 뿐**이고, '땅에서 뜬 4층 모양'(받침 기둥·유리 난간·LED 띠)은 따로 `sky:true`로 표시해요(하룰라라석 블록들·`curvestand.js`의 위층 `levels`). 예전엔 `base>3`이면 4층으로 쳐서 1층 높이를 3 넘게 올리면 스탠드가 공중에 떴어요(패치 AB에서 분리). 1층 높이는 **`js/core/config.js`의 `FLOOR` 한 곳**: `inf`(내야·으쓱이존·장식 블록·곡면 아래층, KKK 카드 `KB.Y`가 따라감) 1.2, `out`(외야석·쐐기·모서리 블록·바비큐존, 그린존 언덕 `gzY`가 따라감) 3.2. 패치 AC에서 각자 2배로 올림(예전 .6·1.6).
+- 스탠드 블록 높이(`js/world/stands.js`의 `buildBlock`): `base`는 **높이 숫자일 뿐**이고, '땅에서 뜬 4층 모양'(받침 기둥·유리 난간·LED 띠)은 따로 `sky:true`로 표시해요(하룰라라석 블록들·`curvestand.js`의 위층 `levels`). 예전엔 `base>3`이면 4층으로 쳐서 1층 높이를 3 넘게 올리면 스탠드가 공중에 떴어요(패치 AB에서 분리). 홈런커플존(`couplezone.js`, `CPL`)의 데크 높이도 `FLOOR.out`을 따라가요. 1층 높이는 **`js/core/config.js`의 `FLOOR` 한 곳**: `inf`(내야·으쓱이존·장식 블록·곡면 아래층, KKK 카드 `KB.Y`가 따라감) 1.2, `out`(외야석·쐐기·모서리 블록·바비큐존, 그린존 언덕 `gzY`가 따라감) 3.2. 패치 AC에서 각자 2배로 올림(예전 .6·1.6).
 
 ## 낮·밤 경기 (묶음 A, 2026-11-01)
 
