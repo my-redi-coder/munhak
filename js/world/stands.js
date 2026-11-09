@@ -71,7 +71,7 @@ var ZB={};
   p=pos1B(34,14);ZB.ussk=buildBlock({key:'ussk',x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0xc8102e,occ:.58});
   p=pos1B(20,14);ZB.infield=buildBlock({key:'infield',x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0x2f6e50,occ:.6,open:{l:.2},reach:[-14-6.9+.45,6.9-.45]});
   p=pos1B(22,29);ZB.harulala=buildBlock({key:'harulala',x:p[0],z:p[1],theta:Math.PI/4,base:13.5,sky:true,rows:8,cols:14,seat:0x34548a,occ:.5,open:{l:2.2,r:2.2},reach:[-16-6.9+.45,16+6.9-.45]});
-  /* 외야(걷는 블록 ZB.outfield)·외야 장식·현수막 블록(ZB.hog)은 world/outfield.js가 담장 곡선을 따라 놓아요 */
+  /* 외야(걷는 블록 ZB.outfield)·외야 장식 블록은 world/outfield.js가 담장 곡선을 따라 놓아요 */
   // decor
   /* 걸어서 이어지는 옆 블록 (하룰라라석 양옆, 내야 왼쪽) — 이어진 쪽 옆벽 없음 */
   p=pos1B(6,14);ZB.infield.links.push(buildBlock({x:p[0],z:p[1],theta:Math.PI/4,base:FLOOR.inf,rows:9,cols:14,seat:0x2f6e50,open:{r:.01}}));

@@ -18,10 +18,11 @@
 | `js/world/bbshow.js` | 85 | BBS, bbShow, bbShowOff, bbShowTick, bbDraw, bbWave, bbSea, bbHomerun, bbKKK, YW, bbYeonan |
 | `js/world/kboard.js` | 24 | KB, kbTex, kbAdd, kbTick, kbClear |
 | `js/world/stands.js` | 93 | SP, blocks, pos1B, buildBlock, SEATGEO, ZB, stageG |
-| `js/world/outfield.js` | 88 | OF, ofFence, ofOut, ofLip |
+| `js/world/outfield.js` | 87 | OF, ofFence, ofOut, ofLip |
 | `js/world/greenzone.js` | 63 | GZ, gzY, gzD, gzP, gzWall, parts, nRail |
-| `js/world/hogbanner.js` | 51 | hogTex, hogBanner |
+| `js/world/hogbanner.js` | 43 | HOGP, hogPosterDraw, hogPosterTex |
 | `js/world/bbq.js` | 65 | BBQ, bbqSmoke, bbqTick |
+| `js/world/bullpen.js` | 93 | PEN |
 | `js/world/outskirts.js` | 86 | OSK |
 | `js/world/couplezone.js` | 84 | CPL |
 | `js/world/curvestand.js` | 55 | CVS |
@@ -54,6 +55,7 @@
 | `js/game/crowdtalk.js` | 48 | CROWD, talkPool, actLine, crowdPick, crowdSay, crowdNear, crowdWave, crowdCalm |
 | `js/game/npc.js` | 46 | npcReact, NPC_MSG, npcStart, npcStop, updateNPCs, _np |
 | `js/game/fieldplay.js` | 75 | FP, PITCH, faceTo, fpAdd, setFieldMode, fpByRole, fpKeys, fpPose, POSE, PITCHKEYS, SWINGKEYS, fieldTick |
+| `js/game/penplay.js` | 43 | PENP, PEN_SIT, penTick |
 | `js/game/events.js` | 66 | EV, evCalm, evCalmCrowd, EV_SCENES, evCam, startEvent, evTick, evRelease, evFinish, skipEvent, evCrowdCheer, evShuffle, evCrowdShout, evCrowdCalm … |
 | `js/ui/count.js` | 20 | EVCOUNT, evCountEl, evCount, evCountOff, evCount0 |
 | `events/homer.js` | 120 | HR, hrRunPose, hrBallAt, hrTurn, hrBoardCam, hrFielders, hrPreField, hrLooseBat, hrLooseTick, hrRun, hrHighFive, hrOnDeck |

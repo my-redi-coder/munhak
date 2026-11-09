@@ -12,7 +12,7 @@ var OSK={
   red:{color:0xc4624c,s0:3.4,s1:93,o0:2.5,o1:12,homeR:4.2},           // 띠: 라인에서 o0~o1m 바깥, 홈 흙 원 반지름 homeR
   ring:{cx:0,cz:-55,rx:132,rz:118,w:6,color:0xcdb08a,behindGap:.42}, // 흙길 타원, 홈 뒤(behindGap 라디안 양쪽)엔 나무 안 심음
   trees:{n:70,from:7,to:20},                                         // 흙길 바깥 7~20m
-  pink:{color:0xd6336c,a0:7,a1:40,y0:.9,y1:2.95},                     // 담장 각도(도) ±a0~±a1, 높이 y0~y1
+  pink:{color:0xd6336c,a0:7,a1:(typeof PEN!=='undefined'?PEN.a1:32.5),y0:.9,y1:2.95},                     // 담장 각도(도) ±a0~±a1, 높이 y0~y1
   wall:{w:28,h:11,z:-123.55,text:'V6를 향해'},                         // 빅보드 건물 앞면(z −124) 바로 앞, 이름 띠(높이 11~13.4) 아래까지
   bush:{x:13,z0:-121.2,z1:-123.2,n:18}                                 // 담장(z −120)과 벽 사이
 };

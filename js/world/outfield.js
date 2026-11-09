@@ -3,7 +3,7 @@
    · 담장(field.js의 fenceR, 타원)에서 OF.LIP m 뒤에 '앞 난간 곡선'을 긋고, 폴 쪽(OF.START도)부터 가운데로
      블록을 하나씩 '앞 모서리끼리 맞닿게' 놓아요. 블록은 홈이 아니라 담장 곡선을 정면으로 봐요(실제 구장처럼).
    · 블록 사이 뒤쪽으로 벌어지는 쐐기 틈은 계단으로 메우고, 줄마다 들어가는 만큼 좌석·관중을 앉혀요(보는 풍경, 걷기 X).
-   · 순서: 오른쪽(1루) 바비큐존 → 걷는 외야(ZB.outfield) → 장식 / 왼쪽(3루) 작은 장식 → 현수막(ZB.hog) → 세탁소 블록(ZB.laundry, 2026-11-04) → 장식.
+   · 순서: 오른쪽(1루) 바비큐존 → 걷는 외야(ZB.outfield) → 장식 / 왼쪽(3루) 작은 장식 → 장식 → 세탁소 블록(ZB.laundry, 2026-11-04) → 장식. (불펜은 담장 앞 띠에 따로: world/bullpen.js. 예전 현수막 블록은 이제 그냥 장식 관중석)
      양쪽 길이를 맞춰 좌우가 거울처럼 같은 곡선에서 끝나요(가운데는 빅보드 앞이라 비움).
    · 걷기·앉기는 블록 안 좌표로만 돌아서, 블록이 돌고 옮겨져도 그대로 따라가요(input.js·movement.js 손대지 않음).
    · 폴 바깥 모서리 장식 블록(OF.corner, 작은 패치 W, 2026-11-04): 폴 쪽 첫 칸에서 반대 방향(파울 지역 쪽)으로 한 칸. 내야 연장 블록(stands.js)과 쐐기로 이어져요. 1루·3루 대칭
@@ -14,7 +14,7 @@ var OF={
   START:46.5,         // 폴 쪽 첫 칸이 시작하는 각도(도). 폴은 45°
   base:FLOOR.out,rows:8,seat:0x6f9d45,   // 높이는 config.js의 FLOOR.out (패치 AC: 1.6 → 3.2)
   right:[{t:'bbq',w:24},{t:'walk',cols:18},{t:'decor',cols:18}],
-  left:[{t:'decor',cols:6},{t:'hog',cols:18},{t:'laundry',cols:18},{t:'decor',cols:18}],/* 현수막 바로 옆 한 블록 = 세탁소(world/laundry.js). 블록 가운데 통로를 사이에 둔 좌우 두 구역에 십의 자리·일의 자리. 그 옆 블록은 평소 장식 관중석 */
+  left:[{t:'decor',cols:6},{t:'decor',cols:18},{t:'laundry',cols:18},{t:'decor',cols:18}],/* 폴 쪽 두 칸(작은 장식 + 장식) 앞이 3루 불펜(world/bullpen.js) 자리라 이제 관중이 다시 앉아요(작은 패치 AE, 예전엔 현수막 블록이라 비웠음). 그 옆 블록 = 세탁소(world/laundry.js): 블록 가운데 통로를 사이에 둔 좌우 두 구역에 십의 자리·일의 자리 */
   bbq:null,           // 바비큐존 자리 {x,z,theta} — bbq.js가 읽어요
   cornerCols:9,       // 폴 바깥 모서리 장식 블록 폭(칸). 작은 패치 W
   corner:{}           // 모서리 블록 자리 corner[1](1루)·corner[-1](3루) = {x,z,theta,n}
@@ -41,9 +41,8 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
     if(s.t==='bbq'){OF.bbq={x:x,z:z,theta:k.theta};return}
     var cfg={x:x,z:z,theta:k.theta,base:OF.base,rows:OF.rows,cols:s.cols,seat:OF.seat,occ:s.t==='walk'?.6:.55,out:true};/* out: 밤에도 밝게(world/nightdim.js) */
     if(s.t==='walk')cfg.key='outfield';
-    if(s.t==='hog')cfg.empty=function(){return true};
     var b=buildBlock(cfg);
-    if(s.t==='walk')ZB.outfield=b;if(s.t==='hog')ZB.hog=b;
+    if(s.t==='walk')ZB.outfield=b;
     if(s.t==='laundry')ZB.laundry=b;/* 세탁소 블록(현수막 바로 옆) — world/laundry.js가 이 블록의 좌우 두 구역을 써요 */
   }
   /* 쐐기: H=맞닿은 앞 모서리, up·un=양쪽 블록이 뒤로 뻗는 방향. 계단 + 뒷벽 + 줄마다 좌석 */
