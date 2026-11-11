@@ -27,7 +27,7 @@ const CONFIG = {
   // 이름표가 뜰 때 풍선 꼬리 끝이 닿는 자리(그림 좌표 400×760) — 건물 지붕 윗선에 맞춤
   anchors: {
     stadium:{x:82,y:424}, wall:{x:180,y:455}, bullpen:{x:268,y:556},
-    locker:{x:348,y:556}, gate:{x:200,y:298}, museum:{x:318,y:298}, piggy:{x:122,y:744}
+    locker:{x:348,y:556}, gate:{x:200,y:298}, museum:{x:318,y:298}, piggy:{x:50,y:674}
   },
   talk: ['봄에 만나요','V6를 향해','다음 시즌, 문학에서','Go for it!','소리 질러!']   // 으쓱이들이 가끔 하는 말
 };

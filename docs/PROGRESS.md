@@ -3,6 +3,11 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 작은 수정 AL: 저금통 동전 자리·크기 바꿈 — 완료 (2026-11-11, `munhak_2026-11-11_AL-coin-move`)
+
+- 동전을 왼쪽 벚나무 밑동 오른쪽(나무 그림자 안, `L.coin`의 `x`=50·`y`=680)으로 옮기고, 가로를 7에서 **13**으로 키움(`scale(.075)` → `.155`). 이름표 꼬리 자리 `anchors.piggy`는 (50, 674)
+- 바뀐 파일: `js/lobby/props.js`, `js/lobby/config.js`, `docs/LOBBY.md`, `docs/PROGRESS.md`
+
 ## 작은 추가 AK: 로비에 '믿을맨 저금통' 동전 — 완료 (2026-11-11, `munhak_2026-11-11_AK-piggy-coin`)
 
 - 왼쪽 아래 벚나무 옆 풀밭에 아주 작은 은색 동전 소품(`js/lobby/props.js`의 `L.coin`, 가로 약 7, 누름 영역 22×18 — 못 찾아도 괜찮은 소품). 첫 번째 누름 → 이름표 '믿을맨 저금통'(흰 테두리), 두 번째 누름 → 별도 저장소 `piggyback1`(<https://my-redi-coder.github.io/piggyback1/>)로 이동
