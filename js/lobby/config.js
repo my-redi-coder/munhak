@@ -20,12 +20,14 @@ const CONFIG = {
                prefetch:['wall.html'] },
     gate:    { kind:'info',  label:'정문', sub:['표가 있어야 들어갈 수 있어요','티켓부스로 가볼까요?'] },
     museum:  { kind:'museum', label:'문학기념관', sub:()=> CONFIG.museumOpen ? '' : '준비 중이에요',
-               url:null, go:'문학기념관으로 가는 중', closedMsg:'아직 전시 기간이 아닙니다' }
+               url:null, go:'문학기념관으로 가는 중', closedMsg:'아직 전시 기간이 아닙니다' },
+    piggy:   { kind:'enter', label:'믿을맨 저금통', url:'https://my-redi-coder.github.io/piggyback1/', go:'저금통으로 가는 중',
+               prefetch:['https://my-redi-coder.github.io/piggyback1/'] }   // 왼쪽 아래 벚나무 옆 풀밭의 작은 동전(별도 저장소 piggyback1)
   },
   // 이름표가 뜰 때 풍선 꼬리 끝이 닿는 자리(그림 좌표 400×760) — 건물 지붕 윗선에 맞춤
   anchors: {
     stadium:{x:82,y:424}, wall:{x:180,y:455}, bullpen:{x:268,y:556},
-    locker:{x:348,y:556}, gate:{x:200,y:298}, museum:{x:318,y:298}
+    locker:{x:348,y:556}, gate:{x:200,y:298}, museum:{x:318,y:298}, piggy:{x:122,y:744}
   },
   talk: ['봄에 만나요','V6를 향해','다음 시즌, 문학에서','Go for it!','소리 질러!']   // 으쓱이들이 가끔 하는 말
 };

@@ -21,6 +21,7 @@
 | 담벼락 | 부스 옆 벽돌벽(작게, 덜 튀게) | '담벼락 / 제작자의 한마디' | `wall.html` |
 | 문학기념관 | 건물 오른쪽 옆 작은 문 | '문학기념관 / 준비 중이에요' | 문이 흔들리고 '아직 전시 기간이 아닙니다' |
 | Munhak 상징물 | 글자 모양 조형물 + 노란 별 | (이름표 없음) | 노란 별이 흔들려요 |
+| 믿을맨 저금통 | 왼쪽 아래 벚나무 옆 풀밭의 아주 작은 은색 동전(일부러 작게) | 이름표 '믿을맨 저금통' | 별도 저장소 `piggyback1`(<https://my-redi-coder.github.io/piggyback1/>)로 |
 
 ## 파일 지도 (불러오는 순서)
 
@@ -34,7 +35,7 @@
 | `js/lobby/kit.js` | 도구 — 난수, 지붕 곡선, 눌러지는 곳 `hot(...)`, 나무·덤불·벚나무. `L`(그림 층 모음)을 만듦 |
 | `js/lobby/scenery.js` | 하늘·구름·언덕·땅·앞마당 바닥·잔디밭·벚나무·벚꽃잎 |
 | `js/lobby/stadium.js` | 경기장 건물·열린 정문·줄 기둥·문학기념관 문 |
-| `js/lobby/props.js` | 나무·깃발·만국기·티켓부스·담벼락·Munhak 상징물·표지판 |
+| `js/lobby/props.js` | 나무·깃발·만국기·티켓부스·담벼락·Munhak 상징물·표지판·믿을맨 저금통 동전(`L.coin`) |
 | `js/lobby/people.js` | 응원 나온 으쓱이와 표 받는 직원(`PEOPLE` 목록) |
 | `js/lobby/scene.js` | 층을 아래에서 위로 쌓음(순서를 바꾸면 겹침이 바뀜) |
 | `js/lobby/interact.js` | 누르기·이름표·미리 받기·이동·반짝·흔들기·으쓱이 한마디 |
@@ -49,6 +50,7 @@
 - **눌러지는 영역**: `hot(id, 이름, 그림, [x, y, 가로, 세로])`의 마지막 네모(보이지 않는 누름 영역). 폰에서 누르기 쉽게 가로·세로 40 이상.
 - **포스터 문구**: `stadium.js`의 `Go for it!` / `V6`. 노란색은 쓰지 않아요(빨강·흰색만).
 - **벚꽃잎 수**: `scenery.js`의 `L.petals` 반복 수(26).
+- **저금통 동전 자리·크기**: `props.js`의 `L.coin` 첫 줄 `x`·`y`(지금 122, 748)와 `scale(.075)`. 자리를 옮기면 `config.js`의 `anchors.piggy`(이름표 꼬리 끝)도 같이 고쳐요. 흰 테두리(`fSel`)가 잘리지 않게 `.art` 안의 보이지 않는 네모 크기도 같이 봐요.
 
 ## 지키는 선
 
@@ -79,6 +81,7 @@
 | 파일 | 이름 | 지금 값 |
 |---|---|---|
 | `js/lobby/config.js` | `hotspots.stadium`의 `url`, `prefetch` 첫 주소 | `'stadium.html'` |
+| `js/lobby/config.js` | `hotspots.piggy`의 `url`, `prefetch` (저금통은 따로 배포한 저장소) | `'https://my-redi-coder.github.io/piggyback1/'` |
 | `js/lobby/wall-page.js` | `WALL_BACK_URL` | `'index.html'` |
 | `js/game/flow.js` | `LOBBY_URL` | `'index.html'` |
 | `minigames/shared/store.js` | `MG_LOBBY_URL` / `MG_STADIUM_URL` | `'../index.html'` / `'../stadium.html'` |

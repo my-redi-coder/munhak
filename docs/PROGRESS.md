@@ -3,6 +3,13 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 작은 추가 AK: 로비에 '믿을맨 저금통' 동전 — 완료 (2026-11-11, `munhak_2026-11-11_AK-piggy-coin`)
+
+- 왼쪽 아래 벚나무 옆 풀밭에 아주 작은 은색 동전 소품(`js/lobby/props.js`의 `L.coin`, 가로 약 7, 누름 영역 22×18 — 못 찾아도 괜찮은 소품). 첫 번째 누름 → 이름표 '믿을맨 저금통'(흰 테두리), 두 번째 누름 → 별도 저장소 `piggyback1`(<https://my-redi-coder.github.io/piggyback1/>)로 이동
+- 저금통은 이 저장소와 따로 배포한 단일 `index.html`. 로비에는 주소만 있음(`config.js`의 `hotspots.piggy`, `anchors.piggy`)
+- 바뀐 파일: `js/lobby/config.js`, `js/lobby/props.js`, `js/lobby/scene.js`(`L.coin()`을 `L.lawn()` 뒤에 쌓음), `docs/LOBBY.md`, `docs/MODULES.md`(modmap 다시 만듦), `docs/PROGRESS.md`
+- 확인(헤드리스): 콘솔 오류 없음, 동전 첫 누름에 이름표, 두 번째 누름에 `piggyback1` 주소 요청. 화면은 폰에서 확인 필요(동전 크기·위치)
+
 ## 작은 패치 AJ: 곡면석 띠 전광판 번쩍임(z-파이팅) 고침 — 완료 (2026-11-09, `munhak_2026-11-09_AJ-ribbon-zfight`)
 
 - 폰 확인(사용자): 곡면석 띠 전광판이 줄무늬로 번쩍거림. 원인: 이음 벽 띠(`ribbonline.js`)가 벽 앞면에서 **5mm**밖에 안 떨어져 있고, 칸 띠도 2cm라서, 멀리서 볼 때(경기장 구경 등) 벽과 깊이 값이 겹쳐 깜빡였음(깊이 정밀도는 거리 제곱에 비례해 나빠짐, 카메라 near .1·far 1600)

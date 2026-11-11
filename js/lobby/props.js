@@ -87,3 +87,21 @@ L.sign = ()=>{
   };
   return board('bullpen','불펜장',236,-1,13,36,[232,556,74,66]) + board('locker','라커룸',316,1,13,36,[312,556,72,66]);
 };
+
+/* 믿을맨 저금통: 왼쪽 아래 벚나무 옆 풀밭에 놓인 아주 작은 은색 동전(일부러 작게 — 찾는 재미). 누르면 이름표, 한 번 더 누르면 저금통(별도 저장소 piggyback1)으로.
+   그림은 120×80짜리 동전을 `scale(.075)`로 줄여 (x,y)에 놓아요. 자리를 옮기려면 x·y와 config.js의 anchors.piggy를 같이 고쳐요.
+   보이는 건 가로 7쯤이라 `fSel`(흰 테두리)이 잘리지 않게 .art 안에 보이지 않는 20×14 네모를 같이 둬요. 누름 영역은 22×18. */
+L.coin = ()=>{
+  const x=122, y=748;
+  const notches=[...Array(16)].map((_,i)=>`<rect x="${23+i*5}" y="41" width="1.8" height="11" rx=".9" fill="#98a2af"/>`).join('');
+  return hot('piggy','믿을맨 저금통',
+    `<rect x="${x-10}" y="${y-7}" width="20" height="14" fill="#fff" fill-opacity="0"/>`
+    +`<g transform="translate(${x} ${y}) scale(.075) translate(-60 -46)">`
+    +`<ellipse cx="60" cy="58" rx="46" ry="12" fill="#000" opacity=".1"/>`
+    +`<defs><clipPath id="coinBand"><path d="M18 40 V50 A42 17 0 0 0 102 50 V40 Z"/></clipPath></defs>`
+    +`<path d="M18 40 V50 A42 17 0 0 0 102 50 V40 Z" fill="#aeb7c3"/><g clip-path="url(#coinBand)">${notches}</g>`
+    +`<ellipse cx="60" cy="40" rx="42" ry="17" fill="#dde2e9"/><ellipse cx="60" cy="40" rx="34" ry="13.4" fill="#c9d0da"/><ellipse cx="60" cy="40" rx="31" ry="11.6" fill="#e6eaf0"/>`
+    +`<ellipse cx="47" cy="36" rx="9" ry="3" fill="#fff" opacity=".75" transform="rotate(-12 47 36)"/>`
+    +`<ellipse cx="78" cy="44" rx="4.2" ry="2.3" fill="#ffb3c6" transform="rotate(24 78 44)"/></g>`,
+    [x-11,y-9,22,18]);
+};

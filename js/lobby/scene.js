@@ -4,6 +4,6 @@
    아래에서 위로 층을 쌓아요. 순서를 바꾸면 겹치는 모양이 바뀌어요. 필요: kit.js scenery.js stadium.js props.js people.js */
 document.getElementById('world').innerHTML = [
   L.sky(), L.hills(), L.ground(), L.plaza(), L.stadium(), L.gate(), L.annex(), L.pines(), L.queue(), L.poles(),
-  L.booth(), L.wall(), L.monument(), L.sign(), L.people(), L.lawn(), L.petals(),
+  L.booth(), L.wall(), L.monument(), L.sign(), L.people(), L.lawn(), L.coin(), L.petals(),
   '<g id="sparks"></g><g id="talkLayer"></g><g id="bubble"></g>'
 ].join('');

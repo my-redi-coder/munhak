@@ -27,7 +27,7 @@
 | `js/world/couplezone.js` | 84 | CPL |
 | `js/world/curvestand.js` | 66 | CVS |
 | `js/world/roofs.js` | 136 | ROOF |
-| `js/world/ribbonline.js` | 50 | RL |
+| `js/world/ribbonline.js` | 53 | RL |
 | `js/world/pz-kit.js` | 39 | PZ_SETS, pzFlat, pzArch, pzStar, pzSpark, pzScribble, pzRound, pzCover, pzMat, pzTexMat, pzNoiseTex |
 | `js/world/pzone.js` | 146 | PZP, pzPanelDraw, pzDefaultArt, pzIcoGlove, pzIcoTicket, pzIcoBat, pzIcoCap, pzSetPhoto, pzSetLine, PZ_STAGE, PZB, pzTileTex, pzPoolTex, pzBackdropTex … |
 | `js/world/hrboard.js` | 118 | HRB, HRB_TILE, hrDigitMat, HRB_SIDE, hrTile, hrSetTile, hrShield, hrMiles, hrBoard, hrShow, hrSetCount, hrTick |
@@ -91,11 +91,11 @@
 
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
-| `js/lobby/config.js` | 31 | CONFIG |
+| `js/lobby/config.js` | 33 | CONFIG |
 | `js/lobby/kit.js` | 23 | L, NS, rng, arcY, hot, pine, bush, cherry |
 | `js/lobby/scenery.js` | 78 | L.sky, L.hills, L.ground, L.plaza, L.lawn, L.petals |
 | `js/lobby/stadium.js` | 118 | L.stadium, L.gate, L.queue, L.annex |
-| `js/lobby/props.js` | 89 | L.pines, L.poles, L.booth, L.wall, L.monument, L.sign |
+| `js/lobby/props.js` | 107 | L.pines, L.poles, L.booth, L.wall, L.monument, L.sign, L.coin |
 | `js/lobby/people.js` | 53 | PEOPLE, person, L.people |
 | `js/lobby/scene.js` | 9 |  |
 | `js/lobby/interact.js` | 153 | $, stage, reduced, state, hotEl, cfgOf, subsOf, clearSel, idleReset, showBubble, sparkle, toast, shake, wiggleStar … |
