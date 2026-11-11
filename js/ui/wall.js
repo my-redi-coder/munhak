@@ -1,7 +1,7 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요.
    Original work by Redi Coder, an SSG Landers fan. Reuse is welcome, commercial use is not. Please credit "Based on Munhak Ballpark by Redi Coder (SSG fan)". */
 /* ================= 담벼락 (묶음 A, 2026-11-01) =================
-   '내 위치' 메뉴 → 둘러보기 '담벼락'(ui/places.js)에서 wallOpen(). 포토존처럼 전용 화면이고, 왼쪽 위 '돌아가기'(또는 Esc)로 나가요. 하단 버튼 없음.
+   (2026-11-11부터 '내 위치' 메뉴에는 담벼락이 없어요 — 지금은 야구장 안에서 여는 길이 없고, 로비 wall.html로만 들어가요. 이 파일은 안 쓰는 상태) 포토존처럼 전용 화면이고, 왼쪽 위 '돌아가기'(또는 Esc)로 나가요. 하단 버튼 없음.
    - 글(제작자의 말·낙서·참고한 곳)은 stadium.html의 #wall 안에 있고, 로비에서 여는 wall.html에도 같은 글이 있어요 → 글을 고칠 땐 두 곳 다(docs/LOBBY.md).
    - (B3) 위치 글귀는 마스킹테이프로 붙인 종이 라벨(.tag), 벽 밑단·보도블록은 글 맨 끝 .wall-ground(같이 스크롤)
    - 회색 벽 일러스트 wallArt()는 js/ui/wall-art.js(로비의 wall.html과 같이 써요). 처음 들어갈 때 한 번 그려요. 글·그림은 담벼락 프로토타입 아티팩트 그대로.

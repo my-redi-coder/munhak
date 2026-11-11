@@ -76,7 +76,7 @@
 | `js/game/photozone.js` | 95 | PZ, _pzP, PZ_POSE, pzStart, pzStop, pzPose, pzHide, PZ_WIN, pzWinMeasure, pzFitD, pzCam, pzZoomTo, pzRayX, pzGrab … |
 | `js/ui/photo.js` | 125 | PHOTO, POLA, photoStamp, photoDate, photoFonts, photoWin, polaPetal, polaTape, polaCompose, polaFlat, polaRender, takePhoto, polaCapDone |
 | `js/ui/photozone-ui.js` | 67 | pzBtn, pzUIOpen, pzHintShow, pzUIClose, pzUISync, pzHold |
-| `js/ui/places.js` | 53 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
+| `js/ui/places.js` | 52 | PLACE_ICO, TOUR_GO, placeItem, placeGroup, placeMenuBuild, placeMenu |
 | `js/ui/wall-art.js` | 30 | wallArt |
 | `js/ui/wall.js` | 31 | WALL, wallFonts, wallOpen, wallClose |
 | `js/game/movement.js` | 22 | updatePlayer |

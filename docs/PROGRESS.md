@@ -3,6 +3,13 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 작은 수정 AM: 야구장 '내 위치' 메뉴에서 담벼락 빼기 — 완료 (2026-11-11, `munhak_2026-11-11_AM-no-wall-menu`)
+
+- 담벼락은 로비(마을 대문 쪽 `wall.html`)에서 들어갈 수 있어서, 야구장 안 '내 위치 > 둘러보기'에는 따로 둘 필요가 없음(사용자 판단). 둘러보기는 이제 **홈런기념판 · 플레이어존 · 경기장 구경** 세 개
+- 고친 곳: `js/core/config.js`(`TOURS`·`TOUR_CFG`에서 담벼락 뺌), `js/ui/places.js`(`TOUR_GO`·`PLACE_ICO`에서 담벼락 뺌), `js/ui/wall.js`(맨 위 설명에 '메뉴에서 뺐음' 적음), `docs/ARCHITECTURE.md`, `docs/MODULES.md`
+- **일부러 안 지운 것**: 야구장 안 담벼락 화면(`stadium.html`의 `#wall`, `js/ui/wall.js`, `styles/wall.css`)은 이제 열 길이 없는 코드로 남아 있음. 로비 `wall.html`과 글이 두 벌이던 걸 한 벌로 줄이고 싶으면 나중에 따로 정리 가능
+- 확인(헤드리스): 콘솔 오류 없음, 메뉴 항목이 관중석 4곳 + 둘러보기 3개로 뜸
+
 ## 작은 수정 AL: 저금통 동전 자리·크기 바꿈 — 완료 (2026-11-11, `munhak_2026-11-11_AL-coin-move`)
 
 - 동전을 왼쪽 벚나무 밑동 오른쪽(나무 그림자 안, `L.coin`의 `x`=50·`y`=680)으로 옮기고, 가로를 7에서 **13**으로 키움(`scale(.075)` → `.155`). 이름표 꼬리 자리 `anchors.piggy`는 (50, 674)

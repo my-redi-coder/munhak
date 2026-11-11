@@ -2,17 +2,16 @@
 /* ================= 내 위치 펼침 메뉴 (묶음 A, 2026-11-01) =================
    위쪽 '내 위치' 버튼(#bZone, 지금 구역 이름) 바로 아래로 펼쳐지는 메뉴(#placeMenu). 예전 '내 위치' 시트(관중 수 표시)를 대신해요.
    - 관중석: ZKEYS 순서(으쓱이존·내야·외야·하룰라라석) → goZone. 지금 있는 구역은 빨갛게(aria-current).
-   - 둘러보기: config.js의 TOURS 순서 → TOUR_GO에 적힌 함수(포토존 pzStart · 경기장 구경 ssStart · 담벼락 wallOpen).
+   - 둘러보기: config.js의 TOURS 순서 → TOUR_GO에 적힌 함수(포토존 pzStart · 경기장 구경 ssStart).
    새 둘러보기 = TOURS에 이름 + TOUR_CFG(또는 PZ_CFG)에 label + 아래 TOUR_GO·PLACE_ICO에 한 줄씩.
    메뉴 밖을 누르거나 Esc면 닫혀요. */
 var PLACE_ICO={
   seat:'<path d="M6 10V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5"/><path d="M4 10h16v5H4zM6 15v5M18 15v5"/>',
   hr:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
   pz:'<rect x="3" y="4" width="18" height="16" rx="1"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/>',
-  look:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
-  wall:'<path d="M3 5h18v14H3zM3 9.7h18M3 14.3h18M9 5v4.7M15 5v4.7M6 9.7v4.6M12 9.7v4.6M18 9.7v4.6M9 14.3V19M15 14.3V19"/>'
+  look:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'
 };
-var TOUR_GO={hr:function(){pzStart('hr')},pz:function(){pzStart('pz')},look:function(){ssStart()},wall:function(){wallOpen()}};
+var TOUR_GO={hr:function(){pzStart('hr')},pz:function(){pzStart('pz')},look:function(){ssStart()}};
 function placeItem(ico,label,cur,fn){
   var b=document.createElement('button');b.className='pitem';b.setAttribute('role','menuitem');
   if(cur)b.setAttribute('aria-current','true');

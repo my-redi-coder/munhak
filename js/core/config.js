@@ -125,5 +125,5 @@ var DAY_TIME={
   night:{short:'밤',btn:'밤 경기',toast:'밤 경기예요. 조명탑이 환하게 켜졌어요'}
 };
 /* '내 위치' 펼침 메뉴의 둘러보기 순서(ui/places.js). 포토존 이름은 PZ_CFG에서, 나머지는 TOUR_CFG에서 */
-var TOURS=['hr','pz','look','wall'];
-var TOUR_CFG={look:{label:'경기장 구경'},wall:{label:'담벼락'}};
+var TOURS=['hr','pz','look'];/* 담벼락은 로비(wall.html)에서만 들어가요 — 2026-11-11 AM */
+var TOUR_CFG={look:{label:'경기장 구경'}};
