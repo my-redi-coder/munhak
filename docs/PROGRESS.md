@@ -3,6 +3,11 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 작은 수정 AN: 저금통 동전을 초록옷 으쓱이 발 앞으로 — 완료 (2026-11-15, `munhak_2026-11-15_AN-coin-feet`)
+
+- 동전을 벚나무 밑동에서 길 왼쪽 풀밭의 **초록 모자 쓴 초록옷 으쓱이**(`people.js`의 (150,648)) 발 바로 앞으로 옮김(`L.coin`의 `x`=150·`y`=656). 이름표 꼬리 `anchors.piggy`는 (150, 650). 크기(가로 13)는 그대로
+- 바뀐 파일: `js/lobby/props.js`, `js/lobby/config.js`, `docs/LOBBY.md`, `docs/PROGRESS.md`
+
 ## 작은 수정 AM: 야구장 '내 위치' 메뉴에서 담벼락 빼기 — 완료 (2026-11-11, `munhak_2026-11-11_AM-no-wall-menu`)
 
 - 담벼락은 로비(마을 대문 쪽 `wall.html`)에서 들어갈 수 있어서, 야구장 안 '내 위치 > 둘러보기'에는 따로 둘 필요가 없음(사용자 판단). 둘러보기는 이제 **홈런기념판 · 플레이어존 · 경기장 구경** 세 개
