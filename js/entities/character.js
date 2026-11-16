@@ -94,6 +94,9 @@ Char.prototype.setBack=function(name,num){
   if(this.backMat.map)this.backMat.map.dispose();this.backMat.map=backTex(this.uk,name,num);this.backMat.needsUpdate=true;
   if(this.jMat.map)this.jMat.map.dispose();this.jMat.map=jerseyTex(this.uk,name,num);this.jMat.needsUpdate=true;
 };
+/* (작은 수정 AO) 흔드는 유니폼에만 다른 이름·번호를 씀(색은 내 것 그대로). 나를 따라 흔드는 으쓱이가 내 등판을 들 때 써요(game/npc.js).
+   유니폼을 내리면(setAct에서 wave를 벗어날 때) 원래 내 이름·번호로 돌아가요 */
+Char.prototype.setJersey=function(name,num){if(this.jMat.map)this.jMat.map.dispose();this.jMat.map=jerseyTex(this.uk,name,num);this.jMat.needsUpdate=true;this.jCopy=true};
 /* 폰 불빛: 손에 드는 작은 빛 (act 'light', 8회말 여난부두) */
 var GLOWTEX=null;
 function glowTex(){if(!GLOWTEX)GLOWTEX=canvasTex(64,64,function(x){var g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.18,'rgba(255,246,220,.9)');g.addColorStop(.45,'rgba(255,226,160,.28)');g.addColorStop(1,'rgba(255,220,150,0)');x.fillStyle=g;x.fillRect(0,0,64,64)});return GLOWTEX}
@@ -103,6 +106,7 @@ Char.prototype.setAct=function(a){
   if(this.glow)this.glow.visible=a==='light';
   var wave=a==='wave';
   if((prev==='wave')!==wave){this.torsoMat.color.setHex(wave?TEE:UNI[this.uk].hex);var ag=armGeo(wave?'tee':this.uk);this.armAm.geometry=ag;this.armBm.geometry=ag;this.back.visible=!wave;this.front.visible=!wave;this.jersey.visible=wave}
+  if(!wave&&this.jCopy){this.jCopy=false;this.setBack(this.bn,this.bnum)}/* (AO) 빌려 든 등판은 내리면 원래대로 */
 };
 Char.prototype.setHat=function(on){uniHat(this,on)};
 Char.prototype.setFace=function(k){if(this.faceKind!==k){this.faceKind=k;this.face.material=FACE[k]}};
