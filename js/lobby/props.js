@@ -88,13 +88,13 @@ L.sign = ()=>{
   return board('bullpen','불펜장',236,-1,13,36,[232,556,74,66]) + board('locker','라커룸',316,1,13,36,[312,556,72,66]);
 };
 
-/* 믿을맨 저금통: 길 왼쪽 풀밭, 초록 모자 쓴 초록옷 으쓱이(people.js의 (150,648)) 발 앞에 놓인 작은 은색 동전. 누르면 이름표, 한 번 더 누르면 저금통(별도 저장소 piggyback1)으로.
+/* 믿을맨 저금통: 길 왼쪽 풀밭, 초록 모자 쓴 초록옷 으쓱이(people.js의 (150,648)) 발 앞에 놓인 작은 은색 동전. 누르면 이름표 '돼그랑', 한 번 더 누르면 저금통(별도 저장소 piggyback1)으로.
    그림은 120×80짜리 동전을 `scale(.155)`로 줄여 (x,y)에 놓아요(동전 몸통 가로 13 = 폰 가로 400px 기준 13px). 자리를 옮기려면 x·y와 config.js의 anchors.piggy를 같이 고쳐요.
    `fSel`(흰 테두리)이 잘리지 않게 .art 안에 보이지 않는 26×20 네모를 같이 둬요. 누름 영역은 26×20. */
 L.coin = ()=>{
   const x=150, y=656;
   const notches=[...Array(16)].map((_,i)=>`<rect x="${23+i*5}" y="41" width="1.8" height="11" rx=".9" fill="#98a2af"/>`).join('');
-  return hot('piggy','믿을맨 저금통',
+  return hot('piggy','돼그랑',
     `<rect x="${x-13}" y="${y-10}" width="26" height="20" fill="#fff" fill-opacity="0"/>`
     +`<g transform="translate(${x} ${y}) scale(.155) translate(-60 -46)">`
     +`<ellipse cx="60" cy="58" rx="46" ry="12" fill="#000" opacity=".1"/>`

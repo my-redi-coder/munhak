@@ -1,7 +1,7 @@
 /* SSG 팬 레디코더의 문학야구장 — 출처를 남겨 주세요('SSG 팬 레디코더의 문학야구장 참조'). 판매·유료 사용은 안 돼요. */
 /* ================= NPC behaviour =================
    (묶음 B) 말풍선·물결은 game/crowdtalk.js. 행동 고르는 비율(응원2·화1·흔들기1)은 그대로
-   (작은 수정 AO) 내가 유니폼을 흔들 때 따라 흔드는 3~4명은 내 등판 이름·번호가 적힌 유니폼을 들어요(색은 각자 것). 내리면 원래대로(entities/character.js의 setJersey)
+   (작은 수정 AO) 내가 유니폼을 흔들 때 따라 흔드는 가장 가까운 7~8명은 내 등판 이름·번호가 적힌 유니폼을 들어요(색은 각자 것). 내리면 원래대로(entities/character.js의 setJersey)
    (2026-11-01) 이벤트 중·직후엔 화내기를 고르면 그냥 가만히 있어요(evCalm). 내가 직접 화내면 따라 화내는 건 그대로 */
 function npcReact(a){
   var near=npcs.slice().sort(function(x,y){return Math.abs(x.seat.x-player.root.position.x)+Math.abs(x.seat.z-player.root.position.z)-(Math.abs(y.seat.x-player.root.position.x)+Math.abs(y.seat.z-player.root.position.z))});
@@ -14,7 +14,7 @@ function npcReact(a){
     CROWD.last=performance.now()/1000;setTimeout(function(){crowdCalm(player.root.position.x,player.root.position.z)},rnd(5000,7000));
     if(m)setTimeout(function(){if(player.act==='angry')toast(m===1?'옆자리 으쓱이도 같이 화내요':'주변 으쓱이 '+m+'명이 같이 화내요',2600)},1600);
   }else if(a==='wave'){
-    var cnt=0;near.slice(0,8).forEach(function(c){if(Math.random()<.45){cnt++;c.follow=true;c.joinAt=rnd(.5,2.5);c.want='wave';c.copyMe=true}});
+    var cnt=0;near.slice(0,Math.random()<.5?7:8).forEach(function(c){cnt++;c.follow=true;c.joinAt=rnd(.5,2.5);c.want='wave';c.copyMe=true});
     if(cnt)setTimeout(function(){if(player.act==='wave')toast(cnt===1?'옆자리 으쓱이도 유니폼을 흔들어요':'주변 으쓱이 '+cnt+'명이 같이 유니폼을 흔들어요',2600)},2200);
   }
 }

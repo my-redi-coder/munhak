@@ -21,7 +21,7 @@ const CONFIG = {
     gate:    { kind:'info',  label:'정문', sub:['표가 있어야 들어갈 수 있어요','티켓부스로 가볼까요?'] },
     museum:  { kind:'museum', label:'문학기념관', sub:()=> CONFIG.museumOpen ? '' : '준비 중이에요',
                url:null, go:'문학기념관으로 가는 중', closedMsg:'아직 전시 기간이 아닙니다' },
-    piggy:   { kind:'enter', label:'믿을맨 저금통', url:'https://my-redi-coder.github.io/piggyback1/', go:'저금통으로 가는 중',
+    piggy:   { kind:'enter', label:'돼그랑', url:'https://my-redi-coder.github.io/piggyback1/', go:'저금통으로 가는 중',
                prefetch:['https://my-redi-coder.github.io/piggyback1/'] }   // 초록옷 으쓱이 발 앞의 작은 동전(별도 저장소 piggyback1)
   },
   // 이름표가 뜰 때 풍선 꼬리 끝이 닿는 자리(그림 좌표 400×760) — 건물 지붕 윗선에 맞춤
