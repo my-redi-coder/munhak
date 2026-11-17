@@ -32,7 +32,7 @@ function mhcDocTex(seed,title){var r=mhcRnd(seed);return mhLiveTex(300,400,funct
   x.fillStyle='#4a3b26';x.font='700 30px '+MHF.kr;x.textAlign='center';x.fillText(title||'',w/2,70);
   x.fillStyle='#8a7a60';for(var i=0;i<11;i++)x.fillRect(40,100+i*22,(w-80)*(.6+.4*r()),5);
   x.fillStyle='#b03a2e';x.beginPath();x.arc(w*.72,h*.86,22,0,7);x.fill()})}
-/* 전시물 그림: 유니폼·가방 무늬·사인판·공·오만원·지폐 옆면 */
+/* 전시물 그림: 유니폼·가방 무늬·홈런볼 테이블·공·오만원·지폐 옆면 */
 function mhcJerseyTex(){return mhLiveTex(840,750,function(x,w,h){
   /* uv: x -0.42~0.42 → 0~w, y 0~0.75 → 아래~위 */
   x.fillStyle='#fbfbf9';x.fillRect(0,0,w,h);
@@ -57,26 +57,52 @@ function mhcBagTex(){return canvasTex(1024,512,function(x,w,h){x.fillStyle='#5e3
     else{x.beginPath();x.arc(0,0,11,0,7);x.fill();x.fillStyle='#5e3f27';for(var s=0;s<4;s++){x.beginPath();x.ellipse(Math.cos(s*Math.PI/2+.78)*5,Math.sin(s*Math.PI/2+.78)*5,3,5,s*Math.PI/2+.78,0,7);x.fill()}x.fillStyle='#b88a52'}
     x.restore()}
   var g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,'rgba(255,240,220,.12)');g.addColorStop(1,'rgba(0,0,0,.18)');x.fillStyle=g;x.fillRect(0,0,w,h)})}
-function mhcSignTex(){var r=mhcRnd(29);return canvasTex(560,430,function(x,w,h){x.fillStyle='#ece9e2';x.fillRect(0,0,w,h);
-  for(var i=0;i<1600;i++){x.fillStyle='rgba(120,110,95,'+r()*.12+')';x.fillRect(r()*w,r()*h,2,2)}
-  /* 사인: 굵은 매직 느낌의 빠른 획 + 끝을 돼지꼬리처럼 말아 뺌 + 18 */
+/* 홈런볼이 박힌 접이식 테이블 상판: 베이지 갈라진 무늬 + 사인(돼지꼬리·18) + 공이 박혀 부서진 구멍.
+   W×H 미터를 1m=1000px로 그려요. 구멍 자리(hole)는 corner-items.js의 공 자리와 같아야 해요 → MHC.table */
+function mhcTableTex(){var T=MHC.table,r=mhcRnd(31);return mhLiveTex(Math.round(T.w*1000),Math.round(T.h*1000),function(x,w,h){
+  /* 바탕: 베이지 + 흰 그물 같은 갈라짐 무늬 */
+  x.fillStyle='#ddd5c3';x.fillRect(0,0,w,h);
+  var rr=mhcRnd(41),pts=[];for(var i=0;i<140;i++)pts.push([rr()*w,rr()*h]);
+  x.strokeStyle='rgba(250,247,240,.75)';x.lineWidth=2.2;x.lineJoin='round';
+  pts.forEach(function(p){var n=5+Math.floor(rr()*3),R=16+rr()*18;x.beginPath();for(var k=0;k<=n;k++){var a=k/n*Math.PI*2+rr()*.4,q=R*(.75+rr()*.4);var px=p[0]+Math.cos(a)*q,py=p[1]+Math.sin(a)*q;k?x.lineTo(px,py):x.moveTo(px,py)}x.stroke()});
+  for(var j=0;j<1800;j++){x.fillStyle='rgba(120,105,80,'+r()*.08+')';x.fillRect(r()*w,r()*h,2,2)}
+  /* 사인 (왼쪽 60%) */
+  x.save();x.translate(w*.04,h*.12);x.scale(w*.6/520,w*.6/520);
   x.strokeStyle='#1d1d20';x.lineCap='round';x.lineJoin='round';
-  var L=function(wd,pts){x.lineWidth=wd;x.beginPath();x.moveTo(pts[0],pts[1]);for(var i=2;i<pts.length;i+=6)x.bezierCurveTo(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5]);x.stroke()};
-  L(11,[70,215, 120,190,165,175,175,182, 160,230,120,290,105,325, 150,310,205,300,245,300]);   /* 첫 꺾임 */
-  L(12,[205,150, 215,200,212,250,200,330]);                                                     /* 세로 내리긋기 */
-  L(10,[230,205, 270,170,300,175,285,220, 270,260,240,250,265,230]);                           /* 동그랗게 감기 */
-  L(11,[290,300, 300,250,320,200,345,170, 330,230,330,290,350,320]);                           /* 뾰족 산 */
-  L(8,[120,265, 250,215,380,165,470,125]);                                                      /* 길게 그은 사선 */
-  /* 돼지꼬리: 오른쪽 아래로 빠지며 두 바퀴 꼬불 */
-  x.lineWidth=7;x.beginPath();x.moveTo(350,320);x.bezierCurveTo(375,345,400,340,405,320);
-  var cx=420,cy=322;for(var k=0;k<=2*Math.PI*2.1;k+=.08){var rr=17-k*1.1;x.lineTo(cx+Math.cos(k+Math.PI)*rr+k*2.2,cy+Math.sin(k+Math.PI)*rr*.85)}x.stroke();
-  /* 18 */
-  x.lineWidth=9;x.beginPath();x.moveTo(445,195);x.lineTo(430,275);x.stroke();
-  x.lineWidth=8;x.beginPath();x.ellipse(478,212,15,17,.2,0,7);x.stroke();x.beginPath();x.ellipse(470,255,19,22,.2,0,7);x.stroke();
-  x.strokeStyle='#cfc9bd';x.lineWidth=10;x.strokeRect(5,5,w-10,h-10)})}
+  var L=function(wd,p){x.lineWidth=wd;x.beginPath();x.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=6)x.bezierCurveTo(p[i],p[i+1],p[i+2],p[i+3],p[i+4],p[i+5]);x.stroke()};
+  L(9,[70,215, 120,190,165,175,175,182, 160,230,120,290,105,325, 150,310,205,300,245,300]);
+  L(10,[205,150, 215,200,212,250,200,330]);
+  L(8,[230,205, 270,170,300,175,285,220, 270,260,240,250,265,230]);
+  L(9,[290,300, 300,250,320,200,345,170, 330,230,330,290,350,320]);
+  L(6,[120,265, 250,215,380,165,470,125]);
+  x.lineWidth=6;x.beginPath();x.moveTo(350,320);x.bezierCurveTo(375,345,400,340,405,320);
+  var cx=420,cy=322;for(var k=0;k<=2*Math.PI*2.1;k+=.08){var q=17-k*1.1;x.lineTo(cx+Math.cos(k+Math.PI)*q+k*2.2,cy+Math.sin(k+Math.PI)*q*.85)}x.stroke();
+  x.lineWidth=6;x.beginPath();x.moveTo(470,230);x.lineTo(458,300);x.stroke();
+  x.beginPath();x.ellipse(498,244,13,15,.2,0,7);x.stroke();x.beginPath();x.ellipse(492,282,16,19,.2,0,7);x.stroke();
+  x.restore();
+  /* 공이 박힌 구멍: 바깥으로 뻗는 금 → 들뜬 겉판 → 까만 구멍 */
+  var hx=(T.hole[0]/T.w+.5)*w,hy=(.5-T.hole[1]/T.h)*h,R=T.ball*1000*1.25,rc=mhcRnd(53);
+  x.strokeStyle='rgba(60,50,40,.75)';x.lineCap='round';
+  for(var c=0;c<11;c++){var a=c/11*Math.PI*2+rc()*.4,len=R*(1.4+rc()*1.6),px=hx+Math.cos(a)*R*.9,py=hy+Math.sin(a)*R*.9;
+    x.lineWidth=2.4;x.beginPath();x.moveTo(px,py);var steps=4;for(var s2=1;s2<=steps;s2++){var t2=s2/steps,aa=a+(rc()-.5)*.5;px=hx+Math.cos(aa)*(R*.9+len*t2);py=hy+Math.sin(aa)*(R*.9+len*t2);x.lineTo(px,py)}x.stroke();
+    if(rc()>.5){x.lineWidth=1.4;x.beginPath();x.moveTo(px,py);x.lineTo(px+Math.cos(a+1)*R*.4,py+Math.sin(a+1)*R*.4);x.stroke()}}
+  /* 들뜬 겉판 조각(밝은 테두리) */
+  var ring=[];for(var k2=0;k2<16;k2++){var a2=k2/16*Math.PI*2,q2=R*(1.12+rc()*.35);ring.push([hx+Math.cos(a2)*q2,hy+Math.sin(a2)*q2])}
+  x.fillStyle='#efe9dc';x.beginPath();ring.forEach(function(p,i){i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])});x.closePath();x.fill();
+  x.strokeStyle='rgba(90,75,55,.6)';x.lineWidth=2;x.stroke();
+  /* 구멍 안쪽: 갈색 속(합판) → 까만 그림자 */
+  var hole=[];for(var k3=0;k3<18;k3++){var a3=k3/18*Math.PI*2,q3=R*(.92+rc()*.22);hole.push([hx+Math.cos(a3)*q3,hy+Math.sin(a3)*q3])}
+  x.fillStyle='#8a6a45';x.beginPath();hole.forEach(function(p,i){i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])});x.closePath();x.fill();
+  var g=x.createRadialGradient(hx,hy,R*.3,hx,hy,R*.95);g.addColorStop(0,'#1a1410');g.addColorStop(1,'rgba(40,30,20,.85)');x.fillStyle=g;
+  x.beginPath();x.arc(hx,hy,R*.86,0,7);x.fill();
+})}
 function mhcBallTex(){return mhLiveTex(256,128,function(x,w,h){x.fillStyle='#f6f4ee';x.fillRect(0,0,w,h);x.strokeStyle='#c8102e';x.lineWidth=3;
   for(var s=0;s<2;s++){x.beginPath();for(var i=0;i<=64;i++){var u=i/64*w,v=h/2+Math.sin(i/64*Math.PI*2+s*Math.PI)*h*.3;i?x.lineTo(u,v):x.moveTo(u,v)}x.stroke()}
-  x.fillStyle='#2a3a6a';x.font='700 16px '+MHF.cond;x.fillText('MUNHAK',w*.38,h*.55)})}
+  /* 공에도 작은 사인 + 18 (앞쪽 = 그림 가운데쯤) */
+  x.strokeStyle='#1d1d20';x.lineWidth=2.4;x.lineCap='round';x.beginPath();x.moveTo(100,74);x.lineTo(112,52);x.lineTo(116,72);x.lineTo(126,50);x.lineTo(130,70);x.quadraticCurveTo(140,60,150,48);x.stroke();
+  x.beginPath();x.moveTo(98,80);x.lineTo(150,62);x.stroke();
+  x.lineWidth=2;x.beginPath();x.moveTo(156,58);x.lineTo(154,74);x.stroke();x.beginPath();x.ellipse(162,61,3,4,0,0,7);x.stroke();x.beginPath();x.ellipse(161,70,4,5,0,0,7);x.stroke();
+})}
 function mhcBillTex(){var r=mhcRnd(77);return mhLiveTex(512,226,function(x,w,h){
   var g=x.createLinearGradient(0,0,w,0);g.addColorStop(0,'#f1c46a');g.addColorStop(.5,'#f6d688');g.addColorStop(1,'#e7b357');x.fillStyle=g;x.fillRect(0,0,w,h);
   x.strokeStyle='rgba(150,95,30,.35)';x.lineWidth=1;for(var i=0;i<40;i++){x.beginPath();x.arc(w*.3,h*.5,8+i*5,0,7);x.stroke()}

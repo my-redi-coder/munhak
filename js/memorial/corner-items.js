@@ -97,24 +97,44 @@ function mhcBagShelf(){var g=new THREE.Group(),shelfY=1.98;
   mhcAdd(new THREE.Mesh(new THREE.PlaneGeometry(.26,.05),mhcStd({map:lb})),-.28,shelfY+.07,.625,g);
   return g}
 
-/* 7-4. 사인판·공·현금 */
+/* 7-4. 홈런볼이 박힌 테이블·현금
+   관중석 접이식 테이블에 홈런볼이 날아와 박힌 채로, 테이블째 사인을 받은 것. 공은 상판에 반쯤 박혀 있고 둘레가 부서져 들떠 있어요 */
+function mhcRoundRect(w,h,r){var s=new THREE.Shape(),x=-w/2,y=-h/2;
+  s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s}
+function mhcHomerunTable(){var T=MHC.table,g=new THREE.Group(),metal=mhcStd({color:0xd9dcdf,metalness:.25,roughness:.4});
+  /* 알루미늄 테두리(뒤판) + 상판(앞면 그림) */
+  mhcAdd(new THREE.Mesh(new THREE.ExtrudeGeometry(mhcRoundRect(T.w+.022,T.h+.022,.045),{depth:.02,bevelEnabled:false}),metal),0,0,-.012,g);
+  var tt=mhcTableTex();tt.repeat.set(1/T.w,1/T.h);tt.offset.set(.5,.5);
+  mhcAdd(new THREE.Mesh(new THREE.ExtrudeGeometry(mhcRoundRect(T.w,T.h,.035),{depth:.012,bevelEnabled:false}),[mhcStd({map:tt,roughness:.75}),mhcStd({color:0xcfd2d6,metalness:.25,roughness:.4})]),0,0,0,g);
+  /* 위쪽 손잡이 */
+  var hd=new THREE.Mesh(new THREE.TorusGeometry(.07,.006,8,20,Math.PI),metal);hd.scale.y=.45;mhcAdd(hd,0,T.h/2+.008,-.004,g);
+  /* 박힌 공: 반쯤 튀어나옴 */
+  var hx=T.hole[0],hy=T.hole[1];
+  var ball=new THREE.Mesh(new THREE.SphereGeometry(T.ball,28,18),mhcStd({map:mhcBallTex(),roughness:.6}));ball.rotation.y=-Math.PI/2-.2;ball.rotation.z=.25;mhcAdd(ball,hx,hy,.012+T.ball*.45,g);
+  /* 들뜬 겉판 조각: 구멍 둘레에서 바깥으로 젖혀진 작은 파편 */
+  var chip=mhcStd({color:0xe9e2d2,roughness:.8}),core=mhcStd({color:0x8a6a45,roughness:.9}),rc=mhcRnd(61);
+  for(var i=0;i<9;i++){var a=i/9*Math.PI*2+rc()*.5,d=T.ball*(1.05+rc()*.25),sz=.012+rc()*.014;
+    var c=new THREE.Mesh(new THREE.BoxGeometry(sz,sz*(.6+rc()*.8),.003),[core,core,core,core,chip,core]);
+    c.position.set(hx+Math.cos(a)*d,hy+Math.sin(a)*d,.014+rc()*.004);c.rotation.z=a+rc();c.rotation.x=-Math.sin(a)*(.5+rc()*.5);c.rotation.y=Math.cos(a)*(.5+rc()*.5);g.add(c)}
+  /* 아래 받침에 떨어진 부스러기 몇 개 */
+  for(var k=0;k<5;k++){var cr=new THREE.Mesh(new THREE.BoxGeometry(.006+rc()*.008,.003,.006+rc()*.008),chip);cr.rotation.y=rc()*3;mhcAdd(cr,hx+(rc()-.5)*.12,-T.h/2+.002,.06+rc()*.05,g)}
+  return mhcCast(g)}
+
 function mhcCashStack(){var g=new THREE.Group(),bw=.24,bd=.106,bh=.035,top=mhcBillTex(),ed=mhcEdgeTex();
   var mats=[mhcStd({map:ed}),mhcStd({map:ed}),mhcStd({map:top,roughness:.8}),mhcStd({color:0xe0c78f}),mhcStd({map:ed}),mhcStd({map:ed})];
   for(var i=0;i<4;i++){var b=new THREE.Mesh(new THREE.BoxGeometry(bw,bh,bd),mats);b.rotation.y=(i%2?.03:-.02);mhcAdd(b,(i%2)*.004,bh/2+i*bh,0,g)}
   return mhcCast(g)}
 function mhcCashCase(){var g=new THREE.Group();
   g.add(mhcPedestal(1.4,.92,.9));var top=1.03;
-  /* 사인판(살짝 뒤로 기댐) */
-  var board=new THREE.Mesh(new THREE.BoxGeometry(.56,.43,.03),[0,0,0,0,mhcStd({map:mhcSignTex(),roughness:.85}),0].map(function(v){return v||mhcStd({color:0xd8d3c8})}));
-  board.rotation.x=-.12;mhcCast(mhcAdd(board,-.2,top+.23,-.15,g));
-  /* 공 + 받침 */
-  var ball=new THREE.Mesh(new THREE.SphereGeometry(.045,24,16),mhcStd({map:mhcBallTex(),roughness:.6}));mhcCast(mhcAdd(ball,.14,top+.29,-.1,g));
-  mhcAdd(new THREE.Mesh(new THREE.CylinderGeometry(.025,.03,.02,16),mhcStd({color:0xd8d8d8,transparent:true,opacity:.6})),.14,top+.235,-.1,g);
+  /* 홈런볼 테이블(살짝 뒤로 기대 세움) + 뒤 받침 */
+  var tb=mhcHomerunTable();tb.rotation.x=-.12;tb.rotation.y=.05;mhcAdd(tb,-.16,top+MHC.table.h/2+.012,-.12,g);
+  var leg=new THREE.Mesh(new THREE.BoxGeometry(.03,.36,.02),mhcStd({color:0x9a9da1,metalness:.7,roughness:.4}));leg.rotation.x=.45;mhcAdd(leg,-.16,top+.17,-.24,g);
   /* 현금: 하얀 받침 위에 오만원 다발 */
   mhcCast(mhcAdd(new THREE.Mesh(new THREE.BoxGeometry(.32,.07,.2),mhcStd({color:0xf1ece2,roughness:.7})),.4,top+.035,.05,g));
   var cs=mhcCashStack();cs.rotation.y=-.08;cs.scale.setScalar(1.25);mhcAdd(cs,.4,top+.07,.05,g);
   mhcAdd(mhcGlass(1.35,.62,.86),0,top,0,g);
-  mhcAdd(mhcCaption('야구공 사인','본인 직접 사인'),-.42,.8,.47,g);
+  mhcAdd(mhcCaption('홈런볼 테이블','공이 박힌 채 사인'),-.42,.8,.47,g);
   mhcAdd(mhcCaption('우승 상금','championship prize'),.36,.8,.47,g);
   return g}
 

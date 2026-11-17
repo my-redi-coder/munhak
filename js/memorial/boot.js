@@ -39,7 +39,7 @@ function mhFontsReady(){
   return Promise.race([mhLoadFonts('최광야구입구홀 ZONE AB V6 Go for it! Photo of Today Permanent exhibition Gallery 0123456789'),new Promise(function(r){setTimeout(r,MH.FONT_WAIT)})]);
 }
 function mhFontsLater(photos){
-  var txt='다음전시를준비하고있어요짤이걸릴자리거포인생유니폼헬멧장갑시즌착용야구공사인본인직접우승상금명품가방창단기록기념표창감사계약오만원장'+photos.map(function(p){return p.title+(p.comment||'')}).join('');
+  var txt='다음전시를준비하고있어요짤이걸릴자리거포인생유니폼헬멧장갑시즌착용홈런볼테이블공이박힌채사인우승상금명품가방창단기록기념표창감사계약오만원장'+photos.map(function(p){return p.title+(p.comment||'')}).join('');
   mhLoadFonts(txt+'0123456789 -·').then(mhRedrawLive,function(){});
 }
 mhLoadPhotos().then(function(photos){return mhFontsReady().then(function(){return photos})}).then(function(p){mhBoot(p);mhFontsLater(p)},function(){mhBoot([])});

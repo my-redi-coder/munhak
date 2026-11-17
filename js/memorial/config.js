@@ -35,6 +35,7 @@ var MH={
     on:true,extra:1.6,stop:2.3,wallW:8.2,
     place:{cutout:[-2.5,1.2],cutout2:[-3.3,.7],jersey:[-1,.95],bag:[.95,0],cash:[1.05,1.3]},
     cutout:{src:'memorial/corner/cutout.webp',h:1.82,ratio:494/1100},      /* 분홍 맨투맨·보라 바지 */
+    table:{w:.62,h:.46,hole:[.18,.05],ball:.048},   /* 홈런볼 테이블: 상판 가로·세로(m), 공이 박힌 자리(가운데 기준 오른쪽·위), 공 반지름 */
     cutout2:{src:'memorial/corner/cutout2.webp',h:1.82,ratio:476/1100},    /* 주황 옷·흰 조끼 (첫 등신대 왼쪽 뒤) */
     red:'#c8102e',ink:'#1e2329',mute:'#6b7178',stone:'#cbbfa9',slab:'#e9e2d3',glassEdge:0x9fd6c4
   },
