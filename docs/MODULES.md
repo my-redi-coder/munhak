@@ -106,6 +106,7 @@
 
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
+| `js/memorial/guard.js` | 16 | MH_GUARD, mhGuardShow |
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
 | `js/core/config.js` | 130 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, STAGE_DY … |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
@@ -116,7 +117,7 @@
 | `js/memorial/toolkit.js` | 11 | MHF, mhPlane, mhTexW, mhLiveTex, mhRedrawLive |
 | `js/memorial/concourse.js` | 45 | mhBuildConcourse |
 | `js/memorial/graphics.js` | 62 | mhChevronTex, mhWallChevron, mhZoneHeader, mhBuildGraphics |
-| `js/memorial/frames.js` | 64 | mhDrawPhoto, mhPhotoTex, mhPumpPhotos, mhEmptyFrame, mhHangFrame, mhBuildFrames |
+| `js/memorial/frames.js` | 65 | mhDrawPhoto, mhPhotoTex, mhPumpPhotos, mhEmptyFrame, mhHangFrame, mhBuildFrames |
 | `js/memorial/corner-art.js` | 89 | MHC, mhcStd, mhcAdd, mhcCast, mhcRnd, mhcNoiseTex, mhcStadiumTex, mhcOldPhotoTex, mhcDocTex, mhcJerseyTex, mhcBagTex, mhcSignTex, mhcBallTex, mhcBillTex … |
 | `js/memorial/corner-items.js` | 120 | mhcStoneTex, mhcPedestal, mhcGlass, mhcCaption, mhcCutout, mhcJerseyShape, mhcHelmet, mhcGlove, mhcJerseySet, mhcBag, mhcBagShelf, mhcCashStack, mhcCashCase |
 | `js/memorial/corner.js` | 55 | mhcFrame, mhcBackdrop, mhcBlob, mhBuildCorner |
@@ -128,7 +129,7 @@
 | `js/memorial/input.js` | 43 | _mhRay, mhBindInput, mhOnTap |
 | `js/memorial/ui.js` | 44 | _mhChips, mhBuildChips, mhUpdateLoc, mhToast, mhHideHint, mhOpenViewer, mhCloseViewer, mhBindViewer |
 | `js/memorial/dress.js` | 35 | mhNeedsDress, mhBuildDressSwatches, mhBuildDressHat, mhSyncDressBack, mhShowDress |
-| `js/memorial/boot.js` | 44 | _mhItems, mhSetupScene, mhLoop, mhBoot, MH_FONTS, mhLoadFonts, mhFontsReady, mhFontsLater |
+| `js/memorial/boot.js` | 45 | _mhItems, mhSetupScene, mhLoop, mhBoot, MH_FONTS, mhLoadFonts, mhFontsReady, mhFontsLater |
 
 ## 담벼락 페이지 — `wall.html`
 

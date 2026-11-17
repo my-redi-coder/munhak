@@ -12,7 +12,7 @@ PAGES = [
 out = ['# 모듈 지도 (자동 생성: tools/modmap.py)', '']
 total = 0
 for page, label, note in PAGES:
-    files = re.findall(r'<script src="(?!http)([^"]+)"', (R / page).read_text())
+    files = re.findall(r'<script src="(?!http)([^"?]+)', (R / page).read_text())  # ?v=… 꼬리표는 뗌
     out += [f'## {label} — `{page}`', '', note, '', '| 파일 | 줄 | 내놓는 이름 |', '|---|---|---|']
     for f in files:
         src = (R / f).read_text()

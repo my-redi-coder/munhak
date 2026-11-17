@@ -24,7 +24,8 @@ function mhPumpPhotos(){
     if(!best)return;
     (function(q){q.on=true;MH._photoBusy++;var im=new Image(),done=function(){MH._photoBusy--};
       im.onload=function(){q.it._im=im;var c=q.tex.image;mhDrawPhoto(c.getContext('2d'),c.width,c.height,im);q.tex.needsUpdate=true;done()};
-      im.onerror=done;im.src=q.it.url})(best);
+      im.onerror=function(){if(im.src.indexOf('/w/')>=0&&q.it.url){im.src=q.it.url;return}done()};  /* 사본이 없으면 원본으로 */
+      im.src=q.it.thumb||q.it.url})(best);
   }
 }
 function mhEmptyFrame(g,W,Hh,fr){

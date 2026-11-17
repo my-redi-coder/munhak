@@ -69,6 +69,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-of
 
 /* 여는 화면 */
 #boot{position:fixed;inset:0;background:#f5f6f7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:opacity .6s;z-index:5;color:#1e2329}
+#boot .err{max-width:80%;margin-top:6px;font-size:11px;color:#9aa0a6;text-align:center;word-break:break-all}
+#boot .retry{margin-top:12px;border:0;border-radius:18px;padding:9px 18px;background:var(--red);color:#fff;font:700 14px "Noto Sans KR",var(--ui-font)}
 #boot.out{opacity:0;pointer-events:none}
 #boot .k{font-family:"Noto Sans KR",var(--ui-font);font-weight:900;font-size:22px;color:var(--red)}
 #boot .s{font-size:14px;color:#6b7178}

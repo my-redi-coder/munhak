@@ -29,6 +29,7 @@ function mhBoot(photos){
   $('boot').classList.add('out');
   if(mhNeedsDress())mhShowDress(mhStartIntro);else mhStartIntro();
   _mhPrev=performance.now();requestAnimationFrame(mhLoop);
+  MH_GUARD.done=true;
 }
 /* 글꼴: 문 열기 전엔 입구에서 바로 보이는 글자만 기다리고(최대 MH.FONT_WAIT), 짤 제목·전시 코너 글자는 들어간 뒤 받아서 다시 그려요.
    한글 글꼴은 글자 조각 단위로 받아서, 짤 제목까지 미리 기다리면 짤이 늘수록 '문을 여는 중'이 길어졌어요 (패치 AS) */
