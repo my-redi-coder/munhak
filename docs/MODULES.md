@@ -117,7 +117,7 @@
 | `js/memorial/toolkit.js` | 11 | MHF, mhPlane, mhTexW, mhLiveTex, mhRedrawLive |
 | `js/memorial/concourse.js` | 45 | mhBuildConcourse |
 | `js/memorial/graphics.js` | 62 | mhChevronTex, mhWallChevron, mhZoneHeader, mhBuildGraphics |
-| `js/memorial/frames.js` | 65 | mhDrawPhoto, mhPhotoTex, mhPumpPhotos, mhEmptyFrame, mhHangFrame, mhBuildFrames |
+| `js/memorial/frames.js` | 73 | mhDrawPhoto, mhPhotoTex, mhPumpPhotos, mhEmptyFrame, mhFrameW, mhHangFrame, mhStick, mhBuildFrames |
 | `js/memorial/corner-art.js` | 115 | MHC, mhcStd, mhcAdd, mhcCast, mhcRnd, mhcNoiseTex, mhcStadiumTex, mhcOldPhotoTex, mhcDocTex, mhcJerseyTex, mhcBagTex, mhcTableTex, mhcBallTex, mhcBillTex … |
 | `js/memorial/corner-items.js` | 140 | mhcStoneTex, mhcPedestal, mhcGlass, mhcCaption, mhcCutout, mhcJerseyShape, mhcHelmet, mhcGlove, mhcJerseySet, mhcBag, mhcBagShelf, mhcRoundRect, mhcHomerunTable, mhcCashStack … |
 | `js/memorial/corner.js` | 56 | mhcFrame, mhcBackdrop, mhcBlob, mhBuildCorner |

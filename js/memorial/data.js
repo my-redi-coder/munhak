@@ -5,7 +5,7 @@ function mhLoadPhotos(){
   return fetch(MH.PHOTOS_URL,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){
     var list=(j&&j.photos)||[];
     return list.filter(function(p){return p&&p.file&&p.title&&MH.ZONES[p.zone]}).map(function(p){
-      return{id:p.id,title:String(p.title).slice(0,12),zone:p.zone,year:p.year||'-',tags:p.tags||[],people:p.people||[],comment:p.comment||'',url:'memorial/'+p.file,thumb:'memorial/'+String(p.file).replace(/^photos\//,'photos/w/')};
+      return{id:p.id,title:String(p.title).slice(0,12),zone:p.zone,year:p.year||'-',tags:p.tags||[],people:p.people||[],comment:p.comment||'',frame:p.frame==='sq'?'sq':'',url:'memorial/'+p.file,thumb:'memorial/'+String(p.file).replace(/^photos\//,'photos/w/')};
     });
   }).catch(function(){return[]});
 }
