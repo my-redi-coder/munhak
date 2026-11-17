@@ -20,7 +20,7 @@ function mhIntroTick(dt){
 }
 function mhArrive(){var p=MH.player;p.act='hi';setTimeout(function(){if(p.act==='hi')p.act=null},1700)}
 function mhSkipIntro(){var PL=MH.PL;if(!PL.intro)return;PL.intro.t=2.5;MH.cam.yaw=0;MH.cam.pitch=.26;MH.player.root.visible=true;mhIntroTick(0)}
-function mhJumpTo(s){
+function mhJumpTo(s,wall){
   var f=$('fade');f.classList.add('on');
-  setTimeout(function(){var p=mhAt(s,MH.HALL.rOut-3.3),player=MH.player;player.root.position.set(p.x,0,p.z);player.root.rotation.y=Math.PI-p.t;MH.cam.yaw=-p.t;MH.cam.pitch=.26;MH.PL.target=null;player.mode='stand';mhUpdateCam(1,true);f.classList.remove('on')},reduceMotion?0:220);
+  setTimeout(function(){var inn=wall==='out',p=mhAt(s,inn?MH.HALL.rIn+3.3:MH.HALL.rOut-3.3),player=MH.player;player.root.position.set(p.x,0,p.z);player.root.rotation.y=inn?-p.t:Math.PI-p.t;MH.cam.yaw=inn?-p.t-Math.PI:-p.t;MH.cam.pitch=.26;MH.PL.target=null;player.mode='stand';mhUpdateCam(1,true);f.classList.remove('on')},reduceMotion?0:220);
 }

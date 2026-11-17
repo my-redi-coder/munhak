@@ -32,7 +32,7 @@ function mhCloseViewer(){$('viewer').hidden=true;_mhCur=null;canvas.focus({preve
 function mhBindViewer(){
   $('vx').addEventListener('click',mhCloseViewer);
   $('viewer').addEventListener('click',function(e){if(e.target===$('viewer'))mhCloseViewer()});
-  $('vgo').addEventListener('click',function(){var it=_mhCur;mhCloseViewer();if(it)mhJumpTo(it.s)});
+  $('vgo').addEventListener('click',function(){var it=_mhCur;mhCloseViewer();if(it)mhJumpTo(it.s,it.wall)});
   /* 저장: 사진 파일을 받아서 내려받기 링크로 저장 (같은 사이트의 사진이라 바로 받아져요) */
   $('vsave').addEventListener('click',function(){
     if(!_mhCur)return;var it=_mhCur;

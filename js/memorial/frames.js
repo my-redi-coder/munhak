@@ -18,8 +18,8 @@ function mhEmptyFrame(g,W,Hh,fr){
   var ep=new THREE.Mesh(new THREE.PlaneGeometry(W,Hh),new THREE.MeshBasicMaterial({map:et}));ep.position.z=.025;ep.userData.empty=true;g.add(ep);MH.hits.push(ep);fr.material=new THREE.MeshLambertMaterial({color:0xd5d8dc});
 }
 function mhHangFrame(it,s,scale,opt){
-  opt=opt||{};var HALL=MH.HALL,W=HALL.frameW*scale,Hh=HALL.frameH*scale,y=opt.y||HALL.frameY,r=HALL.rOut-.06;
-  var g=new THREE.Group();scene.add(g);mhPut(g,s,r,y,'in');
+  opt=opt||{};var HALL=MH.HALL,W=HALL.frameW*scale,Hh=HALL.frameH*scale,y=opt.y||HALL.frameY,wl=opt.wall||it.wall||'in',d=wl==='out'?1:-1,r=(wl==='out'?HALL.rIn:HALL.rOut)+d*.06;
+  var g=new THREE.Group();scene.add(g);mhPut(g,s,r,y,wl);
   var fr=new THREE.Mesh(Box(W+.07,Hh+.07,.04),new THREE.MeshLambertMaterial({color:0x1c1f23}));g.add(fr);
   if(it.empty){mhEmptyFrame(g,W,Hh,fr);return}
   if(!it._tex)it._tex=mhPhotoTex(it);
@@ -31,8 +31,8 @@ function mhHangFrame(it,s,scale,opt){
     x.fillStyle=HALL.wallInk;x.font='700 '+Math.round(h*.3)+'px '+MHF.kr;x.fillText(it.title,2,h*.36);
     var tw=Math.min(w-4,Math.max(x.measureText(it.title).width,w*.42));x.fillStyle=HALL.red;x.fillRect(2,h*.47,tw,Math.max(2,h*.022));
     x.fillStyle=HALL.wallMute;x.font='600 '+Math.round(h*.26)+'px '+MHF.cond;x.fillText(it.code+(date?'   '+date:''),2,h*.82)});
-  var cap=mhPlane(cw,ch,ct);mhPut(cap,s,r+.02,y+Hh/2+.42,'in');
-  if(it.comment){var mt=mhTexW(cw,.3,300,function(x,w,h){x.fillStyle=HALL.wallMute;x.textAlign='left';x.textBaseline='middle';x.font='500 '+Math.round(h*.5)+'px '+MHF.kr;x.fillText(it.comment,2,h/2)});var cm=mhPlane(cw,.3,mt);mhPut(cm,s,r+.02,y-Hh/2-.26,'in')}
+  var cap=mhPlane(cw,ch,ct);mhPut(cap,s,r-d*.02,y+Hh/2+.42,wl);
+  if(it.comment){var mt=mhTexW(cw,.3,300,function(x,w,h){x.fillStyle=HALL.wallMute;x.textAlign='left';x.textBaseline='middle';x.font='500 '+Math.round(h*.5)+'px '+MHF.kr;x.fillText(it.comment,2,h/2)});var cm=mhPlane(cw,.3,mt);mhPut(cm,s,r-d*.02,y-Hh/2-.26,wl)}
 }
 function mhBuildFrames(items){
   var HALL=MH.HALL;
@@ -41,7 +41,7 @@ function mhBuildFrames(items){
   var pool=items.filter(function(it){return !it.empty});if(!pool.length)return;
   var last=store.get(MH.KEY.today,''),cand=pool.filter(function(it){return it.code!==last});
   MH.today=pick(cand.length?cand:pool);store.set(MH.KEY.today,MH.today.code);
-  mhHangFrame(MH.today,0,HALL.todayScale,{y:2.02,noCaption:true,today:true});
+  mhHangFrame(MH.today,0,HALL.todayScale,{y:2.02,noCaption:true,today:true,wall:'in'});
   var T=MH.today,tw=HALL.frameW*HALL.todayScale;
   var tc=mhPlane(tw,.36,mhTexW(tw,.36,260,function(x,w,h){x.textBaseline='middle';x.textAlign='left';
     x.fillStyle=HALL.wallMute;x.font='600 '+Math.round(h*.62)+'px '+MHF.cond;var a=T.code+'   ',aw=x.measureText(a).width;x.fillText(a,2,h/2);
