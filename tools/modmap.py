@@ -6,6 +6,7 @@ R = pathlib.Path(__file__).resolve().parent.parent
 PAGES = [
     ('stadium.html', '3D 야구장', '불러오는 순서대로예요. 뒤 파일은 앞 파일의 이름을 쓸 수 있어요.'),
     ('index.html', '로비(첫 화면)', '3D 야구장과 따로 도는 가벼운 2D 앞마당이에요. 자세한 건 docs/LOBBY.md.'),
+    ('memorial.html', '문학기념관', '야구장의 으쓱이·유니폼 코드를 재사용하고 js/memorial/*.js만 새로 불러요. 자세한 건 docs/MEMORIAL.md.'),
     ('wall.html', '담벼락 페이지', '로비에서 3D 없이 담벼락만 여는 페이지예요. js/ui/wall-art.js는 3D 야구장 안 담벼락과 같이 써요.'),
 ]
 out = ['# 모듈 지도 (자동 생성: tools/modmap.py)', '']

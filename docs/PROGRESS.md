@@ -3,6 +3,16 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 문학기념관 열기 AQ — 완료 (2026-11-17, `munhak_2026-11-17_AQ-memorial`)
+
+- **문학기념관(`memorial.html`)이 열렸어요.** 로비의 문학기념관 문(이름표 '문학기념관 / 짤 전시관')을 누르면 들어가요. 시안 3(2026-11-02 확정) 그대로: 둥근 통로·선수통로 톤, 입구 홀 'Photo of Today', 왼쪽 최광야구, 오른쪽 **A·B만** 열림(C·D는 안 열음)
+- 짤 8장을 `memorial/photos/`에 넣고 `memorial/photos.json`에 목록으로 둠(최광야구 5 · A 3 · B 0). 구역 길이·빈 액자는 **짤 개수에 맞춰 자동**. 짤은 아티팩트 '문학기념관 짤 올리기'(폰)로 올리고, Claude가 '짤 반영해줘'로 저장소에 넣는 흐름(`docs/MEMORIAL.md`)
+- **으쓱이 꾸미기 창**: 기념관에 처음 들어올 때 **한 번만** 유니폼 색·모자·등판 이름·번호를 정함(경기장에서 이미 꾸민 사람은 안 뜸, 기념관 안에서 다시 바꾸는 버튼 없음). 경기장 입장 준비는 그대로 매번 뜸
+- **유니폼 색 저장**: 예전엔 입장할 때마다 랜덤이었는데 이제 저장돼서 경기장·기념관이 같은 모습(`js/core/config.js` ME.uni, `js/ui/setup.js` 색 고를 때·입장할 때 저장, 입장하면 `dressed` 표시)
+- 새 파일: `memorial.html`, `styles/memorial.css`, `js/memorial/*.js`(config·layout·toolkit·concourse·graphics·frames·data·player·movement·camera·intro·input·ui·dress·boot), `memorial/photos.json`·`memorial/photos/*.jpg`, `docs/MEMORIAL.md`
+- 고친 파일: `js/lobby/config.js`(museumOpen true·url·prefetch), `js/core/config.js`, `js/ui/setup.js`, `tools/modmap.py`·`docs/MODULES.md`, `docs/LOBBY.md`, `README.md`
+- 확인(헤드리스, 폰 크기): 로비 문→기념관 이동, 꾸미기 창→입장 연출→걷기, 칩으로 최광야구·A·B 이동, 짤 눌러 크게 보기, 다시 열면 꾸미기 창 안 뜸, 야구장 정상 — 콘솔 오류 없음(favicon 404만)
+
 ## 작은 수정 AP: 동전 이름표 '돼그랑' · 유니폼 따라 흔들기 7~8명 — 완료 (2026-11-16, `munhak_2026-11-16_AP-coin-label-wave8`)
 
 - 로비 동전을 눌렀을 때 뜨는 이름표를 '믿을맨 저금통' → **'돼그랑'**으로(`js/lobby/config.js`의 `hotspots.piggy.label`, `js/lobby/props.js`의 `L.coin`). 저금통 페이지 이름 자체는 그대로

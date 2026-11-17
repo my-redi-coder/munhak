@@ -42,7 +42,8 @@ var TALK={
   }
 };
 
-var ME={adj:pick(ADJ),uni:pick(UKEYS),backName:store.get('backName',''),backNum:store.get('backNum',''),zone:store.get('zone','ussk'),hat:store.get('hat',false)};
+/* (패치 AQ) 유니폼 색도 저장해요 — 경기장과 문학기념관(memorial.html)에서 같은 모습이 유지돼요. 저장된 값이 없으면 지금처럼 랜덤 */
+var ME={adj:pick(ADJ),uni:(function(u){return UKEYS.indexOf(u)>=0?u:pick(UKEYS)})(store.get('uni','')),backName:store.get('backName',''),backNum:store.get('backNum',''),zone:store.get('zone','ussk'),hat:store.get('hat',false)};
 /* (작은 패치 R) 관객 으쓱이 중 모자 쓴 비율. 내 으쓱이는 입장 준비에서 직접 고름(ME.hat) */
 var HAT_RATE=.4;
 /* (작은 패치 S) 반응형 관객(얼굴·대사가 있는 가까운 으쓱이) 수 22 → 33 */

@@ -4,6 +4,7 @@ SSG 랜더스 홈구장(문학)을 3D로 만든 팬 놀이터예요. 내 자리�
 
 - 게임: 깃허브 페이지 주소 (Settings → Pages에서 확인)
 - 첫 화면은 로비(갈 곳 고르기): `index.html` · 3D 야구장: `stadium.html` — 로비 설명은 `docs/LOBBY.md`
+- 문학기념관(짤 전시관): `memorial.html` — 설명·짤 올리는 법은 `docs/MEMORIAL.md`
 - 처음 읽을 문서: `docs/ARCHITECTURE.md`(폴더·규칙·고치는 순서) → `docs/PROGRESS.md`(어디까지 했나) → `docs/MODULES.md`(파일마다 하는 일)
 - 기획·결정: `docs/DECISIONS.md`
 

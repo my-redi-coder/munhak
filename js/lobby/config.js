@@ -7,7 +7,7 @@
    - url: 가는 곳(3D 야구장 본체는 stadium.html, 로비 자신은 index.html)
    - prefetch: 첫 번째 누를 때 미리 받아 두는 파일(두 번째 누를 때 덜 기다리게) */
 const CONFIG = {
-  museumOpen: false,            // true로 바꾸면 문학기념관 문이 열려요(url도 함께 채우기)
+  museumOpen: true,             // true면 문학기념관 문이 열려요(url도 함께 채우기). 2026-11-17 패치 AQ에서 열었어요
   idleClearSec: 10,             // 이름표가 떠 있다가 저절로 꺼지는 시간
   hotspots: {
     stadium: { kind:'enter', label:'티켓부스', sub:'다시 누르면 입장', url:'stadium.html', go:'경기장으로 입장하는 중',
@@ -19,8 +19,9 @@ const CONFIG = {
     wall:    { kind:'enter', label:'담벼락', sub:'제작자의 말', url:'wall.html', go:'담벼락으로 가는 중',
                prefetch:['wall.html'] },
     gate:    { kind:'info',  label:'정문', sub:['표가 있어야 들어갈 수 있어요','티켓부스로 가볼까요?'] },
-    museum:  { kind:'museum', label:'문학기념관', sub:()=> CONFIG.museumOpen ? '' : '준비 중이에요',
-               url:null, go:'문학기념관으로 가는 중', closedMsg:'아직 전시 기간이 아닙니다' },
+    museum:  { kind:'museum', label:'문학기념관', sub:()=> CONFIG.museumOpen ? '짤 전시관' : '준비 중이에요',
+               url:'memorial.html', go:'문학기념관으로 가는 중', closedMsg:'아직 전시 기간이 아닙니다',
+               prefetch:['memorial.html','memorial/photos.json','https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'] },
     piggy:   { kind:'enter', label:'돼그랑', url:'https://my-redi-coder.github.io/piggyback1/', go:'저금통으로 가는 중',
                prefetch:['https://my-redi-coder.github.io/piggyback1/'] }   // 초록옷 으쓱이 발 앞의 작은 동전(별도 저장소 piggyback1)
   },

@@ -7,7 +7,7 @@
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
 | `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
-| `js/core/config.js` | 129 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, STAGE_DY … |
+| `js/core/config.js` | 130 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, STAGE_DY … |
 | `songs/songs.js` | 19 | SONGS |
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/world/sky.js` | 13 | skyU, cloudTex, clouds |
@@ -35,7 +35,7 @@
 | `js/world/laundry.js` | 134 | LDY, LDY_FONT, LDY_GW, LDY_H, LDY_GEO, ldyJerseyTex, LDY_FAR, LDY_NEAR, LDYB, ldyFill, ldyCrowd, LDY_NUM, laundrySet, LDY_T … |
 | `js/world/daynight.js` | 109 | DN, DN_LOOK, DN_B, dnL, dnGlowTex, dnBuildLamps, dnBuildStars, dnGlow, dnApply, setDayNight, dnTick, dnOverride, dnEventDark |
 | `js/world/nightdim.js` | 50 | ND, ndK, ndApply |
-| `js/entities/character.js` | 137 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
+| `js/entities/character.js` | 141 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
 | `js/entities/uniform-kit.js` | 91 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
 | `js/entities/player.js` | 71 | BP, BPGEO, bpGeo, BPBACK, bpBackTex, Ballplayer, bpPose |
 | `js/entities/bpface.js` | 61 | BPF, bpfXY, BPF_INK, bpfTex, bpfMat |
@@ -54,7 +54,7 @@
 | `js/game/actions.js` | 35 | ACT_LABEL, ACT_BTN, lineT, setActButtons, startAct, stopAct, setStatus |
 | `js/ui/sheets.js` | 7 | lastFocus, openModal, closeModal |
 | `js/game/crowdtalk.js` | 48 | CROWD, talkPool, actLine, crowdPick, crowdSay, crowdNear, crowdWave, crowdCalm |
-| `js/game/npc.js` | 46 | npcReact, NPC_MSG, npcStart, npcStop, updateNPCs, _np |
+| `js/game/npc.js` | 47 | npcReact, NPC_MSG, npcStart, npcStop, updateNPCs, _np |
 | `js/game/fieldplay.js` | 75 | FP, PITCH, faceTo, fpAdd, setFieldMode, fpByRole, fpKeys, fpPose, POSE, PITCHKEYS, SWINGKEYS, fieldTick |
 | `js/game/penplay.js` | 43 | PENP, PEN_SIT, penTick |
 | `js/game/events.js` | 66 | EV, evCalm, evCalmCrowd, EV_SCENES, evCam, startEvent, evTick, evRelease, evFinish, skipEvent, evCrowdCheer, evShuffle, evCrowdShout, evCrowdCalm … |
@@ -91,7 +91,7 @@
 
 | 파일 | 줄 | 내놓는 이름 |
 |---|---|---|
-| `js/lobby/config.js` | 33 | CONFIG |
+| `js/lobby/config.js` | 34 | CONFIG |
 | `js/lobby/kit.js` | 23 | L, NS, rng, arcY, hot, pine, bush, cherry |
 | `js/lobby/scenery.js` | 78 | L.sky, L.hills, L.ground, L.plaza, L.lawn, L.petals |
 | `js/lobby/stadium.js` | 118 | L.stadium, L.gate, L.queue, L.annex |
@@ -99,6 +99,33 @@
 | `js/lobby/people.js` | 53 | PEOPLE, person, L.people |
 | `js/lobby/scene.js` | 9 |  |
 | `js/lobby/interact.js` | 153 | $, stage, reduced, state, hotEl, cfgOf, subsOf, clearSel, idleReset, showBubble, sparkle, toast, shake, wiggleStar … |
+
+## 문학기념관 — `memorial.html`
+
+야구장의 으쓱이·유니폼 코드를 재사용하고 js/memorial/*.js만 새로 불러요. 자세한 건 docs/MEMORIAL.md.
+
+| 파일 | 줄 | 내놓는 이름 |
+|---|---|---|
+| `js/core/util.js` | 11 | $, TAU, rnd, pick, clamp, damp, store, reduceMotion, bootFail |
+| `js/core/config.js` | 130 | ADJ, UNI, UKEYS, SKIN, ZONES, ZKEYS, BACKS, LINES, TALK, ME, HAT_RATE, NPC_COUNT, FLOOR, STAGE_DY … |
+| `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
+| `js/entities/character.js` | 141 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
+| `js/entities/uniform-kit.js` | 91 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
+| `js/memorial/config.js` | 31 | MH |
+| `js/memorial/layout.js` | 39 | mhAt, mhToSR, mhPut, mhPlaceAt |
+| `js/memorial/toolkit.js` | 6 | MHF, mhPlane, mhTexW |
+| `js/memorial/concourse.js` | 44 | mhBuildConcourse |
+| `js/memorial/graphics.js` | 62 | mhChevronTex, mhWallChevron, mhZoneHeader, mhBuildGraphics |
+| `js/memorial/frames.js` | 50 | mhDrawPhoto, mhPhotoTex, mhEmptyFrame, mhHangFrame, mhBuildFrames |
+| `js/memorial/data.js` | 11 | mhLoadPhotos |
+| `js/memorial/player.js` | 12 | PZ_POSE, mhMakePlayer |
+| `js/memorial/movement.js` | 27 | mhClampPos, mhWalkTo, mhTurnTo, mhUpdatePlayer |
+| `js/memorial/camera.js` | 18 | _mhDp, mhCamDesired, mhUpdateCam, mhResize |
+| `js/memorial/intro.js` | 26 | mhLandAt, mhStartIntro, mhIntroTick, mhArrive, mhSkipIntro, mhJumpTo |
+| `js/memorial/input.js` | 43 | _mhRay, mhBindInput, mhOnTap |
+| `js/memorial/ui.js` | 44 | _mhChips, mhBuildChips, mhUpdateLoc, mhToast, mhHideHint, mhOpenViewer, mhCloseViewer, mhBindViewer |
+| `js/memorial/dress.js` | 35 | mhNeedsDress, mhBuildDressSwatches, mhBuildDressHat, mhSyncDressBack, mhShowDress |
+| `js/memorial/boot.js` | 40 | _mhItems, mhSetupScene, mhLoop, mhBoot, mhFontsReady |
 
 ## 담벼락 페이지 — `wall.html`
 

@@ -1,0 +1,13 @@
+{
+  "_설명": "문학기념관에 걸리는 짤 목록이에요. 위에서부터 차례로 걸려요(구역별로 따로 셈). zone: K=최광야구, A=2026년 짤, B=그 이전 짤. year: '2026' 또는 '-'(과거). tags·people은 화면에 안 보이는 내부 관리용(사람 특별전 등에 써요). title은 12자 이내, 벽에 보여요. 짤 추가는 Claude에게 '짤 반영해줘'라고 하면 돼요(docs/MEMORIAL.md).",
+  "photos": [
+    { "id": "p-mwkq7gbh", "file": "photos/cmon.jpg",     "title": "C'mon",   "zone": "K", "year": "2026", "tags": ["최광야구"], "people": ["안성현"] },
+    { "id": "p-mwkq8ca9", "file": "photos/munmae.jpg",   "title": "문마에",   "zone": "K", "year": "2026", "tags": ["최광야구"], "people": ["문승원"] },
+    { "id": "p-mwkqf6co", "file": "photos/doljeong.jpg", "title": "돌정",     "zone": "K", "year": "2026", "tags": ["최광야구"], "people": ["최정"] },
+    { "id": "p-mwkqgqg3", "file": "photos/tusu.jpg",     "title": "투수바까", "zone": "K", "year": "2026", "tags": ["최광야구"], "people": ["안상현"] },
+    { "id": "p-sample-mideum", "file": "photos/mideum.jpg", "title": "믿음야구", "zone": "K", "year": "2026", "tags": ["최광야구"], "people": ["최지훈", "노경은"] },
+    { "id": "p-mwkq9dvf", "file": "photos/oiku.jpg",     "title": "어이쿠",   "zone": "A", "year": "2026", "tags": [], "people": ["김건우"] },
+    { "id": "p-mwkqc8x3", "file": "photos/jugeonna.jpg", "title": "죽엇나?",  "zone": "A", "year": "2026", "tags": [], "people": ["안상현", "최정"] },
+    { "id": "p-mwkqdq57", "file": "photos/jjerigi.jpg",  "title": "째리기",   "zone": "A", "year": "2026", "tags": [], "people": ["박성한"] }
+  ]
+}

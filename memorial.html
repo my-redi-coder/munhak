@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<meta name="darkreader-lock">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="문학야구장 문학기념관 — 팬들이 알아보는 짤을 걸어 둔 전시관">
+<title>문학기념관 2026</title>
+<!-- 문학기념관(로비의 문학기념관 문으로 들어오는 3D 전시관). 코드는 js/memorial/*.js, 설명은 docs/MEMORIAL.md, 짤 목록은 memorial/photos.json -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,700;1,800&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="styles/memorial.css">
+</head>
+<body>
+<canvas id="c" tabindex="0" aria-label="문학기념관 3D 공간. 바닥을 눌러 걷고, 끌어서 둘러봐요."></canvas>
+
+<div id="where" aria-live="polite"><small>문학기념관</small><b id="loc">입구 홀</b></div>
+<button id="exit" type="button">나가기</button>
+
+<div id="hint">바닥을 누르면 걸어가요 · 끌면 둘러봐요</div>
+<div id="toast" role="status"></div>
+
+<div id="bar">
+  <button class="walk" id="wl" type="button" aria-label="왼쪽으로 걷기"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div id="chips" role="toolbar" aria-label="구역 바로 가기"></div>
+  <button class="walk" id="wr" type="button" aria-label="오른쪽으로 걷기"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+</div>
+
+<!-- 으쓱이 꾸미기 (처음 한 번만 뜸. js/memorial/dress.js) -->
+<div id="dress" hidden>
+  <div class="dsheet" role="dialog" aria-labelledby="dTitle">
+    <h2 id="dTitle">내 으쓱이 꾸미기</h2>
+    <p class="sub">처음 한 번만 정해요. 경기장 입장 준비에서 다시 바꿀 수 있어요.</p>
+    <div class="dfield"><span id="dUniLbl">유니폼</span><div class="swatches" role="radiogroup" aria-labelledby="dUniLbl" id="dSwatches"></div></div>
+    <div class="dfield"><span id="dDecoLbl">꾸미기</span><div class="swatches" role="group" aria-labelledby="dDecoLbl" id="dHat"></div></div>
+    <div class="dfield"><span>등판</span>
+      <div class="back-row">
+        <input id="dName" maxlength="8" placeholder="선수명" autocomplete="off" aria-label="등판 선수명">
+        <input id="dNum" maxlength="2" inputmode="numeric" placeholder="번호" autocomplete="off" aria-label="등번호">
+      </div>
+    </div>
+    <button id="dGo" type="button">전시관 들어가기</button>
+  </div>
+</div>
+
+<div id="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="vt">
+  <button id="vx" type="button" aria-label="닫기">×</button>
+  <div id="vbox">
+    <img id="vpic" alt="">
+    <div id="vmeta">
+      <div><div id="vt"></div><div id="vm"></div><div id="vc"></div></div>
+      <div id="vacts">
+        <button class="vbtn" id="vgo" type="button" hidden>걸린 자리로 가기</button>
+        <button class="vbtn" id="vsave" type="button" hidden><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="fade"></div>
+<div id="boot"><div class="k">문학기념관</div><div class="s" id="bootMsg">문을 여는 중</div><div class="dot"></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/core/util.js"></script>
+<script src="js/core/config.js"></script>
+<script src="js/engine/renderer.js"></script>
+<script src="js/entities/character.js"></script>
+<script src="js/entities/uniform-kit.js"></script>
+<script src="js/memorial/config.js"></script>
+<script src="js/memorial/layout.js"></script>
+<script src="js/memorial/toolkit.js"></script>
+<script src="js/memorial/concourse.js"></script>
+<script src="js/memorial/graphics.js"></script>
+<script src="js/memorial/frames.js"></script>
+<script src="js/memorial/data.js"></script>
+<script src="js/memorial/player.js"></script>
+<script src="js/memorial/movement.js"></script>
+<script src="js/memorial/camera.js"></script>
+<script src="js/memorial/intro.js"></script>
+<script src="js/memorial/input.js"></script>
+<script src="js/memorial/ui.js"></script>
+<script src="js/memorial/dress.js"></script>
+<script src="js/memorial/boot.js"></script>
+</body>
+</html>

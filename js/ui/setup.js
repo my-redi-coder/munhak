@@ -3,7 +3,7 @@
 function buildSwatches(){
   var box=$('swatches');box.innerHTML='';
   UKEYS.forEach(function(k){var b=document.createElement('button');b.className='sw';b.setAttribute('role','radio');b.setAttribute('aria-checked',k===ME.uni);b.innerHTML='<i style="background:'+UNI[k].css+'"></i>'+UNI[k].label;
-    b.onclick=function(){ME.uni=k;player.setUniform(k);buildSwatches();sfx('tap')};box.appendChild(b)});
+    b.onclick=function(){ME.uni=k;player.setUniform(k);store.set('uni',k);buildSwatches();sfx('tap')};box.appendChild(b)});
 }
 /* (작은 패치 R) 꾸미기: 모자 쓰기 체크박스. 고른 값은 저장돼서 다음에 와도 그대로예요 */
 function buildDeco(){
@@ -29,7 +29,7 @@ $('inName').addEventListener('input',syncBack);$('inNum').addEventListener('inpu
 $('reroll').onclick=function(){var a;do{a=pick(ADJ)}while(a===ME.adj);ME.adj=a;$('meName').textContent=myName();player.name=myName();sfx('tap')};
 $('toStep2').onclick=function(){$('step1').hidden=true;$('step2').hidden=false;phase='setup2';focusZone(ME.zone);auEnsure()};
 $('toStep1').onclick=function(){$('step2').hidden=true;$('step1').hidden=false;phase='setup1';beacon.visible=false};
-$('enter').onclick=function(){auEnsure();store.set('zone',ME.zone);enterGame()};
+$('enter').onclick=function(){auEnsure();store.set('zone',ME.zone);store.set('uni',ME.uni);store.set('dressed',true);/* (AQ) 입장하면 유니폼 저장 + '꾸미기 마침' 표시 → 문학기념관 꾸미기 창이 안 떠요 */enterGame()};
 
 /* zone beacon */
 var beaconTex=canvasTex(256,128,function(x,w,h){});
