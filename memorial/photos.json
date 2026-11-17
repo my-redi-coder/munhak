@@ -512,6 +512,109 @@
    "people": [
     "아빌라"
    ]
+  },
+  {
+   "id": "p-mwkupfq1-0",
+   "file": "photos/umsoobel.jpg",
+   "title": "내 웃음벨",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "이지영"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-1",
+   "file": "photos/ggi1.jpg",
+   "title": "ㅗ",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "김성현"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-2",
+   "file": "photos/ggi2.jpg",
+   "title": "ㅗ",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "문승원"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-3",
+   "file": "photos/legend.jpg",
+   "title": "리빙레전드",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "최정"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-4",
+   "file": "photos/kkeut.jpg",
+   "title": "끝.",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": []
+  },
+  {
+   "id": "p-mwkupfq1-5",
+   "file": "photos/semiga.jpg",
+   "title": "서미가",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "한유섬"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-6",
+   "file": "photos/randy1.jpg",
+   "title": "랜디귀여워",
+   "zone": "B",
+   "year": "-",
+   "tags": [
+    "마스코트"
+   ],
+   "people": [
+    "랜디"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-7",
+   "file": "photos/randy2.jpg",
+   "title": "랜디쓸쓸해",
+   "zone": "B",
+   "year": "-",
+   "tags": [
+    "마스코트"
+   ],
+   "people": [
+    "랜디"
+   ]
+  },
+  {
+   "id": "p-mwkupfq1-8",
+   "file": "photos/haengbok.jpg",
+   "title": "행복싸갈",
+   "zone": "A",
+   "year": "2026",
+   "tags": [
+    "쓱튜브"
+   ],
+   "people": [
+    "안상현"
+   ]
   }
  ]
 }
