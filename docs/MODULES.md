@@ -111,12 +111,12 @@
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/entities/character.js` | 141 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
 | `js/entities/uniform-kit.js` | 91 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
-| `js/memorial/config.js` | 40 | MH |
+| `js/memorial/config.js` | 42 | MH |
 | `js/memorial/layout.js` | 54 | mhAt, mhToSR, mhPut, mhPlaceAt |
-| `js/memorial/toolkit.js` | 6 | MHF, mhPlane, mhTexW |
+| `js/memorial/toolkit.js` | 11 | MHF, mhPlane, mhTexW, mhLiveTex, mhRedrawLive |
 | `js/memorial/concourse.js` | 45 | mhBuildConcourse |
 | `js/memorial/graphics.js` | 62 | mhChevronTex, mhWallChevron, mhZoneHeader, mhBuildGraphics |
-| `js/memorial/frames.js` | 50 | mhDrawPhoto, mhPhotoTex, mhEmptyFrame, mhHangFrame, mhBuildFrames |
+| `js/memorial/frames.js` | 64 | mhDrawPhoto, mhPhotoTex, mhPumpPhotos, mhEmptyFrame, mhHangFrame, mhBuildFrames |
 | `js/memorial/corner-art.js` | 89 | MHC, mhcStd, mhcAdd, mhcCast, mhcRnd, mhcNoiseTex, mhcStadiumTex, mhcOldPhotoTex, mhcDocTex, mhcJerseyTex, mhcBagTex, mhcSignTex, mhcBallTex, mhcBillTex … |
 | `js/memorial/corner-items.js` | 120 | mhcStoneTex, mhcPedestal, mhcGlass, mhcCaption, mhcCutout, mhcJerseyShape, mhcHelmet, mhcGlove, mhcJerseySet, mhcBag, mhcBagShelf, mhcCashStack, mhcCashCase |
 | `js/memorial/corner.js` | 55 | mhcFrame, mhcBackdrop, mhcBlob, mhBuildCorner |
@@ -128,7 +128,7 @@
 | `js/memorial/input.js` | 43 | _mhRay, mhBindInput, mhOnTap |
 | `js/memorial/ui.js` | 44 | _mhChips, mhBuildChips, mhUpdateLoc, mhToast, mhHideHint, mhOpenViewer, mhCloseViewer, mhBindViewer |
 | `js/memorial/dress.js` | 35 | mhNeedsDress, mhBuildDressSwatches, mhBuildDressHat, mhSyncDressBack, mhShowDress |
-| `js/memorial/boot.js` | 40 | _mhItems, mhSetupScene, mhLoop, mhBoot, mhFontsReady |
+| `js/memorial/boot.js` | 44 | _mhItems, mhSetupScene, mhLoop, mhBoot, MH_FONTS, mhLoadFonts, mhFontsReady, mhFontsLater |
 
 ## 담벼락 페이지 — `wall.html`
 

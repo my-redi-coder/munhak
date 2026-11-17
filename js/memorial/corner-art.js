@@ -28,12 +28,12 @@ function mhcStadiumTex(){return canvasTex(1400,560,function(x,w,h){
 function mhcOldPhotoTex(){var r=mhcRnd(3);return canvasTex(400,280,function(x,w,h){x.fillStyle='#d9d4c8';x.fillRect(0,0,w,h);x.fillStyle='#a7a196';x.fillRect(14,14,w-28,h-28);
   for(var row=0;row<3;row++)for(var i=0;i<9;i++){var cx=40+i*40+(row%2)*10,cy=70+row*60;x.fillStyle='#3b3833';x.beginPath();x.arc(cx,cy,10,0,7);x.fill();x.fillStyle='#e9e5dc';x.fillRect(cx-14,cy+10,28,30)}
   x.fillStyle='rgba(60,50,40,.18)';for(var k=0;k<300;k++)x.fillRect(r()*w,r()*h,2,2)})}
-function mhcDocTex(seed,title){var r=mhcRnd(seed);return canvasTex(300,400,function(x,w,h){x.fillStyle='#efe6d2';x.fillRect(0,0,w,h);x.strokeStyle='#b49a6a';x.lineWidth=6;x.strokeRect(14,14,w-28,h-28);
+function mhcDocTex(seed,title){var r=mhcRnd(seed);return mhLiveTex(300,400,function(x,w,h){x.fillStyle='#efe6d2';x.fillRect(0,0,w,h);x.strokeStyle='#b49a6a';x.lineWidth=6;x.strokeRect(14,14,w-28,h-28);
   x.fillStyle='#4a3b26';x.font='700 30px '+MHF.kr;x.textAlign='center';x.fillText(title||'',w/2,70);
   x.fillStyle='#8a7a60';for(var i=0;i<11;i++)x.fillRect(40,100+i*22,(w-80)*(.6+.4*r()),5);
   x.fillStyle='#b03a2e';x.beginPath();x.arc(w*.72,h*.86,22,0,7);x.fill()})}
 /* 전시물 그림: 유니폼·가방 무늬·사인판·공·오만원·지폐 옆면 */
-function mhcJerseyTex(){return canvasTex(840,750,function(x,w,h){
+function mhcJerseyTex(){return mhLiveTex(840,750,function(x,w,h){
   /* uv: x -0.42~0.42 → 0~w, y 0~0.75 → 아래~위 */
   x.fillStyle='#fbfbf9';x.fillRect(0,0,w,h);
   x.strokeStyle='rgba(200,16,46,.13)';x.lineWidth=2;for(var i=0;i<w;i+=26){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke()}
@@ -74,10 +74,10 @@ function mhcSignTex(){var r=mhcRnd(29);return canvasTex(560,430,function(x,w,h){
   x.lineWidth=9;x.beginPath();x.moveTo(445,195);x.lineTo(430,275);x.stroke();
   x.lineWidth=8;x.beginPath();x.ellipse(478,212,15,17,.2,0,7);x.stroke();x.beginPath();x.ellipse(470,255,19,22,.2,0,7);x.stroke();
   x.strokeStyle='#cfc9bd';x.lineWidth=10;x.strokeRect(5,5,w-10,h-10)})}
-function mhcBallTex(){return canvasTex(256,128,function(x,w,h){x.fillStyle='#f6f4ee';x.fillRect(0,0,w,h);x.strokeStyle='#c8102e';x.lineWidth=3;
+function mhcBallTex(){return mhLiveTex(256,128,function(x,w,h){x.fillStyle='#f6f4ee';x.fillRect(0,0,w,h);x.strokeStyle='#c8102e';x.lineWidth=3;
   for(var s=0;s<2;s++){x.beginPath();for(var i=0;i<=64;i++){var u=i/64*w,v=h/2+Math.sin(i/64*Math.PI*2+s*Math.PI)*h*.3;i?x.lineTo(u,v):x.moveTo(u,v)}x.stroke()}
   x.fillStyle='#2a3a6a';x.font='700 16px '+MHF.cond;x.fillText('MUNHAK',w*.38,h*.55)})}
-function mhcBillTex(){var r=mhcRnd(77);return canvasTex(512,226,function(x,w,h){
+function mhcBillTex(){var r=mhcRnd(77);return mhLiveTex(512,226,function(x,w,h){
   var g=x.createLinearGradient(0,0,w,0);g.addColorStop(0,'#f1c46a');g.addColorStop(.5,'#f6d688');g.addColorStop(1,'#e7b357');x.fillStyle=g;x.fillRect(0,0,w,h);
   x.strokeStyle='rgba(150,95,30,.35)';x.lineWidth=1;for(var i=0;i<40;i++){x.beginPath();x.arc(w*.3,h*.5,8+i*5,0,7);x.stroke()}
   x.fillStyle='rgba(255,246,220,.85)';x.beginPath();x.ellipse(w*.72,h*.5,48,62,0,0,7);x.fill();

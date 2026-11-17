@@ -10,8 +10,22 @@ function mhDrawPhoto(x,w,h,im){
 }
 function mhPhotoTex(it){
   var tex=canvasTex(1024,576,function(x,w,h){mhDrawPhoto(x,w,h,null)});
-  var im=new Image();im.onload=function(){it._im=im;var c=tex.image;mhDrawPhoto(c.getContext('2d'),c.width,c.height,im);tex.needsUpdate=true};im.src=it.url;
+  MH.photoQ.push({it:it,tex:tex,on:false});  /* 바로 받지 않고 줄 세움 → mhPumpPhotos가 가까운 것부터 받아요 */
   return tex;
+}
+/* 짤은 한꺼번에 받지 않고, 으쓱이에서 가까운 것부터 동시에 MH.PHOTO_AT_ONCE장씩 받아요 (오늘의 포토가 맨 먼저).
+   boot.js가 몇 프레임마다 불러요. 걸어가면 그쪽 짤이 앞으로 와요 */
+MH.photoQ=[];MH._photoBusy=0;
+function mhPumpPhotos(){
+  var Q=MH.photoQ,pp=MH.player&&MH.player.root.position,ps=pp&&Math.hypot(pp.x,pp.z)>1?mhToSR(pp.x,pp.z).s:0;
+  while(MH._photoBusy<MH.PHOTO_AT_ONCE){
+    var best=null,bd=1e9;
+    Q.forEach(function(q){if(q.on)return;var d=q.it===MH.today?-1:Math.abs(q.it.s-ps);if(d<bd){bd=d;best=q}});
+    if(!best)return;
+    (function(q){q.on=true;MH._photoBusy++;var im=new Image(),done=function(){MH._photoBusy--};
+      im.onload=function(){q.it._im=im;var c=q.tex.image;mhDrawPhoto(c.getContext('2d'),c.width,c.height,im);q.tex.needsUpdate=true;done()};
+      im.onerror=done;im.src=q.it.url})(best);
+  }
 }
 function mhEmptyFrame(g,W,Hh,fr){
   var et=canvasTex(1024,576,function(x,w,h){x.fillStyle='#f6f7f8';x.fillRect(0,0,w,h);x.strokeStyle='#c4c8cd';x.lineWidth=4;x.setLineDash([22,14]);x.strokeRect(18,18,w-36,h-36);x.fillStyle='#9aa0a6';x.font='500 '+Math.round(h*.065)+'px '+MHF.kr;x.textAlign='center';x.textBaseline='middle';x.fillText('다음 짤이 걸릴 자리',w/2,h/2)});

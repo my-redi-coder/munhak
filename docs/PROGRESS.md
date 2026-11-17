@@ -3,6 +3,16 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## 기념관 로딩 줄이기 AS — 완료 (2026-11-18, `munhak_2026-11-18_AS-memorial-fastload`)
+
+- 폰 확인(사용자): 기념관 '문을 여는 중'이 오래 떠 있음. 원인: 문 열기 전에 **짤 제목 글자까지 한글 글꼴을 다 받느라**(최대 3.5초) — 짤이 50장이 되며 받을 글자 조각이 늘었음. 들어간 뒤엔 짤 50장(7.2MB)을 한꺼번에 받았음
+- ① **짤을 가까운 것부터** 3장씩 받기(오늘의 포토가 맨 먼저, 걸어가면 그쪽 짤이 앞으로) — `frames.js`의 `mhPumpPhotos`, `MH.PHOTO_AT_ONCE`
+- ③ **글꼴은 입구 글자만 기다림**(최대 `MH.FONT_WAIT`=1.5초). 짤 제목·전시 코너 글자는 들어간 뒤 받고, 다 받으면 글씨 그림을 한 번 다시 그림(`toolkit.js`의 `mhLiveTex`·`mhRedrawLive`, `boot.js`의 `mhFontsLater`). 그래서 들어가자마자 잠깐 기본 글꼴로 보였다가 바뀔 수 있음
+- ④ 등신대 그림 PNG 744KB → **WebP 97KB**(`memorial/corner/cutout.webp`)
+- ②(짤 파일을 1024×576으로 줄이기)는 이번엔 안 함
+- 바뀐 파일: `js/memorial/config.js`·`toolkit.js`·`frames.js`·`boot.js`·`graphics.js`·`corner-art.js`·`corner-items.js`·`corner.js`, `memorial/corner/cutout.webp`(png 지움), `docs/*`
+- 확인(헤드리스): 콘솔 오류 없음, 오늘의 포토부터 받기 시작, 전시 코너 정상. 폰에서 '문을 여는 중' 시간 확인 필요
+
 ## B존 끝 벽 전시 코너 AR — 완료 (2026-11-18, `munhak_2026-11-18_AR-memorial-corner`)
 
 - **B존을 지나 막힌 끝 벽 앞에 작은 전시 코너**가 생겼어요(원래 '다음 전시를 준비하고 있어요' 자리). 사진 한 장(미술관 전시실)을 3D로 옮긴 시안 그대로, 왼쪽부터 **등신대 → 유니폼·헬멧·장갑 → 가방(벽 선반 위) / 사인과 현금(앞 받침대)**. 뒤 벽은 베이지 + 따뜻한 간접조명, 가운데 경기장 화면, 양옆 옛 사진·문서 액자

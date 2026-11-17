@@ -12,7 +12,9 @@ var MH={
     B:{label:'ZONE B',code:'B'}
   },
   OPEN:['A','B'],              /* 열려 있는 일반 구역 (위치 순서대로) */
-  MIN_SLOTS:5,                 /* 구역마다 최소 걸 자리 수 (빈 자리는 '다음 짤이 걸릴 자리') */
+  MIN_SLOTS:5,
+  PHOTO_AT_ONCE:3,             /* 짤을 동시에 몇 장씩 받을지 (가까운 것부터, frames.js mhPumpPhotos) */
+  FONT_WAIT:1500,              /* 문 열기 전 글꼴을 기다리는 최대 시간(ms). 입구 글자만 기다리고 나머지는 들어간 뒤 받아요 */                 /* 구역마다 최소 걸 자리 수 (빈 자리는 '다음 짤이 걸릴 자리') */
   HALL:{
     rIn:38,rOut:46,rMid:42,height:4.2,        /* 콩코스: 안쪽 벽·바깥 벽 반지름(m), 천장 높이. 반지름은 layout.js가 길이에 맞춰 키울 수 있음 */
     hallHalf:9.5,                              /* 입구 홀 반 길이(m) */
@@ -32,7 +34,7 @@ var MH={
   CORNER:{
     on:true,extra:1.6,stop:2.3,wallW:8.2,
     place:{cutout:[-2.5,1.2],jersey:[-1,.95],bag:[.95,0],cash:[1.05,1.3]},
-    cutout:{src:'memorial/corner/cutout.png',h:1.82,ratio:494/1100},
+    cutout:{src:'memorial/corner/cutout.webp',h:1.82,ratio:494/1100},
     red:'#c8102e',ink:'#1e2329',mute:'#6b7178',stone:'#cbbfa9',slab:'#e9e2d3',glassEdge:0x9fd6c4
   },
   /* 저장해 두는 값 이름 (store: 'munhak:이름') — 유니폼·등판·모자는 야구장과 같은 이름을 써요 */

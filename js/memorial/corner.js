@@ -25,7 +25,7 @@ function mhcBackdrop(root){
   mhcFrame(.62,.43,mhcOldPhotoTex(),-2.75,2.3,.03,root);mhcFrame(.62,.43,mhcOldPhotoTex(),-3.6,2.3,.03,root);
   mhcFrame(.38,.5,mhcDocTex(11,'창단'),-3.0,1.6,.03,root);mhcFrame(.38,.5,mhcDocTex(12,'기록'),-2.52,1.6,.03,root);
   /* 오른쪽: 설명판 + 문서 액자 */
-  var panel=canvasTex(500,700,function(x,w,h){x.fillStyle='#f7f1e6';x.fillRect(0,0,w,h);x.fillStyle=MH.HALL.wallInk;x.font='900 46px '+MHF.kr;x.fillText('문학의 기억',36,90);
+  var panel=mhLiveTex(500,700,function(x,w,h){x.fillStyle='#f7f1e6';x.fillRect(0,0,w,h);x.fillStyle=MH.HALL.wallInk;x.font='900 46px '+MHF.kr;x.fillText('문학의 기억',36,90);
     x.fillStyle=MH.HALL.red;x.fillRect(36,112,70,6);x.fillStyle='#8c8478';for(var i=0;i<14;i++)x.fillRect(36,160+i*34,(w-72)*(i%4===3?.55:.95),9)});
   mhcAdd(new THREE.Mesh(new THREE.PlaneGeometry(.75,1.05),new THREE.MeshBasicMaterial({map:panel})),1.95,2.0,.025,root);
   var t=['기념','표창','감사','우승','기록','계약'];

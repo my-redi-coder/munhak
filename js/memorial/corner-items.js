@@ -16,12 +16,12 @@ function mhcGlass(w,h,d){var g=new THREE.Group();
   /* 유리 반사 한 줄 */
   mhcAdd(new THREE.Mesh(new THREE.PlaneGeometry(.05,h*.9),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.16,depthWrite:false})),-w*.3,h/2,d/2+.002,g);
   return g}
-function mhcCaption(title,sub){var t=canvasTex(420,260,function(x,w,h){x.fillStyle='#fbfaf6';x.fillRect(0,0,w,h);x.fillStyle=MHC.ink;x.font='700 34px '+MHF.kr;x.fillText(title,26,56);
+function mhcCaption(title,sub){var t=mhLiveTex(420,260,function(x,w,h){x.fillStyle='#fbfaf6';x.fillRect(0,0,w,h);x.fillStyle=MHC.ink;x.font='700 34px '+MHF.kr;x.fillText(title,26,56);
   x.fillStyle=MHC.mute;x.font='400 20px '+MHF.kr;x.fillText(sub||'',26,90);x.fillStyle='#b9b4ab';for(var i=0;i<6;i++)x.fillRect(26,120+i*20,(w-52)*(i===5?.5:.92),6)});
   var m=new THREE.Mesh(new THREE.BoxGeometry(.34,.21,.008),[0,0,0,0,mhcStd({map:t,roughness:.7}),0].map(function(v){return v||mhcStd({color:0xe8e4dc})}));
   m.rotation.x=-.35;return mhcCast(m)}
 
-/* 7-1. 등신대: 사용자 그림(memorial/corner/cutout.png, 흰 테두리까지 잘라 둔 것)을 납작한 판으로 세움 + 금속 받침 */
+/* 7-1. 등신대: 사용자 그림(memorial/corner/cutout.webp, 흰 테두리까지 잘라 둔 것)을 납작한 판으로 세움 + 금속 받침 */
 function mhcCutout(){var g=new THREE.Group(),c=MHC.cutout,H=c.h,W=H*c.ratio;
   var t=new THREE.TextureLoader().load(c.src);t.anisotropy=4;
   /* 앞면 그림 + 뒷면은 회색 판지 */
@@ -93,7 +93,7 @@ function mhcBagShelf(){var g=new THREE.Group(),shelfY=1.98;
   /* 선반 아래 유리 기둥(사진처럼 아래 유리장과 이어진 느낌) */
   mhcAdd(mhcGlass(1.0,shelfY-1.05,.6),0,1.05,.31,g);
   /* 작은 이름표 */
-  var lb=canvasTex(300,60,function(x,w,h){x.fillStyle='#fbfaf6';x.fillRect(0,0,w,h);x.fillStyle=MHC.ink;x.font='700 26px '+MHF.kr;x.fillText('명품 가방',14,40)});
+  var lb=mhLiveTex(300,60,function(x,w,h){x.fillStyle='#fbfaf6';x.fillRect(0,0,w,h);x.fillStyle=MHC.ink;x.font='700 26px '+MHF.kr;x.fillText('명품 가방',14,40)});
   mhcAdd(new THREE.Mesh(new THREE.PlaneGeometry(.26,.05),mhcStd({map:lb})),-.28,shelfY+.07,.625,g);
   return g}
 

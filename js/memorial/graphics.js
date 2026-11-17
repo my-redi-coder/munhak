@@ -53,7 +53,7 @@ function mhBuildGraphics(){
 
   /* --- 최광야구 안쪽 벽: 빨간 벽에 큰 흰 글씨 --- */
   var a=(ps-1.2)/HALL.rMid,b=(ps-11)/HALL.rMid;
-  var rt=canvasTex(2048,1075,function(x,w,h){x.fillStyle='#c8102e';x.fillRect(0,0,w,h);x.fillStyle='#ffffff';x.textAlign='center';x.textBaseline='alphabetic';x.font='900 '+Math.round(h*.42)+'px '+MHF.kr;x.fillText('최광야구',w/2,h*.64);x.font='italic 700 '+Math.round(h*.09)+'px '+MHF.cond;x.globalAlpha=.9;x.fillText('Choi · Kwang Baseball',w/2,h*.8)});
+  var rt=mhLiveTex(2048,1075,function(x,w,h){x.fillStyle='#c8102e';x.fillRect(0,0,w,h);x.fillStyle='#ffffff';x.textAlign='center';x.textBaseline='alphabetic';x.font='900 '+Math.round(h*.42)+'px '+MHF.kr;x.fillText('최광야구',w/2,h*.64);x.font='italic 700 '+Math.round(h*.09)+'px '+MHF.cond;x.globalAlpha=.9;x.fillText('Choi · Kwang Baseball',w/2,h*.8)});
   var rw=new THREE.Mesh(new THREE.CylinderGeometry(HALL.rIn+.02,HALL.rIn+.02,H,40,1,true,Math.PI-a,a-b),new THREE.MeshBasicMaterial({map:rt}));rw.position.y=H/2;scene.add(rw);
   mhZoneHeader(ps-1.7,'최광야구',true);
 
