@@ -615,6 +615,144 @@
    "people": [
     "안상현"
    ]
+  },
+  {
+   "id": "p-mwkvu7v8-0",
+   "file": "photos/decal.jpg",
+   "title": "데칼듀마니",
+   "zone": "B",
+   "year": "-",
+   "tags": [
+    "박성한"
+   ],
+   "people": []
+  },
+  {
+   "id": "p-mwkvu7v8-1",
+   "file": "photos/dalguji.jpg",
+   "title": "달구지야..",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "조형우"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-2",
+   "file": "photos/w1800.jpg",
+   "title": "2025.8.31.",
+   "zone": "B",
+   "year": "-",
+   "tags": [
+    "2025"
+   ],
+   "people": [
+    "기념"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-3",
+   "file": "photos/maetgil.jpg",
+   "title": "례 맡길게요 10년만",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "최정"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-4",
+   "file": "photos/quller.jpg",
+   "title": "쿼러그ㅓ코ㅏㄹ럭",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "조병현"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-5",
+   "file": "photos/maengjun.jpg",
+   "title": "맹준박물관(B존에잇슴",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "고명준"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-6",
+   "file": "photos/randy3.jpg",
+   "title": "랜디전남친",
+   "zone": "B",
+   "year": "-",
+   "tags": [
+    "마스코트"
+   ],
+   "people": [
+    "랜디",
+    "박지환"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-7",
+   "file": "photos/beok.jpg",
+   "title": "벜",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "문승원"
+   ]
+  },
+  {
+   "id": "p-mwkvu7v8-8",
+   "file": "photos/nakseo.jpg",
+   "title": "음 좀 낯서네요",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "문승원"
+   ]
+  },
+  {
+   "id": "p-mwkvwtyo-0",
+   "file": "photos/gigang.jpg",
+   "title": "기강잡아",
+   "zone": "B",
+   "year": "-",
+   "tags": [],
+   "people": [
+    "노경은"
+   ]
+  },
+  {
+   "id": "p-mwkvwtyo-1",
+   "file": "photos/salbal.jpg",
+   "title": "살발도니",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "김민준"
+   ]
+  },
+  {
+   "id": "p-mwkvwtyo-2",
+   "file": "photos/nangman.jpg",
+   "title": "낭만..",
+   "zone": "B",
+   "year": "-",
+   "tags": [
+    "마스코트",
+    "불꽃놀이"
+   ],
+   "people": []
   }
  ]
 }
