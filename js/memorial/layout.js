@@ -26,7 +26,7 @@ MH.layoutItems=function(photos){
   L.zoneStart.A=H.zoneStart;spots.A=mk('A',slots.A);L.zoneLen.A=spots.A[spots.A.length-1].s-L.zoneStart.A+2.8;
   L.zoneStart.B=L.zoneStart.A+L.zoneLen.A;spots.B=mk('B',slots.B);L.zoneLen.B=spots.B[spots.B.length-1].s-L.zoneStart.B+2.8;
   spots.K=mk('K',slots.K);
-  H.endR=L.zoneStart.B+L.zoneLen.B+.5;
+  H.endR=L.zoneStart.B+L.zoneLen.B+.5+(MH.CORNER.on?MH.CORNER.extra:0);  /* 끝 벽 전시 코너 자리만큼 더 늘림 */
   H.endL=spots.K[spots.K.length-1].s-2.1;
   H.rMid=Math.max(42,(H.endR-H.endL)/5.2);H.rIn=H.rMid-4;H.rOut=H.rMid+4;
   var items=[];

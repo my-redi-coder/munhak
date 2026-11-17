@@ -2,7 +2,7 @@
 /* ================= memorial/movement: 걷기 (야구장 js/game/movement.js 와 같은 방식) =================
    바닥 누르기 · 키보드(WASD·방향키) · ‹ › 버튼 길게 누르기. 통로 안(안쪽·바깥 벽 사이, 양 끝 안)으로만 걸어요.
    통로가 휘는 만큼 카메라도 같이 돌아서 벽을 보는 각도가 그대로예요. */
-function mhClampPos(x,z){var H=MH.HALL,q=mhToSR(x,z),r=clamp(q.r,H.rIn+.55,H.rOut-.55),s=clamp(q.s,H.endL+.7,H.endR-.7);return mhAt(s,r)}
+function mhClampPos(x,z){var H=MH.HALL,q=mhToSR(x,z),r=clamp(q.r,H.rIn+.55,H.rOut-.55),s=clamp(q.s,H.endL+.7,H.endR-(MH.CORNER.on?MH.CORNER.stop:.7));return mhAt(s,r)}
 function mhWalkTo(x,z){var p=mhClampPos(x,z);MH.PL.target={x:p.x,z:p.z};MH.player.act=null}
 function mhTurnTo(want,dt){var r=MH.player.root,cur=r.rotation.y,diff=Math.atan2(Math.sin(want-cur),Math.cos(want-cur));r.rotation.y=cur+diff*Math.min(1,dt*14)}
 function mhUpdatePlayer(dt){

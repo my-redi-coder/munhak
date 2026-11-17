@@ -3,6 +3,15 @@
 올린 페이지: <https://claude.ai/artifact/R6aKhHg4sbbuzVf1YXTv1H> 개발 노트(문서+도구 모음): 아래 별도 Artifact
 
 
+## B존 끝 벽 전시 코너 AR — 완료 (2026-11-18, `munhak_2026-11-18_AR-memorial-corner`)
+
+- **B존을 지나 막힌 끝 벽 앞에 작은 전시 코너**가 생겼어요(원래 '다음 전시를 준비하고 있어요' 자리). 사진 한 장(미술관 전시실)을 3D로 옮긴 시안 그대로, 왼쪽부터 **등신대 → 유니폼·헬멧·장갑 → 가방(벽 선반 위) / 사인과 현금(앞 받침대)**. 뒤 벽은 베이지 + 따뜻한 간접조명, 가운데 경기장 화면, 양옆 옛 사진·문서 액자
+- 등신대 = 사용자가 준 그림(`memorial/corner/cutout.png`, 흰 배경을 지우고 흰 테두리를 둘러 납작한 판으로 세움). 사인은 매직 느낌 새 사인 + 끝이 돼지꼬리 + **18**. 가방은 갈색 바탕 금빛 꽃·별 무늬(실제 로고 무늬 아님), 오만원 다발은 노란 지폐 느낌(실제 도안 아님), 유니폼 글씨 'MUNHAK'
+- 통로를 끝 쪽으로 1.6m 늘리고(`MH.CORNER.extra`), 으쓱이는 끝 벽 2.3m 앞에서 멈춰요(`stop`) — 전시물 안으로 안 걸어 들어감
+- 새 파일: `js/memorial/corner-art.js`(그림), `js/memorial/corner-items.js`(3D 물건), `js/memorial/corner.js`(배치·뒤 벽·조명), `memorial/corner/cutout.png`
+- 고친 파일: `js/memorial/config.js`(`MH.CORNER` — 끄려면 `on:false`, 자리 `place`), `layout.js`(끝 길이), `movement.js`(멈춤 자리), `concourse.js`(끝 벽 안내 글씨 뺌), `boot.js`(짓기·글꼴), `memorial.html`, `docs/MEMORIAL.md`·`DECISIONS.md`·`MODULES.md`
+- 확인(헤드리스, 폰 크기): B존 끝까지 가서 코너가 보이고 등신대 그림·조명 정상, 콘솔 오류 없음. 시안: 아티팩트 '문학기념관 · B존 끝 벽 전시 코너 (시안)'
+
 ## 문학기념관 열기 AQ — 완료 (2026-11-17, `munhak_2026-11-17_AQ-memorial`)
 
 - **문학기념관(`memorial.html`)이 열렸어요.** 로비의 문학기념관 문(이름표 '문학기념관 / 짤 전시관')을 누르면 들어가요. 시안 3(2026-11-02 확정) 그대로: 둥근 통로·선수통로 톤, 입구 홀 'Photo of Today', 왼쪽 최광야구, 오른쪽 **A·B만** 열림(C·D는 안 열음)

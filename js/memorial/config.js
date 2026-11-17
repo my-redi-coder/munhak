@@ -26,6 +26,15 @@ var MH={
     walkSpeed:2.7,
     wallInk:'#1e2329',wallMute:'#6b7178',red:'#c8102e',wine:'#8f1630'
   },
+  /* B존 끝 벽 전시 코너 (corner*.js): 끝 벽 앞에 사진 한 장 같은 작은 전시. 끄려면 on:false
+     extra=통로를 끝 쪽으로 더 늘리는 길이(m), stop=끝 벽에서 이만큼 앞에서 멈춰 걸음(전시물에 안 들어가게)
+     place=[x, z] 코너 기준 자리(x: 끝 벽을 볼 때 오른쪽+, z: 벽에서 통로 쪽으로), cutout=등신대 그림 */
+  CORNER:{
+    on:true,extra:1.6,stop:2.3,wallW:8.2,
+    place:{cutout:[-2.5,1.2],jersey:[-1,.95],bag:[.95,0],cash:[1.05,1.3]},
+    cutout:{src:'memorial/corner/cutout.png',h:1.82,ratio:494/1100},
+    red:'#c8102e',ink:'#1e2329',mute:'#6b7178',stone:'#cbbfa9',slab:'#e9e2d3',glassEdge:0x9fd6c4
+  },
   /* 저장해 두는 값 이름 (store: 'munhak:이름') — 유니폼·등판·모자는 야구장과 같은 이름을 써요 */
   KEY:{uni:'uni',hat:'hat',backName:'backName',backNum:'backNum',dressed:'dressed',today:'hallToday'}
 };

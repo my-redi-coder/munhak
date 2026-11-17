@@ -24,7 +24,7 @@ function mhBoot(photos){
   mhSetupScene();
   _mhItems=MH.layoutItems(photos);
   mhResize();
-  mhBuildConcourse();mhBuildGraphics();mhBuildFrames(_mhItems);mhBuildChips();
+  mhBuildConcourse();mhBuildGraphics();mhBuildFrames(_mhItems);mhBuildCorner();mhBuildChips();
   mhMakePlayer();mhBindInput();mhBindViewer();
   $('boot').classList.add('out');
   if(mhNeedsDress())mhShowDress(mhStartIntro);else mhStartIntro();
@@ -32,7 +32,7 @@ function mhBoot(photos){
 }
 /* 벽 글씨 글꼴을 다 받은 뒤 짓기 */
 function mhFontsReady(photos){
-  var txt='최광야구입구홀다음전시를준비하고있어요짤이걸릴자리'+photos.map(function(p){return p.title}).join('');
+  var txt='최광야구입구홀다음전시를준비하고있어요짤이걸릴자리문학의기억유니폼헬멧장갑시즌착용야구공사인본인직접우승상금명품가방창단기록기념표창감사계약오만원장'+photos.map(function(p){return p.title}).join('');
   var FL=['800 40px "Barlow Condensed"','italic 800 40px "Barlow Condensed"','italic 700 40px "Barlow Condensed"','600 40px "Barlow Condensed"','900 40px "Noto Sans KR"','700 40px "Noto Sans KR"','500 40px "Noto Sans KR"'];
   var ready=document.fonts&&document.fonts.load?Promise.all(FL.map(function(f){return document.fonts.load(f,txt+'ZONE AB V6 Go for it! Photo of Today 0123456789')})):Promise.resolve();
   return Promise.race([ready,new Promise(function(r){setTimeout(r,3500)})]);

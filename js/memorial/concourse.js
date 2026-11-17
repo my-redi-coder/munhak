@@ -39,6 +39,7 @@ function mhBuildConcourse(){
   [[HALL.endL,'cw'],[HALL.endR,'ccw']].forEach(function(e){
     var tx=canvasTex(512,300,function(x,w,h){x.fillStyle='#f4f5f6';x.fillRect(0,0,w,h);x.fillStyle=HALL.red;x.fillRect(0,h*.86,w,h*.03)});
     var m=new THREE.Mesh(new THREE.PlaneGeometry(HALL.rOut-HALL.rIn+.2,H),new THREE.MeshBasicMaterial({map:tx}));mhPut(m,e[0],HALL.rMid,H/2,e[1]);scene.add(m);MH.walls.push(m);
+    if(e[1]==='ccw'&&MH.CORNER.on)return;  /* B존 끝 벽은 전시 코너(corner.js)가 차지해요 */
     var note=mhPlane(3.2,.4,mhTexW(3.2,.4,200,function(x,w,h){x.fillStyle=HALL.wallMute;x.font='500 '+Math.round(h*.5)+'px '+MHF.kr;x.textAlign='center';x.textBaseline='middle';x.fillText('다음 전시를 준비하고 있어요',w/2,h/2)}));mhPut(note,e[0]+(e[1]==='cw'?.02:-.02),HALL.rMid,1.6,e[1]);
   });
 }
