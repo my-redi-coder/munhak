@@ -410,6 +410,108 @@
    "people": [
     "노경은"
    ]
+  },
+  {
+   "id": "p-mwkt8g3g-0",
+   "file": "photos/yeolgi.jpg",
+   "title": "~ 뜨거운 열기 ~",
+   "zone": "K",
+   "year": "2026",
+   "tags": [
+    "최광야구"
+   ],
+   "people": [
+    "전영준"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-1",
+   "file": "photos/dwaedeuruk.jpg",
+   "title": "돼드럭",
+   "zone": "K",
+   "year": "2026",
+   "tags": [
+    "최광야구"
+   ],
+   "people": [
+    "이로운"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-2",
+   "file": "photos/bolsu.jpg",
+   "title": "~볼수있죵~",
+   "zone": "K",
+   "year": "2026",
+   "tags": [
+    "최광야구"
+   ],
+   "people": [
+    "전영준"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-3",
+   "file": "photos/daeche.jpg",
+   "title": "대체 뭐가 된거지",
+   "zone": "K",
+   "year": "2026",
+   "tags": [
+    "최광야구"
+   ],
+   "people": [
+    "박성한",
+    "김광현"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-4",
+   "file": "photos/maepchi.jpg",
+   "title": "맵치",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "최민준"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-5",
+   "file": "photos/pofomvp.jpg",
+   "title": "포포mvp",
+   "zone": "K",
+   "year": "2026",
+   "tags": [
+    "최광야구"
+   ],
+   "people": [
+    "한두솔"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-6",
+   "file": "photos/aneunguna.jpg",
+   "title": "아는구나",
+   "zone": "K",
+   "year": "2026",
+   "tags": [
+    "최광야구"
+   ],
+   "people": [
+    "조형우",
+    "김민준"
+   ]
+  },
+  {
+   "id": "p-mwkt8g3g-7",
+   "file": "photos/ppyoing.jpg",
+   "title": "뾰잉",
+   "zone": "A",
+   "year": "2026",
+   "tags": [],
+   "people": [
+    "아빌라"
+   ]
   }
  ]
 }
