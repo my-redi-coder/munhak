@@ -22,7 +22,7 @@ function mhcCaption(title,sub){var t=mhLiveTex(420,260,function(x,w,h){x.fillSty
   m.rotation.x=-.35;return mhcCast(m)}
 
 /* 7-1. 등신대: 사용자 그림(memorial/corner/cutout.webp, 흰 테두리까지 잘라 둔 것)을 납작한 판으로 세움 + 금속 받침 */
-function mhcCutout(){var g=new THREE.Group(),c=MHC.cutout,H=c.h,W=H*c.ratio;
+function mhcCutout(c){var g=new THREE.Group();c=c||MHC.cutout;var H=c.h,W=H*c.ratio;
   var t=new THREE.TextureLoader().load(c.src);t.anisotropy=4;
   /* 앞면 그림 + 뒷면은 회색 판지 */
   var front=new THREE.Mesh(new THREE.PlaneGeometry(W,H),mhcStd({map:t,alphaTest:.5,roughness:.6}));

@@ -25,7 +25,7 @@ function mhcBackdrop(root){
   mhcFrame(.62,.43,mhcOldPhotoTex(),-2.75,2.3,.03,root);mhcFrame(.62,.43,mhcOldPhotoTex(),-3.6,2.3,.03,root);
   mhcFrame(.38,.5,mhcDocTex(11,'창단'),-3.0,1.6,.03,root);mhcFrame(.38,.5,mhcDocTex(12,'기록'),-2.52,1.6,.03,root);
   /* 오른쪽: 설명판 + 문서 액자 */
-  var panel=mhLiveTex(500,700,function(x,w,h){x.fillStyle='#f7f1e6';x.fillRect(0,0,w,h);x.fillStyle=MH.HALL.wallInk;x.font='900 46px '+MHF.kr;x.fillText('문학의 기억',36,90);
+  var panel=mhLiveTex(500,700,function(x,w,h){x.fillStyle='#f7f1e6';x.fillRect(0,0,w,h);x.fillStyle=MH.HALL.wallInk;x.font='900 46px '+MHF.kr;x.fillText('거포인생',36,90);
     x.fillStyle=MH.HALL.red;x.fillRect(36,112,70,6);x.fillStyle='#8c8478';for(var i=0;i<14;i++)x.fillRect(36,160+i*34,(w-72)*(i%4===3?.55:.95),9)});
   mhcAdd(new THREE.Mesh(new THREE.PlaneGeometry(.75,1.05),new THREE.MeshBasicMaterial({map:panel})),1.95,2.0,.025,root);
   var t=['기념','표창','감사','우승','기록','계약'];
@@ -41,11 +41,12 @@ function mhBuildCorner(){
   mhcBackdrop(root);
   /* 사진과 같은 순서 (x=오른쪽, z=끝 벽에서 통로 쪽으로) */
   var P=MHC.place;
-  var cut=mhcCutout();cut.rotation.y=.18;cut.scale.setScalar(1.08);mhcAdd(cut,P.cutout[0],0,P.cutout[1],root);
+  var cut=mhcCutout(MHC.cutout);cut.rotation.y=.18;cut.scale.setScalar(1.08);mhcAdd(cut,P.cutout[0],0,P.cutout[1],root);
+  var cut2=mhcCutout(MHC.cutout2);cut2.rotation.y=.38;cut2.scale.setScalar(1.08);mhcAdd(cut2,P.cutout2[0],0,P.cutout2[1],root);  /* 두 번째 등신대: 왼쪽 뒤에서 살짝 안쪽을 봄 */
   var js=mhcJerseySet();js.rotation.y=.12;mhcAdd(js,P.jersey[0],0,P.jersey[1],root);
   mhcAdd(mhcBagShelf(),P.bag[0],0,P.bag[1],root);
   var cc=mhcCashCase();cc.rotation.y=-.06;mhcAdd(cc,P.cash[0],0,P.cash[1],root);
-  mhcBlob(root,P.cutout[0],P.cutout[1],1.3,.8);mhcBlob(root,P.jersey[0],P.jersey[1],1.9,1.4);mhcBlob(root,P.cash[0],P.cash[1],1.9,1.3);
+  mhcBlob(root,P.cutout[0],P.cutout[1],1.3,.8);mhcBlob(root,P.cutout2[0],P.cutout2[1],1.3,.8);mhcBlob(root,P.jersey[0],P.jersey[1],1.9,1.4);mhcBlob(root,P.cash[0],P.cash[1],1.9,1.3);
   mhPut(root,MH.HALL.endR,MH.HALL.rMid,0,'ccw');scene.add(root);root.updateMatrixWorld(true);
   /* 따뜻한 전시 조명: 물건마다 위에서 비추는 스포트라이트 (가까운 곳만 밝힘) */
   ['cutout','jersey','bag','cash'].forEach(function(k){var p=P[k],sp=new THREE.SpotLight(0xffe4bd,.85,7,.4,.6,1.2);

@@ -112,7 +112,7 @@
 | `js/engine/renderer.js` | 35 | canvas, scene, camera, maxAniso, sun, canvasTex, mergeParts, MVC, Box, Cyl |
 | `js/entities/character.js` | 141 | GEO, ARMGEO, armGeo, M, shadowTex, shadowMat, faceTex, FACE, NAMEK, KFONT, drawBack, backTex, jerseyTex, jerseyShared … |
 | `js/entities/uniform-kit.js` | 91 | UNI_L, UNI_LP, uniDrawL, UNI_FRONT, uniFrontMat, UNI_CAP, uniCapMat, uniCapLMat, uniHat, uniWhistle |
-| `js/memorial/config.js` | 42 | MH |
+| `js/memorial/config.js` | 43 | MH |
 | `js/memorial/layout.js` | 54 | mhAt, mhToSR, mhPut, mhPlaceAt |
 | `js/memorial/toolkit.js` | 11 | MHF, mhPlane, mhTexW, mhLiveTex, mhRedrawLive |
 | `js/memorial/concourse.js` | 45 | mhBuildConcourse |
@@ -120,7 +120,7 @@
 | `js/memorial/frames.js` | 65 | mhDrawPhoto, mhPhotoTex, mhPumpPhotos, mhEmptyFrame, mhHangFrame, mhBuildFrames |
 | `js/memorial/corner-art.js` | 89 | MHC, mhcStd, mhcAdd, mhcCast, mhcRnd, mhcNoiseTex, mhcStadiumTex, mhcOldPhotoTex, mhcDocTex, mhcJerseyTex, mhcBagTex, mhcSignTex, mhcBallTex, mhcBillTex … |
 | `js/memorial/corner-items.js` | 120 | mhcStoneTex, mhcPedestal, mhcGlass, mhcCaption, mhcCutout, mhcJerseyShape, mhcHelmet, mhcGlove, mhcJerseySet, mhcBag, mhcBagShelf, mhcCashStack, mhcCashCase |
-| `js/memorial/corner.js` | 55 | mhcFrame, mhcBackdrop, mhcBlob, mhBuildCorner |
+| `js/memorial/corner.js` | 56 | mhcFrame, mhcBackdrop, mhcBlob, mhBuildCorner |
 | `js/memorial/data.js` | 11 | mhLoadPhotos |
 | `js/memorial/player.js` | 12 | PZ_POSE, mhMakePlayer |
 | `js/memorial/movement.js` | 27 | mhClampPos, mhWalkTo, mhTurnTo, mhUpdatePlayer |

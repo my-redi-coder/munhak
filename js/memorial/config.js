@@ -33,8 +33,9 @@ var MH={
      place=[x, z] 코너 기준 자리(x: 끝 벽을 볼 때 오른쪽+, z: 벽에서 통로 쪽으로), cutout=등신대 그림 */
   CORNER:{
     on:true,extra:1.6,stop:2.3,wallW:8.2,
-    place:{cutout:[-2.5,1.2],jersey:[-1,.95],bag:[.95,0],cash:[1.05,1.3]},
-    cutout:{src:'memorial/corner/cutout.webp',h:1.82,ratio:494/1100},
+    place:{cutout:[-2.5,1.2],cutout2:[-3.3,.7],jersey:[-1,.95],bag:[.95,0],cash:[1.05,1.3]},
+    cutout:{src:'memorial/corner/cutout.webp',h:1.82,ratio:494/1100},      /* 분홍 맨투맨·보라 바지 */
+    cutout2:{src:'memorial/corner/cutout2.webp',h:1.82,ratio:476/1100},    /* 주황 옷·흰 조끼 (첫 등신대 왼쪽 뒤) */
     red:'#c8102e',ink:'#1e2329',mute:'#6b7178',stone:'#cbbfa9',slab:'#e9e2d3',glassEdge:0x9fd6c4
   },
   /* 저장해 두는 값 이름 (store: 'munhak:이름') — 유니폼·등판·모자는 야구장과 같은 이름을 써요 */
