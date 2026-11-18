@@ -7,13 +7,16 @@
    (2026-11-01) 포토존은 폴라로이드로 저장해요 — takePhoto(이름, {pola:true})
    - 화면의 폴라로이드 틀(#pzFrame)에서 사진 칸(#pzWin)만 잘라 정사각형 PHOTO.SIZE px로
    - 아이보리 종이 + 두꺼운 아래 여백 + 연분홍 마스킹테이프 + 손글씨 문구·날짜 (모양 숫자는 POLA)
-   - 문구는 PZ_CFG.pola.caption 하나로 고정. 미리보기에서 문구를 누르면 그 사진에만 바꿔요(다음 사진은 다시 기본)
+   - (2026-11-18) 문구는 기본 빈칸. 미리보기의 점선 칸을 눌러 쓰면 기억해서 다음 사진에도 남아요(store 'polaCap').
+     지우면 아무것도 안 쓴 폴라로이드(날짜만). 빈칸일 때 미리보기에만 '여기에 글씨를 쓸 수 있어요'(저장본엔 안 들어가요)
    - 저장본: 반듯하게 + 둘레에 연한 배경(테이프가 안 잘리게) / 미리보기: 배경 없이 살짝 기울이고 그림자(CSS) */
 var PHOTO={url:null,name:'munhak',SIZE:1080,shot:null,cap:null,date:'',pola:false,font:null};
 /* 사진 칸 한 변을 1로 둔 비율. 화면 틀(styles/photozone.css의 .pz-paper·.pz-win)도 같은 비율이에요 */
 var POLA={side:.075,top:.075,bot:.29,pad:.09,
   paper:'#fbf8f1',bg:'#f4ece6',ink:'#2b3a5c',inkSoft:'#5b6680',petal:'#f6a9bf',petalLine:'#d9809c',tape:'rgba(246,186,203,.82)',
   font:'"Nanum Pen Script", "Gaegu", cursive',capSize:.085,dateSize:.058};
+/* 써 둔 폴라로이드 글씨(없으면 빈칸) */
+function polaCapGet(){var v=store.get('polaCap','');return typeof v==='string'?v:''}
 function photoStamp(){var d=new Date(),p=function(n){return ('0'+n).slice(-2)};return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds())}
 function photoDate(){var d=new Date(),p=function(n){return ('0'+n).slice(-2)};return d.getFullYear()+'. '+p(d.getMonth()+1)+'. '+p(d.getDate())}
 /* 손글씨 글꼴은 포토존에 처음 들어갈 때 미리 받아둬요(ui/photozone-ui.js가 부름). 글꼴 파일은 fonts/ (2026-11-01부터 구글 대신 저장소) */
@@ -67,8 +70,10 @@ function polaCompose(shot,cap,date){
   var by=tp+P,fs=P*POLA.capSize,maxW=P*.82;x.font=fs+'px '+POLA.font;
   while(x.measureText(cap).width>maxW&&fs>P*.05){fs*=.94;x.font=fs+'px '+POLA.font}
   var cx=sd+P*.03,cy=by+bt*.42,tw=x.measureText(cap).width;
-  x.save();x.translate(cx,cy);x.rotate(-.025);x.fillStyle=POLA.ink;x.textBaseline='middle';x.textAlign='left';x.fillText(cap,0,0);x.restore();
-  polaPetal(x,cx+tw+fs*.55,cy-fs*.28,fs*.3,.5);
+  if(cap){/* 빈칸이면 글씨·꽃잎 없이(날짜만) */
+    x.save();x.translate(cx,cy);x.rotate(-.025);x.fillStyle=POLA.ink;x.textBaseline='middle';x.textAlign='left';x.fillText(cap,0,0);x.restore();
+    polaPetal(x,cx+tw+fs*.55,cy-fs*.28,fs*.3,.5);
+  }
   /* 날짜(오른쪽 아래) */
   x.font=(P*POLA.dateSize)+'px '+POLA.font;x.fillStyle=POLA.inkSoft;x.textAlign='right';x.textBaseline='middle';x.fillText(date,sd+P-P*.02,by+bt*.76);
   /* 테이프: 위 가장자리에 걸쳐서 */
@@ -87,7 +92,9 @@ function polaRender(){
   var r=polaCompose(PHOTO.shot,PHOTO.cap,PHOTO.date);
   PHOTO.url=polaFlat(r.c);var a=$('photoSave');a.href=PHOTO.url;
   $('photoImg').src=r.c.toDataURL('image/png');
-  var h=$('polaCapHit').style;h.left=r.cap.l*100+'%';h.top=r.cap.t*100+'%';h.width=r.cap.w*100+'%';h.height=r.cap.h*100+'%';
+  var e=$('polaCapHit'),h=e.style;h.left=r.cap.l*100+'%';h.top=r.cap.t*100+'%';h.width=r.cap.w*100+'%';h.height=r.cap.h*100+'%';
+  /* 점선 밑줄 칸. 빈칸이면 연한 안내 글씨(미리보기에만, 저장본엔 없음) */
+  e.classList.toggle('empty',!PHOTO.cap);e.textContent=PHOTO.cap?'':'✏️ '+PZ_CFG.pola.hint;
 }
 /* takePhoto(이름, {pola:true}) — pola면 폴라로이드(포토존), 아니면 지금 화면 그대로(직관 사진) */
 function takePhoto(tag,opt){
@@ -98,19 +105,20 @@ function takePhoto(tag,opt){
   var ready=pola?photoFonts():Promise.resolve();
   setTimeout(function(){ready.then(function(){
     $('photoStage').classList.toggle('pola',pola);$('polaCapHit').hidden=!pola;$('polaCapIn').hidden=true;$('polaHelp').hidden=!pola;
-    if(pola){PHOTO.cap=PZ_CFG.pola.caption;PHOTO.date=photoDate();polaRender()}else $('photoImg').src=PHOTO.url;
+    if(pola){PHOTO.cap=polaCapGet();PHOTO.date=photoDate();polaRender()}else $('photoImg').src=PHOTO.url;
     var a=$('photoSave');a.href=PHOTO.url;a.download=PHOTO.name;
     $('photoShare').hidden=!(navigator.share&&navigator.canShare);openModal('mPhoto');
   })},reduceMotion?0:260);
 }
-/* 문구 고치기: 문구를 누르면 그 자리에 입력칸. 엔터·바깥 누르기로 끝, 비우면 기본 문구로 */
+/* 문구 쓰기: 점선 칸을 누르면 그 자리에 입력칸. 엔터·바깥 누르기로 끝. 쓴 글씨는 기억(다음 사진에도), 비우면 빈 폴라로이드 */
 $('polaCapHit').onclick=function(){
   var i=$('polaCapIn'),h=$('polaCapHit');i.style.cssText=h.style.cssText;i.style.fontSize=Math.max(16,$('photoImg').clientWidth*.064)+'px';/* 16px 미만이면 아이폰이 확대돼요 */
-  i.value=PHOTO.cap;i.hidden=false;h.hidden=true;i.focus();i.select();
+  i.placeholder=PZ_CFG.pola.hint;i.value=PHOTO.cap;i.hidden=false;h.hidden=true;i.focus();i.select();
 };
 function polaCapDone(){
   var i=$('polaCapIn');if(i.hidden)return;
-  var t=i.value.trim().slice(0,PZ_CFG.pola.max);PHOTO.cap=t||PZ_CFG.pola.caption;
+  var t=i.value.trim().slice(0,PZ_CFG.pola.max);PHOTO.cap=t;store.set('polaCap',t);
+  var f=$('pzCapPrev');if(f)f.textContent=t;/* 찍기 화면 틀에도 바로 */
   i.hidden=true;$('polaCapHit').hidden=false;polaRender();
 }
 $('polaCapIn').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();polaCapDone()}else if(e.key==='Escape'){e.stopPropagation();this.value=PHOTO.cap;polaCapDone()}});

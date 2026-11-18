@@ -61,6 +61,7 @@ addEventListener('resize',function(){if(PZ.on)pzWinMeasure()});
 function pzFitD(S){var t=Math.tan(camera.fov*Math.PI/360);return Math.max(S.W,S.H)/2/(t*Math.min(camera.aspect,1)*PZ_WIN.f)}
 function pzCam(out,look){
   var S=PZ.set,O=S.O,d=pzFitD(S)*PZ.zoom,sh=PZ_WIN.dy/(innerHeight/2)*d*Math.tan(camera.fov*Math.PI/360);
+  sh-=(S.lift||0)*Math.max(S.W,S.H)*PZ.zoom;/* (2026-11-18) 세트에 lift가 있으면 카메라를 같은 각도로 위로 올려요(바닥이 덜 보여요) */
   look.set(O.x+S.T.x+PZ.pan,O.y+S.lookY-d*.045-sh,O.z+S.T.z);
   out.set(O.x+S.T.x+PZ.pan*.5,O.y+S.camY+d*.03-sh,O.z+S.T.z+d);
 }

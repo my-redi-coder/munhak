@@ -103,7 +103,7 @@ function pzBulbTick(dt){
 }
 
 PZ_SETS.pz={
-  O:new THREE.Vector3(150,0,380),g:null,T:new THREE.Vector3(0,0,0),W:6.4,H:4.9,camY:1.45,lookY:2.15,
+  O:new THREE.Vector3(150,0,380),g:null,T:new THREE.Vector3(0,0,0),W:6.4,H:4.9,camY:1.45,lookY:2.15,lift:.11,/* lift: 화면을 위로 올리는 양(사진 칸 한 변의 비율) — 바닥 3분의 1 줄이기 (2026-11-18) */
   standZ:1.45,standX:[-3.6,3.6],startX:1.7,panMin:-3,panMax:3,zoomMax:function(){return 1.5},pose:'pzV',
   pointX:function(){return 0},
   build:function(){
@@ -117,7 +117,9 @@ PZ_SETS.pz={
     [-1,1].forEach(function(s){var sw=new THREE.Mesh(new THREE.PlaneGeometry(30,5.2),pzMat(0xb3b1ac));sw.rotation.y=-s*Math.PI/2;sw.position.set(s*17,2.6,12);g.add(sw);
       var col=new THREE.Mesh(Box(.9,5.2,.9),pzMat(0xbebcb6));col.position.set(s*6.2,2.6,.3);g.add(col)});
     var ceil=new THREE.Mesh(new THREE.PlaneGeometry(34,30),pzMat(0x6f6d69));ceil.rotation.x=Math.PI/2;ceil.position.set(0,5.2,12);g.add(ceil);
-    for(var bz=1;bz<27;bz+=4){var bm=new THREE.Mesh(Box(34,.45,.5),pzMat(0x85837e));bm.position.set(0,4.95,bz);g.add(bm);
+    for(var bz=1;bz<27;bz+=4){var bm=new THREE.Mesh(Box(34,.45,.5),pzMat(bz===1?0xb20f27:0x85837e));bm.position.set(0,4.95,bz);g.add(bm);
+      /* (2026-11-18) 화면을 위로 올리며 무대 바로 앞 들보가 사진 맨 위에 보여서, 그 들보는 빨간 막(아래 금색 선)으로 */
+      if(bz===1){var bg=new THREE.Mesh(Box(34,.05,.52),pzMat(PZ_STAGE.gold));bg.position.set(0,4.71,bz);g.add(bg)}
       var lamp=new THREE.Mesh(Box(1.6,.06,.3),pzMat(0xfffbea));lamp.position.set(-3,4.7,bz+2);g.add(lamp);var l2=lamp.clone();l2.position.x=3;g.add(l2)}
     var fr=new THREE.Mesh(new THREE.PlaneGeometry(34,5.2),pzMat(0x9c9a95));fr.rotation.y=Math.PI;fr.position.set(0,2.6,27);g.add(fr);
     /* 빨간 아치 틀 + 패널 */

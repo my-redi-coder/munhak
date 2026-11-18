@@ -44,7 +44,11 @@ body.pz #labels{opacity:0}
 .photo-stage.pola{width:fit-content;max-width:100%;margin:6px auto 4px;transform:rotate(-2deg)}
 .photo-stage.pola .photo-prev{display:block;width:auto;max-width:100%;height:auto;max-height:56vh;border-radius:0;background:none;filter:drop-shadow(0 8px 14px rgba(40,25,15,.22))}
 @media (prefers-reduced-motion:reduce){.photo-stage.pola{transform:none}}
-.pola-hit{position:absolute;border:0;padding:0;background:none;border-radius:8px;cursor:text}
+.pola-hit{position:absolute;box-sizing:border-box;border:0;border-bottom:2px dashed rgba(91,102,128,.55);padding:0 3%;background:none;border-radius:0;cursor:text;display:flex;align-items:center;font-family:"Nanum Pen Script","Gaegu",cursive;font-size:clamp(16px,5.5vw,26px);color:#9aa3b8;white-space:nowrap;overflow:hidden}
+/* (2026-11-18) 점선 밑줄 = 글씨 쓰는 자리. 빈칸이면 안내 글씨가 살짝 숨쉬듯 */
+.pola-hit.empty{animation:polaHint 1.8s ease-in-out infinite}
+@keyframes polaHint{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.pola-hit.empty{animation:none}}
 .pola-hit:focus-visible{outline:2px dashed var(--red);outline-offset:2px}
 .pola-in{position:absolute;box-sizing:border-box;padding:0 3%;border:1.5px dashed #9aa3b8;border-radius:8px;background:rgba(255,255,255,.9);font-family:"Nanum Pen Script","Gaegu",cursive;color:#2b3a5c;outline:none}
 .photo-stage [hidden]{display:none}

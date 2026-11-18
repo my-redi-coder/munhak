@@ -23,7 +23,7 @@ function pzUIOpen(k){
   }
   var ps=$('pzPoses');ps.innerHTML='';
   PZ_CFG.poses.forEach(function(p){var b=document.createElement('button');b.textContent=p[1];b.dataset.pose=p[0];b.onclick=function(){sfx('tap');pzPose(p[0])};ps.appendChild(b)});
-  $('pzCapPrev').textContent=PZ_CFG.pola.caption;$('pzDatePrev').textContent=photoDate();photoFonts();/* 폴라로이드 틀 미리보기 글씨 */
+  $('pzCapPrev').textContent=polaCapGet();/* (2026-11-18) 기본은 빈칸, 써 둔 글씨가 있으면 그 글씨 */$('pzDatePrev').textContent=photoDate();photoFonts();/* 폴라로이드 틀 미리보기 글씨 */
   $('pz').hidden=false;pzUISync();
 }
 /* 들어갈 때 한 번 쓱 떴다 사라지는 안내 (작은 패치 M) */

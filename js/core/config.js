@@ -112,7 +112,7 @@ var EV_SHOUT_N=5;
 var PZ_CFG={
   pz:{label:'플레이어존',desc:'3번 게이트 포토존, 내 사진 넣고 찍기',indoor:true,title:'PLAYER OF THE MONTH',line:'다음 시즌의 주인공은?',lineMax:22},
   hr:{label:'홈런기념판',desc:'외야 잔디벽, 최정 홈런 숫자판',base:538,max:999,miles:[1,100,200,300,400,500],name:'CHOIJEONG',sub:'LEGENDARY',foot:'HOMERUNS',rec:'KBO HOME RUN RECORD'},
-  pola:{caption:'문학에서 — 봄을 기다리며',max:15},/* 폴라로이드 아래 손글씨 문구(하나로 고정) + 미리보기에서 고칠 때 최대 글자 수 — ui/photo.js (2026-11-01) */
+  pola:{max:15,hint:'여기에 글씨를 쓸 수 있어요'},/* 폴라로이드 아래 손글씨: 기본은 빈칸, 미리보기에서 점선 칸을 눌러 써요(쓴 글씨는 기억해 다음 사진에도) + 최대 글자 수 + 빈칸일 때 미리보기 안내 — ui/photo.js (2026-11-18 바꿈, 예전엔 '문학에서 — 봄을 기다리며' 고정) */
   poses:[['pzShow','소개'],['pzBanzai','만세'],['pzV','브이'],['pzBack','뒤돌기']],/* 포즈마다 표정이 달라요: 소개 = 기본 얼굴, 만세 = 활짝(joy), 브이 = 웃는 눈(happy) — game/photozone.js의 PZ_POSE */
   hint:'좌우로 움직여 포즈를 취해요',/* 포토존에 들어갈 때 사진 칸 아래에 쓱 떴다 사라지는 작은 안내(ui/photozone-ui.js의 pzHintShow) */
   full:'999호! 마일스톤 판이 꽉 찼어요',
