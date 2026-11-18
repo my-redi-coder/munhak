@@ -139,7 +139,7 @@ function renderPrint(){var i=R.gi;snd('print');
   $('stage').innerHTML='<div class="tw-card result"><p class="kick">발권 완료</p><h2>'+(R.rebook?'연석으로 바꿨어요!':R.tog?'완벽 예매!':'따로라도 성공!')+'</h2><p class="line">'+tkEsc(line)+'</p>'
    +(R.free?rpLine():'')
    +'<div class="printer"><div class="slot"></div><div class="paper"><div class="tkwrap">'+tkStack(i,R.free?{n:R.goal,seat:R.seatStr,blk:R.blk}:null)+'</div></div></div>'
-   +'<div class="btns">'+(R.free?'<a class="primary" href="locker.html#tickets">티켓북 보기</a>':'<button class="primary" id="tuck">티켓북에 꽂기</button>')+'<button class="secondary" id="more">한 판 더</button></div></div>';
+   +'<div class="btns">'+(R.free?'<button class="primary" id="more">한 판 더</button><a class="secondary" href="locker.html#tickets">티켓북 보기</a>':'<button class="primary" id="tuck">티켓북에 꽂기</button><button class="secondary" id="more">한 판 더</button>')+'</div></div>';
   if(!R.free)$('tuck').onclick=function(){try{sessionStorage.setItem('tw-new',String(i))}catch(e){}location.href='locker.html#tickets'};
   $('more').onclick=function(){newRound()};
 }
