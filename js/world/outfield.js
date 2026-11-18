@@ -44,6 +44,7 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
       buildBlock({x:x,z:z,theta:k.theta,base:OF.base,rows:OF.fakeRows,cols:s.cols,seat:OF.seat,occ:.55,out:true,noRail:true});return}
     var cfg={x:x,z:z,theta:k.theta,base:OF.base,rows:OF.rows,cols:s.cols,seat:OF.seat,occ:s.t==='walk'?.6:.55,out:true,noRail:!!s.pit};/* out: 밤에도 밝게(world/nightdim.js) */
     if(s.t==='walk')cfg.key='outfield';
+    if(s.t==='laundry')cfg.fixedCols=true;/* 세탁소는 좌석 열 번호(c)로 글자를 만들어서 칸 수를 안 늘려요 */
     var b=buildBlock(cfg);
     if(s.t==='walk')ZB.outfield=b;
     if(s.t==='laundry')ZB.laundry=b;/* 세탁소 블록(현수막 바로 옆) — world/laundry.js가 이 블록의 좌우 두 구역을 써요 */
@@ -51,7 +52,7 @@ function ofLip(p){var e=.0005,a=ofFence(p-e),b=ofFence(p+e),tx=b[0]-a[0],tz=b[1]
   /* 쐐기: H=맞닿은 앞 모서리, up·un=양쪽 블록이 뒤로 뻗는 방향. 계단 + 뒷벽 + 줄마다 좌석 */
   function wedge(H,up,un){
     var B=OF.base,R=OF.rows,bottom=-.05,lastTop=B+(R-1)*RH,steps=[[0,1.9,B,0xdedad0]];
-    for(var r=0;r<R;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,B+r*RH,r%2?0xe2ded3:0xd9d5c9]);
+    for(var r=0;r<R;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,B+r*RH,r%2?STEP_A:STEP_B]);
     steps.push([1.9+R*RD,1.9+R*RD+.2,lastTop+1.1,0xd2cbbd]);
     steps.forEach(function(s){
       var P=[[H[0]+s[0]*up[0],H[1]+s[0]*up[1]],[H[0]+s[1]*up[0],H[1]+s[1]*up[1]],[H[0]+s[1]*un[0],H[1]+s[1]*un[1]],[H[0]+s[0]*un[0],H[1]+s[0]*un[1]]];

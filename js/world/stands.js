@@ -1,6 +1,10 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요. */
 /* ================= stands ================= */
 var SP=.8,RD=1.15,RH=.5,AIS=1.4;
+/* 통로 줄이기 (작은 패치 AZ, 2026-11-18): 블록 폭(W)·위치는 그대로 두고, 가운데 통로를 AIS(1.4) → AISN(.6)으로 얇게, 양옆 여백을 EDGE(.4)만 남겨서
+   그만큼 한 줄에 의자가 더 들어가요(14칸 → 16칸). 세탁소(cfg.fixedCols)와 테이블석(cfg.table)은 예전 그대로. 계단 색은 STEP_A·STEP_B·WALL_C 한 곳에서 (회색 톤 낮춤) */
+var AISN=.6,EDGE=.4,STEP_A=0xc6c3b8,STEP_B=0xbcb9ae,WALL_C=0xb3afa4;
+function fillCols(W,C){return Math.max(C,2*Math.floor((W-EDGE-AISN)/(2*SP)))}
 var blocks=[],decorSeats=[],crowdSpots=[];
 function pos1B(s,o,side){side=side||1;return [side*(s*.7071+o*.7071),-s*.7071+o*.7071]}
 /* 4인 테이블석 배치 (홈 뒤 곡면 스탠드, 작은 패치 AI): 한 줄의 좌석 n개를 4개씩 묶어 테이블 하나씩. 남는 1~3개는 2인·1인 테이블.
@@ -18,17 +22,18 @@ function tbParts(out,x,y,z,w,rot,fx,fz){
   out.push({g:Box(w,.2,.04),c:0x6b4f33,p:[x+fx*.16,y+.66,z+fz*.16],r:rot});
 }
 function buildBlock(cfg){
-  var R=cfg.rows,C=cfg.cols,W=cfg.W||C*SP+AIS+1.2,base=cfg.base,sky=!!cfg.sky;/* sky: 땅에서 뜬 4층 스탠드(하룰라라석 쪽). 높이(base)와 따로 표시해서 base를 올려도 안 떠 보이게 (패치 AB) */
+  var R=cfg.rows,C=cfg.cols,W=cfg.W||C*SP+AIS+1.2,base=cfg.base,sky=!!cfg.sky;
+  var tight=!cfg.table&&!cfg.fixedCols,ais=tight?AISN:AIS;if(tight)C=fillCols(W,C);/* tight: 통로 얇게 + 의자 늘림 *//* sky: 땅에서 뜬 4층 스탠드(하룰라라석 쪽). 높이(base)와 따로 표시해서 base를 올려도 안 떠 보이게 (패치 AB) */
   var ul=0,ur=0,g=new THREE.Group();g.position.set(cfg.x,0,cfg.z);g.rotation.y=cfg.theta;scene.add(g);
   var bottom=sky?base-1.1:-.05,parts=[];
   parts.push({g:Box(W,base-bottom,1.9),c:0xdedad0,p:[0,(base+bottom)/2,-.95]});
   for(var r=0;r<R;r++){
     var top=base+r*RH;
-    parts.push({g:Box(W,top-bottom,RD),c:r%2?0xe2ded3:0xd9d5c9,p:[0,(top+bottom)/2,r*RD+RD/2]});
-    parts.push({g:Box(AIS,.03,.1),c:0xf0c43c,p:[0,top+.015,r*RD+.05]});
+    parts.push({g:Box(W,top-bottom,RD),c:r%2?STEP_A:STEP_B,p:[0,(top+bottom)/2,r*RD+RD/2]});
+    parts.push({g:Box(ais,.03,.1),c:0xf0c43c,p:[0,top+.015,r*RD+.05]});
     [1,-1].forEach(function(s){var gap=cfg.open&&cfg.open[s>0?'r':'l'];
-      if(gap)parts.push({g:Box(gap+.04,top-bottom,RD),c:r%2?0xe2ded3:0xd9d5c9,p:[s*(W/2+gap/2),(top+bottom)/2,r*RD+RD/2]});
-      else parts.push({g:Box(.25,top-bottom+.9,RD),c:0xcbc5b7,p:[s*(W/2+.12),(top+.9+bottom)/2,r*RD+RD/2]})});
+      if(gap)parts.push({g:Box(gap+.04,top-bottom,RD),c:r%2?STEP_A:STEP_B,p:[s*(W/2+gap/2),(top+bottom)/2,r*RD+RD/2]});
+      else parts.push({g:Box(.25,top-bottom+.9,RD),c:WALL_C,p:[s*(W/2+.12),(top+.9+bottom)/2,r*RD+RD/2]})});
   }
   var lastTop=base+(R-1)*RH;
   /* 1층 블록(내야·으쓱이존·장식·홈 뒤 아래층)은 뒷벽을 2층 바닥 아랫면(FLOOR.sky-1.1)까지 올려요. 그 면에 띠 전광판이 붙고(world/ribbonline.js), 벽 위는 2층 앞까지 이어지는 복도 바닥이에요 (작은 패치 AH) */
@@ -55,7 +60,7 @@ function buildBlock(cfg){
   var glass=new THREE.Mesh(Box(GW,.95,.04),new THREE.MeshLambertMaterial({color:0xd5ecf2,transparent:true,opacity:.32,depthWrite:false}));glass.position.set((OR-OL)/2,base+.5,-1.9);if(!cfg.noRail)g.add(glass);
   var seats=[];
   for(r=0;r<R;r++)for(var c=0;c<C;c++){
-    var x=TB?TB.xs[c]:(c-(C-1)/2)*SP+(c<C/2?-AIS/2:AIS/2);
+    var x=TB?TB.xs[c]:(c-(C-1)/2)*SP+(c<C/2?-ais/2:ais/2);
     seats.push({r:r,c:c,x:x,z:r*RD+RD*.64,y:base+r*RH,occ:null,crowd:-1});
   }
   g.updateMatrixWorld(true);

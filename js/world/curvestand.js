@@ -37,7 +37,7 @@ var CVS={
       T.groups.forEach(function(gp){tbParts(wedges,c[0]+dir[0]*gp.xc-bw[0]*.5,y,c[1]+dir[1]*gp.xc-bw[1]*.5,gp.w,[0,th,0],-bw[0],-bw[1])});
     }
     var bottom=-.05,/* 4층(sky)도 땅까지 꽉 채워요(작은 패치 AH) */steps=[[0,1.9,L.base,0xdedad0]];
-    for(var r=0;r<L.rows;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,L.base+r*RH,r%2?0xe2ded3:0xd9d5c9]);
+    for(var r=0;r<L.rows;r++)steps.push([1.9+r*RD,1.9+(r+1)*RD,L.base+r*RH,r%2?STEP_A:STEP_B]);
     steps.forEach(function(s){
       var P=[[H[0]+s[0]*up[0],H[1]+s[0]*up[1]],[H[0]+s[1]*up[0],H[1]+s[1]*up[1]],[H[0]+s[1]*un[0],H[1]+s[1]*un[1]],[H[0]+s[0]*un[0],H[1]+s[0]*un[1]]];
       var sh=new THREE.Shape();P.forEach(function(p,i){i?sh.lineTo(p[0],-p[1]):sh.moveTo(p[0],-p[1])});

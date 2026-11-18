@@ -11,7 +11,7 @@ var bbqSmoke=[];
   function fy(i){return BBQ.base+i*BBQ.rise}
   // 계단 바닥 + 앞 옹벽
   /* (작은 패치 AF) 앞쪽 초록 옹벽은 뺐어요: 바로 앞이 가짜 관중석이라 */
-  for(var i=0;i<R;i++){var y=fy(i);parts.push({g:Box(W,y,D),c:i%2?0xd9d5c9:0xcfcabd,p:[0,y/2,i*D+D/2]})}
+  for(var i=0;i<R;i++){var y=fy(i);parts.push({g:Box(W,y,D),c:i%2?STEP_A:STEP_B,p:[0,y/2,i*D+D/2]})}
   // 양옆 계단 + 민트 난간
   [-1,1].forEach(function(s){var sx=s*(W/2-.6);
     for(i=0;i<R*2;i++)parts.push({g:Box(1.1,.04,.1),c:0xf0c43c,p:[sx,fy(Math.floor(i/2))+(i%2)*.5+.02,i*D/2+.05]});
