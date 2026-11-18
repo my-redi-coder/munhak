@@ -84,3 +84,12 @@
 @keyframes zsSeal{60%{opacity:1;transform:rotate(-14deg) scale(.9)}100%{opacity:.95;transform:rotate(-14deg) scale(1)}}
 .rb-chip{display:inline-block;margin:0 0 8px;padding:4px 10px;border-radius:99px;border:1px dashed rgba(200,16,46,.5);color:var(--red);font-size:12.5px}
 @media (prefers-reduced-motion:reduce){.zs-banner.show,.zs-seal.show{animation-duration:.01s}}
+
+/* 다 모은 뒤 콤보 (2026-11-18, replay.js) */
+.rp-combo{margin:4px auto 8px}
+.rp-combo .now{margin:0;display:flex;gap:10px;justify-content:center;font-family:var(--num);font-size:18px}
+.rp-combo .now b{font-weight:400;padding:2px 10px;border-radius:999px;background:#c8102e;color:#fff}
+.rp-combo .now b.s{background:#22407a}
+.rp-combo .top{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.rp-combo.best .top{color:#b8860b;font-weight:700}
+.rp-combo.off .now{font-family:inherit;font-size:14px;color:var(--muted)}

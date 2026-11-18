@@ -6,6 +6,7 @@
    tickets: 티켓팅 War로 모은 승리 티켓 {TICKETS 번호: {n 매수, tog 같이 앉음, seat 자리, blk 구역}} (묶음 B, 2026-11-01)
    perfect: 홈런볼 모으기 퍼펙트 판 횟수 = 금 글러브 수 (2026-11-01 추가. 예전 기록엔 없어서 0부터)
    diary: 직관 짐싸기로 쓴 으쓱이 다이어리 {경기번호(2026 시즌 날짜순 1~144): {s 'ok'|'perfect', miss [실책 이름], lines [일기 줄]}} (2026-11-07 추가) / pkSnd: 직관 짐싸기 소리 켬(기본)·끔
+   twBest: 티켓팅 War 최고 콤보 {c 콤보, s 연석콤보} — 지금 콤보는 저장 안 함(들어와 있는 동안만) (2026-11-18 추가)
    ※ 저장 칸 이름(KEY)과 항목 모양은 바꾸지 않기 — 바꾸면 다들 모은 기록이 안 보여요. 꼭 바꿔야 하면 옛 기록을 옮기는 코드를 같이 넣어요 */
 var LOCKER=(function(){
   var KEY='munhak-locker-v1',d={cards:[],cardsDone:false,balls:[],nice:0,seen:{},tickets:{}};
@@ -40,7 +41,10 @@ var LOCKER=(function(){
     saveDiary:function(){save()},
     diaryCount:function(){return Object.keys(d.diary).length},
     pkSound:function(){return d.pkSnd!==false},
-    setPkSound:function(v){d.pkSnd=!!v;save()}
+    setPkSound:function(v){d.pkSnd=!!v;save()},
+    /* 티켓팅 War 최고 콤보 {c 콤보, s 연석콤보} (2026-11-18) */
+    twBest:function(){return d.twBest||{c:0,s:0}},
+    setTwBest:function(b){d.twBest={c:b.c|0,s:b.s|0};save()}
   };
 })();
 /* 짧은 알림 (모든 미니게임 페이지 공용) */
