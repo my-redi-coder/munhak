@@ -56,6 +56,8 @@ var NPC_COUNT=33;
 var FLOOR={inf:3.2,out:3.2,sky:10.5,gap:2.67};
 /* 응원단상(stands.js 아래)은 예전 1층 높이(1.2)보다 얼마나 올랐는지만큼 같이 올라가요. 단장·마스코트 발 높이도 이 값을 더해요 (작은 패치 AH) */
 var STAGE_DY=FLOOR.inf-1.2;
+/* (작은 패치 BA) 입장할 때 빅보드가 위쪽에 보이게 — 으쓱이존·내야는 처음 서는 자리를 이 줄 수만큼 앞으로(1줄=RD m). 다른 구역은 그대로 */
+var SPAWN_FWD={ussk:3,infield:3};
 if(!ZONES[ME.zone])ME.zone='ussk';
 function myName(){return ME.adj+' 으쓱이'}
 

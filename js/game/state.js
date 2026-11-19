@@ -12,6 +12,9 @@ function placeForSetup(){
   scene.add(player.root);var sp=pos1B(27,6);player.root.position.set(sp[0],0,sp[1]);player.root.rotation.y=Math.PI/4+Math.PI;player.mode='stand';player.setAct(null);
 }
 
+/* 구역에 들어와 처음 서는 자리(구역 기준 z) — 으쓱이존·내야는 SPAWN_FWD줄만큼 앞(config.js) */
+function spawnZ(blk){return (blk.R-2-(SPAWN_FWD[blk.key]||0))*RD+.55}
+
 /* NPCs */
 function clearNPCs(){npcs.forEach(function(n){n.dispose();if(n.seat){n.seat.occ=null;if(n.seat.crowd>=0){crowd.hidden[n.seat.crowd]=0;crowdSet(n.seat.crowd,0)}}});npcs=[];crowdFlush()}
 /* (작은 패치 S) 반응형 관객이 앉을 자리 고르기.
@@ -21,7 +24,7 @@ function clearNPCs(){npcs.forEach(function(n){n.dispose();if(n.seat){n.seat.occ=
      npc.js·crowdtalk.js·mascots.js가 거리를 잴 때 좌표가 맞게 해요 */
 var NPC_SPREAD={sx:6.5,sa:4.4,sb:2.2,ahead:2.3,tail:.16,tailR:16,keep:.9};
 function npcPickSeats(blk,n){
-  var cand=[],ls=(blk.R-2)*RD+.55,v=new THREE.Vector3();
+  var cand=[],ls=spawnZ(blk),v=new THREE.Vector3();
   blk.seats.forEach(function(s){if(s.crowd>=0)cand.push(s)});
   if(!blk.links.length){
     cand.sort(function(a,b){return (a.x*a.x+(a.z-3)*(a.z-3))-(b.x*b.x+(b.z-3)*(b.z-3))});

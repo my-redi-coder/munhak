@@ -17,9 +17,9 @@ function goZone(k,withFade){
     PL.returnSeat=null;stopAct(true);leaveSeat();PL.target=null;setStatus(null);
     if(player.root.parent)player.root.parent.remove(player.root);
     curBlock=ZB[k];curBlock.g.add(player.root);
-    var sz=(curBlock.R-2)*RD+.55;player.root.position.set(0,curBlock.groundH(sz),sz);player.root.rotation.y=Math.PI;player.mode='stand';if(player.shadow)player.shadow.visible=true;
+    var sz=spawnZ(curBlock);player.root.position.set(0,curBlock.groundH(sz),sz);player.root.rotation.y=Math.PI;player.mode='stand';if(player.shadow)player.shadow.visible=true;
     spawnNPCs(curBlock);
-    var wy=curBlock.cfg.theta+Math.PI;cam.yaw=wy+Math.PI;cam.pitch=.5;cam.dist=6.2;
+    cam.dist=6.2;bbAimCam();/* 빅보드가 화면 위쪽에 60%↑ 보이게 (camera.js) */
     snapCam();
     $('zoneName').textContent=ZONES[k].label;ME.zone=k;store.set('zone',k);
     if(withFade)setTimeout(function(){toast(ZONES[k].label+'에 왔어요. 빈 의자를 찾아 앉아 보세요',3000)},500);
