@@ -1,13 +1,14 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (가져다 써도 되지만 돈 받고 쓰면 안 돼요. 'SSG 팬 레디코더의 문학야구장 참조'를 남겨 주세요) */
-/* ================= 기간 한정 빅보드 (2026-11-18 ~ 11-30) =================
-   TD.FROM~TD.TO(한국 날짜, 양끝 포함) 동안만 빅보드 평소 화면(bbScreenTex)을 '외야의 중심' 화면으로 바꿔요.
+/* ================= 빅보드 '외야의 중심' (2026-11-18~, 끝나는 날 없음) =================
+   TD.ON이 true인 동안 계속(사용자가 바꾸라고 할 때까지). 날짜 제한은 11-25에 없앰.
+   TD.FROM~TD.TO는 다시 기간을 둘 때만 씀(TD.ON=false로 바꾸면 그 기간에만) 빅보드 평소 화면(bbScreenTex)을 '외야의 중심' 화면으로 바꿔요.
    - 원래 화면은 따로 복사해 두었다가, 날짜가 지나면(1분마다 확인) 그대로 되돌려요.
    - 이벤트 화면(bbshow.js)이 끝나면 bbScreenTex로 돌아오니 이벤트도 그대로 돌아가요.
    - 미리 보기: 주소 끝에 ?bbday=1 을 붙이면 날짜와 상관없이 켜져요.
    빅보드 앞 공중 컨페티는 world/confetti.js. */
-var TD={FROM:'2026-11-18',TO:'2026-11-30',on:false,chk:0,bak:null};
-TD.LINES={no:'No.54',a:'무낙에서 정라까지',b:'란더스 외야의 중심!!!!',c:'- 9시의 남자도 환영 -'};
-function tdIsDay(){if(/[?&]bbday=1/.test(location.search))return true;var d=new Date(Date.now()+9*36e5).toISOString().slice(0,10);return d>=TD.FROM&&d<=TD.TO}
+var TD={ON:true,FROM:'2026-11-18',TO:'2026-11-30',on:false,chk:0,bak:null};
+TD.LINES={no:'No.54',a:'무낙에서 정라까지',b:'란더스 외야의 중심!!!!',c:'- 9시의 남자도 환영, 문마에도 환영 -'};
+function tdIsDay(){if(TD.ON||/[?&]bbday=1/.test(location.search))return true;var d=new Date(Date.now()+9*36e5).toISOString().slice(0,10);return d>=TD.FROM&&d<=TD.TO}
 
 /* 화면 그림: 빨간 경기장 조명 바탕 + 왼쪽 54번 유니폼 + 오른쪽 큰 문구 */
 function tdDraw(x,w,h){
