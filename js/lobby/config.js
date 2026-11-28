@@ -5,6 +5,7 @@
    - kind: 'enter'(두 번째 누르면 url로 이동) / 'info'(안내만) / 'museum'(museumOpen이 true일 때만 열려요)
    - label: 굵은 글씨 제목. 안 쓰고 싶으면 줄 자체를 빼면 돼요(sub만 보여요)
    - url: 가는 곳(3D 야구장 본체는 stadium.html, 로비 자신은 index.html)
+   - newTab: true면 두 번째 누를 때 새 탭으로 열어요(로비는 그대로)
    - prefetch: 첫 번째 누를 때 미리 받아 두는 파일(두 번째 누를 때 덜 기다리게) */
 const CONFIG = {
   museumOpen: true,             // true면 문학기념관 문이 열려요(url도 함께 채우기). 2026-11-17 패치 AQ에서 열었어요
@@ -23,12 +24,13 @@ const CONFIG = {
                url:'memorial.html', go:'문학기념관으로 가는 중', closedMsg:'아직 전시 기간이 아닙니다',
                prefetch:['memorial.html','memorial/photos.json','https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'] },
     piggy:   { kind:'enter', label:'돼그랑', url:'https://my-redi-coder.github.io/piggyback1/', go:'저금통으로 가는 중',
-               prefetch:['https://my-redi-coder.github.io/piggyback1/'] }   // 초록옷 으쓱이 발 앞의 작은 동전(별도 저장소 piggyback1)
+               prefetch:['https://my-redi-coder.github.io/piggyback1/'] },  // 초록옷 으쓱이 발 앞의 작은 동전(별도 저장소 piggyback1)
+    monument:{ kind:'enter', label:'26행복야구모음집', url:'https://my-redi-coder.github.io/baseball/', newTab:true }   // Munhak☆ 상징물(별도 저장소 baseball), 새 탭으로 열려요
   },
   // 이름표가 뜰 때 풍선 꼬리 끝이 닿는 자리(그림 좌표 400×760) — 건물 지붕 윗선에 맞춤
   anchors: {
     stadium:{x:82,y:424}, wall:{x:180,y:455}, bullpen:{x:268,y:556},
-    locker:{x:348,y:556}, gate:{x:200,y:298}, museum:{x:318,y:298}, piggy:{x:150,y:650}
+    locker:{x:348,y:556}, gate:{x:200,y:298}, museum:{x:318,y:298}, piggy:{x:150,y:650}, monument:{x:306,y:450}
   },
   talk: ['봄에 만나요','V6를 향해','다음 시즌, 문학에서','Go for it!','소리 질러!']   // 으쓱이들이 가끔 하는 말
 };

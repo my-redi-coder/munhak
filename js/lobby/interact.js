@@ -4,7 +4,7 @@
    누르기 → 이름표(말풍선) → 한 번 더 누르면 들어가요. 폰·PC 똑같고 hover는 쓰지 않아요.
    - 첫 번째 누름: 그곳 이름표 + 갈 곳을 미리 받기 시작(prefetch)
    - 두 번째 누름: 'enter'면 가는 중 화면 → url로 이동 / 정문은 티켓 안내 + 티켓부스 반짝 / 문학기념관은 닫힌 문(흔들림 + 안내)
-   - Munhak 상징물은 누르면 노란 별이 흔들려요. 으쓱이들은 가끔 한마디 해요
+   - Munhak 상징물은 누르면 노란 별이 흔들리며 '26행복야구모음집' 이름표, 한 번 더 누르면 모음집이 새 탭으로 열려요. 으쓱이들은 가끔 한마디 해요
    필요: config.js kit.js(NS) people.js(PEOPLE), lobby.html의 #stage #bubble #sparks #talkLayer #toast #live #go */
 const $ = (id)=>document.getElementById(id);
 const stage=$('stage'), bubble=$('bubble'), live=$('live'), goEl=$('go'), toastEl=$('toast');
@@ -78,6 +78,7 @@ function select(id){
   showBubble(id);
   prefetch(id);
   if(cfgOf(id).kind==='info') sparkle();   // 정문을 눌렀을 때만 티켓부스에 반짝
+  if(id==='monument') wiggleStar();        // Munhak☆는 이름표와 함께 별이 흔들려요
   idleReset();
 }
 
@@ -94,6 +95,7 @@ function prefetch(id){
 function goTo(id){
   const c=cfgOf(id);
   if(!c.url){ toast('준비 중이에요'); return; }
+  if(c.newTab){ window.open(c.url,'_blank','noopener'); clearSel(); return; }   // 새 탭: 누른 순간 바로 열어야 팝업 차단에 안 걸려요
   state.going=true; clearTimeout(state.idle);
   $('goMsg').textContent=c.go||'가는 중'; goEl.hidden=false;
   requestAnimationFrame(()=>goEl.classList.add('on'));

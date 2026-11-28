@@ -1,7 +1,7 @@
 /* 출처: SSG 팬 레디코더의 문학야구장 (github.com/my-redi-coder/munhak) — 가져다 써도 되지만 돈 받고 쓰는 건 안 돼요. 쓸 땐 'SSG 팬 레디코더의 문학야구장 참조'를 꼭 남겨 주세요.
    Original work by Redi Coder, an SSG Landers fan. Reuse is welcome, commercial use is not. Please credit "Based on Munhak Ballpark by Redi Coder (SSG fan)". */
 /* ================= 로비 소품 (lobby.html) =================
-   벽 옆 나무·깃발·만국기(L.pines, L.poles), 티켓부스(L.booth), 담벼락(L.wall), Munhak 상징물(L.monument, 누르면 별이 흔들려요),
+   벽 옆 나무·깃발·만국기(L.pines, L.poles), 티켓부스(L.booth), 담벼락(L.wall), Munhak 상징물(L.monument, 누르면 별이 흔들리고 행복야구 모음집으로),
    빨간 길찾기 표지판 한 쌍(L.sign: 불펜장·라커룸). 눌러지는 곳은 hot(...)으로 감싸 있어요. 필요: kit.js */
 L.pines = ()=>{
   let s=pine(14,348,1.05)+pine(388,348,1.05);
@@ -53,7 +53,8 @@ L.wall = ()=> hot('wall','담벼락',
   +`<g transform="rotate(4 172 494)"><rect x="166" y="488" width="11" height="12" fill="#fffdf6"/><path d="M168,493 h7 M168,496 h4" stroke="#9a8f82" stroke-width=".7"/></g>`,
   [150,452,62,60]);
 
-L.monument = ()=>`<g transform="translate(58 0)">
+/* Munhak☆ 상징물: 누르면 별이 흔들리며 이름표 '26행복야구모음집', 한 번 더 누르면 모음집(별도 저장소 baseball)이 새 탭으로 열려요 */
+L.monument = ()=>`<g transform="translate(58 0)">${hot('monument','Munhak 상징물, 26행복야구모음집',`
   <ellipse cx="248" cy="523" rx="42" ry="10" fill="#000" opacity=".14"/>
   <ellipse cx="248" cy="518" rx="38" ry="10" fill="#20252e"/>
   <ellipse cx="248" cy="514" rx="38" ry="10" fill="#343a47"/>
@@ -63,8 +64,7 @@ L.monument = ()=>`<g transform="translate(58 0)">
   <g class="star"><path d="M248,484 l3.7,7.6 8.3,1.1 -6.1,5.7 1.6,8.2 -7.5,-4.1 -7.5,4.1 1.6,-8.2 -6.1,-5.7 8.3,-1.1Z" fill="#f6c928" stroke="#c8102e" stroke-width="2.4" stroke-linejoin="round"/></g>
   <path d="M210,524 Q248,546 286,524" stroke="#e4e6ea" stroke-width="2.2" fill="none"/>
   <path d="M214,524 v-7 M230,531 v-7 M248,534 v-7 M266,531 v-7 M282,524 v-7" stroke="#e4e6ea" stroke-width="1.6" fill="none"/>
-  <g class="toy" role="button" tabindex="0" aria-label="Munhak 상징물, 노란 별 흔들기"><rect class="hit" x="212" y="444" width="74" height="82" fill="#fff" fill-opacity="0"/></g>
-</g>`;
+  `,[212,444,74,82])}</g>`;
 
 L.sign = ()=>{
   // 실제 구장의 빨간 길찾기 표지판처럼: 두껍고 빨간 화살표 판 한 쌍 + 회색 받침
